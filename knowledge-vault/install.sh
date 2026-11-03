@@ -5,7 +5,8 @@
 # ==============================================================================
 set -euo pipefail
 
-VAULT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REAL_SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+VAULT_ROOT="$(cd "$(dirname "${REAL_SCRIPT_PATH}")" && pwd)"
 SCRIPTS_DIR="${VAULT_ROOT}/scripts"
 
 log_info()  { printf "\033[1;34m[VAULT-SETUP]\033[0m %s\n" "$*"; }

@@ -5,7 +5,8 @@
 # ==============================================================================
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REAL_SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(cd "$(dirname "${REAL_SCRIPT_PATH}")" && pwd)"
 VAULT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 ZIM_DIR="${VAULT_ROOT}/storage/zim_files"
 RAW_MIRROR_DIR="${ZIM_DIR}/raw_mirrors"
