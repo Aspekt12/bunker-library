@@ -69,11 +69,12 @@ install_packages() {
             apt-get install -y -qq nodogsplash
         else
             log_info "Package 'nodogsplash' not in current APT repo; building and installing from source..."
-            apt-get install -y -qq build-essential libmicrohttpd-dev debhelper pkg-config
+            apt-get install -y -qq build-essential libmicrohttpd-dev libnftables-dev libjson-c-dev debhelper pkg-config
             local tmp_nds
             tmp_nds="$(mktemp -d)"
             if git clone --depth 1 https://github.com/nodogsplash/nodogsplash.git "${tmp_nds}/nodogsplash"; then
-                make -C "${tmp_nds}/nodogsplash" && make -C "${tmp_nds}/nodogsplash" install
+                (make -C "${tmp_nds}/nodogsplash" || make -C "${tmp_nds}/nodogsplash" WITH_NFTABLES_SUPPORT=0) && \
+                make -C "${tmp_nds}/nodogsplash" install
                 log_ok "nodogsplash compiled and installed successfully."
             else
                 log_warn "Could not clone nodogsplash from GitHub; captive portal will rely on dnsmasq wildcard DNS + Caddy."
