@@ -1,0 +1,22 @@
+# Ignore runtime data, downloaded ZIM archives, Ollama models, and SQLite databases
+knowledge-vault/storage/caddy_data/*
+!knowledge-vault/storage/caddy_data/.gitkeep
+
+knowledge-vault/storage/ollama_data/*
+!knowledge-vault/storage/ollama_data/.gitkeep
+
+knowledge-vault/storage/openwebui_data/*
+!knowledge-vault/storage/openwebui_data/.gitkeep
+
+knowledge-vault/storage/zim_files/*
+!knowledge-vault/storage/zim_files/.gitkeep
+
+# Ignore Python bytecode and temporary files
+__pycache__/
+*.py[cod]
+*$py.class
+*.swp
+*.bak
+.DS_Store
+.aria2_download_queue.txt
+*.aria2

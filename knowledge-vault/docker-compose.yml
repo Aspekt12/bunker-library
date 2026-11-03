@@ -1,0 +1,89 @@
+# ==============================================================================
+# OFFLINE RESILIENCE KNOWLEDGE VAULT - Docker Compose Stack
+# Services: kiwix-serve, ollama, open-webui, caddy
+# ==============================================================================
+services:
+  kiwix-serve:
+    image: ghcr.io/kiwix/kiwix-serve:latest
+    container_name: vault-kiwix
+    restart: unless-stopped
+    volumes:
+      - ./storage/zim_files:/data:ro
+    command: ['*.zim']
+    expose:
+      - "8080"
+    networks:
+      - vault_net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: vault-ollama
+    restart: unless-stopped
+    volumes:
+      - ./storage/ollama_data:/root/.ollama
+      - ./Modelfile:/root/Modelfile:ro
+      - ./Modelfile.fallback:/root/Modelfile.fallback:ro
+    expose:
+      - "11434"
+    networks:
+      - vault_net
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: vault-openwebui
+    restart: unless-stopped
+    depends_on:
+      - ollama
+      - kiwix-serve
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - HF_HUB_OFFLINE=1
+      - TRANSFORMERS_OFFLINE=1
+      - OFFLINE_MODE=true
+      - ENABLE_OPENAI_API=false
+      - ENABLE_SIGNUP=false
+      - WEBUI_NAME=Biroul de Referință & Secretariat Tehnic
+      - DEFAULT_MODELS=elena-vancea:latest
+      - DEFAULT_LOCALE=ro-RO
+      - ENABLE_COMMUNITY_SHARING=false
+      - ENABLE_MESSAGE_RATING=false
+      - SAFE_MODE=false
+    volumes:
+      - ./storage/openwebui_data:/app/backend/data
+      - ./tools/kiwix_tool.py:/app/backend/data/kiwix_tool.py:ro
+    expose:
+      - "8080"
+    networks:
+      - vault_net
+
+  caddy:
+    image: caddy:2.8-alpine
+    container_name: vault-caddy
+    restart: unless-stopped
+    depends_on:
+      - open-webui
+      - kiwix-serve
+    ports:
+      - "80:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./storage/caddy_data:/data
+    networks:
+      - vault_net
+
+networks:
+  vault_net:
+    driver: bridge
+    name: vault_net

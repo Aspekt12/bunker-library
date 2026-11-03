@@ -1,0 +1,37 @@
+{
+    auto_https off
+    admin off
+}
+
+:80 {
+    # Redirect exact /library path to /library/
+    @library_exact path /library
+    redir @library_exact /library/ 308
+
+    # Route /library/* to Kiwix Serve (stripping the /library prefix)
+    handle_path /library/* {
+        reverse_proxy kiwix-serve:8080
+    }
+
+    # Route Kiwix internal asset, article, and catalog paths when browsing from /library/
+    @kiwix_assets {
+        path /skin/* /catalog/* /content/* /viewer* /catch/* /raw/*
+    }
+    handle @kiwix_assets {
+        reverse_proxy kiwix-serve:8080
+    }
+
+    # Route direct Kiwix search queries triggered from Kiwix UI forms
+    @kiwix_search {
+        path /search
+        query pattern=*
+    }
+    handle @kiwix_search {
+        reverse_proxy kiwix-serve:8080
+    }
+
+    # Route all other traffic (/) to Open WebUI (Elena Vancea AI)
+    handle {
+        reverse_proxy open-webui:8080
+    }
+}

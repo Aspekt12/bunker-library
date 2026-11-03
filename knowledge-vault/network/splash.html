@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>Biblioteca Digitală Locală Autonomă — Portal de Acces</title>
+    <style>
+        :root {
+            --bg-primary: #0b0f17;
+            --bg-card: #131b2e;
+            --border-color: #293548;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-gold: #d97706;
+            --accent-blue: #0284c7;
+            --accent-hover: #0369a1;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: "Georgia", "Times New Roman", serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        .vault-container {
+            max-width: 680px;
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--accent-gold);
+            border-radius: 6px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
+            text-align: center;
+        }
+        .badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #fbbf24;
+            background: rgba(217, 119, 6, 0.15);
+            border: 1px solid rgba(217, 119, 6, 0.4);
+            padding: 0.35rem 0.85rem;
+            border-radius: 4px;
+            margin-bottom: 1.25rem;
+        }
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.65rem;
+            color: #ffffff;
+            letter-spacing: 0.02em;
+        }
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1.15rem;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 1.1rem 1.4rem;
+            border-radius: 5px;
+            transition: all 0.18s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .btn-elena {
+            background-color: var(--accent-blue);
+            color: #ffffff;
+            border-color: #38bdf8;
+        }
+        .btn-elena:hover {
+            background-color: var(--accent-hover);
+        }
+        .btn-kiwix {
+            background-color: #1e293b;
+            color: #f8fafc;
+            border-color: #475569;
+        }
+        .btn-kiwix:hover {
+            background-color: #334155;
+        }
+        .btn-desc {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 400;
+            color: #cbd5e1;
+            margin-top: 0.3rem;
+        }
+        .footer-meta {
+            font-family: monospace;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.25rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <main class="vault-container">
+        <div class="badge">AUTONOMOUS AIR-GAPPED NODE &bull; 10.3.141.1</div>
+        <h1>BIBLIOTECA DIGITALĂ LOCALĂ AUTONOMĂ</h1>
+        <p class="subtitle">
+            Biroul de Referință &amp; Secretariat Tehnic.<br>
+            100% air-gapped offline knowledge system. Select a destination below to authenticate with the portal and redirect:
+        </p>
+
+        <div class="actions">
+            <!-- Button 1: Elena Vancea - Technical Assistant (supports both Nodogsplash $authaction token and direct access) -->
+            <a class="btn btn-elena"
+               href="$authaction?tok=$tok&amp;redir=http%3A%2F%2F10.3.141.1%2F"
+               onclick="if(this.getAttribute('href').indexOf('$authaction')===0){window.location.href='http://10.3.141.1/'; return false;}">
+                [Elena Vancea - Asistent Tehnic]
+                <span class="btn-desc">Executive Secretary &amp; Head of Documentary Holdings (http://10.3.141.1/)</span>
+            </a>
+
+            <!-- Button 2: Kiwix Digital Archive -->
+            <a class="btn btn-kiwix"
+               href="$authaction?tok=$tok&amp;redir=http%3A%2F%2F10.3.141.1%2Flibrary%2F"
+               onclick="if(this.getAttribute('href').indexOf('$authaction')===0){window.location.href='http://10.3.141.1/library/'; return false;}">
+                [Arhiva Digitală Kiwix]
+                <span class="btn-desc">Direct ZIM Archive Browser: Wikipedia, Syscall.sh, x86, OSDev, DevDocs (http://10.3.141.1/library/)</span>
+            </a>
+        </div>
+
+        <footer class="footer-meta">
+            SSID: BIBLIOTECA_DIGITALA_OFFLINE &bull; Gateway: 10.3.141.1<br>
+            Documentary Integrity Protocol Active (Kiwix ZIM + Qwen2.5 Quantized GGUF)
+        </footer>
+    </main>
+</body>
+</html>
