@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BunkerOS XP — Offline Resilience Library &amp; AI Desktop</title>
+    <link rel="stylesheet" href="/static/xp.css">
+</head>
+<body class="wallpaper-bliss">
+
+    <!-- =================================================================== -->
+    <!-- 1. WINDOWS XP DESKTOP AREA (ICONS + DYNAMIC FOLDERS + WINDOWS)      -->
+    <!-- =================================================================== -->
+    <div id="xp-desktop" onclick="handleDesktopClick(event)">
+
+        <!-- Desktop Shortcut & Dynamic Folder Grid -->
+        <div id="desktop-icons">
+            <div class="desktop-icon" ondblclick="openWindow('win-library')" onclick="selectDesktopIcon(this, 'win-library')">
+                <div class="icon-graphic">🏛️</div>
+                <span class="icon-label">My Library (Bookshelf)</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openWindow('win-downloader')" onclick="selectDesktopIcon(this, 'win-downloader')">
+                <div class="icon-graphic">📦</div>
+                <span class="icon-label">Add / Remove Books (ZIM)</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openKiwixBrowser('/kiwix/')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic">🌐</div>
+                <span class="icon-label">Kiwix ZIM Explorer</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openWindow('win-chats')" onclick="selectDesktopIcon(this, 'win-chats')">
+                <div class="icon-graphic">💬</div>
+                <span class="icon-label">Saved Chats Folder</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openWindow('win-new-book')" onclick="selectDesktopIcon(this, 'win-new-book')">
+                <div class="icon-graphic">📝</div>
+                <span class="icon-label">Write New Volume</span>
+            </div>
+
+            <!-- Dynamic Desktop Folders & Downloaded Books injected here by xp.js -->
+            <div id="dynamic-desktop-folders"></div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 1: MY LIBRARY — DYNAMIC BOOKSHELF & XP FOLDER EXPLORER   -->
+        <!-- =============================================================== -->
+        <div id="win-library" class="xp-window" style="top: 26px; left: 135px; width: 880px; height: 520px; z-index: 20;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-library')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon">🏛️</span>
+                    <span class="xp-title-text">My Library — Offline Knowledge Vault (Bookshelf Explorer)</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-library')">_</button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-library')">□</button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-library')">✕</button>
+                </div>
+            </div>
+
+            <!-- XP Explorer Address & Toolbar -->
+            <div class="xp-menubar">
+                <div class="xp-toolbar-group">
+                    <button class="xp-toolbar-btn active" id="btn-view-shelf" onclick="setLibraryView('shelf')">
+                        📚 Library Bookshelf View
+                    </button>
+                    <button class="xp-toolbar-btn" id="btn-view-folders" onclick="setLibraryView('folders')">
+                        📁 XP Folders View
+                    </button>
+                    <button class="xp-toolbar-btn" onclick="openWindow('win-downloader')">
+                        ➕ Download More ZIM Books
+                    </button>
+                    <button class="xp-toolbar-btn" onclick="refreshAll()">
+                        🔄 Refresh Shelf
+                    </button>
+                </div>
+                <div class="xp-shelf-meter">
+                    <span id="shelf-count-badge">4 Volumes on Shelf</span>
+                </div>
+            </div>
+
+            <div class="xp-addressbar">
+                <span class="addr-label">Address</span>
+                <div class="addr-input">C:\Bunker_Library\Offline_Knowledge_Vault\Bookshelf</div>
+                <input type="text" id="library-search-input" class="xp-search-box" placeholder="Filter books or ZIMs..." oninput="renderLibraryViews()">
+            </div>
+
+            <div class="xp-window-body xp-explorer-layout">
+                <!-- Left XP Explorer Task Sidebar -->
+                <aside class="xp-sidebar">
+                    <div class="xp-task-card">
+                        <div class="xp-task-header">Library Tasks</div>
+                        <div class="xp-task-body">
+                            <a href="javascript:void(0)" onclick="openWindow('win-downloader')">📦 Download ZIM Archives</a>
+                            <a href="javascript:void(0)" onclick="openWindow('win-new-book')">📝 Create Field Manual</a>
+                            <a href="javascript:void(0)" onclick="openKiwixBrowser('/kiwix/')">🌐 Open Kiwix ZIM Server</a>
+                            <a href="javascript:void(0)" onclick="toggleChatDrawer(true)">🤖 Ask Elena Vancea AI</a>
+                        </div>
+                    </div>
+
+                    <div class="xp-task-card">
+                        <div class="xp-task-header">Filter by Folder</div>
+                        <div class="xp-task-body" id="library-category-filters">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="xp-task-card">
+                        <div class="xp-task-header">Vault Storage Status</div>
+                        <div class="xp-task-body xp-storage-stats">
+                            <div id="sidebar-disk-text">Checking storage...</div>
+                            <div class="xp-progress-outer">
+                                <div id="sidebar-disk-bar" class="xp-progress-inner" style="width: 28%;"></div>
+                            </div>
+                            <div id="sidebar-ai-status" style="margin-top:6px; font-weight:bold; color:#065f46;">AI: Connecting...</div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Right Main Content: Visual Bookshelf OR XP Folder Grid -->
+                <main class="xp-explorer-main">
+                    <!-- VIEW A: Visual Wooden Library Bookshelf (fills up as you download more!) -->
+                    <div id="library-shelf-view" class="bookshelf-Wrapper">
+                        <div class="bookshelf-banner">
+                            <div>
+                                <strong>Dynamic Offline Library</strong> — Each downloaded <code>.zim</code> archive or manual adds a physical volume to your shelves below and creates a desktop shortcut.
+                            </div>
+                            <button class="xp-button-primary" onclick="openWindow('win-downloader')">+ Add ZIM Books</button>
+                        </div>
+                        <div id="bookshelf-shelves-container">
+                            <!-- Wooden shelves & 3D book spines rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- VIEW B: Classic XP Folders & Files Grid -->
+                    <div id="library-folders-view" class="xp-folders-grid" style="display: none;">
+                        <!-- Folder icons & book files rendered here -->
+                    </div>
+                </main>
+            </div>
+
+            <div class="xp-statusbar">
+                <span id="library-status-left">Ready — Click any book spine to open it in the Reader window.</span>
+                <span id="library-status-right">BunkerOS XP Local Zone</span>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 2: ADD / REMOVE BOOKS (ZIM & ARCHIVE DOWNLOADER)         -->
+        <!-- =============================================================== -->
+        <div id="win-downloader" class="xp-window" style="top: 48px; left: 210px; width: 780px; height: 490px; z-index: 25; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-downloader')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon">📦</span>
+                    <span class="xp-title-text">Add or Remove Knowledge Packs — Kiwix ZIM Downloader</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" onclick="minimizeWindow('win-downloader')">_</button>
+                    <button class="xp-btn-max" onclick="toggleMaximize('win-downloader')">□</button>
+                    <button class="xp-btn-close" onclick="closeWindow('win-downloader')">✕</button>
+                </div>
+            </div>
+
+            <div class="xp-menubar">
+                <div style="font-size: 12px; color: #222;">
+                    Download official <strong>Kiwix .ZIM archives</strong> directly into <code>storage/zim_files/</code>. Every downloaded archive automatically populates your <strong>Library Bookshelf</strong> and <strong>Desktop Folders</strong>!
+                </div>
+                <div id="downloader-free-space" class="xp-shelf-meter">Free Space: -- GB</div>
+            </div>
+
+            <div class="xp-window-body" style="padding: 12px; overflow-y: auto; background: #fff;">
+                <div id="catalog-list" class="xp-addremove-list">
+                    <!-- Populated dynamically from /api/catalog -->
+                </div>
+            </div>
+
+            <div class="xp-statusbar">
+                <span id="downloader-status-msg">Multi-segment aria2c downloader ready.</span>
+                <span>Source: download.kiwix.org/zim/</span>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 3: BOOK / KIWIX ZIM READER WINDOW                        -->
+        <!-- =============================================================== -->
+        <div id="win-reader" class="xp-window" style="top: 34px; left: 260px; width: 820px; height: 510px; z-index: 30; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-reader')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" id="reader-win-icon">📘</span>
+                    <span class="xp-title-text" id="reader-win-title">Document Viewer — BunkerOS XP</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" onclick="minimizeWindow('win-reader')">_</button>
+                    <button class="xp-btn-max" onclick="toggleMaximize('win-reader')">□</button>
+                    <button class="xp-btn-close" onclick="closeWindow('win-reader')">✕</button>
+                </div>
+            </div>
+
+            <div class="xp-menubar">
+                <div class="xp-toolbar-group">
+                    <button class="xp-toolbar-btn" onclick="openWindow('win-library')">⬅ Back to Bookshelf</button>
+                    <button class="xp-toolbar-btn" onclick="askAiAboutCurrentBook()">🤖 Ask Elena AI About This Book</button>
+                    <button class="xp-toolbar-btn" id="btn-reader-home" style="display:none;" onclick="openKiwixBrowser('/kiwix/')">🏠 Kiwix Catalog Home</button>
+                </div>
+                <span id="reader-meta-badge" class="xp-shelf-meter">Offline Verified</span>
+            </div>
+
+            <div class="xp-addressbar" id="reader-addressbar">
+                <span class="addr-label">Location</span>
+                <div class="addr-input" id="reader-location-bar">vault://library/volume</div>
+            </div>
+
+            <div class="xp-window-body" style="background: #ffffff; overflow: hidden; display: flex; flex-direction: column;">
+                <!-- Built-in / Custom Volume Markdown Viewer -->
+                <div id="reader-volume-content" class="reader-article-body" style="display: none;"></div>
+                <!-- Embedded Kiwix ZIM Browser Iframe -->
+                <iframe id="reader-kiwix-iframe" src="about:blank" style="display: none; width: 100%; height: 100%; border: none; flex: 1;"></iframe>
+            </div>
+
+            <div class="xp-statusbar">
+                <span id="reader-status-text">Document loaded from local vault.</span>
+                <span>100% Offline Mode</span>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 4: SAVED CHATS ARCHIVE FOLDER                            -->
+        <!-- =============================================================== -->
+        <div id="win-chats" class="xp-window" style="top: 65px; left: 290px; width: 640px; height: 420px; z-index: 26; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-chats')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon">💬</span>
+                    <span class="xp-title-text">Saved AI Conversations — SQLite Archive</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" onclick="minimizeWindow('win-chats')">_</button>
+                    <button class="xp-btn-max" onclick="toggleMaximize('win-chats')">□</button>
+                    <button class="xp-btn-close" onclick="closeWindow('win-chats')">✕</button>
+                </div>
+            </div>
+
+            <div class="xp-menubar">
+                <button class="xp-toolbar-btn" onclick="createNewChatSession(true)">➕ Start New Conversation</button>
+                <button class="xp-toolbar-btn" onclick="loadChatsList()">🔄 Refresh Saved Chats</button>
+            </div>
+
+            <div class="xp-window-body" style="padding: 12px; background: #fff; overflow-y: auto;">
+                <div id="saved-chats-folder-grid" class="xp-folders-grid">
+                    <!-- Saved chats rendered as XP files -->
+                </div>
+            </div>
+
+            <div class="xp-statusbar">
+                <span>All conversations are automatically persisted in storage/app_data/bunker_xp.db</span>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 5: WRITE / ADD NEW VOLUME TO BOOKSHELF                   -->
+        <!-- =============================================================== -->
+        <div id="win-new-book" class="xp-window" style="top: 75px; left: 320px; width: 560px; height: 430px; z-index: 28; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-new-book')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon">📝</span>
+                    <span class="xp-title-text">Add New Volume / Field Note to Library Shelf</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" onclick="minimizeWindow('win-new-book')">_</button>
+                    <button class="xp-btn-close" onclick="closeWindow('win-new-book')">✕</button>
+                </div>
+            </div>
+
+            <div class="xp-window-body" style="padding: 14px; background: #ece9d8; overflow-y: auto;">
+                <div class="xp-form-row">
+                    <label>Book / Manual Title:</label>
+                    <input type="text" id="newbook-title" placeholder="e.g., Custom Radio Frequencies & Repeater Map">
+                </div>
+                <div class="xp-form-row" style="display:flex; gap:10px;">
+                    <div style="flex:1;">
+                        <label>Folder / Category:</label>
+                        <select id="newbook-category">
+                            <option value="Low-Level & Kernel">Low-Level &amp; Kernel</option>
+                            <option value="Survival & Medical">Survival &amp; Medical</option>
+                            <option value="DevDocs & Engineering">DevDocs &amp; Engineering</option>
+                            <option value="Custom Field Notes">Custom Field Notes</option>
+                        </select>
+                    </div>
+                    <div style="width:150px;">
+                        <label>Book Spine Color:</label>
+                        <select id="newbook-color">
+                            <option value="#1e3a8a">Royal Blue</option>
+                            <option value="#7c2d12">Crimson Leather</option>
+                            <option value="#065f46">Emerald Forest</option>
+                            <option value="#92400e">Amber Gold</option>
+                            <option value="#4c1d95">Deep Violet</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="xp-form-row">
+                    <label>Content (Markdown / Technical Notes — searchable by Elena AI):</label>
+                    <textarea id="newbook-content" rows="9" placeholder="# Chapter 1&#10;Write technical notes, commands, or procedures here..."></textarea>
+                </div>
+                <div style="text-align: right; margin-top: 8px;">
+                    <button class="xp-button-primary" onclick="saveCustomBook()">📚 Place Book on Shelf</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- 2. DOCKED BOTTOM AI CHAT ("AI OF TOMORROW" MEETS XP TASKBAR DOCK)   -->
+    <!-- =================================================================== -->
+    <div id="ai-bottom-dock" class="dock-collapsed">
+        <!-- Expandable Drawer (History Sidebar + Message Stream) -->
+        <div id="ai-chat-drawer">
+            <div class="ai-drawer-header" ondblclick="toggleChatDrawer()">
+                <div class="ai-drawer-title">
+                    <span class="ai-pulse-dot"></span>
+                    <strong>Elena Vancea — Secretariat Tehnic &amp; Archive AI</strong>
+                    <span id="active-chat-badge" class="ai-chat-pill">Welcome to BunkerOS XP</span>
+                </div>
+                <div class="ai-drawer-actions">
+                    <button class="xp-mini-btn" onclick="createNewChatSession(true)" title="New Saved Chat">+ New Chat</button>
+                    <button class="xp-mini-btn" onclick="openWindow('win-chats')" title="Open Saved Chats Folder">📁 All Saved Chats</button>
+                    <button class="xp-mini-btn" onclick="toggleChatDrawer(false)" title="Collapse Chat Drawer">▼ Minimize to Bottom Bar</button>
+                </div>
+            </div>
+
+            <div class="ai-drawer-body">
+                <!-- Left Saved Chats List -->
+                <aside class="ai-chats-sidebar">
+                    <div class="ai-sidebar-header">
+                        <span>Saved Sessions</span>
+                        <button onclick="createNewChatSession(true)">+ New</button>
+                    </div>
+                    <div id="ai-chats-list" class="ai-chats-list">
+                        <!-- Populated from SQLite /api/chats -->
+                    </div>
+                </aside>
+
+                <!-- Right Active Conversation Stream -->
+                <section class="ai-messages-panel">
+                    <div id="ai-messages-stream" class="ai-messages-stream">
+                        <!-- Messages + clickable archive source badges rendered here -->
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Always-Visible Bottom Chat Input Bar -->
+        <div id="ai-command-bar">
+            <button class="ai-toggle-drawer-btn" id="btn-toggle-drawer" onclick="toggleChatDrawer()" title="Expand / Collapse Saved Chat History">
+                <span class="ai-avatar-chip">🤖 Elena AI</span>
+                <span id="drawer-chevron">▲ Chat History</span>
+            </button>
+
+            <form id="ai-chat-form" onsubmit="handleChatSubmit(event)">
+                <input
+                    type="text"
+                    id="ai-chat-input"
+                    autocomplete="off"
+                    placeholder="Ask Elena Vancea anything from your local ZIM library (e.g. 'syscall write x64', 'CR3 paging', 'water purification')..."
+                    onfocus="toggleChatDrawer(true)"
+                >
+                <button type="submit" id="ai-send-btn">Send ↵</button>
+            </form>
+
+            <div class="ai-quick-chips">
+                <button type="button" onclick="quickPrompt('Explain Linux x86_64 syscall registers and show an assembly example for sys_write')">x64 Syscalls</button>
+                <button type="button" onclick="quickPrompt('How do I enable 64-bit Long Mode paging with CR3 and EFER?')">OSDev Paging</button>
+                <button type="button" onclick="quickPrompt('What is the emergency water purification and WHO ORS formula?')">Field Med</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- 3. WINDOWS XP START MENU (POPUP)                                    -->
+    <!-- =================================================================== -->
+    <div id="xp-start-menu" style="display: none;">
+        <div class="xp-start-header">
+            <div class="xp-user-avatar">🛡️</div>
+            <div class="xp-user-info">
+                <div class="xp-user-name">Bunker Administrator</div>
+                <div class="xp-user-role">Offline Resilience Vault</div>
+            </div>
+        </div>
+        <div class="xp-start-columns">
+            <div class="xp-start-left">
+                <div class="xp-start-item" onclick="openWindow('win-library'); closeStartMenu();">
+                    <span class="s-icon">🏛️</span>
+                    <div><strong>My Library (Bookshelf)</strong><small>Browse installed books &amp; ZIMs</small></div>
+                </div>
+                <div class="xp-start-item" onclick="openWindow('win-downloader'); closeStartMenu();">
+                    <span class="s-icon">📦</span>
+                    <div><strong>Add / Remove ZIM Books</strong><small>Download Wikipedia, DevDocs, OSDev</small></div>
+                </div>
+                <div class="xp-start-item" onclick="openKiwixBrowser('/kiwix/'); closeStartMenu();">
+                    <span class="s-icon">🌐</span>
+                    <div><strong>Kiwix ZIM Browser</strong><small>Full-screen ZIM server explorer</small></div>
+                </div>
+                <div class="xp-start-item" onclick="toggleChatDrawer(true); closeStartMenu();">
+                    <span class="s-icon">🤖</span>
+                    <div><strong>Elena Vancea AI Chat</strong><small>Grounded local LLM assistant</small></div>
+                </div>
+                <div class="xp-start-item" onclick="openWindow('win-new-book'); closeStartMenu();">
+                    <span class="s-icon">📝</span>
+                    <div><strong>Write New Field Volume</strong><small>Add custom book to shelf</small></div>
+                </div>
+            </div>
+            <div class="xp-start-right">
+                <div class="xp-start-section-title">Desktop Theme</div>
+                <div class="xp-start-link" onclick="setWallpaper('wallpaper-bliss')">🏞️ Windows XP Bliss Hills</div>
+                <div class="xp-start-link" onclick="setWallpaper('wallpaper-mahogany')">📚 Classic Library Study</div>
+                <div class="xp-start-link" onclick="setWallpaper('wallpaper-bunker')">🖥️ Bunker Terminal Dark</div>
+                <hr>
+                <div class="xp-start-section-title">Vault Folders</div>
+                <div class="xp-start-link" onclick="openWindow('win-chats'); closeStartMenu();">💬 Saved Chats Archive</div>
+                <div class="xp-start-link" onclick="setLibraryView('folders'); openWindow('win-library'); closeStartMenu();">📁 Category Folders</div>
+            </div>
+        </div>
+        <div class="xp-start-footer">
+            <button class="xp-start-shutdown" onclick="refreshAll(); closeStartMenu();">🔄 Sync Library &amp; AI</button>
+        </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- 4. WINDOWS XP LUNA TASKBAR (BOTTOM BAR)                             -->
+    <!-- =================================================================== -->
+    <footer id="xp-taskbar">
+        <button id="xp-start-btn" onclick="toggleStartMenu(event)">
+            <span class="xp-flag">❖</span>
+            <span class="xp-start-text">start</span>
+        </button>
+
+        <div id="xp-taskbar-windows">
+            <!-- Active window tabs rendered here -->
+        </div>
+
+        <div id="xp-systray">
+            <span class="systray-item" id="tray-books-count" title="Total Installed Books & ZIMs" onclick="openWindow('win-library')">📚 4 Books</span>
+            <span class="systray-item" id="tray-ai-pill" title="Ollama Local AI Status" onclick="toggleChatDrawer(true)">🟢 AI Ready</span>
+            <span class="systray-clock" id="xp-clock">12:00 PM</span>
+        </div>
+    </footer>
+
+    <script src="/static/xp.js"></script>
+</body>
+</html>

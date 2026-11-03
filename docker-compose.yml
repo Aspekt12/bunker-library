@@ -1,0 +1,40 @@
+services:
+  bunker-xp:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: bunker-xp
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - DEFAULT_MODEL=elena-vancea:latest
+      - FALLBACK_MODEL=qwen2.5:7b-instruct-q4_K_M
+      - ZIM_DIR=/data/zim_files
+      - APP_DATA_DIR=/data/app_data
+    volumes:
+      - ./storage/zim_files:/data/zim_files
+      - ./storage/app_data:/data/app_data
+      - ./app:/app
+    depends_on:
+      - ollama
+    networks:
+      - bunker_net
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bunker-ollama
+    restart: unless-stopped
+    volumes:
+      - ./storage/ollama_data:/root/.ollama
+      - ./Modelfile:/root/Modelfile:ro
+    expose:
+      - "11434"
+    networks:
+      - bunker_net
+
+networks:
+  bunker_net:
+    driver: bridge
+    name: bunker_net

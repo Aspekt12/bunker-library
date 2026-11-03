@@ -1,1 +1,0 @@
-/home/aspekt/bunker-library/knowledge-vault/install.sh
