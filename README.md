@@ -4,38 +4,54 @@ A containerized, **Windows XP Luna-themed Web Desktop OS** (`http://localhost`) 
 
 ---
 
-## Features
+## Quick Start (`bunker-library` CLI)
 
-- **Windows XP Desktop Interface (`http://localhost`)**:
-  - Authentic **Luna Blue** draggable, minimizable, and maximizable windows, **Bliss Hills** wallpaper (plus switchable **Library Mahogany** and **Bunker Dark** themes in the Start Menu), and a live **XP Taskbar & System Tray**.
-- **Dynamic Library Bookshelf & Desktop Folders**:
-  - Comes pre-stocked with 4 core engineering & resilience volumes (**Linux Syscalls x64/x86/ARM64**, **Felix Cloutier x86 Manual**, **OSDev Bare-Metal Kernel Guide**, and **Field Medicine & Off-Grid Power**).
-  - **Fills Up as You Download More**: Every `.zim` archive you download from the **Add/Remove Books (ZIM Downloader)** window (or custom manual you write) automatically adds a colored **3D book spine** to the wooden shelves in **My Library** AND creates folder/archive shortcuts directly on your **Windows XP Desktop**.
-- **Docked Bottom AI Chat ("Elena Vancea") with SQLite History**:
-  - Docked right above the XP Taskbar at the bottom of the screen.
-  - **Every chat is automatically saved** in `storage/app_data/bunker_xp.db`.
-  - Automatically searches your local books and Kiwix `.zim` archives first, attaching clickable **Source Citation Badges** that open the exact book or ZIM article in the XP Reader window.
-- **Zero Host Setup — Just Docker**:
-  - Everything runs inside 2 containers (`bunker-xp` + `bunker-ollama`).
-  - `./app` is bind-mounted into `bunker-xp` with `uvicorn --reload`, so any edit you make to `app/static/index.html`, `app/static/xp.css`, `app/static/xp.js`, or `app/main.py` reloads immediately on `http://localhost`!
+### 1. Install the CLI Command
+```bash
+./install.sh
+```
+This links `bin/bunker-library` into `~/.local/bin/bunker-library`.
+
+### 2. Run `bunker-library` from Anywhere
+```bash
+bunker-library
+```
+- **If the containers are not running**: it automatically starts them (`docker compose up -d`), waits until `http://localhost` is ready, and opens `http://localhost` in your browser.
+- **If the containers are already running**: it immediately opens `http://localhost` in your browser.
+
+### Additional CLI Subcommands
+```bash
+bunker-library           # Start (if not running) and open http://localhost
+bunker-library status    # Check container and system status
+bunker-library stop      # Stop the running containers
+bunker-library restart   # Restart containers and open http://localhost
+bunker-library build     # Rebuild container image and open http://localhost
+bunker-library logs      # Tail container logs
+bunker-library uninstall # Stop containers and remove the bunker-library command
+```
 
 ---
 
-## Quick Start
+## Project Structure
 
-### 1. Start the Containers
-```bash
-docker compose up -d --build
+```text
+bunker-library/
+├── bin/
+│   └── bunker-library   # Main CLI launcher (`bunker-library`)
+├── install.sh           # Installs `bunker-library` into ~/.local/bin
+├── uninstall.sh         # Stops containers and removes the CLI command
+├── docker-compose.yml   # 2-container stack: bunker-xp (Port 80) + bunker-ollama
+├── Modelfile            # Elena Vancea LLM Modelfile
+├── app/
+│   ├── Dockerfile       # Python + FastAPI + kiwix-tools + aria2c
+│   ├── main.py          # Backend API, SQLite saved chats, Kiwix manager, Ollama RAG
+│   ├── seed_books.py    # Starter volumes and downloadable Kiwix ZIM catalog
+│   └── static/
+│       ├── index.html   # Windows XP Desktop layout, windows, and bottom AI chat dock
+│       ├── xp.css       # Windows XP Luna Blue theme, Bliss wallpaper & 3D bookshelves
+│       └── xp.js        # Window manager, dynamic bookshelf renderer & chat client
+└── storage/
+    ├── app_data/        # SQLite database (saved chats & custom volumes)
+    ├── ollama_data/     # Persistent Ollama models
+    └── zim_files/       # Downloaded Kiwix .zim files
 ```
-
-### 2. Open in Your Browser
-Navigate to:
-- **`http://localhost`**
-
-### 3. Live Development
-Edit any file in `app/`:
-- `app/static/index.html` — Desktop layout, windows, Start Menu, and Bottom AI Chat Dock
-- `app/static/xp.css` — Windows XP Luna Blue styling, wallpapers, and 3D wooden bookshelves
-- `app/static/xp.js` — Window manager, bookshelf renderer, ZIM downloader, and chat client
-- `app/main.py` — FastAPI backend, SQLite database, `kiwix-serve` manager, and Ollama RAG
-- `app/seed_books.py` — Built-in starter volumes and downloadable Kiwix ZIM catalog
