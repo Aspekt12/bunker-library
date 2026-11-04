@@ -1,5 +1,6 @@
 /* ==========================================================================
-   BunkerOS XP — 1:1 Windows XP Themes, Wallpapers, Bookshelf & FB Side Chat
+   BunkerOS XP — 1:1 Windows XP Themes, Vector Icons, Responsive Font Scaling,
+   Unabridged Book Reader & Dual-Mode Chat
    ========================================================================== */
 
 * {
@@ -10,10 +11,11 @@
 
 :root {
     --ui-font-size: 12px;
+    --reader-font-size: 15px;
 
     /* Default Luna Blue Theme Variables */
     --win-border: #0046d5;
-    --win-title-bg: linear-gradient(180deg, #0961ec 0%, #3a93ff 10%, #0058ee 46%, #0046c7 88%, #0855dd 100%);
+    --win-title-bg: linear-gradient(180deg, #0961ec 0%, #3a93ff 9%, #0058ee 46%, #0046c7 88%, #0855dd 100%);
     --win-title-text: #ffffff;
     --win-bg: #ece9d8;
     --taskbar-bg: linear-gradient(180deg, #3168d5 0%, #4993e6 8%, #2258d5 18%, #245edb 88%, #1941a5 100%);
@@ -27,7 +29,6 @@
     --task-header-text: #215dc6;
     --win-ctrl-btn-bg: linear-gradient(180deg, #3c8cff 0%, #125ee0 100%);
     --start-right-bg: #d3e5fa;
-    --fb-header-bg: linear-gradient(180deg, #3b5998 0%, #2d4373 100%);
 }
 
 /* Theme 2: Windows XP Olive Green (Homestead) */
@@ -110,7 +111,7 @@ body.theme-classic-98 {
 }
 
 body {
-    font-family: "Tahoma", "MS Sans Serif", "Verdana", sans-serif;
+    font-family: "Tahoma", "MS Sans Serif", "Segoe UI", sans-serif;
     font-size: var(--ui-font-size);
     color: #111;
     width: 100vw;
@@ -122,8 +123,18 @@ body {
     background-position: center !important;
 }
 
+/* SVG Vector Icon Alignment */
+.xp-svg-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
 /* --------------------------------------------------------------------------
-   1. Wallpapers (1:1 Bliss Hills, Autumn, Azul, Ascent, Mahogany, Teal)
+   1. Wallpapers (Bliss Hills, Autumn, Azul, Ascent, Mahogany, Teal)
    -------------------------------------------------------------------------- */
 body.wallpaper-bliss {
     background:
@@ -152,7 +163,6 @@ body.wallpaper-azul {
 
 body.wallpaper-ascent {
     background:
-        polygon(0 100%, 35% 45%, 65% 100%),
         radial-gradient(circle at 78% 22%, #f8fafc 0%, rgba(248,250,252,0.15) 8%, transparent 18%),
         linear-gradient(180deg, #090d16 0%, #1e1b4b 45%, #312e81 78%, #0f172a 100%);
 }
@@ -166,14 +176,14 @@ body.wallpaper-teal {
 }
 
 /* --------------------------------------------------------------------------
-   2. Desktop Area & 1:1 XP Desktop Icons
+   2. Desktop Area & 1:1 XP Desktop Icons (Scales with --ui-font-size)
    -------------------------------------------------------------------------- */
 #xp-desktop {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 32px; /* Right above the 32px XP Taskbar */
+    bottom: 32px;
     overflow: hidden;
 }
 
@@ -189,7 +199,7 @@ body.chat-mode-bottom-bar #xp-desktop {
     gap: 10px;
     padding: 12px;
     height: 100%;
-    max-width: 280px;
+    max-width: 310px;
     pointer-events: none;
 }
 
@@ -199,7 +209,8 @@ body.chat-mode-bottom-bar #xp-desktop {
 
 .desktop-icon {
     pointer-events: auto;
-    width: 88px;
+    width: calc(var(--ui-font-size) * 7.5);
+    min-width: 86px;
     padding: 5px 4px;
     display: flex;
     flex-direction: column;
@@ -226,15 +237,13 @@ body.chat-mode-bottom-bar #xp-desktop {
 }
 
 .icon-graphic {
-    font-size: 32px;
-    line-height: 1;
     margin-bottom: 4px;
-    filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.6));
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.55));
 }
 
 .icon-label {
     color: #ffffff;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.92);
     line-height: 1.25;
     text-shadow: 1px 1px 2px #000, 0 0 3px #000;
     word-break: break-word;
@@ -274,13 +283,13 @@ body.theme-classic-98 .xp-window {
 }
 
 .xp-titlebar {
-    height: 29px;
+    min-height: 29px;
+    padding: 3px 6px 3px 8px;
     background: var(--win-title-bg);
     color: var(--win-title-text);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 6px 0 8px;
     cursor: move;
     user-select: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.35);
@@ -291,7 +300,7 @@ body.theme-classic-98 .xp-window {
     align-items: center;
     gap: 6px;
     font-weight: bold;
-    font-size: 12px;
+    font-size: var(--ui-font-size);
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.65);
     white-space: nowrap;
     overflow: hidden;
@@ -312,12 +321,12 @@ body.theme-luna-silver .xp-title-left {
     height: 21px;
     border-radius: 3px;
     border: 1px solid #ffffff;
-    font-weight: bold;
-    font-size: 11px;
-    line-height: 1;
     color: #fff;
     cursor: pointer;
-    box-shadow: inset 0 1px 1px rgba(255,255,255,0.6);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.65);
 }
 
 body.theme-classic-98 .xp-title-controls button {
@@ -331,20 +340,28 @@ body.theme-classic-98 .xp-title-controls button {
     background: var(--win-ctrl-btn-bg);
 }
 
+.xp-btn-min:hover, .xp-btn-max:hover {
+    filter: brightness(1.12);
+}
+
 .xp-btn-close {
     background: linear-gradient(180deg, #f3745f 0%, #dc3116 55%, #b81d06 100%);
 }
 
+.xp-btn-close:hover {
+    background: linear-gradient(180deg, #ff8873 0%, #e8391d 55%, #c92007 100%);
+}
+
 /* 1:1 Classic File Edit View Menu Strip */
 .xp-classic-menubar {
-    height: 23px;
+    min-height: 23px;
     background: var(--win-bg);
     border-bottom: 1px solid #d4d0c8;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 0 0 6px;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.94);
 }
 
 .xp-menu-items {
@@ -365,14 +382,13 @@ body.theme-classic-98 .xp-title-controls button {
 
 .xp-menubar-flag {
     height: 100%;
-    width: 34px;
+    min-height: 22px;
+    width: 36px;
     background: #ffffff;
     border-left: 1px solid #d4d0c8;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0058ee;
-    font-weight: bold;
 }
 
 /* Toolbars & Address Bars */
@@ -384,6 +400,7 @@ body.theme-classic-98 .xp-title-controls button {
     align-items: center;
     justify-content: space-between;
     gap: 8px;
+    font-size: calc(var(--ui-font-size) * 0.94);
 }
 
 .xp-toolbar-group {
@@ -406,15 +423,28 @@ body.theme-classic-98 .xp-title-controls button {
     border-radius: 3px;
     padding: 3px 8px;
     font-family: inherit;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.94);
     color: #111;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .xp-toolbar-btn:hover, .xp-toolbar-btn.active {
     background: linear-gradient(180deg, #e3f0ff 0%, #c2dcff 100%);
     border-color: #316ac5;
     font-weight: bold;
+}
+
+.xp-font-pill {
+    background: #fff;
+    border: 1px solid #aca899;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-weight: bold;
+    font-size: calc(var(--ui-font-size) * 0.9);
+    color: #003594;
 }
 
 .xp-shelf-meter {
@@ -424,7 +454,8 @@ body.theme-classic-98 .xp-title-controls button {
     border-radius: 3px;
     font-weight: bold;
     color: #003c9d;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.94);
+    white-space: nowrap;
 }
 
 .xp-addressbar {
@@ -434,11 +465,12 @@ body.theme-classic-98 .xp-title-controls button {
     display: flex;
     align-items: center;
     gap: 6px;
+    font-size: calc(var(--ui-font-size) * 0.94);
 }
 
 .addr-label {
     color: #444;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.94);
 }
 
 .addr-input-wrap {
@@ -447,7 +479,7 @@ body.theme-classic-98 .xp-title-controls button {
     border: 1px solid #7f9db9;
     display: flex;
     align-items: center;
-    padding: 1px 6px;
+    padding: 2px 6px;
     gap: 5px;
 }
 
@@ -456,15 +488,16 @@ body.theme-classic-98 .xp-title-controls button {
     outline: none;
     width: 100%;
     font-family: "Tahoma", sans-serif;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.95);
     color: #111;
 }
 
 .xp-search-box {
-    width: 175px;
+    width: 205px;
     border: 1px solid #7f9db9;
     padding: 3px 6px;
-    font-size: 11px;
+    font-family: inherit;
+    font-size: calc(var(--ui-font-size) * 0.94);
 }
 
 .xp-go-btn {
@@ -472,8 +505,12 @@ body.theme-classic-98 .xp-title-controls button {
     border: 1px solid #aca899;
     border-radius: 3px;
     padding: 2px 8px;
-    font-size: 11px;
+    font-family: inherit;
+    font-size: calc(var(--ui-font-size) * 0.94);
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .xp-window-body {
@@ -482,14 +519,14 @@ body.theme-classic-98 .xp-title-controls button {
 }
 
 .xp-statusbar {
-    height: 22px;
+    min-height: 22px;
     background: var(--win-bg);
     border-top: 1px solid #aca899;
-    padding: 0 8px;
+    padding: 2px 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.92);
     color: #333;
 }
 
@@ -502,7 +539,7 @@ body.theme-classic-98 .xp-title-controls button {
 }
 
 .xp-sidebar {
-    width: 200px;
+    width: 210px;
     background: var(--sidebar-bg);
     padding: 10px;
     overflow-y: auto;
@@ -525,7 +562,7 @@ body.theme-classic-98 .xp-title-controls button {
     color: var(--task-header-text);
     font-weight: bold;
     padding: 5px 8px;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.95);
 }
 
 .xp-task-body {
@@ -533,18 +570,27 @@ body.theme-classic-98 .xp-title-controls button {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.94);
 }
 
 .xp-task-body a {
     color: #1144aa;
     text-decoration: none;
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     padding: 2px 0;
 }
 
 .xp-task-body a:hover {
     text-decoration: underline;
+    color: #00287a;
+}
+
+.xp-ai-status-line {
+    margin-top: 6px;
+    font-weight: bold;
+    color: #065f46;
 }
 
 .xp-progress-outer {
@@ -583,6 +629,7 @@ body.theme-classic-98 .xp-title-controls button {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    font-size: var(--ui-font-size);
 }
 
 .xp-button-primary {
@@ -592,9 +639,14 @@ body.theme-classic-98 .xp-title-controls button {
     border-radius: 3px;
     padding: 5px 10px;
     font-weight: bold;
-    font-size: 11px;
+    font-family: inherit;
+    font-size: calc(var(--ui-font-size) * 0.94);
     cursor: pointer;
     white-space: nowrap;
+}
+
+.xp-button-primary:hover {
+    filter: brightness(1.08);
 }
 
 .wooden-shelf-case {
@@ -607,13 +659,15 @@ body.theme-classic-98 .xp-title-controls button {
 }
 
 .shelf-plaque {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     background: linear-gradient(180deg, #fbbf24 0%, #b45309 100%);
     color: #1c0a00;
     font-weight: bold;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.92);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     padding: 2px 10px;
     border-radius: 3px;
     border: 1px solid #78350f;
@@ -623,8 +677,8 @@ body.theme-classic-98 .xp-title-controls button {
 .shelf-books-row {
     display: flex;
     align-items: flex-end;
-    gap: 7px;
-    min-height: 138px;
+    gap: 8px;
+    min-height: 148px;
     padding: 6px 8px 0 8px;
     border-bottom: 14px solid #6b3416;
     box-shadow: 0 6px 0 #3a1907;
@@ -633,8 +687,9 @@ body.theme-classic-98 .xp-title-controls button {
 }
 
 .book-spine {
-    width: 44px;
-    height: 126px;
+    width: calc(var(--ui-font-size) * 3.8);
+    min-width: 44px;
+    height: 136px;
     border-radius: 3px 3px 1px 1px;
     color: #ffffff;
     cursor: pointer;
@@ -644,19 +699,21 @@ body.theme-classic-98 .xp-title-controls button {
     align-items: center;
     justify-content: space-between;
     padding: 6px 3px;
-    box-shadow: -2px 0 4px rgba(0,0,0,0.55), inset 3px 0 4px rgba(255,255,255,0.22), inset -2px 0 4px rgba(0,0,0,0.4);
+    box-shadow: -2px 0 5px rgba(0,0,0,0.6), inset 3px 0 5px rgba(255,255,255,0.22), inset -2px 0 4px rgba(0,0,0,0.45);
     border-top: 2px solid #fde68a;
     transition: transform 0.16s ease;
 }
 
 .book-spine.density-compact {
-    width: 34px;
-    height: 114px;
+    width: calc(var(--ui-font-size) * 3.0);
+    min-width: 34px;
+    height: 122px;
 }
 
 .book-spine.density-large {
-    width: 58px;
-    height: 136px;
+    width: calc(var(--ui-font-size) * 4.8);
+    min-width: 58px;
+    height: 148px;
 }
 
 .book-spine:hover {
@@ -674,25 +731,25 @@ body.theme-classic-98 .xp-title-controls button {
 .spine-title {
     writing-mode: vertical-rl;
     text-orientation: mixed;
-    font-size: 10.5px;
+    font-size: calc(var(--ui-font-size) * 0.92);
     font-weight: bold;
-    max-height: 88px;
+    max-height: 94px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.85);
 }
 
 .book-ghost-slot {
     width: 42px;
-    height: 118px;
+    height: 124px;
     border: 1px dashed rgba(255, 255, 255, 0.24);
     border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.36);
-    font-size: 10px;
+    color: rgba(255, 255, 255, 0.38);
+    font-size: calc(var(--ui-font-size) * 0.85);
     writing-mode: vertical-rl;
     cursor: pointer;
 }
@@ -705,15 +762,15 @@ body.theme-classic-98 .xp-title-controls button {
 /* Layout 2: Front-Cover Book Showcase Grid */
 .covers-showcase-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
     gap: 14px;
 }
 
 .book-cover-card {
     border-radius: 5px 8px 8px 5px;
     color: #fff;
-    padding: 12px 10px;
-    min-height: 185px;
+    padding: 14px 12px;
+    min-height: 195px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -729,23 +786,27 @@ body.theme-classic-98 .xp-title-controls button {
 
 .cover-card-top {
     text-align: center;
-}
-
-.cover-card-icon {
-    font-size: 30px;
-    margin-bottom: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
 .cover-card-title {
     font-weight: bold;
-    font-size: 12px;
+    font-size: calc(var(--ui-font-size) * 1.02);
     line-height: 1.3;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.75);
+}
+
+.cover-card-author {
+    font-size: calc(var(--ui-font-size) * 0.86);
+    opacity: 0.88;
 }
 
 .cover-card-footer {
-    font-size: 10px;
-    background: rgba(0,0,0,0.32);
+    font-size: calc(var(--ui-font-size) * 0.85);
+    background: rgba(0,0,0,0.34);
     padding: 4px 6px;
     border-radius: 3px;
     text-align: center;
@@ -754,15 +815,15 @@ body.theme-classic-98 .xp-title-controls button {
 /* Layout 3: Windows XP Tiles Grid */
 .xp-folders-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 10px;
 }
 
 .xp-file-card {
     display: flex;
     align-items: center;
-    gap: 9px;
-    padding: 8px;
+    gap: 10px;
+    padding: 8px 10px;
     border: 1px solid #e2e8f0;
     border-radius: 4px;
     background: #fafafa;
@@ -774,18 +835,15 @@ body.theme-classic-98 .xp-title-controls button {
     border-color: #316ac5;
 }
 
-.xp-file-icon {
-    font-size: 28px;
-}
-
 .xp-file-meta strong {
     display: block;
     color: #003c9d;
+    font-size: var(--ui-font-size);
 }
 
 .xp-file-meta small {
-    color: #666;
-    font-size: 10.5px;
+    color: #555;
+    font-size: calc(var(--ui-font-size) * 0.88);
 }
 
 /* Layout 4: Windows XP Details Table */
@@ -798,14 +856,14 @@ body.theme-classic-98 .xp-title-controls button {
 .xp-details-table th {
     background: linear-gradient(180deg, #ffffff 0%, #ece9d8 100%);
     border: 1px solid #aca899;
-    padding: 4px 8px;
+    padding: 5px 8px;
     text-align: left;
-    font-weight: normal;
+    font-weight: bold;
     color: #222;
 }
 
 .xp-details-table td {
-    padding: 5px 8px;
+    padding: 6px 8px;
     border-bottom: 1px solid #f1f5f9;
     cursor: pointer;
 }
@@ -842,7 +900,7 @@ body.theme-classic-98 .xp-title-controls button {
     border-top-right-radius: 4px;
     padding: 5px 11px;
     font-family: inherit;
-    font-size: 11.5px;
+    font-size: calc(var(--ui-font-size) * 0.95);
     cursor: pointer;
     color: #222;
 }
@@ -862,6 +920,21 @@ body.theme-classic-98 .xp-title-controls button {
     overflow-y: auto;
 }
 
+.xp-theme-swatches {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.swatch-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,0.4);
+}
+
 /* Classic XP CRT Monitor Preview */
 .xp-crt-preview-wrap {
     display: flex;
@@ -872,11 +945,11 @@ body.theme-classic-98 .xp-title-controls button {
 
 .xp-crt-monitor {
     width: 190px;
-    height: 124px;
+    height: 120px;
     background: #d4d0c8;
     border: 4px outset #ffffff;
     border-radius: 6px;
-    padding: 9px;
+    padding: 8px;
     box-shadow: 0 3px 8px rgba(0,0,0,0.25);
 }
 
@@ -893,7 +966,7 @@ body.theme-classic-98 .xp-title-controls button {
 
 .preview-mini-win {
     width: 110px;
-    height: 64px;
+    height: 62px;
     background: var(--win-bg);
     border: 2px solid var(--win-border);
     border-radius: 3px;
@@ -934,7 +1007,7 @@ body.theme-classic-98 .xp-title-controls button {
     font-weight: bold;
     color: #003594;
     margin-bottom: 8px;
-    font-size: 11.5px;
+    font-size: var(--ui-font-size);
 }
 
 .xp-form-grid {
@@ -945,7 +1018,7 @@ body.theme-classic-98 .xp-title-controls button {
 
 .xp-fieldset label {
     display: block;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.94);
     margin-bottom: 4px;
     color: #222;
 }
@@ -957,7 +1030,7 @@ body.theme-classic-98 .xp-title-controls button {
     border: 1px solid #7f9db9;
     padding: 4px 6px;
     font-family: inherit;
-    font-size: 11.5px;
+    font-size: var(--ui-font-size);
 }
 
 .xp-radio-list {
@@ -985,7 +1058,7 @@ body.theme-classic-98 .xp-title-controls button {
 .xp-radio-card small {
     display: block;
     color: #555;
-    font-size: 10.5px;
+    font-size: calc(var(--ui-font-size) * 0.88);
     margin-top: 2px;
 }
 
@@ -1003,7 +1076,7 @@ body.theme-classic-98 .xp-title-controls button {
     border: 1px solid #003c74;
     border-radius: 3px;
     font-family: inherit;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.95);
     cursor: pointer;
 }
 
@@ -1017,7 +1090,7 @@ body.theme-classic-98 .xp-title-controls button {
 }
 
 /* --------------------------------------------------------------------------
-   7. Add/Remove Books & Reader Content
+   7. Add/Remove Books & Split-Pane Unabridged Book Reader
    -------------------------------------------------------------------------- */
 .xp-addremove-list {
     display: flex;
@@ -1045,17 +1118,19 @@ body.theme-classic-98 .xp-title-controls button {
     color: #003594;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
+    flex-wrap: wrap;
+    font-size: var(--ui-font-size);
 }
 
 .xp-pkg-desc {
     color: #444;
-    font-size: 11px;
-    margin-top: 3px;
+    font-size: calc(var(--ui-font-size) * 0.92);
+    margin-top: 4px;
 }
 
 .xp-pkg-badge {
-    font-size: 10.5px;
+    font-size: calc(var(--ui-font-size) * 0.85);
     background: #e2e8f0;
     color: #1e293b;
     padding: 1px 6px;
@@ -1063,27 +1138,122 @@ body.theme-classic-98 .xp-title-controls button {
     font-weight: normal;
 }
 
+/* Split-Pane Book Reader Layout (Left Chapter TOC + Right Book Page) */
+.reader-split-layout {
+    display: flex;
+    height: 100%;
+    background: #ffffff;
+}
+
+.reader-toc-sidebar {
+    width: 240px;
+    background: #f8f7f1;
+    border-right: 1px solid #aca899;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.reader-toc-header {
+    background: linear-gradient(180deg, #ffffff 0%, #e4e0ce 100%);
+    border-bottom: 1px solid #aca899;
+    padding: 6px 10px;
+    font-weight: bold;
+    color: #003594;
+    font-size: calc(var(--ui-font-size) * 0.95);
+}
+
+.reader-toc-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.reader-toc-item {
+    padding: 6px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: calc(var(--ui-font-size) * 0.92);
+    color: #1e293b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid transparent;
+}
+
+.reader-toc-item:hover {
+    background: #e3f0ff;
+    border-color: #93c5fd;
+}
+
+.reader-toc-item.active {
+    background: #2563eb;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.reader-toc-item small {
+    opacity: 0.72;
+    font-size: calc(var(--ui-font-size) * 0.8);
+    white-space: nowrap;
+}
+
+.reader-main-pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #fffdf9;
+}
+
 .reader-article-body {
-    padding: 18px 24px;
+    padding: 24px 32px;
     overflow-y: auto;
     height: 100%;
-    line-height: 1.55;
-    font-size: calc(var(--ui-font-size) + 1px);
+    line-height: 1.68;
+    font-size: var(--reader-font-size);
     color: #1e293b;
+    font-family: "Georgia", "Cambria", "Times New Roman", serif;
 }
 
-.reader-article-body h1 {
-    color: #003c9d;
-    border-bottom: 2px solid #cbd5e1;
-    padding-bottom: 6px;
-    margin-bottom: 12px;
-    font-size: calc(var(--ui-font-size) + 6px);
+.reader-book-header-box {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #1e3a8a;
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-family: "Tahoma", sans-serif;
 }
 
-.reader-article-body h2 {
+.reader-book-header-box h1 {
+    font-size: calc(var(--reader-font-size) * 1.35);
+    color: #0f172a;
+    margin-bottom: 4px;
+    border: none;
+    padding: 0;
+}
+
+.reader-book-header-box .meta-sub {
+    color: #475569;
+    font-size: calc(var(--reader-font-size) * 0.85);
+}
+
+.reader-chapter-title {
+    font-family: "Georgia", serif;
+    font-size: calc(var(--reader-font-size) * 1.28);
     color: #1e3a8a;
-    margin: 14px 0 8px 0;
-    font-size: calc(var(--ui-font-size) + 3px);
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+}
+
+.reader-article-body p {
+    margin-bottom: 14px;
 }
 
 .reader-article-body pre {
@@ -1092,25 +1262,38 @@ body.theme-classic-98 .xp-title-controls button {
     padding: 10px 12px;
     border-radius: 4px;
     overflow-x: auto;
-    margin: 8px 0;
-    font-family: monospace;
+    margin: 10px 0;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: calc(var(--reader-font-size) * 0.88);
 }
 
 .reader-article-body table {
     width: 100%;
     border-collapse: collapse;
-    margin: 10px 0;
+    margin: 12px 0;
+    font-family: "Tahoma", sans-serif;
+    font-size: calc(var(--reader-font-size) * 0.9);
 }
 
 .reader-article-body th, .reader-article-body td {
     border: 1px solid #cbd5e1;
-    padding: 5px 8px;
+    padding: 6px 8px;
     text-align: left;
 }
 
 .reader-article-body th {
     background: #eff6ff;
     color: #1e3a8a;
+}
+
+.reader-chapter-nav-footer {
+    margin-top: 26px;
+    padding-top: 14px;
+    border-top: 1px solid #cbd5e1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Tahoma", sans-serif;
 }
 
 .xp-form-row {
@@ -1133,13 +1316,13 @@ body.theme-classic-98 .xp-title-controls button {
 
 /* ==========================================================================
    8. DUAL-MODE AI CHAT DOCK
-      MODE A: .chat-mode-fb-side (Old Facebook 2009 Bottom-Right Side Popup!)
+      MODE A: .chat-mode-fb-side (Old Facebook 2009 Bottom-Right Side Popup)
       MODE B: .chat-mode-bottom-bar (Centered Full Bottom Command Bar)
    ========================================================================== */
 
 #ai-bottom-dock {
     position: fixed;
-    bottom: 32px; /* Sits right above the 32px XP Taskbar */
+    bottom: 32px;
     z-index: 920;
     display: flex;
     flex-direction: column;
@@ -1150,18 +1333,18 @@ body.theme-classic-98 .xp-title-controls button {
 body.chat-mode-fb-side #ai-bottom-dock {
     right: 12px;
     left: auto;
-    width: 320px;
+    width: 345px;
     align-items: flex-end;
 }
 
 body.chat-mode-fb-side #ai-bottom-dock.fb-history-open {
-    width: 495px;
+    width: 520px;
 }
 
 body.chat-mode-fb-side #ai-chat-drawer {
     pointer-events: auto;
     width: 100%;
-    height: 365px;
+    height: 380px;
     background: #ffffff;
     border: 1px solid #29447e;
     border-bottom: none;
@@ -1176,10 +1359,10 @@ body.chat-mode-fb-side #ai-chat-drawer {
 }
 
 body.chat-mode-fb-side .ai-drawer-header {
-    height: 29px;
+    min-height: 30px;
     background: linear-gradient(180deg, #4b67a8 0%, #3b5998 50%, #314b82 100%);
     color: #ffffff;
-    padding: 0 8px;
+    padding: 3px 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1188,7 +1371,7 @@ body.chat-mode-fb-side .ai-drawer-header {
 }
 
 body.chat-mode-fb-side .ai-chats-sidebar {
-    width: 165px;
+    width: 170px;
     background: #f2f4f8;
     border-right: 1px solid #d8dfea;
     display: none;
@@ -1229,13 +1412,13 @@ body.chat-mode-fb-side #ai-command-bar {
 
 body.chat-mode-fb-side .ai-toggle-drawer-btn {
     width: 100%;
-    height: 24px;
+    min-height: 25px;
     background: linear-gradient(180deg, #4b67a8 0%, #3b5998 100%);
     color: #fff;
     border: 1px solid #1d2a4d;
     border-radius: 3px;
-    padding: 0 8px;
-    font-size: 11.5px;
+    padding: 2px 8px;
+    font-size: var(--ui-font-size);
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -1244,7 +1427,7 @@ body.chat-mode-fb-side .ai-toggle-drawer-btn {
 }
 
 body.chat-mode-fb-side #ai-chat-input {
-    height: 28px;
+    height: 30px;
     background: #ffffff;
     border: 1px solid #bdc7d8;
     border-radius: 3px;
@@ -1267,7 +1450,7 @@ body.chat-mode-bottom-bar #ai-chat-drawer {
     pointer-events: auto;
     width: min(1000px, 96vw);
     margin: 0 auto;
-    height: 350px;
+    height: 360px;
     background: rgba(15, 23, 42, 0.96);
     border: 2px solid #2b7de9;
     border-bottom: none;
@@ -1282,10 +1465,10 @@ body.chat-mode-bottom-bar #ai-chat-drawer {
 }
 
 body.chat-mode-bottom-bar .ai-drawer-header {
-    height: 32px;
+    min-height: 32px;
     background: var(--win-title-bg);
     color: #fff;
-    padding: 0 12px;
+    padding: 3px 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1312,10 +1495,10 @@ body.chat-mode-bottom-bar .chat-bubble.user {
 
 body.chat-mode-bottom-bar #ai-command-bar {
     pointer-events: auto;
-    height: 44px;
+    min-height: 44px;
     background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     border-top: 2px solid #3b82f6;
-    padding: 0 12px;
+    padding: 4px 12px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1328,7 +1511,7 @@ body.chat-mode-bottom-bar .ai-toggle-drawer-btn {
     border-radius: 4px;
     padding: 5px 10px;
     font-weight: bold;
-    font-size: 11.5px;
+    font-size: var(--ui-font-size);
     display: flex;
     align-items: center;
     gap: 6px;
@@ -1357,7 +1540,7 @@ body.chat-mode-bottom-bar #ai-chat-input {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 11.5px;
+    font-size: var(--ui-font-size);
     white-space: nowrap;
     overflow: hidden;
 }
@@ -1369,13 +1552,14 @@ body.chat-mode-bottom-bar #ai-chat-input {
     background: #22c55e;
     box-shadow: 0 0 6px #22c55e;
     display: inline-block;
+    flex-shrink: 0;
 }
 
 .ai-chat-pill {
     background: rgba(255,255,255,0.2);
     padding: 1px 6px;
     border-radius: 999px;
-    font-size: 10px;
+    font-size: calc(var(--ui-font-size) * 0.84);
     max-width: 90px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1392,7 +1576,7 @@ body.chat-mode-bottom-bar #ai-chat-input {
     border: 1px solid rgba(255,255,255,0.35);
     border-radius: 3px;
     padding: 2px 5px;
-    font-size: 10px;
+    font-size: calc(var(--ui-font-size) * 0.85);
     cursor: pointer;
 }
 
@@ -1412,7 +1596,7 @@ body.chat-mode-bottom-bar #ai-chat-input {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 10.5px;
+    font-size: calc(var(--ui-font-size) * 0.9);
     font-weight: bold;
 }
 
@@ -1422,7 +1606,7 @@ body.chat-mode-bottom-bar #ai-chat-input {
     border: none;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 10px;
+    font-size: calc(var(--ui-font-size) * 0.85);
     cursor: pointer;
 }
 
@@ -1439,7 +1623,7 @@ body.chat-mode-bottom-bar #ai-chat-input {
     padding: 5px 7px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.92);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1471,14 +1655,15 @@ body.chat-mode-bottom-bar #ai-chat-input {
     flex-direction: column;
     gap: 8px;
     user-select: text;
-    font-size: var(--ui-font-size);
+    font-size: var(--reader-font-size);
 }
 
 .chat-bubble {
-    max-width: 88%;
-    padding: 7px 10px;
+    max-width: 90%;
+    padding: 8px 11px;
     border-radius: 6px;
-    line-height: 1.45;
+    line-height: 1.48;
+    font-size: var(--reader-font-size);
 }
 
 .chat-bubble.user {
@@ -1497,7 +1682,7 @@ body.chat-mode-bottom-bar #ai-chat-input {
     overflow-x: auto;
     margin-top: 5px;
     font-family: monospace;
-    font-size: 11px;
+    font-size: calc(var(--reader-font-size) * 0.88);
 }
 
 .chat-sources-row {
@@ -1513,10 +1698,13 @@ body.chat-mode-bottom-bar #ai-chat-input {
     background: rgba(37, 99, 235, 0.12);
     border: 1px solid rgba(37, 99, 235, 0.4);
     color: #1d4ed8;
-    font-size: 10.5px;
-    padding: 1px 6px;
+    font-size: calc(var(--ui-font-size) * 0.9);
+    padding: 2px 7px;
     border-radius: 3px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 body.chat-mode-bottom-bar .source-chip {
@@ -1540,7 +1728,7 @@ body.chat-mode-bottom-bar .source-chip {
     border-radius: 3px;
     padding: 0 10px;
     font-weight: bold;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.94);
     cursor: pointer;
 }
 
@@ -1555,7 +1743,7 @@ body.chat-mode-bottom-bar .source-chip {
     border: 1px solid #475569;
     border-radius: 4px;
     padding: 4px 8px;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.92);
     cursor: pointer;
 }
 
@@ -1617,14 +1805,14 @@ body.theme-classic-98 #xp-start-btn {
 
 .xp-task-tab {
     height: 24px;
-    min-width: 130px;
-    max-width: 185px;
+    min-width: 135px;
+    max-width: 195px;
     background: var(--taskbar-tab-bg);
     border: 1px solid rgba(0,0,0,0.35);
     border-radius: 3px;
     color: #ffffff;
     padding: 0 8px;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.92);
     display: flex;
     align-items: center;
     gap: 6px;
@@ -1653,9 +1841,9 @@ body.theme-classic-98 .xp-task-tab {
     padding: 0 10px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     color: #ffffff;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.92);
 }
 
 body.theme-classic-98 #xp-systray {
@@ -1665,11 +1853,39 @@ body.theme-classic-98 #xp-systray {
     margin-right: 3px;
 }
 
+.systray-font-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: rgba(0, 0, 0, 0.22);
+    padding: 2px 5px;
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.25);
+}
+
+.systray-font-btn {
+    background: rgba(255,255,255,0.18);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 2px;
+    padding: 0 4px;
+    font-size: 10.5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.systray-font-btn:hover {
+    background: rgba(255,255,255,0.35);
+}
+
 .systray-item {
     cursor: pointer;
     background: rgba(0, 0, 0, 0.16);
     padding: 2px 6px;
     border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 /* Start Menu Popup */
@@ -1677,7 +1893,7 @@ body.theme-classic-98 #xp-systray {
     position: fixed;
     left: 2px;
     bottom: 32px;
-    width: 390px;
+    width: 400px;
     background: #ffffff;
     border: 2px solid var(--win-border);
     border-top-left-radius: 8px;
@@ -1698,30 +1914,30 @@ body.theme-classic-98 #xp-systray {
 }
 
 .xp-user-avatar {
-    width: 40px;
-    height: 40px;
-    background: #e0f2fe;
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
     border: 2px solid #ffffff;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .xp-user-name {
     font-weight: bold;
-    font-size: 14px;
+    font-size: calc(var(--ui-font-size) * 1.15);
 }
 
 .xp-user-role {
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.9);
     opacity: 0.85;
 }
 
 .xp-start-columns {
     display: flex;
-    min-height: 255px;
+    min-height: 265px;
 }
 
 .xp-start-left {
@@ -1736,10 +1952,11 @@ body.theme-classic-98 #xp-systray {
 .xp-start-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
     padding: 6px;
     border-radius: 4px;
     cursor: pointer;
+    font-size: var(--ui-font-size);
 }
 
 .xp-start-item:hover {
@@ -1749,12 +1966,8 @@ body.theme-classic-98 #xp-systray {
 
 .xp-start-item small {
     display: block;
-    font-size: 10px;
+    font-size: calc(var(--ui-font-size) * 0.85);
     opacity: 0.8;
-}
-
-.s-icon {
-    font-size: 22px;
 }
 
 .xp-start-right {
@@ -1768,11 +1981,14 @@ body.theme-classic-98 #xp-systray {
 }
 
 .xp-start-link {
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.94);
     color: #1e3a8a;
     cursor: pointer;
     padding: 4px 5px;
     border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .xp-start-link.bold {
@@ -1792,24 +2008,23 @@ body.theme-classic-98 #xp-systray {
     gap: 8px;
 }
 
-.xp-start-logoff {
-    background: #f59e0b;
+.xp-start-logoff, .xp-start-shutdown {
     color: #fff;
     border: 1px solid #fff;
     border-radius: 3px;
     padding: 4px 10px;
     font-weight: bold;
-    font-size: 11px;
+    font-size: calc(var(--ui-font-size) * 0.92);
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.xp-start-logoff {
+    background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%);
 }
 
 .xp-start-shutdown {
-    background: #e04318;
-    color: #fff;
-    border: 1px solid #fff;
-    border-radius: 3px;
-    padding: 4px 10px;
-    font-weight: bold;
-    font-size: 11px;
-    cursor: pointer;
+    background: linear-gradient(180deg, #f87171 0%, #dc2626 100%);
 }

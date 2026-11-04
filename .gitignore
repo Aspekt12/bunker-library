@@ -1,6 +1,16 @@
 # Ignore runtime data, downloaded ZIM archives, Ollama models, and SQLite databases
 storage/app_data/*
 !storage/app_data/.gitkeep
+!storage/app_data/books/
+storage/app_data/books/*
+!storage/app_data/books/book-art-of-war.txt
+!storage/app_data/books/book-meditations.txt
+!storage/app_data/books/book-the-prince.txt
+!storage/app_data/books/book-enchiridion.txt
+!storage/app_data/books/book-time-machine.txt
+!storage/app_data/books/book-frankenstein.txt
+!storage/app_data/books/book-linux-syscalls-full.txt
+!storage/app_data/books/manifest.json
 
 storage/ollama_data/*
 !storage/ollama_data/.gitkeep

@@ -4,112 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BunkerOS XP Professional — Offline Knowledge Desktop</title>
-    <link rel="stylesheet" href="/static/xp.css?v=3">
+    <link rel="stylesheet" href="/static/xp.css?v=5">
 </head>
 <body class="theme-luna-blue wallpaper-bliss chat-mode-fb-side">
+
+    <!-- Shared SVG Gradients & Filters for 1:1 Windows XP Vector Icons -->
+    <svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+        <defs>
+            <linearGradient id="xpFolderFront" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffe885"/>
+                <stop offset="55%" stop-color="#f7c125"/>
+                <stop offset="100%" stop-color="#d48b07"/>
+            </linearGradient>
+            <linearGradient id="xpFolderBack" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f7c125"/>
+                <stop offset="100%" stop-color="#b46904"/>
+            </linearGradient>
+            <linearGradient id="xpMonitorScreen" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#8cd5ff"/>
+                <stop offset="50%" stop-color="#2989d8"/>
+                <stop offset="100%" stop-color="#1e5799"/>
+            </linearGradient>
+            <linearGradient id="xpMonitorBezel" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f5f4ea"/>
+                <stop offset="100%" stop-color="#b8b4a2"/>
+            </linearGradient>
+            <linearGradient id="xpDiscShine" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#e0f2fe"/>
+                <stop offset="35%" stop-color="#7dd3fc"/>
+                <stop offset="50%" stop-color="#f8fafc"/>
+                <stop offset="70%" stop-color="#a5b4fc"/>
+                <stop offset="100%" stop-color="#38bdf8"/>
+            </linearGradient>
+            <linearGradient id="xpBoxGold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fcd34d"/>
+                <stop offset="60%" stop-color="#d97706"/>
+                <stop offset="100%" stop-color="#92400e"/>
+            </linearGradient>
+            <linearGradient id="xpGlobeBlue" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#60a5fa"/>
+                <stop offset="55%" stop-color="#1d4ed8"/>
+                <stop offset="100%" stop-color="#1e3a8a"/>
+            </linearGradient>
+            <linearGradient id="xpGreenOrb" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#86efac"/>
+                <stop offset="50%" stop-color="#22c55e"/>
+                <stop offset="100%" stop-color="#15803d"/>
+            </linearGradient>
+        </defs>
+    </svg>
 
     <!-- =================================================================== -->
     <!-- 1. WINDOWS XP DESKTOP WORKSPACE                                     -->
     <!-- =================================================================== -->
     <div id="xp-desktop" onclick="handleDesktopClick(event)">
 
-        <!-- Desktop Shortcut Grid (1:1 XP Icons + Dynamic Folders/Books) -->
+        <!-- Desktop Shortcut Grid (1:1 XP Vector Icons + Dynamic Folders/Books) -->
         <div id="desktop-icons">
             <div class="desktop-icon" ondblclick="openWindow('win-library')" onclick="selectDesktopIcon(this)">
-                <div class="icon-graphic xp-svg-icon">
-                    <svg viewBox="0 0 48 48" width="38" height="38">
-                        <rect x="6" y="6" width="36" height="26" rx="2" fill="#3a93ff" stroke="#003594" stroke-width="2"/>
-                        <rect x="9" y="9" width="30" height="20" fill="#a6d5ff"/>
-                        <path d="M14 24 L20 17 L26 22 L31 15 L36 24 Z" fill="#3f9b0b"/>
-                        <rect x="18" y="32" width="12" height="5" fill="#c4c0b4" stroke="#666"/>
-                        <rect x="11" y="37" width="26" height="4" rx="1" fill="#ece9d8" stroke="#666"/>
-                    </svg>
-                </div>
+                <div class="icon-graphic" data-xp-icon="my_library" data-icon-size="38"></div>
                 <span class="icon-label">My Library (Bookshelf)</span>
             </div>
 
             <div class="desktop-icon" ondblclick="openWindow('win-downloader')" onclick="selectDesktopIcon(this)">
-                <div class="icon-graphic xp-svg-icon">
-                    <svg viewBox="0 0 48 48" width="38" height="38">
-                        <path d="M8 16 L24 8 L40 16 L40 34 L24 42 L8 34 Z" fill="#f59e0b" stroke="#78350f" stroke-width="2"/>
-                        <path d="M8 16 L24 24 L40 16" fill="none" stroke="#78350f" stroke-width="2"/>
-                        <line x1="24" y1="24" x2="24" y2="42" stroke="#78350f" stroke-width="2"/>
-                        <circle cx="35" cy="34" r="9" fill="#16a34a" stroke="#fff" stroke-width="2"/>
-                        <path d="M35 29 v10 M30 34 h10" stroke="#fff" stroke-width="2.5"/>
-                    </svg>
-                </div>
-                <span class="icon-label">Add or Remove Books (ZIM)</span>
+                <div class="icon-graphic" data-xp-icon="add_remove" data-icon-size="38"></div>
+                <span class="icon-label">Add or Remove Books</span>
             </div>
 
             <div class="desktop-icon" ondblclick="openKiwixBrowser('/kiwix/')" onclick="selectDesktopIcon(this)">
-                <div class="icon-graphic xp-svg-icon">
-                    <svg viewBox="0 0 48 48" width="38" height="38">
-                        <circle cx="24" cy="24" r="17" fill="url(#ieGrad)" stroke="#003594" stroke-width="2"/>
-                        <defs>
-                            <linearGradient id="ieGrad" x1="0" y1="0" x2="1" y2="1">
-                                <stop offset="0%" stop-color="#67b7ff"/>
-                                <stop offset="100%" stop-color="#004bc4"/>
-                            </linearGradient>
-                        </defs>
-                        <ellipse cx="24" cy="24" rx="21" ry="8" fill="none" stroke="#fde047" stroke-width="2.5" transform="rotate(-24 24 24)"/>
-                        <text x="16" y="31" fill="#fff" font-family="Georgia, serif" font-weight="bold" font-size="24">e</text>
-                    </svg>
-                </div>
+                <div class="icon-graphic" data-xp-icon="ie_globe" data-icon-size="38"></div>
                 <span class="icon-label">Kiwix ZIM Explorer</span>
             </div>
 
             <div class="desktop-icon" ondblclick="openWindow('win-settings')" onclick="selectDesktopIcon(this)">
-                <div class="icon-graphic xp-svg-icon">
-                    <svg viewBox="0 0 48 48" width="38" height="38">
-                        <path d="M6 13 L19 13 L23 17 L42 17 L42 39 L6 39 Z" fill="#fbbf24" stroke="#92400e" stroke-width="2"/>
-                        <circle cx="29" cy="28" r="7" fill="#3b82f6" stroke="#1e3a8a" stroke-width="2"/>
-                        <circle cx="29" cy="28" r="2.5" fill="#fff"/>
-                    </svg>
-                </div>
-                <span class="icon-label">Control Panel &amp; Settings</span>
+                <div class="icon-graphic" data-xp-icon="control_panel" data-icon-size="38"></div>
+                <span class="icon-label">Control Panel</span>
             </div>
 
             <div class="desktop-icon" ondblclick="openWindow('win-chats')" onclick="selectDesktopIcon(this)">
-                <div class="icon-graphic xp-svg-icon">
-                    <svg viewBox="0 0 48 48" width="38" height="38">
-                        <circle cx="20" cy="16" r="6" fill="#38bdf8" stroke="#0369a1" stroke-width="2"/>
-                        <path d="M10 35 C10 26 30 26 30 35 Z" fill="#38bdf8" stroke="#0369a1" stroke-width="2"/>
-                        <circle cx="31" cy="19" r="5" fill="#4ade80" stroke="#15803d" stroke-width="2"/>
-                        <path d="M23 37 C23 29 39 29 39 37 Z" fill="#4ade80" stroke="#15803d" stroke-width="2"/>
-                    </svg>
-                </div>
-                <span class="icon-label">Saved Chats Folder</span>
+                <div class="icon-graphic" data-xp-icon="msn_chat" data-icon-size="38"></div>
+                <span class="icon-label">Saved Chats</span>
             </div>
 
             <div class="desktop-icon" ondblclick="openWindow('win-new-book')" onclick="selectDesktopIcon(this)">
-                <div class="icon-graphic xp-svg-icon">
-                    <svg viewBox="0 0 48 48" width="38" height="38">
-                        <rect x="10" y="6" width="28" height="36" rx="2" fill="#fff" stroke="#475569" stroke-width="2"/>
-                        <line x1="15" y1="14" x2="33" y2="14" stroke="#2563eb" stroke-width="2"/>
-                        <line x1="15" y1="21" x2="33" y2="21" stroke="#94a3b8" stroke-width="2"/>
-                        <line x1="15" y1="28" x2="28" y2="28" stroke="#94a3b8" stroke-width="2"/>
-                    </svg>
-                </div>
+                <div class="icon-graphic" data-xp-icon="notepad" data-icon-size="38"></div>
                 <span class="icon-label">Write New Volume</span>
             </div>
 
-            <!-- Dynamic Desktop Folders & Downloaded Books injected here -->
+            <!-- Dynamic Desktop Category Folders & ZIM Discs injected here -->
             <div id="dynamic-desktop-folders"></div>
         </div>
 
         <!-- =============================================================== -->
         <!-- WINDOW 1: MY LIBRARY — 1:1 WINDOWS XP EXPLORER & BOOKSHELF      -->
         <!-- =============================================================== -->
-        <div id="win-library" class="xp-window" style="top: 20px; left: 130px; width: 870px; height: 525px; z-index: 20;">
+        <div id="win-library" class="xp-window" style="top: 16px; left: 122px; width: 900px; height: 545px; z-index: 20;">
             <div class="xp-titlebar" onmousedown="startDrag(event, 'win-library')">
                 <div class="xp-title-left">
-                    <span class="xp-title-icon">🏛️</span>
+                    <span class="xp-title-icon" data-xp-icon="my_library" data-icon-size="16"></span>
                     <span class="xp-title-text">My Library — Offline Knowledge Vault</span>
                 </div>
                 <div class="xp-title-controls">
-                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-library')">_</button>
-                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-library')">□</button>
-                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-library')">✕</button>
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-library')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-library')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-library')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
                 </div>
             </div>
 
@@ -123,25 +127,56 @@
                     <span onclick="openWindow('win-settings')"><u>T</u>ools</span>
                     <span onclick="openChatAndFocus()"><u>H</u>elp</span>
                 </div>
-                <div class="xp-menubar-flag">❖</div>
+                <div class="xp-menubar-flag" title="Microsoft Windows XP">
+                    <svg viewBox="0 0 24 24" width="14" height="14">
+                        <path d="M2 4 Q6 2 11 4 L11 11 Q6 9 2 11 Z" fill="#f25022"/>
+                        <path d="M13 4 Q18 6 22 4 L22 11 Q18 13 13 11 Z" fill="#7fba00"/>
+                        <path d="M2 13 Q6 11 11 13 L11 20 Q6 18 2 20 Z" fill="#00a4ef"/>
+                        <path d="M13 13 Q18 15 22 13 L22 20 Q18 22 13 20 Z" fill="#ffb900"/>
+                    </svg>
+                </div>
             </div>
 
             <!-- 1:1 Windows XP Explorer Standard Buttons Toolbar -->
             <div class="xp-menubar">
                 <div class="xp-toolbar-group">
-                    <button class="xp-toolbar-btn" onclick="selectCategoryFilter('ALL')">⬅ Back</button>
-                    <button class="xp-toolbar-btn" onclick="refreshAll()">🔄 Refresh</button>
+                    <button class="xp-toolbar-btn" onclick="selectCategoryFilter('ALL')">
+                        <span class="btn-svg" data-xp-icon="nav_back" data-icon-size="15"></span>
+                        <span>Back</span>
+                    </button>
+                    <button class="xp-toolbar-btn" onclick="refreshAll()">
+                        <span class="btn-svg" data-xp-icon="nav_refresh" data-icon-size="15"></span>
+                        <span>Refresh</span>
+                    </button>
                     <span class="xp-toolbar-sep"></span>
-                    <button class="xp-toolbar-btn" id="btn-layout-spines" onclick="setBookshelfLayout('spines-3d')">📚 3D Shelf</button>
-                    <button class="xp-toolbar-btn" id="btn-layout-covers" onclick="setBookshelfLayout('covers-grid')">📖 Covers</button>
-                    <button class="xp-toolbar-btn" id="btn-layout-tiles" onclick="setBookshelfLayout('xp-tiles')">🗂️ XP Tiles</button>
-                    <button class="xp-toolbar-btn" id="btn-layout-details" onclick="setBookshelfLayout('xp-details')">📋 Details</button>
+                    <button class="xp-toolbar-btn" id="btn-layout-spines" onclick="setBookshelfLayout('spines-3d')">
+                        <span class="btn-svg" data-xp-icon="shelf_3d" data-icon-size="15"></span>
+                        <span>3D Shelf</span>
+                    </button>
+                    <button class="xp-toolbar-btn" id="btn-layout-covers" onclick="setBookshelfLayout('covers-grid')">
+                        <span class="btn-svg" data-xp-icon="book_blue" data-icon-size="15"></span>
+                        <span>Covers</span>
+                    </button>
+                    <button class="xp-toolbar-btn" id="btn-layout-tiles" onclick="setBookshelfLayout('xp-tiles')">
+                        <span class="btn-svg" data-xp-icon="folder_closed" data-icon-size="15"></span>
+                        <span>Tiles</span>
+                    </button>
+                    <button class="xp-toolbar-btn" id="btn-layout-details" onclick="setBookshelfLayout('xp-details')">
+                        <span class="btn-svg" data-xp-icon="view_details" data-icon-size="15"></span>
+                        <span>Details</span>
+                    </button>
                     <span class="xp-toolbar-sep"></span>
-                    <button class="xp-toolbar-btn" onclick="openWindow('win-downloader')">➕ Add ZIM Books</button>
-                    <button class="xp-toolbar-btn" onclick="openWindow('win-settings')">⚙️ Settings</button>
+                    <button class="xp-toolbar-btn" onclick="openWindow('win-downloader')">
+                        <span class="btn-svg" data-xp-icon="add_remove" data-icon-size="15"></span>
+                        <span>Add Books</span>
+                    </button>
+                    <button class="xp-toolbar-btn" onclick="openWindow('win-settings')">
+                        <span class="btn-svg" data-xp-icon="control_panel" data-icon-size="15"></span>
+                        <span>Settings</span>
+                    </button>
                 </div>
                 <div class="xp-shelf-meter">
-                    <span id="shelf-count-badge">4 Volumes</span>
+                    <span id="shelf-count-badge">7 Volumes</span>
                 </div>
             </div>
 
@@ -149,11 +184,14 @@
             <div class="xp-addressbar">
                 <span class="addr-label">A<u>d</u>dress</span>
                 <div class="addr-input-wrap">
-                    <span class="addr-folder-icon">📁</span>
+                    <span class="addr-folder-icon" data-xp-icon="folder_open" data-icon-size="15"></span>
                     <input type="text" id="library-address-text" readonly value="C:\Bunker_Library\All_Shelves">
                 </div>
-                <input type="text" id="library-search-input" class="xp-search-box" placeholder="Search books & ZIMs..." oninput="renderLibraryViews()">
-                <button class="xp-go-btn" onclick="renderLibraryViews()">🟢 Go</button>
+                <input type="text" id="library-search-input" class="xp-search-box" placeholder="Search books, authors, topics..." oninput="renderLibraryViews()">
+                <button class="xp-go-btn" onclick="renderLibraryViews()">
+                    <span class="btn-svg" data-xp-icon="go_arrow" data-icon-size="14"></span>
+                    <span>Go</span>
+                </button>
             </div>
 
             <div class="xp-window-body xp-explorer-layout">
@@ -162,10 +200,22 @@
                     <div class="xp-task-card">
                         <div class="xp-task-header">Library Tasks</div>
                         <div class="xp-task-body">
-                            <a href="javascript:void(0)" onclick="openWindow('win-downloader')">📦 Add / Remove ZIM Books</a>
-                            <a href="javascript:void(0)" onclick="openWindow('win-new-book')">📝 Write New Field Volume</a>
-                            <a href="javascript:void(0)" onclick="openKiwixBrowser('/kiwix/')">🌐 Open Kiwix ZIM Server</a>
-                            <a href="javascript:void(0)" onclick="openWindow('win-settings')">🎨 Customize Shelf &amp; AI</a>
+                            <a href="javascript:void(0)" onclick="openWindow('win-downloader')">
+                                <span class="task-link-icon" data-xp-icon="add_remove" data-icon-size="14"></span>
+                                <span>Add or Remove Books</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openWindow('win-new-book')">
+                                <span class="task-link-icon" data-xp-icon="notepad" data-icon-size="14"></span>
+                                <span>Write New Field Volume</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openKiwixBrowser('/kiwix/')">
+                                <span class="task-link-icon" data-xp-icon="ie_globe" data-icon-size="14"></span>
+                                <span>Open Kiwix ZIM Server</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openWindow('win-settings')">
+                                <span class="task-link-icon" data-xp-icon="control_panel" data-icon-size="14"></span>
+                                <span>Control Panel &amp; Fonts</span>
+                            </a>
                         </div>
                     </div>
 
@@ -181,7 +231,7 @@
                             <div class="xp-progress-outer">
                                 <div id="sidebar-disk-bar" class="xp-progress-inner" style="width: 28%;"></div>
                             </div>
-                            <div id="sidebar-ai-status" style="margin-top:6px; font-weight:bold; color:#065f46;">AI: Online</div>
+                            <div id="sidebar-ai-status" class="xp-ai-status-line">AI: Online</div>
                         </div>
                     </div>
                 </aside>
@@ -192,9 +242,9 @@
                     <div id="library-shelf-view">
                         <div class="bookshelf-banner">
                             <div>
-                                <strong>Dynamic Knowledge Bookshelf</strong> — The more <code>.zim</code> archives you download, the more physical books fill your shelves and desktop folders.
+                                <strong>Unabridged Offline Library</strong> — Click any book spine to open its full text and Chapter Table of Contents, or click <strong>Add Books</strong> to download more full novels &amp; Kiwix ZIMs.
                             </div>
-                            <button class="xp-button-primary" onclick="openWindow('win-downloader')">+ Add ZIM Books</button>
+                            <button class="xp-button-primary" onclick="openWindow('win-downloader')">+ Add More Books</button>
                         </div>
                         <div id="bookshelf-shelves-container"></div>
                     </div>
@@ -211,7 +261,7 @@
             </div>
 
             <div class="xp-statusbar">
-                <span id="library-status-left">Click any volume to open it in the XP Document Reader.</span>
+                <span id="library-status-left">Click any volume to read the complete book with chapter navigation.</span>
                 <span id="library-status-right">My Computer</span>
             </div>
         </div>
@@ -219,26 +269,32 @@
         <!-- =============================================================== -->
         <!-- WINDOW 2: CONTROL PANEL & DISPLAY PROPERTIES (SETTINGS APP)     -->
         <!-- =============================================================== -->
-        <div id="win-settings" class="xp-window" style="top: 38px; left: 230px; width: 650px; height: 515px; z-index: 35; display: none;">
+        <div id="win-settings" class="xp-window" style="top: 30px; left: 210px; width: 670px; height: 535px; z-index: 35; display: none;">
             <div class="xp-titlebar" onmousedown="startDrag(event, 'win-settings')">
                 <div class="xp-title-left">
-                    <span class="xp-title-icon">⚙️</span>
-                    <span class="xp-title-text">Control Panel — Display, AI Assistant &amp; Layout Properties</span>
+                    <span class="xp-title-icon" data-xp-icon="control_panel" data-icon-size="16"></span>
+                    <span class="xp-title-text">Control Panel — Display, Fonts, AI Assistant &amp; Layout Properties</span>
                 </div>
                 <div class="xp-title-controls">
-                    <button class="xp-btn-min" onclick="minimizeWindow('win-settings')">_</button>
-                    <button class="xp-btn-max" onclick="toggleMaximize('win-settings')">□</button>
-                    <button class="xp-btn-close" onclick="closeWindow('win-settings')">✕</button>
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-settings')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-settings')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-settings')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
                 </div>
             </div>
 
             <div class="xp-window-body xp-properties-dialog">
                 <!-- Authentic Windows XP Property Sheet Tabs -->
                 <div class="xp-prop-tabs">
-                    <button class="xp-prop-tab active" id="tabbtn-themes" onclick="switchSettingsTab('themes')">🎨 Themes &amp; Desktop</button>
-                    <button class="xp-prop-tab" id="tabbtn-ai" onclick="switchSettingsTab('ai')">🤖 AI Helper &amp; Persona</button>
-                    <button class="xp-prop-tab" id="tabbtn-bookshelf" onclick="switchSettingsTab('bookshelf')">📚 Bookshelf Layout</button>
-                    <button class="xp-prop-tab" id="tabbtn-interface" onclick="switchSettingsTab('interface')">💬 Chat Bar &amp; Fonts</button>
+                    <button class="xp-prop-tab active" id="tabbtn-themes" onclick="switchSettingsTab('themes')">Themes &amp; Desktop</button>
+                    <button class="xp-prop-tab" id="tabbtn-interface" onclick="switchSettingsTab('interface')">Font Size &amp; Chat Bar</button>
+                    <button class="xp-prop-tab" id="tabbtn-ai" onclick="switchSettingsTab('ai')">AI Helper &amp; Persona</button>
+                    <button class="xp-prop-tab" id="tabbtn-bookshelf" onclick="switchSettingsTab('bookshelf')">Bookshelf Layout</button>
                 </div>
 
                 <!-- TAB 1: THEMES & DESKTOP WALLPAPER -->
@@ -256,17 +312,27 @@
                     </div>
 
                     <div class="xp-fieldset">
-                        <div class="xp-fieldset-title">Windows XP Color Scheme (1:1 Theme)</div>
-                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
-                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('luna-blue')">🔵 Luna Blue</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('luna-olive')">🫒 Olive Green</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('luna-silver')">⚪ Silver Metallic</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('royale-noir')">⚫ Royale Noir</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('classic-98')">🪟 Classic 98/2000</button>
+                        <div class="xp-fieldset-title">Windows XP Visual Style (Applies Immediately)</div>
+                        <div class="xp-theme-swatches">
+                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('luna-blue')">
+                                <span class="swatch-dot" style="background:#0058ee;"></span> Luna Blue
+                            </button>
+                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('luna-olive')">
+                                <span class="swatch-dot" style="background:#748858;"></span> Olive Green
+                            </button>
+                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('luna-silver')">
+                                <span class="swatch-dot" style="background:#9498a6;"></span> Silver Metallic
+                            </button>
+                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('royale-noir')">
+                                <span class="swatch-dot" style="background:#232832;"></span> Royale Noir
+                            </button>
+                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('classic-98')">
+                                <span class="swatch-dot" style="background:#0a246a;"></span> Classic 98/2000
+                            </button>
                         </div>
                         <div class="xp-form-grid">
                             <div>
-                                <label>Windows &amp; Buttons Style:</label>
+                                <label>Windows &amp; Taskbar Color Scheme:</label>
                                 <select id="set-xp-theme" onchange="previewThemeAndWallpaper(true)">
                                     <option value="luna-blue">Windows XP — Luna Blue (Default)</option>
                                     <option value="luna-olive">Windows XP — Olive Green (Homestead)</option>
@@ -291,14 +357,72 @@
                         <div style="margin-top: 8px; display: flex; gap: 8px; align-items: center;">
                             <input type="text" id="set-custom-wallpaper" placeholder="Paste image URL or click Browse to upload from PC..." style="flex:1;" oninput="onCustomWallpaperInput()">
                             <label class="xp-toolbar-btn" style="cursor:pointer; margin:0;">
-                                📂 Browse...
+                                <span>Browse...</span>
                                 <input type="file" accept="image/*" style="display:none;" onchange="handleWallpaperFileUpload(event)">
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <!-- TAB 2: AI HELPER NAME, AVATAR & PERSONALITY -->
+                <!-- TAB 2: FONT SIZES & CHAT LAYOUT -->
+                <div class="xp-prop-page" id="tabpage-interface" style="display: none;">
+                    <div class="xp-fieldset">
+                        <div class="xp-fieldset-title">1. Desktop &amp; Windows UI Font Size (Scales Entire OS Interface)</div>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                            <label style="margin:0; min-width: 155px;">UI Font Size: <strong id="font-size-val-label">12px</strong></label>
+                            <button type="button" class="xp-toolbar-btn" onclick="stepUiFontSize(-1)"><strong>A-</strong></button>
+                            <input type="range" id="set-font-size" min="10" max="24" step="1" value="12" oninput="previewFontSize(this.value, true)" style="flex:1;">
+                            <button type="button" class="xp-toolbar-btn" onclick="stepUiFontSize(1)"><strong>A+</strong></button>
+                        </div>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(10, true)">Compact (10px)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(12, true)">Default XP (12px)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(14, true)">Medium (14px)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(16, true)">Large (16px)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(19, true)">Extra Large (19px)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(22, true)">Huge (22px)</button>
+                        </div>
+                    </div>
+
+                    <div class="xp-fieldset" style="margin-top: 10px;">
+                        <div class="xp-fieldset-title">2. Book Reader &amp; Chat Text Size (Scales Book Chapters &amp; AI Messages)</div>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                            <label style="margin:0; min-width: 155px;">Reader / Chat Text: <strong id="reader-font-size-val-label">15px</strong></label>
+                            <button type="button" class="xp-toolbar-btn" onclick="stepReaderFontSize(-1)"><strong>A-</strong></button>
+                            <input type="range" id="set-reader-font-size" min="11" max="28" step="1" value="15" oninput="previewReaderFontSize(this.value, true)" style="flex:1;">
+                            <button type="button" class="xp-toolbar-btn" onclick="stepReaderFontSize(1)"><strong>A+</strong></button>
+                        </div>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            <button type="button" class="xp-toolbar-btn" onclick="previewReaderFontSize(12, true)">Small (12px)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="previewReaderFontSize(15, true)">Standard Book (15px)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="previewReaderFontSize(18, true)">Comfort Read (18px)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="previewReaderFontSize(22, true)">Large Print (22px)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="previewReaderFontSize(26, true)">Max Print (26px)</button>
+                        </div>
+                    </div>
+
+                    <div class="xp-fieldset" style="margin-top: 10px;">
+                        <div class="xp-fieldset-title">3. AI Chat Window Layout</div>
+                        <div class="xp-radio-list">
+                            <label class="xp-radio-card">
+                                <input type="radio" name="set_chat_layout" value="fb-side" onchange="saveAndApplySettings(false)">
+                                <div>
+                                    <strong>Old Facebook Bottom-Right Chat Window (2009 Style)</strong>
+                                    <small>Compact chat tab bar docked on the bottom-right that pops up a vertical chat window + session list on the side of your desktop.</small>
+                                </div>
+                            </label>
+                            <label class="xp-radio-card">
+                                <input type="radio" name="set_chat_layout" value="bottom-bar" onchange="saveAndApplySettings(false)">
+                                <div>
+                                    <strong>Wide Bottom Command Bar + Split Drawer</strong>
+                                    <small>Full-width AI command bar docked across the bottom with a wide split-screen conversation drawer.</small>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: AI HELPER NAME, AVATAR & PERSONALITY -->
                 <div class="xp-prop-page" id="tabpage-ai" style="display: none;">
                     <div class="xp-fieldset">
                         <div class="xp-fieldset-title">AI Assistant Identity</div>
@@ -308,14 +432,14 @@
                                 <input type="text" id="set-ai-name" placeholder="e.g. Elena Vancea, Clippy, Rover">
                             </div>
                             <div>
-                                <label>Avatar Icon:</label>
+                                <label>Vector Avatar Badge:</label>
                                 <select id="set-ai-avatar">
-                                    <option value="👩‍💼">👩‍💼 Elena (Executive Librarian)</option>
-                                    <option value="📎">📎 Clippy (XP Office Assistant)</option>
-                                    <option value="🐕">🐕 Rover (XP Search Puppy)</option>
-                                    <option value="🧙‍♂️">🧙‍♂️ Merlin (XP Wizard)</option>
-                                    <option value="🤖">🤖 CyberBot (Futuristic AI)</option>
-                                    <option value="🦉">🦉 Athena (Archive Owl)</option>
+                                    <option value="xp_agent_f">Elena Vancea (Executive Librarian)</option>
+                                    <option value="xp_clippy">Clippy (XP Office Assistant)</option>
+                                    <option value="xp_rover">Rover (XP Search Companion)</option>
+                                    <option value="xp_msn">MSN Messenger Buddy</option>
+                                    <option value="xp_computer">XP Workstation Terminal</option>
+                                    <option value="xp_agent_m">Field Engineer / Medic</option>
                                 </select>
                             </div>
                         </div>
@@ -328,98 +452,59 @@
                     <div class="xp-fieldset" style="margin-top: 10px;">
                         <div class="xp-fieldset-title">AI Personality Preset &amp; System Instructions</div>
                         <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px;">
-                            <button type="button" class="xp-toolbar-btn" onclick="applyPersonaPreset('librarian')">👩‍💼 Strict Librarian (Elena)</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="applyPersonaPreset('clippy')">📎 Clippy (Nostalgic XP Helper)</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="applyPersonaPreset('hacker')">💻 Kernel / Assembly Hacker</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="applyPersonaPreset('medic')">⚕️ Field Survival &amp; Medic</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="applyPersonaPreset('librarian')">Strict Librarian (Elena)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="applyPersonaPreset('clippy')">Clippy (XP Office Helper)</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="applyPersonaPreset('hacker')">Kernel / Syscall Architect</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="applyPersonaPreset('strategist')">Classical Strategist &amp; Stoic</button>
                         </div>
                         <label>System Prompt (supports <code>{ai_name}</code> and <code>{ai_role_title}</code>):</label>
-                        <textarea id="set-ai-personality" rows="6"></textarea>
+                        <textarea id="set-ai-personality" rows="5"></textarea>
                     </div>
                 </div>
 
-                <!-- TAB 3: BOOKSHELF & LIBRARY LAYOUT -->
+                <!-- TAB 4: BOOKSHELF & LIBRARY LAYOUT -->
                 <div class="xp-prop-page" id="tabpage-bookshelf" style="display: none;">
                     <div class="xp-fieldset">
                         <div class="xp-fieldset-title">Library Display Mode</div>
-                        <p style="margin-bottom: 10px; color: #444;">Choose how your downloaded ZIM archives and manuals are arranged inside <strong>My Library</strong>:</p>
                         <div class="xp-radio-list">
                             <label class="xp-radio-card">
-                                <input type="radio" name="set_bookshelf_layout" value="spines-3d" checked>
+                                <input type="radio" name="set_bookshelf_layout" value="spines-3d" checked onchange="saveAndApplySettings(false)">
                                 <div>
-                                    <strong>📚 3D Wooden Bookshelf (Vertical Spines)</strong>
-                                    <small>Realistic wooden shelves that physically fill up with colored 3D book spines as you download more archives.</small>
+                                    <strong>3D Wooden Bookshelf (Vertical Spines)</strong>
+                                    <small>Realistic mahogany shelves that fill with leather-bound book spines as you download books and archives.</small>
                                 </div>
                             </label>
                             <label class="xp-radio-card">
-                                <input type="radio" name="set_bookshelf_layout" value="covers-grid">
+                                <input type="radio" name="set_bookshelf_layout" value="covers-grid" onchange="saveAndApplySettings(false)">
                                 <div>
-                                    <strong>📖 Front-Cover Book Showcase</strong>
-                                    <small>Displays each volume face-out like a library display table with cover badge, author, and summary.</small>
+                                    <strong>Front-Cover Book Showcase</strong>
+                                    <small>Displays each volume face-out with embossed cover artwork, author, and file size.</small>
                                 </div>
                             </label>
                             <label class="xp-radio-card">
-                                <input type="radio" name="set_bookshelf_layout" value="xp-tiles">
+                                <input type="radio" name="set_bookshelf_layout" value="xp-tiles" onchange="saveAndApplySettings(false)">
                                 <div>
-                                    <strong>🗂️ Windows XP Explorer Tiles View</strong>
-                                    <small>Classic Windows XP 48x48 large icon tiles with 3-line file metadata.</small>
+                                    <strong>Windows XP Explorer Tiles View</strong>
+                                    <small>Classic Windows XP 48x48 vector icon tiles with 3-line file metadata.</small>
                                 </div>
                             </label>
                             <label class="xp-radio-card">
-                                <input type="radio" name="set_bookshelf_layout" value="xp-details">
+                                <input type="radio" name="set_bookshelf_layout" value="xp-details" onchange="saveAndApplySettings(false)">
                                 <div>
-                                    <strong>📋 Windows XP Explorer Details Table</strong>
-                                    <small>Compact spreadsheet list with Title, Folder Category, Format, Size, and Author columns.</small>
+                                    <strong>Windows XP Explorer Details Table</strong>
+                                    <small>Spreadsheet view with Title, Category, Format, Size, and Author columns.</small>
                                 </div>
                             </label>
                         </div>
                     </div>
 
                     <div class="xp-fieldset" style="margin-top: 10px;">
-                        <div class="xp-fieldset-title">Book Spine Size &amp; Shelf Density</div>
-                        <select id="set-shelf-density">
+                        <div class="xp-fieldset-title">Book Spine Width &amp; Shelf Density</div>
+                        <select id="set-shelf-density" onchange="saveAndApplySettings(false)">
                             <option value="compact">Compact Spines (Fits more books per shelf)</option>
                             <option value="normal">Standard Library Spines (Default)</option>
-                            <option value="large">Wide Collector Spines (Larger titles)</option>
+                            <option value="large">Wide Collector Spines (Larger spine titles)</option>
                         </select>
-                    </div>
-                </div>
-
-                <!-- TAB 4: CHAT LAYOUT (OLD FACEBOOK SIDE POPUP VS BOTTOM BAR) & FONT SIZE -->
-                <div class="xp-prop-page" id="tabpage-interface" style="display: none;">
-                    <div class="xp-fieldset">
-                        <div class="xp-fieldset-title">AI Chat Dock Style</div>
-                        <div class="xp-radio-list">
-                            <label class="xp-radio-card">
-                                <input type="radio" name="set_chat_layout" value="fb-side">
-                                <div>
-                                    <strong>💬 Old Facebook Bottom-Right Chat Window (2009 Style)</strong>
-                                    <small>Compact chat tab bar docked on the bottom-right that pops up a small vertical chat window + buddy/session list on the side of your desktop.</small>
-                                </div>
-                            </label>
-                            <label class="xp-radio-card">
-                                <input type="radio" name="set_chat_layout" value="bottom-bar">
-                                <div>
-                                    <strong>🚀 Wide Bottom Command Bar + Expandable Drawer</strong>
-                                    <small>Full-width AI command bar docked across the bottom with a large split-screen conversation drawer.</small>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="xp-fieldset" style="margin-top: 10px;">
-                        <div class="xp-fieldset-title">Appearance — Font Size Scaling</div>
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-                            <label style="margin:0; white-space:nowrap;">Font Size: <strong id="font-size-val-label">12px (Default XP)</strong></label>
-                            <input type="range" id="set-font-size" min="11" max="18" step="1" value="12" oninput="previewFontSize(this.value)" style="flex:1;">
-                        </div>
-                        <div style="display: flex; gap: 6px;">
-                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(11)">Small (11px)</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(12)">Normal XP (12px)</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(14)">Medium (14px)</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(16)">Large (16px)</button>
-                            <button type="button" class="xp-toolbar-btn" onclick="previewFontSize(18)">Extra Large (18px)</button>
-                        </div>
                     </div>
                 </div>
 
@@ -433,24 +518,30 @@
         </div>
 
         <!-- =============================================================== -->
-        <!-- WINDOW 3: ADD / REMOVE BOOKS (ZIM & ARCHIVE DOWNLOADER)         -->
+        <!-- WINDOW 3: ADD / REMOVE BOOKS (FULL BOOKS & ZIM DOWNLOADER)      -->
         <!-- =============================================================== -->
-        <div id="win-downloader" class="xp-window" style="top: 46px; left: 205px; width: 780px; height: 490px; z-index: 25; display: none;">
+        <div id="win-downloader" class="xp-window" style="top: 42px; left: 185px; width: 810px; height: 500px; z-index: 25; display: none;">
             <div class="xp-titlebar" onmousedown="startDrag(event, 'win-downloader')">
                 <div class="xp-title-left">
-                    <span class="xp-title-icon">📦</span>
-                    <span class="xp-title-text">Add or Remove Knowledge Packs — Kiwix ZIM Downloader</span>
+                    <span class="xp-title-icon" data-xp-icon="add_remove" data-icon-size="16"></span>
+                    <span class="xp-title-text">Add or Remove Books — Full Literature &amp; Kiwix ZIM Downloader</span>
                 </div>
                 <div class="xp-title-controls">
-                    <button class="xp-btn-min" onclick="minimizeWindow('win-downloader')">_</button>
-                    <button class="xp-btn-max" onclick="toggleMaximize('win-downloader')">□</button>
-                    <button class="xp-btn-close" onclick="closeWindow('win-downloader')">✕</button>
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-downloader')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-downloader')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-downloader')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
                 </div>
             </div>
 
             <div class="xp-menubar">
                 <div>
-                    Download official <strong>Kiwix .ZIM archives</strong> into <code>storage/zim_files/</code>. Every downloaded archive automatically adds a book to your <strong>Library Bookshelf</strong> and <strong>Desktop</strong>!
+                    Install unabridged <strong>Project Gutenberg Books</strong> (instant download) or <strong>Official Kiwix .ZIM Archives</strong> directly onto your bookshelf.
                 </div>
                 <div id="downloader-free-space" class="xp-shelf-meter">Free Space: -- GB</div>
             </div>
@@ -460,75 +551,122 @@
             </div>
 
             <div class="xp-statusbar">
-                <span id="downloader-status-msg">Multi-segment aria2c downloader ready.</span>
-                <span>Source: download.kiwix.org/zim/</span>
+                <span id="downloader-status-msg">Ready to install books and ZIM archives.</span>
+                <span>Sources: Gutenberg.org &amp; Kiwix.org</span>
             </div>
         </div>
 
         <!-- =============================================================== -->
-        <!-- WINDOW 4: BOOK / KIWIX ZIM READER WINDOW                        -->
+        <!-- WINDOW 4: UNABRIDGED BOOK & KIWIX ZIM READER WINDOW             -->
         <!-- =============================================================== -->
-        <div id="win-reader" class="xp-window" style="top: 32px; left: 250px; width: 820px; height: 510px; z-index: 30; display: none;">
+        <div id="win-reader" class="xp-window" style="top: 24px; left: 165px; width: 910px; height: 555px; z-index: 30; display: none;">
             <div class="xp-titlebar" onmousedown="startDrag(event, 'win-reader')">
                 <div class="xp-title-left">
-                    <span class="xp-title-icon" id="reader-win-icon">📘</span>
-                    <span class="xp-title-text" id="reader-win-title">Document Viewer — BunkerOS XP</span>
+                    <span class="xp-title-icon" id="reader-win-icon" data-xp-icon="book_blue" data-icon-size="16"></span>
+                    <span class="xp-title-text" id="reader-win-title">Book Reader — BunkerOS XP</span>
                 </div>
                 <div class="xp-title-controls">
-                    <button class="xp-btn-min" onclick="minimizeWindow('win-reader')">_</button>
-                    <button class="xp-btn-max" onclick="toggleMaximize('win-reader')">□</button>
-                    <button class="xp-btn-close" onclick="closeWindow('win-reader')">✕</button>
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-reader')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-reader')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-reader')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
                 </div>
             </div>
 
             <div class="xp-menubar">
                 <div class="xp-toolbar-group">
-                    <button class="xp-toolbar-btn" onclick="openWindow('win-library')">⬅ Back to Bookshelf</button>
-                    <button class="xp-toolbar-btn" onclick="askAiAboutCurrentBook()">🤖 Ask AI About This Book</button>
-                    <button class="xp-toolbar-btn" id="btn-reader-home" style="display:none;" onclick="openKiwixBrowser('/kiwix/')">🏠 Kiwix Catalog Home</button>
+                    <button class="xp-toolbar-btn" onclick="openWindow('win-library')">
+                        <span class="btn-svg" data-xp-icon="nav_back" data-icon-size="14"></span>
+                        <span>Bookshelf</span>
+                    </button>
+                    <span class="xp-toolbar-sep"></span>
+                    <button class="xp-toolbar-btn" id="btn-prev-chapter" onclick="stepBookChapter(-1)">
+                        <span>&laquo; Prev Chapter</span>
+                    </button>
+                    <button class="xp-toolbar-btn" id="btn-next-chapter" onclick="stepBookChapter(1)">
+                        <span>Next Chapter &raquo;</span>
+                    </button>
+                    <span class="xp-toolbar-sep"></span>
+                    <button class="xp-toolbar-btn" title="Decrease Reader Font Size" onclick="stepReaderFontSize(-1)">
+                        <strong>A-</strong>
+                    </button>
+                    <span id="reader-toolbar-font-badge" class="xp-font-pill">15px</span>
+                    <button class="xp-toolbar-btn" title="Increase Reader Font Size" onclick="stepReaderFontSize(1)">
+                        <strong>A+</strong>
+                    </button>
+                    <span class="xp-toolbar-sep"></span>
+                    <button class="xp-toolbar-btn" onclick="askAiAboutCurrentBook()">
+                        <span class="btn-svg" data-xp-icon="xp_agent_f" data-icon-size="14"></span>
+                        <span>Ask AI About Book</span>
+                    </button>
+                    <button class="xp-toolbar-btn" id="btn-reader-home" style="display:none;" onclick="openKiwixBrowser('/kiwix/')">
+                        <span class="btn-svg" data-xp-icon="ie_globe" data-icon-size="14"></span>
+                        <span>Kiwix Home</span>
+                    </button>
                 </div>
-                <span id="reader-meta-badge" class="xp-shelf-meter">Offline Verified</span>
+                <span id="reader-meta-badge" class="xp-shelf-meter">Unabridged Text</span>
             </div>
 
             <div class="xp-addressbar" id="reader-addressbar">
-                <span class="addr-label">Address</span>
+                <span class="addr-label">Location</span>
                 <div class="addr-input-wrap">
-                    <span class="addr-folder-icon">📘</span>
-                    <input type="text" id="reader-location-bar" readonly value="vault://library/volume">
+                    <span class="addr-folder-icon" data-xp-icon="book_open" data-icon-size="14"></span>
+                    <input type="text" id="reader-location-bar" readonly value="C:\Bunker_Library\Books">
+                </div>
+                <input type="text" id="reader-chapter-search" class="xp-search-box" placeholder="Search inside this book..." oninput="filterBookChapters()">
+            </div>
+
+            <div class="xp-window-body reader-split-layout">
+                <!-- Left Chapter Table of Contents Sidebar -->
+                <aside id="reader-toc-sidebar" class="reader-toc-sidebar">
+                    <div class="reader-toc-header">Table of Contents</div>
+                    <div id="reader-toc-list" class="reader-toc-list"></div>
+                </aside>
+
+                <!-- Right Book Page / Kiwix Iframe -->
+                <div class="reader-main-pane">
+                    <div id="reader-volume-content" class="reader-article-body" style="display: none;"></div>
+                    <iframe id="reader-kiwix-iframe" src="about:blank" style="display: none; width: 100%; height: 100%; border: none; flex: 1;"></iframe>
                 </div>
             </div>
 
-            <div class="xp-window-body" style="background: #ffffff; overflow: hidden; display: flex; flex-direction: column;">
-                <div id="reader-volume-content" class="reader-article-body" style="display: none;"></div>
-                <iframe id="reader-kiwix-iframe" src="about:blank" style="display: none; width: 100%; height: 100%; border: none; flex: 1;"></iframe>
-            </div>
-
             <div class="xp-statusbar">
-                <span id="reader-status-text">Document loaded from local vault.</span>
-                <span>Offline Mode</span>
+                <span id="reader-status-text">Select any chapter on the left or use Prev/Next to read.</span>
+                <span id="reader-wordcount-text">Offline Vault</span>
             </div>
         </div>
 
         <!-- =============================================================== -->
         <!-- WINDOW 5: SAVED CHATS ARCHIVE FOLDER                            -->
         <!-- =============================================================== -->
-        <div id="win-chats" class="xp-window" style="top: 62px; left: 280px; width: 640px; height: 420px; z-index: 26; display: none;">
+        <div id="win-chats" class="xp-window" style="top: 62px; left: 260px; width: 650px; height: 425px; z-index: 26; display: none;">
             <div class="xp-titlebar" onmousedown="startDrag(event, 'win-chats')">
                 <div class="xp-title-left">
-                    <span class="xp-title-icon">💬</span>
+                    <span class="xp-title-icon" data-xp-icon="msn_chat" data-icon-size="16"></span>
                     <span class="xp-title-text">Saved AI Conversations — SQLite Archive</span>
                 </div>
                 <div class="xp-title-controls">
-                    <button class="xp-btn-min" onclick="minimizeWindow('win-chats')">_</button>
-                    <button class="xp-btn-max" onclick="toggleMaximize('win-chats')">□</button>
-                    <button class="xp-btn-close" onclick="closeWindow('win-chats')">✕</button>
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-chats')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-chats')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-chats')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
                 </div>
             </div>
 
             <div class="xp-menubar">
                 <div class="xp-toolbar-group">
-                    <button class="xp-toolbar-btn" onclick="createNewChatSession(true)">➕ Start New Conversation</button>
-                    <button class="xp-toolbar-btn" onclick="loadChatsList(false)">🔄 Refresh Saved Chats</button>
+                    <button class="xp-toolbar-btn" onclick="createNewChatSession(true)">+ New Conversation</button>
+                    <button class="xp-toolbar-btn" onclick="loadChatsList(false)">Refresh Saved Chats</button>
                 </div>
             </div>
 
@@ -544,19 +682,23 @@
         <!-- =============================================================== -->
         <!-- WINDOW 6: WRITE / ADD NEW VOLUME TO BOOKSHELF                   -->
         <!-- =============================================================== -->
-        <div id="win-new-book" class="xp-window" style="top: 72px; left: 310px; width: 560px; height: 430px; z-index: 28; display: none;">
+        <div id="win-new-book" class="xp-window" style="top: 68px; left: 290px; width: 570px; height: 435px; z-index: 28; display: none;">
             <div class="xp-titlebar" onmousedown="startDrag(event, 'win-new-book')">
                 <div class="xp-title-left">
-                    <span class="xp-title-icon">📝</span>
-                    <span class="xp-title-text">Add New Volume / Field Note to Library Shelf</span>
+                    <span class="xp-title-icon" data-xp-icon="notepad" data-icon-size="16"></span>
+                    <span class="xp-title-text">Write New Volume / Field Note</span>
                 </div>
                 <div class="xp-title-controls">
-                    <button class="xp-btn-min" onclick="minimizeWindow('win-new-book')">_</button>
-                    <button class="xp-btn-close" onclick="closeWindow('win-new-book')">✕</button>
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-new-book')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-new-book')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
                 </div>
             </div>
 
-            <div class="xp-window-body" style="padding: 14px; background: #ece9d8; overflow-y: auto;">
+            <div class="xp-window-body" style="padding: 14px; background: var(--win-bg); overflow-y: auto;">
                 <div class="xp-form-row">
                     <label>Book / Manual Title:</label>
                     <input type="text" id="newbook-title" placeholder="e.g., Custom Radio Frequencies & Repeater Map">
@@ -565,9 +707,10 @@
                     <div style="flex:1;">
                         <label>Folder / Category:</label>
                         <select id="newbook-category">
-                            <option value="Low-Level & Kernel">Low-Level &amp; Kernel</option>
-                            <option value="Survival & Medical">Survival &amp; Medical</option>
-                            <option value="DevDocs & Engineering">DevDocs &amp; Engineering</option>
+                            <option value="Strategy & Philosophy">Strategy &amp; Philosophy</option>
+                            <option value="Classic Literature & Sci-Fi">Classic Literature &amp; Sci-Fi</option>
+                            <option value="Systems & Kernel Engineering">Systems &amp; Kernel Engineering</option>
+                            <option value="Science & Medicine">Science &amp; Medicine</option>
                             <option value="Custom Field Notes">Custom Field Notes</option>
                         </select>
                     </div>
@@ -575,7 +718,7 @@
                         <label>Book Spine Color:</label>
                         <select id="newbook-color">
                             <option value="#1e3a8a">Royal Blue</option>
-                            <option value="#7c2d12">Crimson Leather</option>
+                            <option value="#7f1d1d">Crimson Leather</option>
                             <option value="#065f46">Emerald Forest</option>
                             <option value="#92400e">Amber Gold</option>
                             <option value="#4c1d95">Deep Violet</option>
@@ -583,11 +726,11 @@
                     </div>
                 </div>
                 <div class="xp-form-row">
-                    <label>Content (Markdown / Technical Notes — searchable by AI):</label>
-                    <textarea id="newbook-content" rows="9" placeholder="# Chapter 1&#10;Write technical notes, commands, or procedures here..."></textarea>
+                    <label>Content (Markdown / Chapters — searchable by AI):</label>
+                    <textarea id="newbook-content" rows="8" placeholder="# Chapter 1&#10;Write technical notes, commands, or procedures here..."></textarea>
                 </div>
                 <div style="text-align: right; margin-top: 8px;">
-                    <button class="xp-button-primary" onclick="saveCustomBook()">📚 Place Book on Shelf</button>
+                    <button class="xp-button-primary" onclick="saveCustomBook()">Save Volume to Shelf</button>
                 </div>
             </div>
         </div>
@@ -603,15 +746,17 @@
             <div class="ai-drawer-header" onclick="handleDrawerHeaderClick(event)">
                 <div class="ai-drawer-title">
                     <span class="ai-pulse-dot"></span>
-                    <span id="chat-header-avatar">👩‍💼</span>
+                    <span id="chat-header-avatar" class="avatar-svg-wrap"></span>
                     <strong id="chat-header-name">Elena Vancea</strong>
                     <span id="active-chat-badge" class="ai-chat-pill">Welcome</span>
                 </div>
                 <div class="ai-drawer-actions">
+                    <button class="xp-mini-btn" onclick="stepReaderFontSize(-1)" title="Decrease Chat & Reader Text Size">A-</button>
+                    <button class="xp-mini-btn" onclick="stepReaderFontSize(1)" title="Increase Chat & Reader Text Size">A+</button>
                     <button class="xp-mini-btn" onclick="createNewChatSession(true)" title="Start a new saved chat">+ New</button>
-                    <button class="xp-mini-btn" onclick="toggleFbSessionsList()" title="Toggle Saved Sessions List">📜 History</button>
-                    <button class="xp-mini-btn" onclick="toggleChatLayoutQuick()" title="Switch between Old Facebook Side Chat and Full Bottom Bar">⇄ Layout</button>
-                    <button class="xp-mini-btn" onclick="openWindow('win-settings'); switchSettingsTab('ai');" title="Customize AI Name & Personality">⚙️</button>
+                    <button class="xp-mini-btn" onclick="toggleFbSessionsList()" title="Toggle Saved Sessions List">History</button>
+                    <button class="xp-mini-btn" onclick="toggleChatLayoutQuick()" title="Switch between Old Facebook Side Chat and Full Bottom Bar">Layout</button>
+                    <button class="xp-mini-btn" onclick="openWindow('win-settings'); switchSettingsTab('ai');" title="Customize AI Name & Personality">Config</button>
                     <button class="xp-mini-btn" onclick="toggleChatDrawer(false)" title="Minimize Chat">_</button>
                 </div>
             </div>
@@ -637,9 +782,9 @@
         <div id="ai-command-bar">
             <button class="ai-toggle-drawer-btn" id="btn-toggle-drawer" onclick="toggleChatDrawer()">
                 <span class="ai-online-dot"></span>
-                <span id="cmd-bar-avatar">👩‍💼</span>
+                <span id="cmd-bar-avatar" class="avatar-svg-wrap"></span>
                 <span id="cmd-bar-name">Elena Vancea</span>
-                <span id="drawer-chevron">▲</span>
+                <span id="drawer-chevron">&#9660;</span>
             </button>
 
             <form id="ai-chat-form" onsubmit="handleChatSubmit(event)">
@@ -654,9 +799,9 @@
             </form>
 
             <div class="ai-quick-chips">
-                <button type="button" onclick="quickPrompt('Explain Linux x86_64 syscall registers and show an assembly example for sys_write')">x64 Syscalls</button>
-                <button type="button" onclick="quickPrompt('How do I enable 64-bit Long Mode paging with CR3 and EFER?')">OSDev Paging</button>
-                <button type="button" onclick="quickPrompt('What is the emergency water purification and WHO ORS formula?')">Field Med</button>
+                <button type="button" onclick="quickPrompt('What does Sun Tzu say about supreme excellence and deception in The Art of War?')">Art of War</button>
+                <button type="button" onclick="quickPrompt('Summarize Marcus Aurelius key Stoic principles from Meditations')">Meditations</button>
+                <button type="button" onclick="quickPrompt('Explain Linux x86_64 syscall registers and numbers for read, write, execve')">x64 Syscalls</button>
             </div>
         </div>
     </div>
@@ -666,7 +811,7 @@
     <!-- =================================================================== -->
     <div id="xp-start-menu" style="display: none;">
         <div class="xp-start-header">
-            <div class="xp-user-avatar">🛡️</div>
+            <div class="xp-user-avatar" data-xp-icon="xp_user_chess" data-icon-size="34"></div>
             <div class="xp-user-info">
                 <div class="xp-user-name">Bunker Administrator</div>
                 <div class="xp-user-role">Windows XP Professional</div>
@@ -675,39 +820,60 @@
         <div class="xp-start-columns">
             <div class="xp-start-left">
                 <div class="xp-start-item" onclick="openWindow('win-library'); closeStartMenu();">
-                    <span class="s-icon">🏛️</span>
-                    <div><strong>My Library (Bookshelf)</strong><small>Browse books &amp; ZIM archives</small></div>
+                    <span class="s-icon" data-xp-icon="my_library" data-icon-size="28"></span>
+                    <div><strong>My Library (Bookshelf)</strong><small>Browse full books &amp; ZIM archives</small></div>
                 </div>
                 <div class="xp-start-item" onclick="openWindow('win-downloader'); closeStartMenu();">
-                    <span class="s-icon">📦</span>
-                    <div><strong>Add or Remove Books</strong><small>Download Kiwix .ZIM packs</small></div>
+                    <span class="s-icon" data-xp-icon="add_remove" data-icon-size="28"></span>
+                    <div><strong>Add or Remove Books</strong><small>Install Gutenberg books &amp; ZIMs</small></div>
                 </div>
                 <div class="xp-start-item" onclick="openKiwixBrowser('/kiwix/'); closeStartMenu();">
-                    <span class="s-icon">🌐</span>
+                    <span class="s-icon" data-xp-icon="ie_globe" data-icon-size="28"></span>
                     <div><strong>Kiwix ZIM Explorer</strong><small>Offline encyclopedia browser</small></div>
                 </div>
                 <div class="xp-start-item" onclick="toggleChatDrawer(true); closeStartMenu();">
-                    <span class="s-icon" id="start-menu-ai-icon">👩‍💼</span>
+                    <span class="s-icon" id="start-menu-ai-icon" data-xp-icon="xp_agent_f" data-icon-size="28"></span>
                     <div><strong id="start-menu-ai-name">Elena Vancea AI</strong><small>Local archive assistant</small></div>
                 </div>
                 <div class="xp-start-item" onclick="openWindow('win-new-book'); closeStartMenu();">
-                    <span class="s-icon">📝</span>
+                    <span class="s-icon" data-xp-icon="notepad" data-icon-size="28"></span>
                     <div><strong>Write New Field Volume</strong><small>Author custom manual on shelf</small></div>
                 </div>
             </div>
             <div class="xp-start-right">
-                <div class="xp-start-link bold" onclick="openWindow('win-library'); closeStartMenu();">📁 My Documents</div>
-                <div class="xp-start-link bold" onclick="openWindow('win-chats'); closeStartMenu();">💬 Saved Chats Folder</div>
+                <div class="xp-start-link bold" onclick="openWindow('win-library'); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="folder_open" data-icon-size="16"></span>
+                    <span>My Documents</span>
+                </div>
+                <div class="xp-start-link bold" onclick="openWindow('win-chats'); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="msn_chat" data-icon-size="16"></span>
+                    <span>Saved Chats</span>
+                </div>
                 <hr>
-                <div class="xp-start-link bold" onclick="openWindow('win-settings'); switchSettingsTab('themes'); closeStartMenu();">⚙️ Control Panel</div>
-                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('themes'); closeStartMenu();">🎨 Display &amp; Themes</div>
-                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('ai'); closeStartMenu();">🤖 AI Helper Persona</div>
-                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('interface'); closeStartMenu();">🔤 Chat Style &amp; Font Size</div>
+                <div class="xp-start-link bold" onclick="openWindow('win-settings'); switchSettingsTab('themes'); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="control_panel" data-icon-size="16"></span>
+                    <span>Control Panel</span>
+                </div>
+                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('themes'); closeStartMenu();">
+                    <span>Display &amp; XP Themes</span>
+                </div>
+                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('interface'); closeStartMenu();">
+                    <span>Font Size &amp; Chat Bar</span>
+                </div>
+                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('ai'); closeStartMenu();">
+                    <span>AI Helper Persona</span>
+                </div>
             </div>
         </div>
         <div class="xp-start-footer">
-            <button class="xp-start-logoff" onclick="openWindow('win-settings'); closeStartMenu();">⚙️ Settings</button>
-            <button class="xp-start-shutdown" onclick="refreshAll(); closeStartMenu();">🔄 Sync Vault</button>
+            <button class="xp-start-logoff" onclick="openWindow('win-settings'); closeStartMenu();">
+                <span class="footer-btn-svg" data-xp-icon="xp_key" data-icon-size="14"></span>
+                <span>Control Panel</span>
+            </button>
+            <button class="xp-start-shutdown" onclick="refreshAll(); closeStartMenu();">
+                <span class="footer-btn-svg" data-xp-icon="xp_power" data-icon-size="14"></span>
+                <span>Sync Vault</span>
+            </button>
         </div>
     </div>
 
@@ -728,13 +894,18 @@
         <div id="xp-taskbar-windows"></div>
 
         <div id="xp-systray">
-            <span class="systray-item" id="tray-settings-btn" title="Open Control Panel & Settings" onclick="openWindow('win-settings')">⚙️</span>
-            <span class="systray-item" id="tray-books-count" title="Total Installed Books & ZIMs" onclick="openWindow('win-library')">📚 4 Books</span>
-            <span class="systray-item" id="tray-ai-pill" title="Ollama Local AI Status" onclick="toggleChatDrawer(true)">🟢 AI Ready</span>
+            <div class="systray-font-controls" title="Instant UI Font Size Scaling">
+                <button class="systray-font-btn" onclick="stepUiFontSize(-1)">A-</button>
+                <span id="tray-font-label">12px</span>
+                <button class="systray-font-btn" onclick="stepUiFontSize(1)">A+</button>
+            </div>
+            <span class="systray-item" id="tray-settings-btn" title="Open Control Panel" onclick="openWindow('win-settings')" data-xp-icon="control_panel" data-icon-size="15"></span>
+            <span class="systray-item" id="tray-books-count" title="Total Installed Books & ZIMs" onclick="openWindow('win-library')">7 Books</span>
+            <span class="systray-item" id="tray-ai-pill" title="Ollama Local AI Status" onclick="toggleChatDrawer(true)">AI Ready</span>
             <span class="systray-clock" id="xp-clock">12:00 PM</span>
         </div>
     </footer>
 
-    <script src="/static/xp.js?v=3"></script>
+    <script src="/static/xp.js?v=5"></script>
 </body>
 </html>

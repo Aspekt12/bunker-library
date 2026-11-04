@@ -1,6 +1,7 @@
 /* ==========================================================================
    BunkerOS XP — Client Controller
-   1:1 Windows XP Themes, Settings App, 4 Bookshelf Layouts & FB Side Chat
+   1:1 Windows XP Vector Icons, Themes, Responsive Font Scaling,
+   Unabridged Book Reader (with Chapter TOC & Search) & Dual-Mode Chat
    ========================================================================== */
 
 let highestZ = 40;
@@ -11,60 +12,364 @@ let appSettings = {
     wallpaper: "wallpaper-bliss",
     custom_wallpaper: "",
     ai_name: "Elena Vancea",
-    ai_avatar: "👩‍💼",
+    ai_avatar: "xp_agent_f",
     ai_role_title: "Executive Secretary & Chief Technical Librarian",
     ai_personality: "",
     bookshelf_layout: "spines-3d",
     shelf_density: "normal",
     chat_layout: "fb-side",
     font_size_px: 12,
+    reader_font_size_px: 15,
 };
 
 let libraryData = { total: 0, items: [], categories: {} };
 let selectedCategory = "ALL";
+
+// Unabridged Book Reader State
 let currentReaderBook = null;
+let currentBookChapters = [];
+let currentChapterIndex = 0;
 
 let savedChats = [];
 let activeChatId = null;
 let downloadPollTimer = null;
 
+// ==========================================================================
+// 0. AUTHENTIC WINDOWS XP 3D VECTOR ICON ENGINE (ZERO EMOJI SLOP)
+// ==========================================================================
+function renderBookSvg(coverLight, coverDark, spineColor, size) {
+    return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+        <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+            <path d="M10 7 L36 5 L36 39 L10 41 Z" fill="${coverDark}" stroke="#1e293b" stroke-width="1.5"/>
+            <path d="M12 9 L38 7 L40 9 L14 11 Z" fill="#fef9c3" stroke="#94a3b8" stroke-width="1"/>
+            <path d="M14 11 L40 9 L40 42 L14 44 Z" fill="${coverLight}" stroke="#0f172a" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M10 7 C10 9 12 11 14 11 L14 44 C12 44 10 42 10 41 Z" fill="${spineColor}" stroke="#0f172a" stroke-width="1.8"/>
+            <rect x="19" y="16" width="15" height="8" rx="1" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+            <line x1="21" y1="19" x2="32" y2="18.3" stroke="#78350f" stroke-width="1.4"/>
+            <line x1="21" y1="21.5" x2="29" y2="21" stroke="#78350f" stroke-width="1.2"/>
+        </svg>
+    </span>`;
+}
+
+function xpIcon(name, size = 18) {
+    switch (name) {
+        case "my_library":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="5" y="6" width="34" height="25" rx="2.5" fill="url(#xpMonitorBezel)" stroke="#334155" stroke-width="2"/>
+                    <rect x="8" y="9" width="28" height="19" fill="url(#xpMonitorScreen)" stroke="#0f172a" stroke-width="1.2"/>
+                    <rect x="17" y="31" width="10" height="5" fill="#94a3b8" stroke="#475569" stroke-width="1.5"/>
+                    <path d="M11 36 L33 36 L36 40 L8 40 Z" fill="url(#xpMonitorBezel)" stroke="#475569" stroke-width="1.5"/>
+                    <path d="M27 17 L43 15 L43 42 L27 44 Z" fill="#dc2626" stroke="#450a0a" stroke-width="1.8"/>
+                    <path d="M24 15 L27 17 L27 44 L24 42 Z" fill="#991b1b" stroke="#450a0a" stroke-width="1.5"/>
+                    <rect x="30" y="21" width="9" height="5" fill="#fef08a" stroke="#854d0e" stroke-width="1"/>
+                </svg>
+            </span>`;
+
+        case "folder_closed":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <path d="M5 11 L18 11 L22 15 L42 15 L42 38 L5 38 Z" fill="url(#xpFolderBack)" stroke="#92400e" stroke-width="1.8" stroke-linejoin="round"/>
+                    <path d="M5 17 L43 17 L41 39 L5 39 Z" fill="url(#xpFolderFront)" stroke="#92400e" stroke-width="1.8" stroke-linejoin="round"/>
+                    <line x1="7" y1="19" x2="41" y2="19" stroke="#fef08a" stroke-width="1.5"/>
+                </svg>
+            </span>`;
+
+        case "folder_open":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <path d="M5 10 L18 10 L22 14 L40 14 L40 36 L5 36 Z" fill="url(#xpFolderBack)" stroke="#92400e" stroke-width="1.8"/>
+                    <rect x="9" y="13" width="28" height="16" rx="1" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2"/>
+                    <path d="M3 22 L41 22 L45 39 L7 39 Z" fill="url(#xpFolderFront)" stroke="#92400e" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+            </span>`;
+
+        case "add_remove":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <circle cx="31" cy="14" r="10" fill="url(#xpDiscShine)" stroke="#334155" stroke-width="1.6"/>
+                    <circle cx="31" cy="14" r="3" fill="#ffffff" stroke="#475569" stroke-width="1.2"/>
+                    <path d="M7 19 L23 12 L39 19 L39 36 L23 43 L7 36 Z" fill="url(#xpBoxGold)" stroke="#78350f" stroke-width="1.8" stroke-linejoin="round"/>
+                    <path d="M7 19 L23 26 L39 19" fill="none" stroke="#78350f" stroke-width="1.8"/>
+                    <line x1="23" y1="26" x2="23" y2="43" stroke="#78350f" stroke-width="1.8"/>
+                    <circle cx="36" cy="35" r="8.5" fill="url(#xpGreenOrb)" stroke="#ffffff" stroke-width="1.8"/>
+                    <path d="M36 31 v8 M32 35 h8" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+                </svg>
+            </span>`;
+
+        case "ie_globe":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <circle cx="24" cy="24" r="16.5" fill="url(#xpGlobeBlue)" stroke="#1e3a8a" stroke-width="2"/>
+                    <ellipse cx="24" cy="24" rx="8.5" ry="16.5" fill="none" stroke="#93c5fd" stroke-width="1.3"/>
+                    <line x1="8" y1="24" x2="40" y2="24" stroke="#93c5fd" stroke-width="1.3"/>
+                    <ellipse cx="24" cy="24" rx="21.5" ry="7.5" fill="none" stroke="#facc15" stroke-width="2.6" transform="rotate(-24 24 24)"/>
+                </svg>
+            </span>`;
+
+        case "control_panel":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <path d="M5 12 L18 12 L22 16 L42 16 L42 39 L5 39 Z" fill="url(#xpFolderFront)" stroke="#92400e" stroke-width="1.8"/>
+                    <circle cx="29" cy="28" r="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+                    <circle cx="29" cy="28" r="3" fill="#ffffff"/>
+                    <path d="M14 23 L21 30 M16 21 L12 25" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </span>`;
+
+        case "msn_chat":
+        case "xp_msn":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <circle cx="19" cy="15" r="6" fill="#38bdf8" stroke="#0369a1" stroke-width="1.8"/>
+                    <path d="M8 35 C8 25 30 25 30 35 Z" fill="#0284c7" stroke="#075985" stroke-width="1.8"/>
+                    <circle cx="31" cy="18" r="5.5" fill="#4ade80" stroke="#15803d" stroke-width="1.8"/>
+                    <path d="M22 38 C22 29 40 29 40 38 Z" fill="#16a34a" stroke="#14532d" stroke-width="1.8"/>
+                </svg>
+            </span>`;
+
+        case "notepad":
+        case "book_note":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="9" y="6" width="30" height="36" rx="2" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+                    <rect x="9" y="6" width="30" height="6" fill="#0284c7" stroke="#334155" stroke-width="1.5"/>
+                    <line x1="14" y1="18" x2="34" y2="18" stroke="#2563eb" stroke-width="2"/>
+                    <line x1="14" y1="24" x2="34" y2="24" stroke="#94a3b8" stroke-width="1.8"/>
+                    <line x1="14" y1="30" x2="27" y2="30" stroke="#94a3b8" stroke-width="1.8"/>
+                </svg>
+            </span>`;
+
+        case "book_red":
+            return renderBookSvg("#dc2626", "#991b1b", "#7f1d1d", size);
+        case "book_blue":
+            return renderBookSvg("#2563eb", "#1e40af", "#1e3a8a", size);
+        case "book_green":
+            return renderBookSvg("#059669", "#065f46", "#064e3b", size);
+        case "book_gold":
+            return renderBookSvg("#d97706", "#92400e", "#78350f", size);
+        case "book_purple":
+            return renderBookSvg("#7c3aed", "#5b21b6", "#4c1d95", size);
+        case "book_teal":
+            return renderBookSvg("#0d9488", "#115e59", "#134e4a", size);
+
+        case "manual_tech":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="9" y="5" width="30" height="38" rx="2.5" fill="#1e3a8a" stroke="#0f172a" stroke-width="2"/>
+                    <rect x="9" y="5" width="6" height="38" fill="#0f172a"/>
+                    <rect x="18" y="10" width="17" height="10" rx="1" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.2"/>
+                    <path d="M21 15 L24 13 L21 11 M25 16 H31" fill="none" stroke="#1e3a8a" stroke-width="1.6" stroke-linecap="round"/>
+                    <circle cx="26.5" cy="31" r="6" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="3 2"/>
+                </svg>
+            </span>`;
+
+        case "book_open":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <path d="M6 12 Q15 9 24 13 Q33 9 42 12 L42 36 Q33 33 24 37 Q15 33 6 36 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="2"/>
+                    <line x1="24" y1="13" x2="24" y2="37" stroke="#1e3a8a" stroke-width="2"/>
+                    <line x1="10" y1="18" x2="20" y2="19" stroke="#64748b" stroke-width="1.5"/>
+                    <line x1="10" y1="23" x2="20" y2="24" stroke="#64748b" stroke-width="1.5"/>
+                    <line x1="28" y1="19" x2="38" y2="18" stroke="#64748b" stroke-width="1.5"/>
+                    <line x1="28" y1="24" x2="38" y2="23" stroke="#64748b" stroke-width="1.5"/>
+                </svg>
+            </span>`;
+
+        case "zim_disc":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <circle cx="24" cy="24" r="18" fill="url(#xpDiscShine)" stroke="#334155" stroke-width="2"/>
+                    <path d="M24 6 A18 18 0 0 1 42 24 L29 24 A5 5 0 0 0 24 19 Z" fill="rgba(255,255,255,0.45)"/>
+                    <circle cx="24" cy="24" r="6" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/>
+                    <circle cx="24" cy="24" r="2.5" fill="#ffffff" stroke="#334155" stroke-width="1.2"/>
+                </svg>
+            </span>`;
+
+        case "shelf_3d":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="6" y="34" width="36" height="6" rx="1" fill="#92400e" stroke="#451a03" stroke-width="1.8"/>
+                    <rect x="9" y="12" width="7" height="22" rx="1" fill="#dc2626" stroke="#450a0a" stroke-width="1.5"/>
+                    <rect x="17" y="10" width="8" height="24" rx="1" fill="#2563eb" stroke="#1e3a8a" stroke-width="1.5"/>
+                    <rect x="26" y="14" width="7" height="20" rx="1" fill="#059669" stroke="#064e3b" stroke-width="1.5"/>
+                    <rect x="34" y="11" width="6" height="23" rx="1" fill="#d97706" stroke="#78350f" stroke-width="1.5"/>
+                </svg>
+            </span>`;
+
+        case "view_details":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="6" y="8" width="36" height="32" rx="2" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+                    <rect x="6" y="8" width="36" height="8" fill="#3b82f6"/>
+                    <line x1="14" y1="22" x2="36" y2="22" stroke="#334155" stroke-width="2.2"/>
+                    <line x1="14" y1="29" x2="36" y2="29" stroke="#334155" stroke-width="2.2"/>
+                    <line x1="14" y1="35" x2="30" y2="35" stroke="#334155" stroke-width="2.2"/>
+                </svg>
+            </span>`;
+
+        case "nav_back":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <circle cx="24" cy="24" r="18" fill="url(#xpGreenOrb)" stroke="#14532d" stroke-width="2"/>
+                    <path d="M26 14 L15 24 L26 34 M16 24 H34" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>`;
+
+        case "nav_refresh":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <circle cx="24" cy="24" r="18" fill="url(#xpGreenOrb)" stroke="#14532d" stroke-width="2"/>
+                    <path d="M32 18 A10 10 0 1 0 33 29" fill="none" stroke="#ffffff" stroke-width="3.6" stroke-linecap="round"/>
+                    <polygon points="34,12 35,21 26,19" fill="#ffffff"/>
+                </svg>
+            </span>`;
+
+        case "go_arrow":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="6" y="6" width="36" height="36" rx="6" fill="url(#xpGreenOrb)" stroke="#14532d" stroke-width="2"/>
+                    <path d="M15 24 H33 M25 15 L34 24 L25 33" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>`;
+
+        case "xp_agent_f":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="4" y="4" width="40" height="40" rx="6" fill="#1e3a8a" stroke="#93c5fd" stroke-width="2"/>
+                    <circle cx="24" cy="18" r="7.5" fill="#fde68a" stroke="#92400e" stroke-width="1.5"/>
+                    <path d="M12 39 C12 28 36 28 36 39 Z" fill="#2563eb" stroke="#bfdbfe" stroke-width="1.5"/>
+                    <rect x="18" y="16" width="12" height="3.5" rx="1" fill="none" stroke="#1e293b" stroke-width="1.4"/>
+                </svg>
+            </span>`;
+
+        case "xp_agent_m":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="4" y="4" width="40" height="40" rx="6" fill="#065f46" stroke="#6ee7b7" stroke-width="2"/>
+                    <circle cx="24" cy="18" r="7.5" fill="#fed7aa" stroke="#7c2d12" stroke-width="1.5"/>
+                    <path d="M12 39 C12 28 36 28 36 39 Z" fill="#059669" stroke="#a7f3d0" stroke-width="1.5"/>
+                </svg>
+            </span>`;
+
+        case "xp_clippy":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="6" y="6" width="36" height="36" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+                    <path d="M19 32 V15 A6 6 0 0 1 31 15 V33 A8 8 0 0 1 15 33 V18" fill="none" stroke="#475569" stroke-width="3.2" stroke-linecap="round"/>
+                    <circle cx="20" cy="19" r="3" fill="#ffffff" stroke="#0f172a" stroke-width="1.4"/>
+                    <circle cx="29" cy="19" r="3" fill="#ffffff" stroke="#0f172a" stroke-width="1.4"/>
+                    <circle cx="20" cy="19" r="1.2" fill="#0f172a"/>
+                    <circle cx="29" cy="19" r="1.2" fill="#0f172a"/>
+                </svg>
+            </span>`;
+
+        case "xp_rover":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="4" y="4" width="40" height="40" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+                    <ellipse cx="14" cy="19" rx="4" ry="7" fill="#92400e"/>
+                    <ellipse cx="34" cy="19" rx="4" ry="7" fill="#92400e"/>
+                    <circle cx="24" cy="24" r="10" fill="#f59e0b" stroke="#78350f" stroke-width="1.6"/>
+                    <circle cx="20.5" cy="22" r="2" fill="#0f172a"/>
+                    <circle cx="27.5" cy="22" r="2" fill="#0f172a"/>
+                    <ellipse cx="24" cy="26.5" rx="3" ry="2" fill="#451a03"/>
+                </svg>
+            </span>`;
+
+        case "xp_computer":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="7" y="8" width="34" height="24" rx="2" fill="url(#xpMonitorBezel)" stroke="#334155" stroke-width="2"/>
+                    <rect x="10" y="11" width="28" height="18" fill="url(#xpMonitorScreen)"/>
+                    <rect x="18" y="32" width="12" height="5" fill="#94a3b8"/>
+                    <rect x="12" y="37" width="24" height="4" rx="1" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/>
+                </svg>
+            </span>`;
+
+        case "xp_user_chess":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="12" y="35" width="24" height="6" rx="1.5" fill="#1e3a8a" stroke="#0f172a" stroke-width="1.5"/>
+                    <path d="M16 35 L19 18 L29 18 L32 35 Z" fill="#2563eb" stroke="#0f172a" stroke-width="1.5"/>
+                    <circle cx="24" cy="13" r="6" fill="#60a5fa" stroke="#0f172a" stroke-width="1.5"/>
+                </svg>
+            </span>`;
+
+        case "xp_key":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <circle cx="16" cy="24" r="9" fill="none" stroke="#ffffff" stroke-width="4"/>
+                    <path d="M25 24 H42 M35 24 V32 M40 24 V30" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+            </span>`;
+
+        case "xp_power":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <path d="M16 14 A13 13 0 1 0 32 14" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="24" y1="8" x2="24" y2="24" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+            </span>`;
+
+        case "status_ok":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <circle cx="24" cy="24" r="18" fill="url(#xpGreenOrb)" stroke="#14532d" stroke-width="2"/>
+                    <path d="M15 24 L21 30 L34 17" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>`;
+
+        default:
+            return renderBookSvg("#2563eb", "#1e40af", "#1e3a8a", size);
+    }
+}
+
+function hydrateStaticIcons() {
+    document.querySelectorAll("[data-xp-icon]").forEach((el) => {
+        const iconName = el.getAttribute("data-xp-icon");
+        const size = parseInt(el.getAttribute("data-icon-size") || "18", 10);
+        el.innerHTML = xpIcon(iconName, size);
+    });
+}
+
 const WINDOW_META = {
-    "win-library":    { title: "My Library (Bookshelf)", icon: "🏛️" },
-    "win-settings":   { title: "Control Panel & Settings", icon: "⚙️" },
-    "win-downloader": { title: "Add/Remove Books (ZIM)", icon: "📦" },
-    "win-reader":     { title: "Document Viewer",        icon: "📘" },
-    "win-chats":      { title: "Saved Chats Folder",     icon: "💬" },
-    "win-new-book":   { title: "Write New Volume",       icon: "📝" },
+    "win-library":    { title: "My Library (Bookshelf)", icon: "my_library" },
+    "win-settings":   { title: "Control Panel",          icon: "control_panel" },
+    "win-downloader": { title: "Add or Remove Books",    icon: "add_remove" },
+    "win-reader":     { title: "Book Reader",            icon: "book_open" },
+    "win-chats":      { title: "Saved Chats",            icon: "msn_chat" },
+    "win-new-book":   { title: "Write New Volume",       icon: "notepad" },
 };
 
 const PERSONA_PRESETS = {
     librarian: {
         name: "Elena Vancea",
-        avatar: "👩‍💼",
+        avatar: "xp_agent_f",
         role: "Executive Secretary & Chief Technical Librarian",
         prompt:
-            "You are {ai_name}, {ai_role_title} inside BunkerOS XP. Answer with rigorous technical precision in the user's language (Romanian or English). Always ground your answers in the local archive excerpts and cite the volume title.",
+            "You are {ai_name}, {ai_role_title} inside BunkerOS XP. Answer with rigorous precision in the user's language (Romanian or English). Always ground your answers in the local archive excerpts and cite the volume title.",
     },
     clippy: {
         name: "Clippy XP",
-        avatar: "📎",
+        avatar: "xp_clippy",
         role: "Windows XP Office & Archive Assistant",
         prompt:
-            "You are {ai_name} ({ai_role_title}). Start occasionally with a nostalgic 'It looks like you're researching...' and provide super helpful, enthusiastic, accurate technical answers grounded in the local BunkerOS XP archives!",
+            "You are {ai_name} ({ai_role_title}). Start occasionally with a nostalgic 'It looks like you're reading...' and provide helpful, accurate answers grounded in the local BunkerOS XP books!",
     },
     hacker: {
         name: "Root0x86",
-        avatar: "🤖",
-        role: "Low-Level Kernel & Systems Architect",
+        avatar: "xp_computer",
+        role: "Low-Level Kernel & Syscall Architect",
         prompt:
-            "You are {ai_name}, {ai_role_title}. Provide terse, high-signal low-level engineering answers with register tables, assembly snippets, and C/POSIX examples from the local vault.",
+            "You are {ai_name}, {ai_role_title}. Provide high-signal low-level engineering answers with syscall numbers, register tables, and C/POSIX examples from the local vault.",
     },
-    medic: {
-        name: "Dr. Vance",
-        avatar: "🦉",
-        role: "Field Resilience & Emergency Medical Officer",
+    strategist: {
+        name: "Marcus & Sun Tzu",
+        avatar: "xp_agent_m",
+        role: "Classical Strategy & Stoic Philosophy Advisor",
         prompt:
-            "You are {ai_name}, {ai_role_title}. Provide clear, step-by-step survival, off-grid engineering, and emergency medical protocols strictly grounded in the local reference manuals.",
+            "You are {ai_name}, {ai_role_title}. Draw directly upon The Art of War, Meditations, The Prince, and The Enchiridion in the local library to give timeless strategic and philosophical counsel.",
     },
 };
 
@@ -72,6 +377,7 @@ const PERSONA_PRESETS = {
 // 1. Initialization & Clock
 // --------------------------------------------------------------------------
 window.addEventListener("DOMContentLoaded", async () => {
+    hydrateStaticIcons();
     updateClock();
     setInterval(updateClock, 15000);
 
@@ -101,7 +407,7 @@ async function refreshAll() {
 }
 
 // --------------------------------------------------------------------------
-// 2. Settings & Control Panel Management (/api/settings)
+// 2. Settings, Themes & Font Scaling (/api/settings)
 // --------------------------------------------------------------------------
 async function loadSettings() {
     try {
@@ -212,7 +518,6 @@ function applySettingsToDOM(cfg) {
     document.documentElement.className = `${themeCls}`;
     document.body.className = `${themeCls} ${wallCls} ${chatCls}`;
 
-    // Also set CSS custom properties directly on :root so theme changes are 100% immediate
     const palette = XP_THEME_PALETTES[themeKey] || XP_THEME_PALETTES["luna-blue"];
     Object.entries(palette).forEach(([prop, val]) => {
         document.documentElement.style.setProperty(prop, val);
@@ -224,31 +529,42 @@ function applySettingsToDOM(cfg) {
         document.body.style.backgroundImage = "";
     }
 
-    // Apply Font Size CSS Variable
-    const fontPx = parseInt(cfg.font_size_px || 12, 10);
-    document.documentElement.style.setProperty("--ui-font-size", `${fontPx}px`);
+    // Apply both UI Font Size and Reader/Chat Font Size CSS variables
+    const uiFontPx = Math.min(24, Math.max(10, parseInt(cfg.font_size_px || 12, 10)));
+    const readerFontPx = Math.min(28, Math.max(11, parseInt(cfg.reader_font_size_px || 15, 10)));
+    document.documentElement.style.setProperty("--ui-font-size", `${uiFontPx}px`);
+    document.documentElement.style.setProperty("--reader-font-size", `${readerFontPx}px`);
 
-    // Apply AI Helper Name & Avatar across Chat Dock + Start Menu
-    const aiName = cfg.ai_name || "Elena Vancea";
-    const aiAvatar = cfg.ai_avatar || "👩‍💼";
-
-    const setEl = (id, val) => {
+    const setElText = (id, val) => {
         const el = document.getElementById(id);
         if (el) el.textContent = val;
     };
-    setEl("chat-header-avatar", aiAvatar);
-    setEl("chat-header-name", aiName);
-    setEl("cmd-bar-avatar", aiAvatar);
-    setEl("cmd-bar-name", aiName);
-    setEl("start-menu-ai-icon", aiAvatar);
-    setEl("start-menu-ai-name", `${aiName} AI`);
+    setElText("tray-font-label", `${uiFontPx}px`);
+    setElText("font-size-val-label", `${uiFontPx}px`);
+    setElText("reader-font-size-val-label", `${readerFontPx}px`);
+    setElText("reader-toolbar-font-badge", `${readerFontPx}px`);
+
+    // Apply AI Helper Name & Vector Avatar across Chat Dock + Start Menu
+    const aiName = cfg.ai_name || "Elena Vancea";
+    const aiAvatarKey = cfg.ai_avatar || "xp_agent_f";
+
+    const setElHtml = (id, htmlVal) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = htmlVal;
+    };
+    setElHtml("chat-header-avatar", xpIcon(aiAvatarKey, 16));
+    setElHtml("cmd-bar-avatar", xpIcon(aiAvatarKey, 16));
+    setElHtml("start-menu-ai-icon", xpIcon(aiAvatarKey, 28));
+
+    setElText("chat-header-name", aiName);
+    setElText("cmd-bar-name", aiName);
+    setElText("start-menu-ai-name", `${aiName} AI`);
 
     const chatInput = document.getElementById("ai-chat-input");
     if (chatInput) {
         chatInput.placeholder = `Message ${aiName}...`;
     }
 
-    // Apply Bookshelf Layout Mode
     updateBookshelfLayoutVisibility(cfg.bookshelf_layout || "spines-3d");
     renderLibraryViews();
 }
@@ -262,14 +578,12 @@ function populateSettingsForm(cfg) {
     setVal("set-wallpaper", cfg.wallpaper || "wallpaper-bliss");
     setVal("set-custom-wallpaper", cfg.custom_wallpaper || "");
     setVal("set-ai-name", cfg.ai_name || "Elena Vancea");
-    setVal("set-ai-avatar", cfg.ai_avatar || "👩‍💼");
+    setVal("set-ai-avatar", cfg.ai_avatar || "xp_agent_f");
     setVal("set-ai-role", cfg.ai_role_title || "");
     setVal("set-ai-personality", cfg.ai_personality || "");
     setVal("set-shelf-density", cfg.shelf_density || "normal");
     setVal("set-font-size", cfg.font_size_px || 12);
-
-    const fontLabel = document.getElementById("font-size-val-label");
-    if (fontLabel) fontLabel.textContent = `${cfg.font_size_px || 12}px`;
+    setVal("set-reader-font-size", cfg.reader_font_size_px || 15);
 
     document.querySelectorAll('input[name="set_bookshelf_layout"]').forEach((r) => {
         r.checked = r.value === (cfg.bookshelf_layout || "spines-3d");
@@ -278,11 +592,11 @@ function populateSettingsForm(cfg) {
         r.checked = r.value === (cfg.chat_layout || "fb-side");
     });
 
-    previewThemeAndWallpaper();
+    previewThemeAndWallpaper(false);
 }
 
 function switchSettingsTab(tabName) {
-    ["themes", "ai", "bookshelf", "interface"].forEach((t) => {
+    ["themes", "interface", "ai", "bookshelf"].forEach((t) => {
         const btn = document.getElementById(`tabbtn-${t}`);
         const page = document.getElementById(`tabpage-${t}`);
         if (btn) btn.classList.toggle("active", t === tabName);
@@ -297,8 +611,8 @@ function quickSelectTheme(themeKey) {
 }
 
 async function previewThemeAndWallpaper(autoSave = false) {
-    const theme = document.getElementById("set-xp-theme")?.value || "luna-blue";
-    const wall = document.getElementById("set-wallpaper")?.value || "wallpaper-bliss";
+    const theme = document.getElementById("set-xp-theme")?.value || appSettings.xp_theme || "luna-blue";
+    const wall = document.getElementById("set-wallpaper")?.value || appSettings.wallpaper || "wallpaper-bliss";
     const customUrl = document.getElementById("set-custom-wallpaper")?.value.trim() || "";
 
     appSettings.xp_theme = theme;
@@ -346,7 +660,7 @@ function onCustomWallpaperInput() {
     const val = document.getElementById("set-custom-wallpaper")?.value.trim();
     if (val) {
         document.getElementById("set-wallpaper").value = "custom";
-        previewThemeAndWallpaper();
+        previewThemeAndWallpaper(true);
     }
 }
 
@@ -358,7 +672,7 @@ function handleWallpaperFileUpload(event) {
         const dataUrl = e.target.result;
         document.getElementById("set-custom-wallpaper").value = dataUrl;
         document.getElementById("set-wallpaper").value = "custom";
-        previewThemeAndWallpaper();
+        previewThemeAndWallpaper(true);
     };
     reader.readAsDataURL(file);
 }
@@ -372,13 +686,45 @@ function applyPersonaPreset(key) {
     document.getElementById("set-ai-personality").value = p.prompt;
 }
 
-function previewFontSize(pxVal) {
-    const px = parseInt(pxVal, 10) || 12;
-    document.getElementById("set-font-size").value = px;
-    const label = document.getElementById("font-size-val-label");
-    if (label) label.textContent = `${px}px`;
+// Instant UI & Reader Font Size Scaling Functions
+async function previewFontSize(pxVal, autoSave = false) {
+    const px = Math.min(24, Math.max(10, parseInt(pxVal, 10) || 12));
     appSettings.font_size_px = px;
-    document.documentElement.style.setProperty("--ui-font-size", `${px}px`);
+    const slider = document.getElementById("set-font-size");
+    if (slider) slider.value = px;
+    applySettingsToDOM(appSettings);
+    if (autoSave) {
+        await fetch("/api/settings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ font_size_px: px }),
+        });
+    }
+}
+
+async function stepUiFontSize(delta) {
+    const nextPx = Math.min(24, Math.max(10, (parseInt(appSettings.font_size_px, 10) || 12) + delta));
+    await previewFontSize(nextPx, true);
+}
+
+async function previewReaderFontSize(pxVal, autoSave = false) {
+    const px = Math.min(28, Math.max(11, parseInt(pxVal, 10) || 15));
+    appSettings.reader_font_size_px = px;
+    const slider = document.getElementById("set-reader-font-size");
+    if (slider) slider.value = px;
+    applySettingsToDOM(appSettings);
+    if (autoSave) {
+        await fetch("/api/settings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ reader_font_size_px: px }),
+        });
+    }
+}
+
+async function stepReaderFontSize(delta) {
+    const nextPx = Math.min(28, Math.max(11, (parseInt(appSettings.reader_font_size_px, 10) || 15) + delta));
+    await previewReaderFontSize(nextPx, true);
 }
 
 async function saveAndApplySettings(closeAfter = false) {
@@ -399,6 +745,7 @@ async function saveAndApplySettings(closeAfter = false) {
         shelf_density: document.getElementById("set-shelf-density").value,
         chat_layout: selectedChatLayout,
         font_size_px: parseInt(document.getElementById("set-font-size").value, 10) || 12,
+        reader_font_size_px: parseInt(document.getElementById("set-reader-font-size").value, 10) || 15,
     };
 
     try {
@@ -517,7 +864,7 @@ function renderTaskbarTabs() {
         const isActive = isVisible && winId === topWinId;
         html += `
             <div class="xp-task-tab ${isActive ? "active" : ""}" onclick="handleTaskbarTabClick('${winId}')">
-                <span>${meta.icon}</span>
+                ${xpIcon(meta.icon, 15)}
                 <span>${escapeHtml(meta.title)}</span>
             </div>
         `;
@@ -536,7 +883,7 @@ function handleTaskbarTabClick(winId) {
 }
 
 function startDrag(e, winId) {
-    if (e.target.tagName === "BUTTON") return;
+    if (e.target.closest("button")) return;
     const win = document.getElementById(winId);
     if (!win || win.classList.contains("maximized")) return;
     focusWindow(winId);
@@ -593,16 +940,20 @@ async function loadSystemStatus() {
         const data = await res.json();
 
         const trayBooks = document.getElementById("tray-books-count");
-        if (trayBooks) trayBooks.textContent = `📚 ${data.total_books} Books (${data.zim_count} ZIMs)`;
+        if (trayBooks) {
+            trayBooks.innerHTML = `${xpIcon("book_blue", 14)} <span>${data.total_books} Books</span>`;
+        }
 
         const trayAi = document.getElementById("tray-ai-pill");
         if (trayAi) {
-            trayAi.textContent = data.ollama_online ? `🟢 ${appSettings.ai_name.split(" ")[0]}` : "🟡 AI Standby";
+            trayAi.innerHTML = data.ollama_online
+                ? `<span class="ai-online-dot"></span> <span>${escapeHtml(appSettings.ai_name.split(" ")[0])}</span>`
+                : `<span>AI Standby</span>`;
         }
 
         const diskText = document.getElementById("sidebar-disk-text");
         if (diskText) {
-            diskText.textContent = `Free: ${data.disk_free_gb} GB / ${data.disk_total_gb} GB (${data.zim_count} ZIMs)`;
+            diskText.textContent = `Free: ${data.disk_free_gb} GB / ${data.disk_total_gb} GB (${data.total_books} Volumes)`;
         }
         const diskBar = document.getElementById("sidebar-disk-bar");
         if (diskBar) {
@@ -611,8 +962,8 @@ async function loadSystemStatus() {
         const aiStatus = document.getElementById("sidebar-ai-status");
         if (aiStatus) {
             aiStatus.textContent = data.ollama_online
-                ? `🟢 Ollama Ready (${data.active_model.split(":")[0]})`
-                : "🟡 Ollama Standby";
+                ? `Ollama Ready (${data.active_model.split(":")[0]})`
+                : "Ollama Standby";
         }
         const dlSpace = document.getElementById("downloader-free-space");
         if (dlSpace) {
@@ -687,11 +1038,15 @@ function renderCategorySidebar() {
     if (!container) return;
 
     const cats = Object.keys(libraryData.categories || {});
-    let html = `<a href="javascript:void(0)" style="${selectedCategory === "ALL" ? "font-weight:bold;text-decoration:underline;" : ""}" onclick="selectCategoryFilter('ALL')">📂 All Shelves (${libraryData.total})</a>`;
+    let html = `<a href="javascript:void(0)" style="${selectedCategory === "ALL" ? "font-weight:bold;text-decoration:underline;" : ""}" onclick="selectCategoryFilter('ALL')">
+        ${xpIcon("folder_open", 14)} <span>All Shelves (${libraryData.total})</span>
+    </a>`;
     cats.forEach((cat) => {
         const count = (libraryData.categories[cat] || []).length;
         const activeStyle = selectedCategory === cat ? "font-weight:bold;text-decoration:underline;" : "";
-        html += `<a href="javascript:void(0)" style="${activeStyle}" onclick="selectCategoryFilter('${escapeAttr(cat)}')">📁 ${escapeHtml(cat)} (${count})</a>`;
+        html += `<a href="javascript:void(0)" style="${activeStyle}" onclick="selectCategoryFilter('${escapeAttr(cat)}')">
+            ${xpIcon(selectedCategory === cat ? "folder_open" : "folder_closed", 14)} <span>${escapeHtml(cat)} (${count})</span>
+        </a>`;
     });
     container.innerHTML = html;
 }
@@ -706,7 +1061,7 @@ function renderDynamicDesktopFolders() {
         const count = (libraryData.categories[cat] || []).length;
         html += `
             <div class="desktop-icon" ondblclick="selectCategoryFilter('${escapeAttr(cat)}')" onclick="selectDesktopIcon(this)">
-                <div class="icon-graphic">📁</div>
+                <div class="icon-graphic">${xpIcon("folder_closed", 38)}</div>
                 <span class="icon-label">${escapeHtml(cat)} (${count})</span>
             </div>
         `;
@@ -717,7 +1072,7 @@ function renderDynamicDesktopFolders() {
         .forEach((zitem) => {
             html += `
                 <div class="desktop-icon" ondblclick="openLibraryItem('${escapeAttr(zitem.id)}')" onclick="selectDesktopIcon(this)">
-                    <div class="icon-graphic">💿</div>
+                    <div class="icon-graphic">${xpIcon("zim_disc", 38)}</div>
                     <span class="icon-label">${escapeHtml(zitem.title)}</span>
                 </div>
             `;
@@ -739,6 +1094,7 @@ function renderLibraryViews() {
         return (
             item.title.toLowerCase().includes(filterQuery) ||
             item.category.toLowerCase().includes(filterQuery) ||
+            (item.author || "").toLowerCase().includes(filterQuery) ||
             (item.summary || "").toLowerCase().includes(filterQuery)
         );
     });
@@ -757,34 +1113,35 @@ function renderLibraryViews() {
         let shelfHtml = "";
         const catNames = Object.keys(grouped);
         if (catNames.length === 0) {
-            shelfHtml = `<div style="padding:20px;color:#555;">No matching volumes on this shelf. Click <b>+ Add ZIM Books</b> to populate your library!</div>`;
+            shelfHtml = `<div style="padding:20px;color:#555;">No matching volumes on this shelf. Click <b>+ Add More Books</b> to install additional books or ZIM archives!</div>`;
         } else {
             catNames.forEach((cat) => {
                 const books = grouped[cat];
-                const ghostCount = Math.max(1, 8 - books.length);
+                const ghostCount = Math.max(1, 7 - books.length);
                 let spinesHtml = "";
                 books.forEach((b) => {
+                    const iconKey = b.icon_type || (b.type === "zim" ? "zim_disc" : "book_blue");
                     spinesHtml += `
                         <div class="book-spine ${densityCls}"
-                             style="background: linear-gradient(90deg, ${b.spine_color} 0%, ${b.spine_color}dd 65%, #111827 100%);"
-                             title="${escapeAttr(b.title)} (${escapeAttr(b.size_label)})\n${escapeAttr(b.summary)}"
+                             style="background: linear-gradient(90deg, ${b.spine_color} 0%, ${b.spine_color}dd 65%, #0f172a 100%);"
+                             title="${escapeAttr(b.title)} — ${escapeAttr(b.author || "")} (${escapeAttr(b.size_label)})\n${escapeAttr(b.summary)}"
                              onclick="openLibraryItem('${escapeAttr(b.id)}')">
-                            <span class="spine-icon">${b.icon || "📘"}</span>
+                            <span class="spine-icon">${xpIcon(iconKey, 18)}</span>
                             <span class="spine-title">${escapeHtml(b.title)}</span>
                         </div>
                     `;
                 });
                 for (let i = 0; i < ghostCount; i++) {
                     spinesHtml += `
-                        <div class="book-ghost-slot" title="Empty shelf slot — Click to download more ZIM books!" onclick="openWindow('win-downloader')">
-                            + ZIM Slot
+                        <div class="book-ghost-slot" title="Empty shelf slot — Click to install more books or ZIM archives!" onclick="openWindow('win-downloader')">
+                            + Add Book
                         </div>
                     `;
                 }
 
                 shelfHtml += `
                     <div class="wooden-shelf-case">
-                        <div class="shelf-plaque">📁 ${escapeHtml(cat)} (${books.length} ${books.length === 1 ? "Volume" : "Volumes"})</div>
+                        <div class="shelf-plaque">${xpIcon("folder_open", 14)} <span>${escapeHtml(cat)} (${books.length} ${books.length === 1 ? "Volume" : "Volumes"})</span></div>
                         <div class="shelf-books-row">
                             ${spinesHtml}
                         </div>
@@ -799,21 +1156,23 @@ function renderLibraryViews() {
     const coversEl = document.getElementById("library-covers-view");
     if (coversEl) {
         coversEl.innerHTML = allItems
-            .map(
-                (b) => `
-            <div class="book-cover-card"
-                 style="background: linear-gradient(145deg, ${b.spine_color} 0%, #0f172a 100%);"
-                 onclick="openLibraryItem('${escapeAttr(b.id)}')">
-                <div class="cover-card-top">
-                    <div class="cover-card-icon">${b.icon || "📘"}</div>
-                    <div class="cover-card-title">${escapeHtml(b.title)}</div>
+            .map((b) => {
+                const iconKey = b.icon_type || (b.type === "zim" ? "zim_disc" : "book_blue");
+                return `
+                <div class="book-cover-card"
+                     style="background: linear-gradient(145deg, ${b.spine_color} 0%, #0f172a 100%);"
+                     onclick="openLibraryItem('${escapeAttr(b.id)}')">
+                    <div class="cover-card-top">
+                        <div>${xpIcon(iconKey, 36)}</div>
+                        <div class="cover-card-title">${escapeHtml(b.title)}</div>
+                        <div class="cover-card-author">${escapeHtml(b.author || "")}</div>
+                    </div>
+                    <div class="cover-card-footer">
+                        ${escapeHtml(b.category)}<br><strong>${escapeHtml(b.size_label)}</strong>
+                    </div>
                 </div>
-                <div class="cover-card-footer">
-                    ${escapeHtml(b.category)}<br><strong>${escapeHtml(b.size_label)}</strong>
-                </div>
-            </div>
-        `
-            )
+            `;
+            })
             .join("");
     }
 
@@ -821,17 +1180,18 @@ function renderLibraryViews() {
     const foldersEl = document.getElementById("library-folders-view");
     if (foldersEl) {
         foldersEl.innerHTML = allItems
-            .map(
-                (b) => `
-            <div class="xp-file-card" onclick="openLibraryItem('${escapeAttr(b.id)}')">
-                <div class="xp-file-icon">${b.icon || "📘"}</div>
-                <div class="xp-file-meta">
-                    <strong>${escapeHtml(b.title)}</strong>
-                    <small>${escapeHtml(b.category)} &bull; ${escapeHtml(b.size_label)}</small>
+            .map((b) => {
+                const iconKey = b.icon_type || (b.type === "zim" ? "zim_disc" : "book_blue");
+                return `
+                <div class="xp-file-card" onclick="openLibraryItem('${escapeAttr(b.id)}')">
+                    <div class="xp-file-icon">${xpIcon(iconKey, 36)}</div>
+                    <div class="xp-file-meta">
+                        <strong>${escapeHtml(b.title)}</strong>
+                        <small>${escapeHtml(b.author || b.category)} &bull; ${escapeHtml(b.size_label)}</small>
+                    </div>
                 </div>
-            </div>
-        `
-            )
+            `;
+            })
             .join("");
     }
 
@@ -839,27 +1199,28 @@ function renderLibraryViews() {
     const detailsEl = document.getElementById("library-details-view");
     if (detailsEl) {
         const rows = allItems
-            .map(
-                (b) => `
-            <tr onclick="openLibraryItem('${escapeAttr(b.id)}')">
-                <td>${b.icon || "📘"} <strong>${escapeHtml(b.title)}</strong></td>
-                <td>${escapeHtml(b.category)}</td>
-                <td>${b.type === "zim" ? "Kiwix ZIM Archive" : "Reference Volume"}</td>
-                <td>${escapeHtml(b.size_label)}</td>
-                <td>${escapeHtml(b.author || "Local Vault")}</td>
-            </tr>
-        `
-            )
+            .map((b) => {
+                const iconKey = b.icon_type || (b.type === "zim" ? "zim_disc" : "book_blue");
+                return `
+                <tr onclick="openLibraryItem('${escapeAttr(b.id)}')">
+                    <td><span style="display:inline-flex;align-items:center;gap:6px;">${xpIcon(iconKey, 16)} <strong>${escapeHtml(b.title)}</strong></span></td>
+                    <td>${escapeHtml(b.author || "Local Vault")}</td>
+                    <td>${escapeHtml(b.category)}</td>
+                    <td>${b.type === "zim" ? "Kiwix ZIM Archive" : "Unabridged Book"}</td>
+                    <td>${escapeHtml(b.size_label)}</td>
+                </tr>
+            `;
+            })
             .join("");
         detailsEl.innerHTML = `
             <table class="xp-details-table">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Author</th>
                         <th>Folder / Category</th>
                         <th>Type</th>
                         <th>Size</th>
-                        <th>Author / Source</th>
                     </tr>
                 </thead>
                 <tbody>${rows}</tbody>
@@ -869,7 +1230,7 @@ function renderLibraryViews() {
 }
 
 // --------------------------------------------------------------------------
-// 6. Opening Books & Kiwix ZIM Archives in the XP Reader Window
+// 6. Unabridged Book Reader (with Chapter TOC, Search & Kiwix ZIM Viewer)
 // --------------------------------------------------------------------------
 async function openLibraryItem(itemId) {
     const item = (libraryData.items || []).find((x) => x.id === itemId);
@@ -878,46 +1239,176 @@ async function openLibraryItem(itemId) {
     currentReaderBook = item;
     openWindow("win-reader");
 
-    document.getElementById("reader-win-icon").textContent = item.icon || "📘";
+    const iconKey = item.icon_type || (item.type === "zim" ? "zim_disc" : "book_blue");
+    document.getElementById("reader-win-icon").innerHTML = xpIcon(iconKey, 16);
     document.getElementById("reader-win-title").textContent = `${item.title} — BunkerOS XP Reader`;
-    document.getElementById("reader-meta-badge").textContent = item.size_label || "Local Archive";
+    document.getElementById("reader-meta-badge").textContent = item.size_label || "Unabridged";
 
+    const tocSidebar = document.getElementById("reader-toc-sidebar");
     const volDiv = document.getElementById("reader-volume-content");
     const iframe = document.getElementById("reader-kiwix-iframe");
     const homeBtn = document.getElementById("btn-reader-home");
+    const prevBtn = document.getElementById("btn-prev-chapter");
+    const nextBtn = document.getElementById("btn-next-chapter");
+    const searchBox = document.getElementById("reader-chapter-search");
 
     if (item.type === "zim") {
+        if (tocSidebar) tocSidebar.style.display = "none";
+        if (prevBtn) prevBtn.style.display = "none";
+        if (nextBtn) nextBtn.style.display = "none";
+        if (searchBox) searchBox.style.display = "none";
         volDiv.style.display = "none";
         iframe.style.display = "block";
-        homeBtn.style.display = "inline-block";
+        homeBtn.style.display = "inline-flex";
         const targetUrl = item.reader_url || "/kiwix/";
         document.getElementById("reader-location-bar").value = `http://localhost${targetUrl} (${item.zim_filename})`;
+        document.getElementById("reader-status-text").textContent = `Viewing Kiwix ZIM archive: ${item.zim_filename}`;
         iframe.src = targetUrl;
     } else {
         iframe.style.display = "none";
         homeBtn.style.display = "none";
+        if (tocSidebar) tocSidebar.style.display = "flex";
+        if (prevBtn) prevBtn.style.display = "inline-flex";
+        if (nextBtn) nextBtn.style.display = "inline-flex";
+        if (searchBox) {
+            searchBox.style.display = "inline-block";
+            searchBox.value = "";
+        }
         volDiv.style.display = "block";
-        document.getElementById("reader-location-bar").value = `C:\\Bunker_Library\\Volumes\\${item.id}.md`;
-        volDiv.innerHTML = "<p>Loading volume from vault...</p>";
+        document.getElementById("reader-location-bar").value = `C:\\Bunker_Library\\Books\\${item.id}.txt`;
+        volDiv.innerHTML = "<p>Loading complete book from local vault...</p>";
 
         try {
             const res = await fetch(`/api/library/volume/${encodeURIComponent(item.id)}`);
             const vol = await res.json();
-            volDiv.innerHTML = renderMarkdown(vol.content || "");
+            currentReaderBook = vol;
+            currentBookChapters = vol.chapters && vol.chapters.length > 0
+                ? vol.chapters
+                : [{ index: 0, title: vol.title, content: vol.content || "", word_count: (vol.content || "").split(/\s+/).length }];
+            currentChapterIndex = 0;
+
+            const wcEl = document.getElementById("reader-wordcount-text");
+            if (wcEl) {
+                wcEl.textContent = `${(vol.word_count || 0).toLocaleString()} words (${vol.size_label || ""}) — ${currentBookChapters.length} sections`;
+            }
+
+            renderBookTocList();
+            selectBookChapter(0);
         } catch (err) {
-            volDiv.innerHTML = `<p style="color:red;">Error loading volume: ${escapeHtml(String(err))}</p>`;
+            volDiv.innerHTML = `<p style="color:#dc2626;">Error loading volume: ${escapeHtml(String(err))}</p>`;
         }
     }
+}
+
+function renderBookTocList() {
+    const tocList = document.getElementById("reader-toc-list");
+    if (!tocList) return;
+
+    const filter = (document.getElementById("reader-chapter-search")?.value || "").trim().toLowerCase();
+
+    let html = "";
+    currentBookChapters.forEach((ch, idx) => {
+        if (filter) {
+            const inTitle = ch.title.toLowerCase().includes(filter);
+            const inContent = ch.content.toLowerCase().includes(filter);
+            if (!inTitle && !inContent) return;
+        }
+        const isActive = idx === currentChapterIndex;
+        html += `
+            <div class="reader-toc-item ${isActive ? "active" : ""}" onclick="selectBookChapter(${idx})">
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${idx + 1}. ${escapeHtml(ch.title)}</span>
+                <small>${ch.word_count || 0}w</small>
+            </div>
+        `;
+    });
+
+    if (!html) {
+        html = `<div style="padding:10px;color:#64748b;">No chapters matched "${escapeHtml(filter)}".</div>`;
+    }
+    tocList.innerHTML = html;
+}
+
+function filterBookChapters() {
+    renderBookTocList();
+}
+
+function selectBookChapter(idx) {
+    if (!currentBookChapters.length) return;
+    currentChapterIndex = Math.max(0, Math.min(currentBookChapters.length - 1, idx));
+    renderBookTocList();
+
+    const ch = currentBookChapters[currentChapterIndex];
+    const volDiv = document.getElementById("reader-volume-content");
+    if (!volDiv) return;
+
+    const hasPrev = currentChapterIndex > 0;
+    const hasNext = currentChapterIndex < currentBookChapters.length - 1;
+
+    const headerBox = currentChapterIndex === 0 && currentReaderBook
+        ? `<div class="reader-book-header-box">
+            <h1>${escapeHtml(currentReaderBook.title)}</h1>
+            <div class="meta-sub"><strong>Author:</strong> ${escapeHtml(currentReaderBook.author || "Classic Edition")} &bull; <strong>Category:</strong> ${escapeHtml(currentReaderBook.category || "")} &bull; <strong>Size:</strong> ${escapeHtml(currentReaderBook.size_label || "")}</div>
+           </div>`
+        : "";
+
+    const navFooter = `
+        <div class="reader-chapter-nav-footer">
+            <button class="xp-toolbar-btn" ${hasPrev ? "" : "disabled"} onclick="stepBookChapter(-1)">&laquo; Previous Section</button>
+            <span>Section ${currentChapterIndex + 1} of ${currentBookChapters.length}</span>
+            <button class="xp-toolbar-btn" ${hasNext ? "" : "disabled"} onclick="stepBookChapter(1)">Next Section &raquo;</button>
+        </div>
+    `;
+
+    volDiv.innerHTML = `
+        ${headerBox}
+        <h2 class="reader-chapter-title">${escapeHtml(ch.title)}</h2>
+        <div class="reader-chapter-prose">${formatBookProse(ch.content)}</div>
+        ${navFooter}
+    `;
+    volDiv.scrollTop = 0;
+
+    const statusEl = document.getElementById("reader-status-text");
+    if (statusEl && currentReaderBook) {
+        statusEl.textContent = `${currentReaderBook.title} — Section ${currentChapterIndex + 1}/${currentBookChapters.length}: ${ch.title}`;
+    }
+}
+
+function stepBookChapter(delta) {
+    if (!currentBookChapters.length) return;
+    const nextIdx = currentChapterIndex + delta;
+    if (nextIdx >= 0 && nextIdx < currentBookChapters.length) {
+        selectBookChapter(nextIdx);
+    }
+}
+
+function formatBookProse(rawContent) {
+    // If content has markdown tables or code blocks (e.g. Linux Syscalls Reference), use markdown renderer
+    if (rawContent.includes("| Syscall # |") || rawContent.includes("```")) {
+        return renderMarkdown(rawContent);
+    }
+    const paras = rawContent.split(/\n\s*\n/);
+    return paras
+        .map((p) => {
+            const trimmed = p.trim();
+            if (!trimmed) return "";
+            if (trimmed.startsWith("#")) {
+                return `<h3>${escapeHtml(trimmed.replace(/^#+\s*/, ""))}</h3>`;
+            }
+            return `<p>${escapeHtml(trimmed).replace(/\n/g, "<br>")}</p>`;
+        })
+        .join("");
 }
 
 function openKiwixBrowser(urlPath = "/kiwix/") {
     currentReaderBook = { title: "Kiwix ZIM Server Catalog", type: "zim" };
     openWindow("win-reader");
-    document.getElementById("reader-win-icon").textContent = "🌐";
+    document.getElementById("reader-win-icon").innerHTML = xpIcon("ie_globe", 16);
     document.getElementById("reader-win-title").textContent = "Kiwix Offline ZIM Server — Explorer";
     document.getElementById("reader-location-bar").value = `http://localhost${urlPath}`;
     document.getElementById("reader-volume-content").style.display = "none";
-    document.getElementById("btn-reader-home").style.display = "inline-block";
+    const tocSidebar = document.getElementById("reader-toc-sidebar");
+    if (tocSidebar) tocSidebar.style.display = "none";
+    document.getElementById("btn-reader-home").style.display = "inline-flex";
     const iframe = document.getElementById("reader-kiwix-iframe");
     iframe.style.display = "block";
     iframe.src = urlPath;
@@ -925,7 +1416,9 @@ function openKiwixBrowser(urlPath = "/kiwix/") {
 
 function askAiAboutCurrentBook() {
     if (!currentReaderBook) return;
-    openChatAndFocus(`Summarize the key technical details from "${currentReaderBook.title}"`);
+    const ch = currentBookChapters[currentChapterIndex];
+    const chContext = ch ? ` (specifically section "${ch.title}")` : "";
+    openChatAndFocus(`Summarize the key ideas from "${currentReaderBook.title}"${chContext}`);
 }
 
 function openChatAndFocus(prefill = "") {
@@ -938,7 +1431,7 @@ function openChatAndFocus(prefill = "") {
 }
 
 // --------------------------------------------------------------------------
-// 7. Add / Remove Books (ZIM Downloader) & Custom Volume Creator
+// 7. Add / Remove Books (Full Gutenberg Books + Kiwix ZIM Downloader)
 // --------------------------------------------------------------------------
 async function loadCatalog() {
     try {
@@ -955,11 +1448,15 @@ async function loadCatalog() {
             const isRunning = dl && (dl.status === "resolving" || dl.status === "downloading");
             if (isRunning) anyActive = true;
 
+            const iconKey = pkg.icon_type || (pkg.source_type === "gutenberg" ? "book_gold" : "zim_disc");
+
             let actionHtml = "";
             if (pkg.installed) {
-                actionHtml = `<span style="color:#065f46;font-weight:bold;">✅ Installed on Shelf</span>`;
+                actionHtml = `<span style="color:#065f46;font-weight:bold;display:inline-flex;align-items:center;gap:5px;">
+                    ${xpIcon("status_ok", 16)} <span>Installed</span>
+                </span>`;
             } else if (isRunning) {
-                const pct = dl.percent || 5;
+                const pct = dl.percent || 10;
                 actionHtml = `
                     <div style="width:190px;">
                         <div style="font-size:10.5px;color:#003c9d;margin-bottom:2px;">${escapeHtml(dl.message || "Downloading...")}</div>
@@ -967,20 +1464,20 @@ async function loadCatalog() {
                     </div>
                 `;
             } else {
-                actionHtml = `<button class="xp-button-primary" onclick="startZimDownload('${escapeAttr(pkg.id)}')">⬇ Download &amp; Add to Shelf</button>`;
+                actionHtml = `<button class="xp-button-primary" onclick="startZimDownload('${escapeAttr(pkg.id)}')">Install to Shelf</button>`;
             }
 
             html += `
                 <div class="xp-pkg-row">
                     <div class="xp-pkg-info">
                         <div class="xp-pkg-title">
-                            <span>${pkg.icon || "💿"}</span>
+                            ${xpIcon(iconKey, 20)}
                             <span>${escapeHtml(pkg.title)}</span>
                             <span class="xp-pkg-badge">${escapeHtml(pkg.size_label)}</span>
                             <span class="xp-pkg-badge">${escapeHtml(pkg.category)}</span>
                         </div>
                         <div class="xp-pkg-desc">${escapeHtml(pkg.description)}</div>
-                        ${dl && dl.status === "error" ? `<div style="color:#b91c1c;font-size:11px;margin-top:3px;">⚠️ ${escapeHtml(dl.message)}</div>` : ""}
+                        ${dl && dl.status === "error" ? `<div style="color:#b91c1c;font-size:11px;margin-top:3px;">Error: ${escapeHtml(dl.message)}</div>` : ""}
                     </div>
                     <div>${actionHtml}</div>
                 </div>
@@ -995,7 +1492,7 @@ async function loadCatalog() {
                     await loadCatalog();
                     await loadLibrary();
                     await loadSystemStatus();
-                }, 2000);
+                }, 1500);
             }
         } else if (downloadPollTimer) {
             clearInterval(downloadPollTimer);
@@ -1010,7 +1507,7 @@ async function loadCatalog() {
 
 async function startZimDownload(itemId) {
     try {
-        document.getElementById("downloader-status-msg").textContent = `Starting aria2c download for ${itemId}...`;
+        document.getElementById("downloader-status-msg").textContent = `Installing ${itemId} into Library...`;
         await fetch(`/api/downloads/start/${encodeURIComponent(itemId)}`, { method: "POST" });
         await loadCatalog();
     } catch (err) {
@@ -1054,10 +1551,10 @@ function toggleChatDrawer(forceState) {
     const shouldOpen = typeof forceState === "boolean" ? forceState : dock.classList.contains("dock-collapsed");
     if (shouldOpen) {
         dock.classList.remove("dock-collapsed");
-        if (chevron) chevron.textContent = "▼";
+        if (chevron) chevron.innerHTML = "&#9660;";
     } else {
         dock.classList.add("dock-collapsed");
-        if (chevron) chevron.textContent = "▲";
+        if (chevron) chevron.innerHTML = "&#9650;";
     }
 }
 
@@ -1087,7 +1584,9 @@ function renderSavedChatsSidebar() {
         const isActive = c.id === activeChatId;
         html += `
             <div class="ai-chat-history-item ${isActive ? "active" : ""}" onclick="selectChatSession('${escapeAttr(c.id)}')">
-                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">💬 ${escapeHtml(c.title)}</span>
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;">
+                    ${xpIcon("msn_chat", 13)} <span>${escapeHtml(c.title)}</span>
+                </span>
                 <small style="opacity:0.65;">${c.message_count || 0}</small>
             </div>
         `;
@@ -1104,7 +1603,7 @@ function renderSavedChatsFolderWindow() {
         const dateStr = new Date((c.updated_at || 0) * 1000).toLocaleString();
         html += `
             <div class="xp-file-card" onclick="selectChatSession('${escapeAttr(c.id)}'); toggleChatDrawer(true);">
-                <div class="xp-file-icon">💬</div>
+                <div class="xp-file-icon">${xpIcon("msn_chat", 34)}</div>
                 <div class="xp-file-meta">
                     <strong>${escapeHtml(c.title)}</strong>
                     <small>${c.message_count || 0} messages &bull; ${escapeHtml(dateStr)}</small>
@@ -1163,9 +1662,9 @@ function renderMessagesStream(messages) {
             const chips = m.sources
                 .map((s) => {
                     if (s.type === "zim_article" && s.url) {
-                        return `<span class="source-chip" onclick="openKiwixBrowser('${escapeAttr(s.url)}')">💿 ${escapeHtml(s.title)}</span>`;
+                        return `<span class="source-chip" onclick="openKiwixBrowser('${escapeAttr(s.url)}')">${xpIcon("zim_disc", 13)} <span>${escapeHtml(s.title)}</span></span>`;
                     }
-                    return `<span class="source-chip" onclick="openLibraryItem('${escapeAttr(s.id)}')">📘 ${escapeHtml(s.title)}</span>`;
+                    return `<span class="source-chip" onclick="openLibraryItem('${escapeAttr(s.id)}')">${xpIcon("book_blue", 13)} <span>${escapeHtml(s.title)}</span></span>`;
                 })
                 .join("");
             sourcesHtml = `<div class="chat-sources-row">${chips}</div>`;
@@ -1202,7 +1701,7 @@ async function handleChatSubmit(e) {
     const stream = document.getElementById("ai-messages-stream");
     stream.innerHTML += `
         <div class="chat-bubble user">${escapeHtml(text)}</div>
-        <div class="chat-bubble assistant" id="temp-thinking-bubble"><em>${escapeHtml(appSettings.ai_avatar)} ${escapeHtml(appSettings.ai_name)} is searching local archives...</em></div>
+        <div class="chat-bubble assistant" id="temp-thinking-bubble"><em>${escapeHtml(appSettings.ai_name)} is searching local books...</em></div>
     `;
     stream.scrollTop = stream.scrollHeight;
 

@@ -2,11 +2,11 @@
 BunkerOS XP - Unified Backend API
 Provides:
 1. Windows XP Desktop OS static frontend on http://localhost (Port 80)
-2. Persistent SQLite database for Saved Chats & Custom Library Volumes
-3. Dynamic Library & Bookshelf API (built-in volumes + downloaded Kiwix .zim files)
-4. Background ZIM Download Manager (aria2c) with live progress tracking
+2. Persistent SQLite database for Saved Chats, Custom Library Volumes, and XP Settings
+3. Dynamic Library & Bookshelf API (Complete Unabridged Books + Custom Notes + Kiwix .zim files)
+4. Background Book & ZIM Download Manager (Project Gutenberg full books + Kiwix aria2c)
 5. Internal kiwix-serve daemon manager & /kiwix/* reverse proxy
-6. Grounded Local AI Chat (Ollama + Archive RAG with clickable desktop citations)
+6. Grounded Local AI Chat (Ollama + Full-Book & ZIM RAG with clickable desktop citations)
 """
 
 import asyncio
@@ -24,14 +24,15 @@ from typing import Any, Dict, List, Optional
 
 import httpx
 from fastapi import FastAPI, HTTPException, Request, Response
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from seed_books import DOWNLOAD_CATALOG, STARTER_VOLUMES
+from seed_books import DEFAULT_REAL_BOOKS, DOWNLOAD_CATALOG
 
 ZIM_DIR = Path(os.environ.get("ZIM_DIR", "/data/zim_files"))
 APP_DATA_DIR = Path(os.environ.get("APP_DATA_DIR", "/data/app_data"))
+BOOKS_DIR = APP_DATA_DIR / "books"
 DB_PATH = APP_DATA_DIR / "bunker_xp.db"
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
@@ -43,6 +44,7 @@ KIWIX_BASE_URL = f"http://127.0.0.1:{KIWIX_INTERNAL_PORT}"
 
 ZIM_DIR.mkdir(parents=True, exist_ok=True)
 APP_DATA_DIR.mkdir(parents=True, exist_ok=True)
+BOOKS_DIR.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(title="BunkerOS XP - Offline Knowledge Desktop")
 
@@ -55,6 +57,7 @@ async def disable_static_cache(request: Request, call_next):
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
     return response
+
 
 # Global state for kiwix-serve subprocess and active downloads
 kiwix_proc: Optional[subprocess.Popen] = None
@@ -133,16 +136,22 @@ def init_db() -> None:
         )
         welcome_sources = [
             {
-                "id": "vol-linux-syscalls",
-                "title": "Linux Syscall Reference (x64 / x86 / ARM64)",
+                "id": "book-art-of-war",
+                "title": "The Art of War — Sun Tzu",
                 "type": "volume",
-                "snippet": "Calling conventions and syscall numbers for x86_64, i386, arm64, riscv64.",
+                "snippet": "Complete 13-chapter classic treatise on military strategy, tactics, and leadership.",
             },
             {
-                "id": "vol-felix-x86",
-                "title": "Felix Cloutier x86 & AMD64 Instruction Manual",
+                "id": "book-meditations",
+                "title": "Meditations — Marcus Aurelius",
                 "type": "volume",
-                "snippet": "General-purpose registers, MOV/LEA/SYSCALL instructions, Control Registers CR0-CR4.",
+                "snippet": "Complete 12 books of private Stoic philosophical reflections by Roman Emperor Marcus Aurelius.",
+            },
+            {
+                "id": "book-linux-syscalls-full",
+                "title": "Linux x86_64 Complete Syscall Reference",
+                "type": "volume",
+                "snippet": "Complete table of 385 Linux x86_64 system calls extracted from kernel headers.",
             },
         ]
         cur.execute(
@@ -153,9 +162,9 @@ def init_db() -> None:
                 "assistant",
                 (
                     "Bună ziua! Sunt **Elena Vancea**, Secretară Executivă și Responsabilă a Fondului Documentar din **BunkerOS XP**.\n\n"
-                    "- **Biblioteca Dinamică**: Pe măsură ce descărcați noi arhive `.zim` din fereastra **Add/Remove Books**, rafturile bibliotecii și folderele de pe desktop se umplu automat cu volume noi.\n"
-                    "- **Conversații Salvate**: Orice discuție purtată în această bară de jos este salvată automat în baza de date locală.\n\n"
-                    "Cu ce informație tehnică, apel de sistem Linux, instrucțiune x86 sau document din arhivă vă pot ajuta astăzi?"
+                    "- **Volume Complete în Bibliotecă**: Raftul conține acum cărți integrale (*The Art of War*, *Meditations*, *The Prince*, *The Enchiridion*, *The Time Machine*, *Frankenstein* și manualul complet *Linux x86_64 Syscalls*).\n"
+                    "- **Descărcare Instantanee**: Din **Add or Remove Books** puteți descărca dintr-un click romane și tratate complete sau arhive `.zim` Kiwix.\n\n"
+                    "Cu ce carte, capitol sau referință tehnică vă pot ajuta astăzi?"
                 ),
                 json.dumps(welcome_sources),
                 now,
@@ -166,7 +175,7 @@ def init_db() -> None:
 
 
 # ==============================================================================
-# 2. Internal Kiwix-Serve Process Manager
+# 2. Internal Kiwix-Serve Process Manager & Default Books Seeder
 # ==============================================================================
 def restart_kiwix_serve() -> bool:
     global kiwix_proc
@@ -202,6 +211,58 @@ def restart_kiwix_serve() -> bool:
         return False
 
 
+def strip_gutenberg_boilerplate(raw: str, title: str, author: str) -> str:
+    text = raw.replace("\r\n", "\n")
+    start_markers = [
+        "*** START OF THE PROJECT GUTENBERG EBOOK",
+        "*** START OF THIS PROJECT GUTENBERG EBOOK",
+        "***START OF THE PROJECT GUTENBERG EBOOK",
+    ]
+    for m in start_markers:
+        idx = text.find(m)
+        if idx != -1:
+            nl = text.find("\n", idx)
+            if nl != -1:
+                text = text[nl + 1 :]
+            break
+
+    end_markers = [
+        "*** END OF THE PROJECT GUTENBERG EBOOK",
+        "*** END OF THIS PROJECT GUTENBERG EBOOK",
+        "***END OF THE PROJECT GUTENBERG EBOOK",
+        "End of the Project Gutenberg EBook",
+        "End of Project Gutenberg's",
+    ]
+    for m in end_markers:
+        idx = text.find(m)
+        if idx != -1:
+            text = text[:idx]
+            break
+
+    text = text.strip()
+    header = f"# {title}\n**Author:** {author}\n\n---\n\n"
+    return header + text
+
+
+async def ensure_default_books() -> None:
+    """Downloads any missing default Gutenberg book in background if not already on disk."""
+    async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
+        for b in DEFAULT_REAL_BOOKS:
+            fpath = BOOKS_DIR / b["filename"]
+            if fpath.exists() and fpath.stat().st_size > 1024:
+                continue
+            url = b.get("gutenberg_url", "")
+            if not url:
+                continue
+            try:
+                resp = await client.get(url)
+                if resp.status_code == 200 and len(resp.text) > 1000:
+                    cleaned = strip_gutenberg_boilerplate(resp.text, b["title"], b["author"])
+                    fpath.write_text(cleaned, encoding="utf-8")
+            except Exception:
+                pass
+
+
 async def ensure_ollama_persona() -> None:
     """Ensures elena-vancea:latest is compiled in Ollama if qwen2.5 is present."""
     await asyncio.sleep(3)
@@ -212,7 +273,6 @@ async def ensure_ollama_persona() -> None:
                 models = [m.get("name", "") for m in resp.json().get("models", [])]
                 if not any(m.startswith("elena-vancea") for m in models):
                     if any("qwen2.5" in m for m in models):
-                        modelfile_path = Path("/app/../Modelfile")
                         system_prompt = (
                             "Vă numiți Elena Vancea, Secretară Executivă și Bibliotecară Tehnică în BunkerOS XP. "
                             "Răspundeți riguros pe baza arhivelor locale și citați sursele."
@@ -234,11 +294,12 @@ async def ensure_ollama_persona() -> None:
 async def on_startup() -> None:
     init_db()
     restart_kiwix_serve()
+    asyncio.create_task(ensure_default_books())
     asyncio.create_task(ensure_ollama_persona())
 
 
 # ==============================================================================
-# 3. Library & Bookshelf Inventory Helpers
+# 3. Library & Bookshelf Inventory + Chapter Parser
 # ==============================================================================
 SPINE_PALETTE = [
     "#1e3a8a",
@@ -264,22 +325,142 @@ def format_bytes(size: int) -> str:
     return f"{size / (1024**3):.2f} GB"
 
 
+def get_all_book_definitions() -> List[Dict[str, Any]]:
+    """Combines DEFAULT_REAL_BOOKS and any Gutenberg book from DOWNLOAD_CATALOG."""
+    defs: Dict[str, Dict[str, Any]] = {}
+    for b in DEFAULT_REAL_BOOKS:
+        defs[b["id"]] = dict(b)
+    for c in DOWNLOAD_CATALOG:
+        if c.get("source_type") == "gutenberg":
+            defs[c["id"]] = {
+                "id": c["id"],
+                "title": c["title"].replace(" (Full Book)", "").replace(" (Complete Novel)", "").replace(" (Full Epic Poem)", "").replace(" (Complete 10 Books)", ""),
+                "author": c.get("author", "Project Gutenberg"),
+                "category": c.get("category", "Classic Literature & Sci-Fi"),
+                "spine_color": c.get("spine_color", "#1e3a8a"),
+                "icon_type": c.get("icon_type", "book_blue"),
+                "filename": c["filename"],
+                "summary": c.get("description", ""),
+                "removable": True,
+            }
+    return list(defs.values())
+
+
+def parse_book_chapters(raw_text: str, book_title: str) -> List[Dict[str, Any]]:
+    """
+    Splits a full-length book into navigable chapters/sections so the Reader window
+    renders smoothly and provides a real Chapter Table of Contents.
+    """
+    lines = raw_text.splitlines()
+    heading_re = re.compile(
+        r"^(?:"
+        r"#{1,3}\s+.+|"
+        r"(?:CHAPTER|BOOK|PART|SECTION|ACT|LETTER|ADVENTURE)\s+[IVXLCDM0-9]+.*|"
+        r"^(?:I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII|XIX|XX|XXI|XXII|XXIII|XXIV|XXV|XXVI)\.\s+[A-Z].*"
+        r")$"
+    )
+
+    raw_chapters: List[Dict[str, Any]] = []
+    current_title = "Front Matter & Introduction"
+    current_lines: List[str] = []
+
+    for line in lines:
+        stripped = line.strip()
+        is_heading = False
+        if stripped and len(stripped) < 95:
+            if heading_re.match(stripped):
+                is_heading = True
+
+        if is_heading and len("\n".join(current_lines).strip()) > 600:
+            raw_chapters.append(
+                {
+                    "title": current_title.lstrip("#").strip(),
+                    "content": "\n".join(current_lines).strip(),
+                }
+            )
+            current_title = stripped.lstrip("#").strip()
+            current_lines = [line]
+        else:
+            if is_heading and len("\n".join(current_lines).strip()) <= 600 and current_title == "Front Matter & Introduction":
+                current_title = stripped.lstrip("#").strip()
+            current_lines.append(line)
+
+    if current_lines and "\n".join(current_lines).strip():
+        raw_chapters.append(
+            {
+                "title": current_title.lstrip("#").strip(),
+                "content": "\n".join(current_lines).strip(),
+            }
+        )
+
+    # If a chapter is very long (> 22,000 chars) or book had no standard chapter markers,
+    # subdivide large blocks cleanly along paragraph boundaries (~14,000 chars per part)
+    final_chapters: List[Dict[str, Any]] = []
+    MAX_CHARS = 16000
+    for ch in raw_chapters:
+        text = ch["content"]
+        if len(text) <= MAX_CHARS:
+            final_chapters.append(ch)
+        else:
+            paras = text.split("\n\n")
+            chunk: List[str] = []
+            chunk_len = 0
+            part_num = 1
+            for p in paras:
+                if chunk_len + len(p) > MAX_CHARS and chunk:
+                    suffix = f" (Part {part_num})" if part_num > 1 or len(text) > MAX_CHARS else ""
+                    final_chapters.append(
+                        {
+                            "title": f"{ch['title']}{suffix}",
+                            "content": "\n\n".join(chunk).strip(),
+                        }
+                    )
+                    part_num += 1
+                    chunk = [p]
+                    chunk_len = len(p)
+                else:
+                    chunk.append(p)
+                    chunk_len += len(p) + 2
+            if chunk:
+                suffix = f" (Part {part_num})" if part_num > 1 else ""
+                final_chapters.append(
+                    {
+                        "title": f"{ch['title']}{suffix}",
+                        "content": "\n\n".join(chunk).strip(),
+                    }
+                )
+
+    for idx, ch in enumerate(final_chapters):
+        ch["index"] = idx
+        ch["word_count"] = len(ch["content"].split())
+
+    return final_chapters
+
+
 def get_all_library_items() -> List[Dict[str, Any]]:
     items: List[Dict[str, Any]] = []
 
-    # 1. Starter built-in volumes
-    for vol in STARTER_VOLUMES:
+    # 1. Installed full-text books in /data/app_data/books
+    for bdef in get_all_book_definitions():
+        fpath = BOOKS_DIR / bdef["filename"]
+        if not fpath.exists() or not fpath.is_file():
+            continue
+        stat = fpath.stat()
+        if stat.st_size < 100:
+            continue
         items.append(
             {
-                "id": vol["id"],
-                "title": vol["title"],
-                "category": vol["category"],
+                "id": bdef["id"],
+                "title": bdef["title"],
+                "category": bdef["category"],
                 "type": "volume",
-                "spine_color": vol["spine_color"],
-                "icon": vol["icon"],
-                "size_label": vol["size_label"],
-                "author": vol["author"],
-                "summary": vol["summary"],
+                "spine_color": bdef["spine_color"],
+                "icon_type": bdef.get("icon_type", "book_blue"),
+                "size_label": format_bytes(stat.st_size),
+                "size_bytes": stat.st_size,
+                "author": bdef["author"],
+                "summary": bdef["summary"],
+                "removable": bool(bdef.get("removable", False)),
             }
         )
 
@@ -288,6 +469,7 @@ def get_all_library_items() -> List[Dict[str, Any]]:
     cur = conn.cursor()
     cur.execute("SELECT * FROM custom_volumes ORDER BY created_at ASC")
     for row in cur.fetchall():
+        content_bytes = len((row["content"] or "").encode("utf-8"))
         items.append(
             {
                 "id": row["id"],
@@ -295,10 +477,12 @@ def get_all_library_items() -> List[Dict[str, Any]]:
                 "category": row["category"],
                 "type": "volume",
                 "spine_color": row["spine_color"],
-                "icon": row["icon"],
-                "size_label": "Custom Note",
+                "icon_type": "book_note",
+                "size_label": format_bytes(content_bytes),
+                "size_bytes": content_bytes,
                 "author": row["author"],
                 "summary": row["summary"],
+                "removable": True,
             }
         )
     conn.close()
@@ -310,17 +494,16 @@ def get_all_library_items() -> List[Dict[str, Any]]:
             continue
         stat = zpath.stat()
         stem = zpath.stem
-        # Strip trailing _YYYY-MM for kiwix content ID matching
         book_slug = re.sub(r"_[0-9]{4}-[0-9]{2}$", "", stem)
         pretty_title = stem.replace("_", " ").replace(".", " ").title()
         category = "Kiwix ZIM Archives"
         lower_name = stem.lower()
         if "wikipedia" in lower_name:
             category = "Encyclopedias (Wikipedia)"
-        elif any(k in lower_name for k in ("devdocs", "stack", "unix", "osdev", "c_", "linux", "python")):
-            category = "DevDocs & Engineering"
+        elif any(k in lower_name for k in ("devdocs", "stack", "unix", "osdev", "c_", "linux", "python", "bash")):
+            category = "Systems & Kernel Engineering"
         elif any(k in lower_name for k in ("med", "ifixit", "osm")):
-            category = "Survival & Medical"
+            category = "Science & Medicine"
 
         items.append(
             {
@@ -332,11 +515,13 @@ def get_all_library_items() -> List[Dict[str, Any]]:
                 "category": category,
                 "type": "zim",
                 "spine_color": SPINE_PALETTE[idx % len(SPINE_PALETTE)],
-                "icon": "💿",
+                "icon_type": "zim_disc",
                 "size_label": format_bytes(stat.st_size),
+                "size_bytes": stat.st_size,
                 "author": "Kiwix Offline ZIM",
-                "summary": f"Offline ZIM Archive ({zpath.name}, {format_bytes(stat.st_size)}). Click to browse in Kiwix Reader.",
-                "reader_url": f"/kiwix/",
+                "summary": f"Offline ZIM Archive ({zpath.name}, {format_bytes(stat.st_size)}). Opens in Kiwix Reader.",
+                "reader_url": "/kiwix/",
+                "removable": True,
             }
         )
 
@@ -351,7 +536,7 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "wallpaper": "wallpaper-bliss",    # wallpaper-bliss | wallpaper-autumn | wallpaper-azul | wallpaper-ascent | wallpaper-mahogany | wallpaper-teal | custom
     "custom_wallpaper": "",            # Data URL or external URL if wallpaper == 'custom'
     "ai_name": "Elena Vancea",
-    "ai_avatar": "👩‍💼",
+    "ai_avatar": "xp_agent_f",         # xp_agent_f | xp_agent_m | xp_clippy | xp_rover | xp_msn | xp_computer
     "ai_role_title": "Executive Secretary & Chief Technical Librarian",
     "ai_personality": (
         "You are {ai_name}, {ai_role_title} inside BunkerOS XP (an autonomous offline knowledge desktop). "
@@ -361,7 +546,8 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "bookshelf_layout": "spines-3d",   # spines-3d | covers-grid | xp-tiles | xp-details
     "shelf_density": "normal",         # compact | normal | large
     "chat_layout": "fb-side",          # fb-side (Old Facebook bottom-right popup) | bottom-bar (Wide docked bar)
-    "font_size_px": 12,                # 11 to 18
+    "font_size_px": 12,                # UI Base Font Size: 10 to 24
+    "reader_font_size_px": 15,         # Reader & Chat Text Size: 11 to 28
 }
 
 
@@ -379,6 +565,16 @@ def load_settings_dict() -> Dict[str, Any]:
         conn.close()
     except Exception:
         pass
+    # Migrate any legacy emoji avatar to vector avatar key
+    if merged.get("ai_avatar") not in (
+        "xp_agent_f",
+        "xp_agent_m",
+        "xp_clippy",
+        "xp_rover",
+        "xp_msn",
+        "xp_computer",
+    ):
+        merged["ai_avatar"] = "xp_agent_f"
     return merged
 
 
@@ -450,17 +646,42 @@ async def api_get_library() -> Dict[str, Any]:
 
 @app.get("/api/library/volume/{vol_id}")
 async def api_get_volume(vol_id: str) -> Dict[str, Any]:
-    for vol in STARTER_VOLUMES:
-        if vol["id"] == vol_id:
-            return vol
+    # 1. Check installed full-text books
+    for bdef in get_all_book_definitions():
+        if bdef["id"] == vol_id:
+            fpath = BOOKS_DIR / bdef["filename"]
+            if fpath.exists() and fpath.is_file():
+                raw_text = fpath.read_text(encoding="utf-8", errors="replace")
+                chapters = parse_book_chapters(raw_text, bdef["title"])
+                stat = fpath.stat()
+                total_words = sum(ch.get("word_count", 0) for ch in chapters)
+                return {
+                    "id": bdef["id"],
+                    "title": bdef["title"],
+                    "author": bdef["author"],
+                    "category": bdef["category"],
+                    "spine_color": bdef["spine_color"],
+                    "icon_type": bdef.get("icon_type", "book_blue"),
+                    "size_label": format_bytes(stat.st_size),
+                    "word_count": total_words,
+                    "summary": bdef["summary"],
+                    "chapters": chapters,
+                    "content": chapters[0]["content"] if chapters else raw_text[:12000],
+                }
 
+    # 2. Check custom SQLite volumes
     conn = get_db()
     cur = conn.cursor()
     cur.execute("SELECT * FROM custom_volumes WHERE id = ?", (vol_id,))
     row = cur.fetchone()
     conn.close()
     if row:
-        return dict(row)
+        d = dict(row)
+        chapters = parse_book_chapters(d["content"], d["title"])
+        d["chapters"] = chapters
+        d["word_count"] = len(d["content"].split())
+        d["size_label"] = format_bytes(len(d["content"].encode("utf-8")))
+        return d
 
     raise HTTPException(status_code=404, detail="Volume not found")
 
@@ -491,7 +712,7 @@ async def api_create_custom_volume(payload: CustomVolumeCreate) -> Dict[str, Any
             payload.title.strip(),
             payload.category.strip(),
             payload.spine_color,
-            "📓",
+            "book_note",
             payload.author.strip(),
             summary,
             payload.content,
@@ -506,9 +727,13 @@ async def api_create_custom_volume(payload: CustomVolumeCreate) -> Dict[str, Any
 @app.get("/api/catalog")
 async def api_get_catalog() -> Dict[str, Any]:
     existing_zims = [p.name for p in ZIM_DIR.glob("*.zim")]
+    existing_books = [p.name for p in BOOKS_DIR.glob("*.txt") if p.stat().st_size > 100]
     catalog_out = []
     for entry in DOWNLOAD_CATALOG:
-        installed = any(re.search(entry["prefix_regex"], zname) for zname in existing_zims)
+        if entry.get("source_type") == "gutenberg":
+            installed = entry.get("filename") in existing_books
+        else:
+            installed = any(re.search(entry["prefix_regex"], zname) for zname in existing_zims)
         dl_state = active_downloads.get(entry["id"])
         catalog_out.append(
             {
@@ -538,6 +763,61 @@ async def resolve_kiwix_url(kiwix_category: str, prefix_regex: str) -> Optional[
 
 async def run_download_job(item: Dict[str, str]) -> None:
     item_id = item["id"]
+    source_type = item.get("source_type", "zim")
+
+    # Branch A: Full-Text Project Gutenberg Book Download
+    if source_type == "gutenberg":
+        url = item["direct_url"]
+        filename = item["filename"]
+        active_downloads[item_id] = {
+            "id": item_id,
+            "title": item["title"],
+            "status": "downloading",
+            "percent": 15,
+            "filename": filename,
+            "message": f"Downloading full book text from Project Gutenberg...",
+        }
+        try:
+            async with httpx.AsyncClient(timeout=45.0, follow_redirects=True) as client:
+                resp = await client.get(url)
+                if resp.status_code == 200 and len(resp.text) > 1000:
+                    active_downloads[item_id]["percent"] = 75
+                    active_downloads[item_id]["message"] = "Formatting chapters and indexing into Library..."
+                    clean_title = item["title"].replace(" (Full Book)", "").replace(" (Complete Novel)", "")
+                    cleaned = strip_gutenberg_boilerplate(
+                        resp.text,
+                        clean_title,
+                        item.get("author", "Project Gutenberg"),
+                    )
+                    target_path = BOOKS_DIR / filename
+                    target_path.write_text(cleaned, encoding="utf-8")
+                    active_downloads[item_id] = {
+                        "id": item_id,
+                        "title": item["title"],
+                        "status": "completed",
+                        "percent": 100,
+                        "filename": filename,
+                        "message": f"Installed {clean_title} ({format_bytes(target_path.stat().st_size)}) to Library!",
+                    }
+                else:
+                    active_downloads[item_id] = {
+                        "id": item_id,
+                        "title": item["title"],
+                        "status": "error",
+                        "percent": 0,
+                        "message": f"HTTP {resp.status_code} while fetching book.",
+                    }
+        except Exception as exc:
+            active_downloads[item_id] = {
+                "id": item_id,
+                "title": item["title"],
+                "status": "error",
+                "percent": 0,
+                "message": f"Failed to download book: {exc}",
+            }
+        return
+
+    # Branch B: Official Kiwix .ZIM Archive Download via aria2c
     active_downloads[item_id] = {
         "id": item_id,
         "title": item["title"],
@@ -647,6 +927,26 @@ async def api_start_download(item_id: str) -> Dict[str, Any]:
     return {"status": "started", "id": item_id}
 
 
+@app.delete("/api/library/book/{book_id}")
+async def api_delete_book(book_id: str) -> Dict[str, Any]:
+    for c in DOWNLOAD_CATALOG:
+        if c.get("id") == book_id and c.get("source_type") == "gutenberg":
+            target = BOOKS_DIR / c["filename"]
+            if target.exists():
+                target.unlink()
+                active_downloads.pop(book_id, None)
+                return {"status": "deleted", "id": book_id}
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM custom_volumes WHERE id = ?", (book_id,))
+    deleted = cur.rowcount
+    conn.commit()
+    conn.close()
+    if deleted:
+        return {"status": "deleted", "id": book_id}
+    raise HTTPException(status_code=404, detail="Book not found or is a core system volume")
+
+
 @app.delete("/api/library/zim/{filename}")
 async def api_delete_zim(filename: str) -> Dict[str, Any]:
     safe_name = Path(filename).name
@@ -659,32 +959,76 @@ async def api_delete_zim(filename: str) -> Dict[str, Any]:
 
 
 # ==============================================================================
-# 5. Archive Search & Grounding (Built-in Volumes + Kiwix ZIMs)
+# 5. Archive Search & Grounding (Full-Text Books + Custom Notes + Kiwix ZIMs)
 # ==============================================================================
+STOPWORDS = {
+    "the", "and", "for", "that", "this", "with", "from", "what", "how", "who",
+    "where", "when", "why", "are", "was", "were", "have", "has", "had", "about",
+    "into", "care", "este", "sunt", "din", "pentru", "cum", "despre", "unui",
+}
+
+
 async def search_all_archives(query: str) -> List[Dict[str, str]]:
     if not query.strip():
         return []
 
-    tokens = [t.lower() for t in re.findall(r"[a-zA-Z0-9_]{2,}", query) if len(t) >= 2]
+    tokens = [
+        t.lower()
+        for t in re.findall(r"[a-zA-Z0-9_]{3,}", query)
+        if t.lower() not in STOPWORDS
+    ]
     if not tokens:
         tokens = [query.strip().lower()]
 
     matches: List[Dict[str, str]] = []
 
-    # 1. Search built-in and custom volumes
-    all_vols = list(STARTER_VOLUMES)
+    # 1. Search installed full-text books in /data/app_data/books
+    for bdef in get_all_book_definitions():
+        fpath = BOOKS_DIR / bdef["filename"]
+        if not fpath.exists() or not fpath.is_file():
+            continue
+        try:
+            text = fpath.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+
+        title_lower = f"{bdef['title']} {bdef['author']} {bdef['summary']}".lower()
+        title_hits = sum(4 for tok in tokens if tok in title_lower)
+
+        # Find best matching paragraph across the book
+        best_para = ""
+        best_para_score = 0
+        for para in text.split("\n\n"):
+            p_clean = para.strip()
+            if len(p_clean) < 40:
+                continue
+            p_lower = p_clean.lower()
+            p_score = sum(2 for tok in tokens if tok in p_lower)
+            if p_score > best_para_score:
+                best_para_score = p_score
+                best_para = p_clean[:550]
+
+        total_score = title_hits + best_para_score
+        if total_score > 0:
+            matches.append(
+                {
+                    "id": bdef["id"],
+                    "title": f"{bdef['title']} ({bdef['author']})",
+                    "type": "volume",
+                    "snippet": best_para or bdef["summary"],
+                    "score": str(total_score),
+                }
+            )
+
+    # 2. Search custom SQLite volumes
     conn = get_db()
     cur = conn.cursor()
     cur.execute("SELECT * FROM custom_volumes")
     for r in cur.fetchall():
-        all_vols.append(dict(r))
-    conn.close()
-
-    for vol in all_vols:
+        vol = dict(r)
         haystack = f"{vol['title']} {vol.get('summary', '')} {vol['content']}".lower()
         score = sum(3 if tok in vol["title"].lower() else (1 if tok in haystack else 0) for tok in tokens)
         if score > 0:
-            # Extract best matching paragraph
             best_para = vol.get("summary", "")
             for para in vol["content"].split("\n\n"):
                 if any(tok in para.lower() for tok in tokens):
@@ -699,8 +1043,9 @@ async def search_all_archives(query: str) -> List[Dict[str, str]]:
                     "score": str(score),
                 }
             )
+    conn.close()
 
-    # 2. Search live Kiwix ZIM server if running
+    # 3. Search live Kiwix ZIM server if running
     if kiwix_proc and kiwix_proc.poll() is None:
         try:
             async with httpx.AsyncClient(timeout=4.0) as client:
@@ -724,7 +1069,7 @@ async def search_all_archives(query: str) -> List[Dict[str, str]]:
                                     "type": "zim_article",
                                     "url": href,
                                     "snippet": f"Verified Kiwix ZIM article at {href}",
-                                    "score": "5",
+                                    "score": "6",
                                 }
                             )
         except Exception:
@@ -835,7 +1180,6 @@ async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, A
         (user_msg_id, chat_id, "user", user_text, "[]", now),
     )
 
-    # Auto-title the chat if it is still named "New Technical Session"
     chat_title = chat_row["title"]
     if chat_title in ("New Technical Session", "New Chat"):
         chat_title = user_text[:42] + ("..." if len(user_text) > 42 else "")
@@ -843,13 +1187,11 @@ async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, A
     else:
         cur.execute("UPDATE chats SET updated_at = ? WHERE id = ?", (now, chat_id))
 
-    # Fetch recent conversation history
     cur.execute("SELECT role, content FROM messages WHERE chat_id = ? ORDER BY created_at ASC LIMIT 14", (chat_id,))
     history_rows = [dict(r) for r in cur.fetchall()]
     conn.commit()
     conn.close()
 
-    # Search local archives for grounding
     sources = await search_all_archives(user_text)
     archive_context = ""
     if sources:
@@ -889,7 +1231,6 @@ async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, A
 
     try:
         async with httpx.AsyncClient(timeout=90.0) as client:
-            # Verify available model name in Ollama
             tags_resp = await client.get(f"{OLLAMA_BASE_URL}/api/tags")
             available = [m.get("name", "") for m in tags_resp.json().get("models", [])] if tags_resp.status_code == 200 else []
             if target_model not in available:
@@ -914,7 +1255,7 @@ async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, A
             )
         else:
             reply_text = (
-                f"⚠️ Local Ollama model (`{target_model}`) is still loading or unreachable (`{exc}`). "
+                f"Local Ollama model (`{target_model}`) is still loading or unreachable (`{exc}`). "
                 "No direct offline excerpt matched that query yet."
             )
 
@@ -959,7 +1300,7 @@ async def proxy_kiwix(path: str, request: Request) -> Response:
                 content="""
                 <html><body style="font-family:Tahoma,sans-serif;background:#ece9d8;padding:24px;color:#111;">
                 <h3>No Kiwix .ZIM Archives Downloaded Yet</h3>
-                <p>Open the <b>Add / Remove Books (ZIM Downloader)</b> window on your Windows XP Desktop and click <b>Download</b> on any ZIM package to populate the Kiwix Reader and your Library Bookshelf!</p>
+                <p>Open the <b>Add or Remove Books</b> window on your Windows XP Desktop and click <b>Install</b> on any ZIM package to populate the Kiwix Reader and your Library Bookshelf.</p>
                 </body></html>
                 """,
                 status_code=200,

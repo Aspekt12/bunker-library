@@ -1,0 +1,72 @@
+[
+  {
+    "id": "book-art-of-war",
+    "title": "The Art of War",
+    "author": "Sun Tzu (trans. Lionel Giles)",
+    "category": "Strategy & Philosophy",
+    "spine_color": "#7f1d1d",
+    "summary": "Complete 13-chapter classic treatise on military strategy, tactics, and leadership.",
+    "filename": "book-art-of-war.txt",
+    "size_label": "308.2 KB"
+  },
+  {
+    "id": "book-meditations",
+    "title": "Meditations",
+    "author": "Marcus Aurelius (trans. George Long)",
+    "category": "Strategy & Philosophy",
+    "spine_color": "#1e3a8a",
+    "summary": "Complete 12 books of private Stoic philosophical reflections by Roman Emperor Marcus Aurelius.",
+    "filename": "book-meditations.txt",
+    "size_label": "389.3 KB"
+  },
+  {
+    "id": "book-the-prince",
+    "title": "The Prince",
+    "author": "Niccol\u00f2 Machiavelli",
+    "category": "Strategy & Philosophy",
+    "spine_color": "#4c1d95",
+    "summary": "Complete 26-chapter political treatise on statecraft, power, and governance.",
+    "filename": "book-the-prince.txt",
+    "size_label": "276.8 KB"
+  },
+  {
+    "id": "book-enchiridion",
+    "title": "The Enchiridion (Manual of Stoicism)",
+    "author": "Epictetus (trans. T. W. Higginson)",
+    "category": "Strategy & Philosophy",
+    "spine_color": "#065f46",
+    "summary": "Complete handbook of practical Stoic ethical and mental resilience principles.",
+    "filename": "book-enchiridion.txt",
+    "size_label": "68.8 KB"
+  },
+  {
+    "id": "book-time-machine",
+    "title": "The Time Machine",
+    "author": "H. G. Wells",
+    "category": "Classic Literature & Sci-Fi",
+    "spine_color": "#0f766e",
+    "summary": "Complete unabridged science-fiction novella exploring the distant future of humanity.",
+    "filename": "book-time-machine.txt",
+    "size_label": "177.2 KB"
+  },
+  {
+    "id": "book-frankenstein",
+    "title": "Frankenstein; Or, The Modern Prometheus",
+    "author": "Mary Wollstonecraft Shelley",
+    "category": "Classic Literature & Sci-Fi",
+    "spine_color": "#3730a3",
+    "summary": "Complete unabridged 1818/1831 gothic science-fiction novel.",
+    "filename": "book-frankenstein.txt",
+    "size_label": "411.7 KB"
+  },
+  {
+    "id": "book-linux-syscalls-full",
+    "title": "Linux x86_64 Complete Syscall Table (385 Calls)",
+    "author": "Linux Kernel ABI (asm/unistd_64.h)",
+    "category": "Systems & Kernel Engineering",
+    "spine_color": "#1d4ed8",
+    "summary": "Complete unabridged table of all 385 Linux x86_64 system calls with decimal/hex numbers and register conventions.",
+    "filename": "book-linux-syscalls-full.txt",
+    "size_label": "31.1 KB"
+  }
+]
