@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BunkerOS XP Professional — Offline Knowledge Desktop</title>
-    <link rel="stylesheet" href="/static/xp.css">
+    <link rel="stylesheet" href="/static/xp.css?v=3">
 </head>
 <body class="theme-luna-blue wallpaper-bliss chat-mode-fb-side">
 
@@ -257,10 +257,17 @@
 
                     <div class="xp-fieldset">
                         <div class="xp-fieldset-title">Windows XP Color Scheme (1:1 Theme)</div>
+                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('luna-blue')">🔵 Luna Blue</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('luna-olive')">🫒 Olive Green</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('luna-silver')">⚪ Silver Metallic</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('royale-noir')">⚫ Royale Noir</button>
+                            <button type="button" class="xp-toolbar-btn" onclick="quickSelectTheme('classic-98')">🪟 Classic 98/2000</button>
+                        </div>
                         <div class="xp-form-grid">
                             <div>
                                 <label>Windows &amp; Buttons Style:</label>
-                                <select id="set-xp-theme" onchange="previewThemeAndWallpaper()">
+                                <select id="set-xp-theme" onchange="previewThemeAndWallpaper(true)">
                                     <option value="luna-blue">Windows XP — Luna Blue (Default)</option>
                                     <option value="luna-olive">Windows XP — Olive Green (Homestead)</option>
                                     <option value="luna-silver">Windows XP — Silver (Metallic)</option>
@@ -270,7 +277,7 @@
                             </div>
                             <div>
                                 <label>Desktop Background (Wallpaper):</label>
-                                <select id="set-wallpaper" onchange="previewThemeAndWallpaper()">
+                                <select id="set-wallpaper" onchange="previewThemeAndWallpaper(true)">
                                     <option value="wallpaper-bliss">Bliss (Rolling Green Hills &amp; Sky)</option>
                                     <option value="wallpaper-autumn">Autumn (Red &amp; Gold Maple Woods)</option>
                                     <option value="wallpaper-azul">Azul (Tropical Ocean Horizon)</option>
@@ -728,6 +735,6 @@
         </div>
     </footer>
 
-    <script src="/static/xp.js"></script>
+    <script src="/static/xp.js?v=3"></script>
 </body>
 </html>

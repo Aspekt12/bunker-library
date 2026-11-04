@@ -115,12 +115,108 @@ async function loadSettings() {
     }
 }
 
+const XP_THEME_PALETTES = {
+    "luna-blue": {
+        "--win-border": "#0046d5",
+        "--win-title-bg": "linear-gradient(180deg, #0961ec 0%, #3a93ff 10%, #0058ee 46%, #0046c7 88%, #0855dd 100%)",
+        "--win-title-text": "#ffffff",
+        "--win-bg": "#ece9d8",
+        "--taskbar-bg": "linear-gradient(180deg, #3168d5 0%, #4993e6 8%, #2258d5 18%, #245edb 88%, #1941a5 100%)",
+        "--taskbar-tab-bg": "linear-gradient(180deg, #3c81f3 0%, #2764d8 100%)",
+        "--taskbar-tab-active": "linear-gradient(180deg, #1b4ba8 0%, #153c8a 100%)",
+        "--start-btn-bg": "linear-gradient(180deg, #42a842 0%, #73d273 10%, #379837 50%, #2b7b2b 92%, #1d591d 100%)",
+        "--systray-bg": "linear-gradient(180deg, #158be9 0%, #0e6ec4 100%)",
+        "--sidebar-bg": "linear-gradient(180deg, #7ba2e7 0%, #6375d6 100%)",
+        "--task-card-bg": "#d6dff7",
+        "--task-header-bg": "linear-gradient(90deg, #ffffff 0%, #c6d3f7 100%)",
+        "--task-header-text": "#215dc6",
+        "--win-ctrl-btn-bg": "linear-gradient(180deg, #3c8cff 0%, #125ee0 100%)",
+        "--start-right-bg": "#d3e5fa",
+    },
+    "luna-olive": {
+        "--win-border": "#5a6b44",
+        "--win-title-bg": "linear-gradient(180deg, #8da370 0%, #b0c494 10%, #748858 48%, #5e7046 88%, #6b7e53 100%)",
+        "--win-title-text": "#ffffff",
+        "--win-bg": "#f2f0e4",
+        "--taskbar-bg": "linear-gradient(180deg, #7c9260 0%, #9cb280 9%, #6b7e53 20%, #63754c 88%, #4d5c3a 100%)",
+        "--taskbar-tab-bg": "linear-gradient(180deg, #8da370 0%, #748858 100%)",
+        "--taskbar-tab-active": "linear-gradient(180deg, #52613c 0%, #445231 100%)",
+        "--start-btn-bg": "linear-gradient(180deg, #e07236 0%, #f39a68 10%, #cf6026 52%, #a84816 92%, #87370d 100%)",
+        "--systray-bg": "linear-gradient(180deg, #5d6f46 0%, #495836 100%)",
+        "--sidebar-bg": "linear-gradient(180deg, #b5c49e 0%, #93a677 100%)",
+        "--task-card-bg": "#eef3e6",
+        "--task-header-bg": "linear-gradient(90deg, #ffffff 0%, #d8e2c5 100%)",
+        "--task-header-text": "#455432",
+        "--win-ctrl-btn-bg": "linear-gradient(180deg, #9cb280 0%, #5e7046 100%)",
+        "--start-right-bg": "#e4ebd8",
+    },
+    "luna-silver": {
+        "--win-border": "#666975",
+        "--win-title-bg": "linear-gradient(180deg, #aeb2be 0%, #dcdfe7 12%, #9498a6 48%, #767a88 88%, #888c9a 100%)",
+        "--win-title-text": "#111827",
+        "--win-bg": "#efeff2",
+        "--taskbar-bg": "linear-gradient(180deg, #9fa3b0 0%, #cfd2dc 9%, #838796 20%, #757988 88%, #5b5f6c 100%)",
+        "--taskbar-tab-bg": "linear-gradient(180deg, #b8bcc8 0%, #9498a6 100%)",
+        "--taskbar-tab-active": "linear-gradient(180deg, #646875 0%, #525663 100%)",
+        "--start-btn-bg": "linear-gradient(180deg, #42a842 0%, #73d273 10%, #379837 50%, #2b7b2b 92%, #1d591d 100%)",
+        "--systray-bg": "linear-gradient(180deg, #747887 0%, #5c606e 100%)",
+        "--sidebar-bg": "linear-gradient(180deg, #c7cad4 0%, #a4a8b6 100%)",
+        "--task-card-bg": "#f3f4f7",
+        "--task-header-bg": "linear-gradient(90deg, #ffffff 0%, #dadce4 100%)",
+        "--task-header-text": "#374151",
+        "--win-ctrl-btn-bg": "linear-gradient(180deg, #cfd2dc 0%, #767a88 100%)",
+        "--start-right-bg": "#e5e7eb",
+    },
+    "royale-noir": {
+        "--win-border": "#1e232d",
+        "--win-title-bg": "linear-gradient(180deg, #38404f 0%, #525c70 10%, #232832 48%, #151920 88%, #1e232d 100%)",
+        "--win-title-text": "#ffffff",
+        "--win-bg": "#e5e7eb",
+        "--taskbar-bg": "linear-gradient(180deg, #2d333f 0%, #454d5e 9%, #1c2029 20%, #151820 88%, #0d0f14 100%)",
+        "--taskbar-tab-bg": "linear-gradient(180deg, #374151 0%, #1f2937 100%)",
+        "--taskbar-tab-active": "linear-gradient(180deg, #e35d1b 0%, #b8430b 100%)",
+        "--start-btn-bg": "linear-gradient(180deg, #f27127 0%, #ff9b61 10%, #e35d1b 52%, #b5420a 92%, #8c3105 100%)",
+        "--systray-bg": "linear-gradient(180deg, #1f242d 0%, #11141a 100%)",
+        "--sidebar-bg": "linear-gradient(180deg, #374151 0%, #1f2937 100%)",
+        "--task-card-bg": "#e5e7eb",
+        "--task-header-bg": "linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%)",
+        "--task-header-text": "#111827",
+        "--win-ctrl-btn-bg": "linear-gradient(180deg, #4b5563 0%, #1f2937 100%)",
+        "--start-right-bg": "#d1d5db",
+    },
+    "classic-98": {
+        "--win-border": "#808080",
+        "--win-title-bg": "linear-gradient(90deg, #0a246a 0%, #a6caf0 100%)",
+        "--win-title-text": "#ffffff",
+        "--win-bg": "#d4d0c8",
+        "--taskbar-bg": "#d4d0c8",
+        "--taskbar-tab-bg": "#d4d0c8",
+        "--taskbar-tab-active": "#ebe8e1",
+        "--start-btn-bg": "#d4d0c8",
+        "--systray-bg": "#d4d0c8",
+        "--sidebar-bg": "#d4d0c8",
+        "--task-card-bg": "#ffffff",
+        "--task-header-bg": "#0a246a",
+        "--task-header-text": "#ffffff",
+        "--win-ctrl-btn-bg": "#d4d0c8",
+        "--start-right-bg": "#d4d0c8",
+    },
+};
+
 function applySettingsToDOM(cfg) {
-    const themeCls = `theme-${cfg.xp_theme || "luna-blue"}`;
+    const themeKey = cfg.xp_theme || "luna-blue";
+    const themeCls = `theme-${themeKey}`;
     const wallCls = cfg.wallpaper || "wallpaper-bliss";
     const chatCls = `chat-mode-${cfg.chat_layout || "fb-side"}`;
 
+    document.documentElement.className = `${themeCls}`;
     document.body.className = `${themeCls} ${wallCls} ${chatCls}`;
+
+    // Also set CSS custom properties directly on :root so theme changes are 100% immediate
+    const palette = XP_THEME_PALETTES[themeKey] || XP_THEME_PALETTES["luna-blue"];
+    Object.entries(palette).forEach(([prop, val]) => {
+        document.documentElement.style.setProperty(prop, val);
+    });
 
     if (cfg.wallpaper === "custom" && cfg.custom_wallpaper) {
         document.body.style.backgroundImage = `url("${cfg.custom_wallpaper}")`;
@@ -194,7 +290,13 @@ function switchSettingsTab(tabName) {
     });
 }
 
-function previewThemeAndWallpaper() {
+function quickSelectTheme(themeKey) {
+    const sel = document.getElementById("set-xp-theme");
+    if (sel) sel.value = themeKey;
+    previewThemeAndWallpaper(true);
+}
+
+async function previewThemeAndWallpaper(autoSave = false) {
     const theme = document.getElementById("set-xp-theme")?.value || "luna-blue";
     const wall = document.getElementById("set-wallpaper")?.value || "wallpaper-bliss";
     const customUrl = document.getElementById("set-custom-wallpaper")?.value.trim() || "";
@@ -220,6 +322,22 @@ function previewThemeAndWallpaper() {
             screen.style.background = "#008080";
         } else {
             screen.style.background = "linear-gradient(180deg, #1b65d6 0%, #4da1ff 55%, #52b718 56%)";
+        }
+    }
+
+    if (autoSave) {
+        try {
+            await fetch("/api/settings", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    xp_theme: theme,
+                    wallpaper: wall,
+                    custom_wallpaper: customUrl,
+                }),
+            });
+        } catch (err) {
+            console.error("Auto-save theme failed:", err);
         }
     }
 }

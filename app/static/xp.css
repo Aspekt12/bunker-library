@@ -25,13 +25,17 @@
     --task-card-bg: #d6dff7;
     --task-header-bg: linear-gradient(90deg, #ffffff 0%, #c6d3f7 100%);
     --task-header-text: #215dc6;
+    --win-ctrl-btn-bg: linear-gradient(180deg, #3c8cff 0%, #125ee0 100%);
+    --start-right-bg: #d3e5fa;
     --fb-header-bg: linear-gradient(180deg, #3b5998 0%, #2d4373 100%);
 }
 
 /* Theme 2: Windows XP Olive Green (Homestead) */
+html.theme-luna-olive,
 body.theme-luna-olive {
     --win-border: #5a6b44;
     --win-title-bg: linear-gradient(180deg, #8da370 0%, #b0c494 10%, #748858 48%, #5e7046 88%, #6b7e53 100%);
+    --win-title-text: #ffffff;
     --win-bg: #f2f0e4;
     --taskbar-bg: linear-gradient(180deg, #7c9260 0%, #9cb280 9%, #6b7e53 20%, #63754c 88%, #4d5c3a 100%);
     --taskbar-tab-bg: linear-gradient(180deg, #8da370 0%, #748858 100%);
@@ -42,9 +46,12 @@ body.theme-luna-olive {
     --task-card-bg: #eef3e6;
     --task-header-bg: linear-gradient(90deg, #ffffff 0%, #d8e2c5 100%);
     --task-header-text: #455432;
+    --win-ctrl-btn-bg: linear-gradient(180deg, #9cb280 0%, #5e7046 100%);
+    --start-right-bg: #e4ebd8;
 }
 
 /* Theme 3: Windows XP Silver (Metallic) */
+html.theme-luna-silver,
 body.theme-luna-silver {
     --win-border: #666975;
     --win-title-bg: linear-gradient(180deg, #aeb2be 0%, #dcdfe7 12%, #9498a6 48%, #767a88 88%, #888c9a 100%);
@@ -58,12 +65,16 @@ body.theme-luna-silver {
     --task-card-bg: #f3f4f7;
     --task-header-bg: linear-gradient(90deg, #ffffff 0%, #dadce4 100%);
     --task-header-text: #374151;
+    --win-ctrl-btn-bg: linear-gradient(180deg, #cfd2dc 0%, #767a88 100%);
+    --start-right-bg: #e5e7eb;
 }
 
 /* Theme 4: Windows XP Royale Noir / Zune (Dark Glossy) */
+html.theme-royale-noir,
 body.theme-royale-noir {
     --win-border: #1e232d;
     --win-title-bg: linear-gradient(180deg, #38404f 0%, #525c70 10%, #232832 48%, #151920 88%, #1e232d 100%);
+    --win-title-text: #ffffff;
     --win-bg: #e5e7eb;
     --taskbar-bg: linear-gradient(180deg, #2d333f 0%, #454d5e 9%, #1c2029 20%, #151820 88%, #0d0f14 100%);
     --taskbar-tab-bg: linear-gradient(180deg, #374151 0%, #1f2937 100%);
@@ -74,12 +85,16 @@ body.theme-royale-noir {
     --task-card-bg: #e5e7eb;
     --task-header-bg: linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%);
     --task-header-text: #111827;
+    --win-ctrl-btn-bg: linear-gradient(180deg, #4b5563 0%, #1f2937 100%);
+    --start-right-bg: #d1d5db;
 }
 
 /* Theme 5: Windows Classic (Windows 2000 / 98 Beveled Gray) */
+html.theme-classic-98,
 body.theme-classic-98 {
     --win-border: #808080;
     --win-title-bg: linear-gradient(90deg, #0a246a 0%, #a6caf0 100%);
+    --win-title-text: #ffffff;
     --win-bg: #d4d0c8;
     --taskbar-bg: #d4d0c8;
     --taskbar-tab-bg: #d4d0c8;
@@ -90,6 +105,8 @@ body.theme-classic-98 {
     --task-card-bg: #ffffff;
     --task-header-bg: #0a246a;
     --task-header-text: #ffffff;
+    --win-ctrl-btn-bg: #d4d0c8;
+    --start-right-bg: #d4d0c8;
 }
 
 body {
@@ -311,7 +328,7 @@ body.theme-classic-98 .xp-title-controls button {
 }
 
 .xp-btn-min, .xp-btn-max {
-    background: linear-gradient(180deg, #3c8cff 0%, #125ee0 100%);
+    background: var(--win-ctrl-btn-bg);
 }
 
 .xp-btn-close {
@@ -877,8 +894,8 @@ body.theme-classic-98 .xp-title-controls button {
 .preview-mini-win {
     width: 110px;
     height: 64px;
-    background: #ece9d8;
-    border: 2px solid #0046d5;
+    background: var(--win-bg);
+    border: 2px solid var(--win-border);
     border-radius: 3px;
     overflow: hidden;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
@@ -1742,7 +1759,7 @@ body.theme-classic-98 #xp-systray {
 
 .xp-start-right {
     flex: 0.85;
-    background: #d3e5fa;
+    background: var(--start-right-bg);
     border-left: 1px solid #95bdee;
     padding: 8px 10px;
     display: flex;

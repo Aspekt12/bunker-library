@@ -46,6 +46,16 @@ APP_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(title="BunkerOS XP - Offline Knowledge Desktop")
 
+
+@app.middleware("http")
+async def disable_static_cache(request: Request, call_next):
+    response = await call_next(request)
+    if request.url.path == "/" or request.url.path.startswith("/static/"):
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
+
 # Global state for kiwix-serve subprocess and active downloads
 kiwix_proc: Optional[subprocess.Popen] = None
 active_downloads: Dict[str, Dict[str, Any]] = {}
