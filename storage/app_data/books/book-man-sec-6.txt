@@ -1,0 +1,31 @@
+# Linux Man Pages Sec. 6: Games & Screen Demos (44 Pages)
+**Overview:** Classic UNIX terminal games and demonstrations.
+**Total Installed Man Pages in Section 6:** 44
+
+---
+
+## Complete Section 6 Directory (44 Pages)
+Use the **Table of Contents** or **Search Box** in the Reader window to open any of the 44 man pages in Section 6 directly.
+
+`LS(6)`, `OpenStereogram(6)`, `bastet(6)`, `chkfont(6)`, `cowsay(6)`, `cowthink(6)`, `figlet-figlet(6)`, `figlet-utf8(6)`, `figlet(6)`, `figlist(6)`, `fortune(6)`, `greed(6)`, `intro(6)`, `kaces(6)`, `kcanfield(6)`, `kcribbage(6)`, `kdominos(6)`, `kklondike(6)`, `kmcarlo(6)`, `kmontana(6)`, `kslyfox(6)`, `kspider(6)`, `ktabby(6)`, `kthieves(6)`, `ktowers(6)`, `lolcat(6)`, `love-11.5(6)`, `love(6)`, `luanti(6)`, `moon-buggy(6)`, `neverball(6)`, `nudoku(6)`, `oneko(6)`, `opencity(6)`, `showfigfonts(6)`, `sl(6)`, `steam(6)`, `supertuxkart(6)`, `vitetris(6)`, `xmille(6)`, `xphoon(6)`, `xreversi(6)`, `xsnow(6)`, `xsol(6)`
+
+
+
+# INTRO(6) — Linux Manual Page
+
+### NAME
+
+intro - introduction to games
+
+### DESCRIPTION
+
+Section 6 of the manual describes the games and funny little programs
+available on the system.
+
+### NOTES
+
+### Authors and copyright conditions
+
+Look at the header of the manual page source for the author(s) and copyright
+conditions.
+Note that these can be different from page to page!

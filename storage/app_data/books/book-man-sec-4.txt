@@ -1,0 +1,2154 @@
+# Linux Man Pages Sec. 4: Special Files & Devices (55 Pages)
+**Overview:** Kernel device nodes in /dev: null, zero, random, urandom, tty, console, pts, mem, loop, sd, hd.
+**Total Installed Man Pages in Section 4:** 55
+
+---
+
+## Complete Section 4 Directory (55 Pages)
+Use the **Table of Contents** or **Search Box** in the Reader window to open any of the 55 man pages in Section 4 directly.
+
+`amdgpu(4)`, `ati(4)`, `cciss(4)`, `console_codes(4)`, `console_ioctl(4)`, `cpuid(4)`, `dsp56k(4)`, `exa(4)`, `extcap(4)`, `fbdev(4)`, `fbdevhw(4)`, `full(4)`, `fuse(4)`, `hd(4)`, `hpsa(4)`, `initrd(4)`, `inputtestdrv(4)`, `intel-virtual-output(4)`, `intel(4)`, `intro(4)`, `kmem(4)`, `libinput(4)`, `lirc(4)`, `loop-control(4)`, `loop(4)`, `lp(4)`, `mem(4)`, `modesetting(4)`, `mouse(4)`, `msr(4)`, `nouveau(4)`, `null(4)`, `port(4)`, `ptmx(4)`, `pts(4)`, `radeon(4)`, `ram(4)`, `random(4)`, `rtc(4)`, `sd(4)`, `smartpqi(4)`, `st(4)`, `tty(4)`, `ttyS(4)`, `tty_ioctl(4)`, `urandom(4)`, `vcs(4)`, `vcsa(4)`, `vesa(4)`, `veth(4)`, `vmware(4)`, `wacom(4)`, `wavelan(4)`, `wireshark-filter(4)`, `zero(4)`
+
+
+
+# INTRO(4) — Linux Manual Page
+
+### NAME
+
+intro - introduction to special files
+
+### DESCRIPTION
+
+Section 4 of the manual describes special files (devices).
+
+### FILES
+
+/dev/* \[em] device files
+
+### NOTES
+
+### Authors and copyright conditions
+
+Look at the header of the manual page source for the author(s) and copyright
+conditions.
+Note that these can be different from page to page!
+
+### SEE ALSO
+
+mknod (1),
+mknod (2),
+standards (7)
+
+
+# NULL(4) — Linux Manual Page
+
+### NAME
+
+null, zero - data sink
+
+### DESCRIPTION
+
+Data written to the
+/dev/null
+and
+/dev/zero
+special files is discarded.
+
+Reads from
+/dev/null
+always return end of file (i.e.,
+read (2)
+returns 0), whereas reads from
+/dev/zero
+always return bytes containing zero (\[aq]\[rs]0\[aq] characters).
+
+These devices are typically created by:
+
+mknod -m 666 /dev/null c 1 3
+mknod -m 666 /dev/zero c 1 5
+chown root:root /dev/null /dev/zero
+
+### FILES
+
+/dev/null
+
+/dev/zero
+
+### NOTES
+
+If these devices are not writable and readable for all users, many
+programs will act strangely.
+
+Since Linux 2.6.31,
+reads from
+/dev/zero
+are interruptible by signals.
+(This change was made to help with bad latencies for large reads from
+/dev/zero .)
+
+### SEE ALSO
+
+chown (1),
+mknod (1),
+full (4)
+
+
+# ZERO(4) — Linux Manual Page
+
+### NAME
+
+null, zero - data sink
+
+### DESCRIPTION
+
+Data written to the
+/dev/null
+and
+/dev/zero
+special files is discarded.
+
+Reads from
+/dev/null
+always return end of file (i.e.,
+read (2)
+returns 0), whereas reads from
+/dev/zero
+always return bytes containing zero (\[aq]\[rs]0\[aq] characters).
+
+These devices are typically created by:
+
+mknod -m 666 /dev/null c 1 3
+mknod -m 666 /dev/zero c 1 5
+chown root:root /dev/null /dev/zero
+
+### FILES
+
+/dev/null
+
+/dev/zero
+
+### NOTES
+
+If these devices are not writable and readable for all users, many
+programs will act strangely.
+
+Since Linux 2.6.31,
+reads from
+/dev/zero
+are interruptible by signals.
+(This change was made to help with bad latencies for large reads from
+/dev/zero .)
+
+### SEE ALSO
+
+chown (1),
+mknod (1),
+full (4)
+
+
+# FULL(4) — Linux Manual Page
+
+### NAME
+
+full - always full device
+
+### CONFIGURATION
+
+If your system does not have
+/dev/full
+created already, it
+can be created with the following commands:
+
+mknod -m 666 /dev/full c 1 7
+chown root:root /dev/full
+
+### DESCRIPTION
+
+The file
+/dev/full
+has major device number 1
+and minor device number 7.
+
+Writes to the
+/dev/full
+device fail with an
+ENOSPC
+error.
+This can be used to test how a program handles disk-full errors.
+
+Reads from the
+/dev/full
+device will return \[rs]0 characters.
+
+Seeks on
+/dev/full
+will always succeed.
+
+### FILES
+
+/dev/full
+
+### SEE ALSO
+
+mknod (1),
+null (4),
+zero (4)
+
+
+# RANDOM(4) — Linux Manual Page
+
+### NAME
+
+random, urandom - kernel random number source devices
+
+### SYNOPSIS
+
+#include <linux/random.h>
+
+### DESCRIPTION
+
+The character special files
+/dev/random
+and
+/dev/urandom
+(present since Linux 1.3.30)
+provide an interface to the kernel's random number generator.
+The file
+/dev/random
+has major device number 1 and minor device number 8.
+The file
+/dev/urandom
+has major device number 1 and minor device number 9.
+
+The random number generator gathers environmental noise
+from device drivers and other sources into an entropy pool.
+The generator also keeps an estimate of the
+number of bits of noise in the entropy pool.
+From this entropy pool, random numbers are created.
+
+Linux 3.17 and later provides the simpler and safer
+getrandom (2)
+interface which requires no special files;
+see the
+getrandom (2)
+manual page for details.
+
+When read, the
+/dev/urandom
+device returns random bytes using a pseudorandom
+number generator seeded from the entropy pool.
+Reads from this device do not block (i.e., the CPU is not yielded),
+but can incur an appreciable delay when requesting large amounts of data.
+
+When read during early boot time,
+/dev/urandom
+may return data prior to the entropy pool being initialized.
+If this is of concern in your application, use
+getrandom (2)
+or
+/dev/random
+instead.
+
+The
+/dev/random
+device is a legacy interface which dates back to
+a time where the cryptographic primitives used in the implementation
+of
+/dev/urandom
+were not widely trusted.
+It will return random bytes only within the estimated number of
+bits of fresh noise in the entropy pool, blocking if necessary.
+/dev/random
+is suitable for applications that need
+high quality randomness, and can afford indeterminate delays.
+
+When the entropy pool is empty, reads from
+/dev/random
+will block
+until additional environmental noise is gathered.
+Since Linux 5.6, the
+O_NONBLOCK
+flag is ignored as
+/dev/random
+will no longer block except during early boot process.
+In earlier versions, if
+open (2)
+is called for
+/dev/random
+with the
+O_NONBLOCK
+flag, a subsequent
+read (2)
+will not block if the requested number of bytes is not available.
+Instead, the available bytes are returned.
+If no byte is available,
+read (2)
+will return -1 and
+errno
+will be set to
+EAGAIN .
+
+The
+O_NONBLOCK
+flag has no effect when opening
+/dev/urandom .
+When calling
+read (2)
+for the device
+/dev/urandom ,
+reads of up to 256 bytes will return as many bytes as are requested
+and will not be interrupted by a signal handler.
+Reads with a buffer over this limit may return less than the
+requested number of bytes or fail with the error
+EINTR ,
+if interrupted by a signal handler.
+
+Since Linux 3.16,
+a
+read (2)
+from
+/dev/urandom
+will return at most 32\ MB.
+A
+read (2)
+from
+/dev/random
+will return at most 512 bytes
+(340 bytes before Linux 2.6.12).
+
+Writing to
+/dev/random
+or
+/dev/urandom
+will update the
+entropy pool with the data written, but this will not result in a
+higher entropy count.
+This means that it will impact the contents
+read from both files, but it will not make reads from
+/dev/random
+faster.
+
+### Usage
+
+The
+/dev/random
+interface is considered a legacy interface,
+and
+/dev/urandom
+is preferred and sufficient in all use cases,
+with the exception of
+applications which require randomness during early boot time;
+for
+these applications,
+getrandom (2)
+must be used instead,
+because it will block until the entropy pool is initialized.
+
+If a seed file is saved across reboots as recommended below,
+the output is
+cryptographically secure against attackers without local root access as
+soon as it is reloaded in the boot sequence, and perfectly adequate for
+network encryption session keys.
+(All major Linux distributions have saved the seed file across reboots
+since 2000 at least.)
+Since reads from
+/dev/random
+may block, users will usually want to open it in nonblocking mode
+(or perform a read with timeout),
+and provide some sort of user notification if the desired
+entropy is not immediately available.
+
+### Configuration
+
+If your system does not have
+/dev/random
+and
+/dev/urandom
+created already, they
+can be created with the following commands:
+
+mknod -m 666 /dev/random c 1 8
+mknod -m 666 /dev/urandom c 1 9
+chown root:root /dev/random /dev/urandom
+
+When a Linux system starts up without much operator interaction,
+the entropy pool may be in a fairly predictable state.
+This reduces the actual amount of noise in the entropy pool
+below the estimate.
+In order to counteract this effect, it helps to carry
+entropy pool information across shut-downs and start-ups.
+To do this, add the lines to an appropriate script
+which is run during the Linux system start-up sequence:
+
+echo "Initializing random number generator..."
+random_seed=/var/run/random-seed
+# Carry a random seed from start-up to start-up
+# Load and then save the whole entropy pool
+if [ -f $random_seed ]; then
+    cat $random_seed >/dev/urandom
+else
+    touch $random_seed
+fi
+chmod 600 $random_seed
+poolfile=/proc/sys/kernel/random/poolsize
+[ -r $poolfile ] && bits=$(cat $poolfile) || bits=4096
+bytes=$(expr $bits / 8)
+dd if=/dev/urandom of=$random_seed count=1 bs=$bytes
+
+Also, add the following lines in an appropriate script which is
+run during the Linux system shutdown:
+
+# Carry a random seed from shut-down to start-up
+# Save the whole entropy pool
+echo "Saving random seed..."
+random_seed=/var/run/random-seed
+touch $random_seed
+chmod 600 $random_seed
+poolfile=/proc/sys/kernel/random/poolsize
+[ -r $poolfile ] && bits=$(cat $poolfile) || bits=4096
+bytes=$(expr $bits / 8)
+dd if=/dev/urandom of=$random_seed count=1 bs=$bytes
+
+In the above examples, we assume Linux 2.6.0 or later, where
+/proc/sys/kernel/random/poolsize
+returns the size of the entropy pool in bits (see below).
+
+### /proc interfaces
+
+The files in the directory
+/proc/sys/kernel/random
+(present since Linux 2.3.16) provide additional information about the
+/dev/random
+device:
+
+entropy_avail
+This read-only file gives the available entropy, in bits.
+This will be a number in the range 0 to 4096.
+
+poolsize
+This file
+gives the size of the entropy pool.
+The semantics of this file vary across kernel versions:
+
+Linux 2.4:
+This file gives the size of the entropy pool in
+bytes .
+Normally, this file will have the value 512, but it is writable,
+and can be changed to any value for which an algorithm is available.
+The choices are 32, 64, 128, 256, 512, 1024, or 2048.
+
+Linux 2.6 and later:
+This file is read-only, and gives the size of the entropy pool in
+bits .
+It contains the value 4096.
+
+read_wakeup_threshold
+This file
+contains the number of bits of entropy required for waking up processes
+that sleep waiting for entropy from
+/dev/random .
+The default is 64.
+
+write_wakeup_threshold
+This file
+contains the number of bits of entropy below which we wake up
+processes that do a
+select (2)
+or
+poll (2)
+for write access to
+/dev/random .
+These values can be changed by writing to the files.
+
+uuid
+boot_id
+These read-only files
+contain random strings like 6fd5a44b-35f4-4ad4-a9b9-6b9be13e1fe9.
+The former is generated afresh for each read, the latter was
+generated once.
+
+### ioctl(2) interface
+
+The following
+ioctl (2)
+requests are defined on file descriptors connected to either
+/dev/random
+or
+/dev/urandom .
+All requests performed will interact with the input
+entropy pool impacting both
+/dev/random
+and
+/dev/urandom .
+The
+CAP_SYS_ADMIN
+capability is required for all requests except
+RNDGETENTCNT .
+
+RNDGETENTCNT
+Retrieve the entropy count of the input pool, the contents will be the same
+as the
+entropy_avail
+file under proc.
+The result will be stored in the int pointed to by the argument.
+
+RNDADDTOENTCNT
+Increment or decrement the entropy count of the input pool
+by the value pointed to by the argument.
+
+RNDGETPOOL
+Removed in Linux 2.6.9.
+
+RNDADDENTROPY
+Add some additional entropy to the input pool,
+incrementing the entropy count.
+This differs from writing to
+/dev/random
+or
+/dev/urandom ,
+which only adds some
+data but does not increment the entropy count.
+The following structure is used:
+
+struct rand_pool_info {
+    int    entropy_count;
+    int    buf_size;
+    __u32  buf[0];
+};
+
+Here
+entropy_count
+is the value added to (or subtracted from) the entropy count, and
+buf
+is the buffer of size
+buf_size
+which gets added to the entropy pool.
+
+RNDZAPENTCNT
+RNDCLEARPOOL
+Zero the entropy count of all pools and add some system data (such as
+wall clock) to the pools.
+
+### FILES
+
+/dev/random
+
+/dev/urandom
+
+### NOTES
+
+For an overview and comparison of the various interfaces that
+can be used to obtain randomness, see
+random (7).
+
+### BUGS
+
+During early boot time, reads from
+/dev/urandom
+may return data prior to the entropy pool being initialized.
+
+### SEE ALSO
+
+mknod (1),
+getrandom (2),
+random (7)
+
+RFC\ 1750, "Randomness Recommendations for Security"
+
+
+# URANDOM(4) — Linux Manual Page
+
+### NAME
+
+random, urandom - kernel random number source devices
+
+### SYNOPSIS
+
+#include <linux/random.h>
+
+### DESCRIPTION
+
+The character special files
+/dev/random
+and
+/dev/urandom
+(present since Linux 1.3.30)
+provide an interface to the kernel's random number generator.
+The file
+/dev/random
+has major device number 1 and minor device number 8.
+The file
+/dev/urandom
+has major device number 1 and minor device number 9.
+
+The random number generator gathers environmental noise
+from device drivers and other sources into an entropy pool.
+The generator also keeps an estimate of the
+number of bits of noise in the entropy pool.
+From this entropy pool, random numbers are created.
+
+Linux 3.17 and later provides the simpler and safer
+getrandom (2)
+interface which requires no special files;
+see the
+getrandom (2)
+manual page for details.
+
+When read, the
+/dev/urandom
+device returns random bytes using a pseudorandom
+number generator seeded from the entropy pool.
+Reads from this device do not block (i.e., the CPU is not yielded),
+but can incur an appreciable delay when requesting large amounts of data.
+
+When read during early boot time,
+/dev/urandom
+may return data prior to the entropy pool being initialized.
+If this is of concern in your application, use
+getrandom (2)
+or
+/dev/random
+instead.
+
+The
+/dev/random
+device is a legacy interface which dates back to
+a time where the cryptographic primitives used in the implementation
+of
+/dev/urandom
+were not widely trusted.
+It will return random bytes only within the estimated number of
+bits of fresh noise in the entropy pool, blocking if necessary.
+/dev/random
+is suitable for applications that need
+high quality randomness, and can afford indeterminate delays.
+
+When the entropy pool is empty, reads from
+/dev/random
+will block
+until additional environmental noise is gathered.
+Since Linux 5.6, the
+O_NONBLOCK
+flag is ignored as
+/dev/random
+will no longer block except during early boot process.
+In earlier versions, if
+open (2)
+is called for
+/dev/random
+with the
+O_NONBLOCK
+flag, a subsequent
+read (2)
+will not block if the requested number of bytes is not available.
+Instead, the available bytes are returned.
+If no byte is available,
+read (2)
+will return -1 and
+errno
+will be set to
+EAGAIN .
+
+The
+O_NONBLOCK
+flag has no effect when opening
+/dev/urandom .
+When calling
+read (2)
+for the device
+/dev/urandom ,
+reads of up to 256 bytes will return as many bytes as are requested
+and will not be interrupted by a signal handler.
+Reads with a buffer over this limit may return less than the
+requested number of bytes or fail with the error
+EINTR ,
+if interrupted by a signal handler.
+
+Since Linux 3.16,
+a
+read (2)
+from
+/dev/urandom
+will return at most 32\ MB.
+A
+read (2)
+from
+/dev/random
+will return at most 512 bytes
+(340 bytes before Linux 2.6.12).
+
+Writing to
+/dev/random
+or
+/dev/urandom
+will update the
+entropy pool with the data written, but this will not result in a
+higher entropy count.
+This means that it will impact the contents
+read from both files, but it will not make reads from
+/dev/random
+faster.
+
+### Usage
+
+The
+/dev/random
+interface is considered a legacy interface,
+and
+/dev/urandom
+is preferred and sufficient in all use cases,
+with the exception of
+applications which require randomness during early boot time;
+for
+these applications,
+getrandom (2)
+must be used instead,
+because it will block until the entropy pool is initialized.
+
+If a seed file is saved across reboots as recommended below,
+the output is
+cryptographically secure against attackers without local root access as
+soon as it is reloaded in the boot sequence, and perfectly adequate for
+network encryption session keys.
+(All major Linux distributions have saved the seed file across reboots
+since 2000 at least.)
+Since reads from
+/dev/random
+may block, users will usually want to open it in nonblocking mode
+(or perform a read with timeout),
+and provide some sort of user notification if the desired
+entropy is not immediately available.
+
+### Configuration
+
+If your system does not have
+/dev/random
+and
+/dev/urandom
+created already, they
+can be created with the following commands:
+
+mknod -m 666 /dev/random c 1 8
+mknod -m 666 /dev/urandom c 1 9
+chown root:root /dev/random /dev/urandom
+
+When a Linux system starts up without much operator interaction,
+the entropy pool may be in a fairly predictable state.
+This reduces the actual amount of noise in the entropy pool
+below the estimate.
+In order to counteract this effect, it helps to carry
+entropy pool information across shut-downs and start-ups.
+To do this, add the lines to an appropriate script
+which is run during the Linux system start-up sequence:
+
+echo "Initializing random number generator..."
+random_seed=/var/run/random-seed
+# Carry a random seed from start-up to start-up
+# Load and then save the whole entropy pool
+if [ -f $random_seed ]; then
+    cat $random_seed >/dev/urandom
+else
+    touch $random_seed
+fi
+chmod 600 $random_seed
+poolfile=/proc/sys/kernel/random/poolsize
+[ -r $poolfile ] && bits=$(cat $poolfile) || bits=4096
+bytes=$(expr $bits / 8)
+dd if=/dev/urandom of=$random_seed count=1 bs=$bytes
+
+Also, add the following lines in an appropriate script which is
+run during the Linux system shutdown:
+
+# Carry a random seed from shut-down to start-up
+# Save the whole entropy pool
+echo "Saving random seed..."
+random_seed=/var/run/random-seed
+touch $random_seed
+chmod 600 $random_seed
+poolfile=/proc/sys/kernel/random/poolsize
+[ -r $poolfile ] && bits=$(cat $poolfile) || bits=4096
+bytes=$(expr $bits / 8)
+dd if=/dev/urandom of=$random_seed count=1 bs=$bytes
+
+In the above examples, we assume Linux 2.6.0 or later, where
+/proc/sys/kernel/random/poolsize
+returns the size of the entropy pool in bits (see below).
+
+### /proc interfaces
+
+The files in the directory
+/proc/sys/kernel/random
+(present since Linux 2.3.16) provide additional information about the
+/dev/random
+device:
+
+entropy_avail
+This read-only file gives the available entropy, in bits.
+This will be a number in the range 0 to 4096.
+
+poolsize
+This file
+gives the size of the entropy pool.
+The semantics of this file vary across kernel versions:
+
+Linux 2.4:
+This file gives the size of the entropy pool in
+bytes .
+Normally, this file will have the value 512, but it is writable,
+and can be changed to any value for which an algorithm is available.
+The choices are 32, 64, 128, 256, 512, 1024, or 2048.
+
+Linux 2.6 and later:
+This file is read-only, and gives the size of the entropy pool in
+bits .
+It contains the value 4096.
+
+read_wakeup_threshold
+This file
+contains the number of bits of entropy required for waking up processes
+that sleep waiting for entropy from
+/dev/random .
+The default is 64.
+
+write_wakeup_threshold
+This file
+contains the number of bits of entropy below which we wake up
+processes that do a
+select (2)
+or
+poll (2)
+for write access to
+/dev/random .
+These values can be changed by writing to the files.
+
+uuid
+boot_id
+These read-only files
+contain random strings like 6fd5a44b-35f4-4ad4-a9b9-6b9be13e1fe9.
+The former is generated afresh for each read, the latter was
+generated once.
+
+### ioctl(2) interface
+
+The following
+ioctl (2)
+requests are defined on file descriptors connected to either
+/dev/random
+or
+/dev/urandom .
+All requests performed will interact with the input
+entropy pool impacting both
+/dev/random
+and
+/dev/urandom .
+The
+CAP_SYS_ADMIN
+capability is required for all requests except
+RNDGETENTCNT .
+
+RNDGETENTCNT
+Retrieve the entropy count of the input pool, the contents will be the same
+as the
+entropy_avail
+file under proc.
+The result will be stored in the int pointed to by the argument.
+
+RNDADDTOENTCNT
+Increment or decrement the entropy count of the input pool
+by the value pointed to by the argument.
+
+RNDGETPOOL
+Removed in Linux 2.6.9.
+
+RNDADDENTROPY
+Add some additional entropy to the input pool,
+incrementing the entropy count.
+This differs from writing to
+/dev/random
+or
+/dev/urandom ,
+which only adds some
+data but does not increment the entropy count.
+The following structure is used:
+
+struct rand_pool_info {
+    int    entropy_count;
+    int    buf_size;
+    __u32  buf[0];
+};
+
+Here
+entropy_count
+is the value added to (or subtracted from) the entropy count, and
+buf
+is the buffer of size
+buf_size
+which gets added to the entropy pool.
+
+RNDZAPENTCNT
+RNDCLEARPOOL
+Zero the entropy count of all pools and add some system data (such as
+wall clock) to the pools.
+
+### FILES
+
+/dev/random
+
+/dev/urandom
+
+### NOTES
+
+For an overview and comparison of the various interfaces that
+can be used to obtain randomness, see
+random (7).
+
+### BUGS
+
+During early boot time, reads from
+/dev/urandom
+may return data prior to the entropy pool being initialized.
+
+### SEE ALSO
+
+mknod (1),
+getrandom (2),
+random (7)
+
+RFC\ 1750, "Randomness Recommendations for Security"
+
+
+# TTY(4) — Linux Manual Page
+
+### NAME
+
+tty - controlling terminal
+
+### DESCRIPTION
+
+The file
+/dev/tty
+is a character file with major number 5 and
+minor number 0, usually with mode 0666 and ownership root:tty.
+It is a synonym for the controlling terminal of a process, if any.
+
+In addition to the
+ioctl (2)
+requests supported by the device that
+tty
+refers to, the
+ioctl (2)
+request
+TIOCNOTTY
+is supported.
+
+### TIOCNOTTY
+
+Detach the calling process from its controlling terminal.
+
+If the process is the session leader,
+then
+SIGHUP
+and
+SIGCONT
+signals are sent to the foreground process group
+and all processes in the current session lose their controlling tty.
+
+This
+ioctl (2)
+call works only on file descriptors connected
+to
+/dev/tty .
+It is used by daemon processes when they are invoked
+by a user at a terminal.
+The process attempts to open
+/dev/tty .
+If the open succeeds, it
+detaches itself from the terminal by using
+TIOCNOTTY ,
+while if the
+open fails, it is obviously not attached to a terminal and does not need
+to detach itself.
+
+### FILES
+
+/dev/tty
+
+### SEE ALSO
+
+chown (1),
+mknod (1),
+ioctl (2),
+ioctl_console (2),
+ioctl_tty (2),
+termios (7),
+ttyS (4),
+vcs (4),
+pty (7),
+agetty (8),
+mingetty (8)
+
+
+# PTS(4) — Linux Manual Page
+
+### NAME
+
+ptmx, pts - pseudoterminal master and slave
+
+### DESCRIPTION
+
+The file
+/dev/ptmx
+(the pseudoterminal multiplexer device)
+is a character file with major number 5 and
+minor number 2, usually with mode 0666 and ownership root:root.
+It is used to create a pseudoterminal master and slave pair.
+
+When a process opens
+/dev/ptmx ,
+it gets a file
+descriptor for a pseudoterminal master
+and a pseudoterminal slave device is created in the
+/dev/pts
+directory.
+Each file descriptor obtained by opening
+/dev/ptmx
+is an independent pseudoterminal master with its own associated slave,
+whose path can
+be found by passing the file descriptor to
+ptsname (3).
+
+Before opening the pseudoterminal slave, you must pass the master's file
+descriptor to
+grantpt (3)
+and
+unlockpt (3).
+
+Once both the pseudoterminal master and slave are open, the slave provides
+processes with an interface that is identical to that of a real terminal.
+
+Data written to the slave is presented on the master file descriptor as input.
+Data written to the master is presented to the slave as input.
+
+In practice, pseudoterminals are used for implementing terminal emulators
+such as
+xterm (1),
+in which data read from the pseudoterminal master is interpreted by the
+application in the same way
+a real terminal would interpret the data, and for implementing remote-login
+programs such as
+sshd (8),
+in which data read from the pseudoterminal master is sent across the network
+to a client program that is connected to a terminal or terminal emulator.
+
+Pseudoterminals can also be used to send input to programs that normally
+refuse to read input from pipes (such as
+su (1),
+and
+passwd (1)).
+
+### FILES
+
+/dev/ptmx ,
+/dev/pts/*
+
+### NOTES
+
+The Linux support for the above (known as UNIX 98 pseudoterminal naming)
+is done using the
+devpts
+filesystem, which should be mounted on
+/dev/pts .
+
+### SEE ALSO
+
+getpt (3),
+grantpt (3),
+ptsname (3),
+unlockpt (3),
+pty (7)
+
+
+# MEM(4) — Linux Manual Page
+
+### NAME
+
+mem, kmem, port - system memory, kernel memory and system ports
+
+### DESCRIPTION
+
+/dev/mem
+is a character device file
+that is an image of the main memory of the computer.
+It may be used, for example, to examine (and even patch) the system.
+
+Byte addresses in
+/dev/mem
+are interpreted as physical memory addresses.
+References to nonexistent locations cause errors to be returned.
+
+Examining and patching is likely to lead to unexpected results
+when read-only or write-only bits are present.
+
+Since Linux 2.6.26, and depending on the architecture, the
+CONFIG_STRICT_DEVMEM
+kernel configuration option limits the areas
+which can be accessed through this file.
+For example: on x86, RAM access is not allowed but accessing
+memory-mapped PCI regions is.
+
+It is typically created by:
+
+mknod -m 660 /dev/mem c 1 1
+chown root:kmem /dev/mem
+
+The file
+/dev/kmem
+is the same as
+/dev/mem ,
+except that the kernel virtual memory
+rather than physical memory is accessed.
+Since Linux 2.6.26, this file is available only if the
+CONFIG_DEVKMEM
+kernel configuration option is enabled.
+
+It is typically created by:
+
+mknod -m 640 /dev/kmem c 1 2
+chown root:kmem /dev/kmem
+
+/dev/port
+is similar to
+/dev/mem ,
+but the I/O ports are accessed.
+
+It is typically created by:
+
+mknod -m 660 /dev/port c 1 4
+chown root:kmem /dev/port
+
+### FILES
+
+/dev/mem
+
+/dev/kmem
+
+/dev/port
+
+### SEE ALSO
+
+chown (1),
+mknod (1),
+ioperm (2)
+
+
+# LOOP(4) — Linux Manual Page
+
+### NAME
+
+loop, loop-control - loop devices
+
+### SYNOPSIS
+
+#include <linux/loop.h>
+
+### DESCRIPTION
+
+The loop device is a block device that maps its data blocks not to a
+physical device such as a hard disk or optical disk drive,
+but to the blocks of
+a regular file in a filesystem or to another block device.
+This can be useful for example to provide a block device for a filesystem
+image stored in a file, so that it can be mounted with the
+mount (8)
+command.
+You could do
+
+$  dd if=/dev/zero of=file.img bs=1MiB count=10 ;
+$  sudo losetup /dev/loop4 file.img ;
+$  sudo mkfs \-t ext4 /dev/loop4 ;
+$  sudo mkdir /myloopdev ;
+$  sudo mount /dev/loop4 /myloopdev ;
+
+See
+losetup (8)
+for another example.
+
+A transfer function can be specified for each loop device for
+encryption and decryption purposes.
+
+The following
+ioctl (2)
+operations are provided by the loop block device:
+
+LOOP_SET_FD
+Associate the loop device with the open file whose file descriptor is
+passed as the (third)
+ioctl (2)
+argument.
+
+LOOP_CLR_FD
+Disassociate the loop device from any file descriptor.
+
+LOOP_SET_STATUS
+Set the status of the loop device using the (third)
+ioctl (2)
+argument.
+This argument is a pointer to a
+loop_info
+structure, defined in
+<linux/loop.h>
+as:
+
+struct loop_info {
+    int           lo_number;      /* ioctl r/o */
+    dev_t         lo_device;      /* ioctl r/o */
+    unsigned long lo_inode;       /* ioctl r/o */
+    dev_t         lo_rdevice;     /* ioctl r/o */
+    int           lo_offset;
+    int           lo_encrypt_type;
+    int           lo_encrypt_key_size;  /* ioctl w/o */
+    int           lo_flags;       /* ioctl r/w (r/o before
+                                     Linux 2.6.25) */
+    char          lo_name[LO_NAME_SIZE];
+    unsigned char lo_encrypt_key[LO_KEY_SIZE];
+                                  /* ioctl w/o */
+    unsigned long lo_init[2];
+    char          reserved[4];
+};
+
+The encryption type
+( lo_encrypt_type )
+should be one of
+LO_CRYPT_NONE ,
+LO_CRYPT_XOR ,
+LO_CRYPT_DES ,
+LO_CRYPT_FISH2 ,
+LO_CRYPT_BLOW ,
+LO_CRYPT_CAST128 ,
+LO_CRYPT_IDEA ,
+LO_CRYPT_DUMMY ,
+LO_CRYPT_SKIPJACK ,
+or (since Linux 2.6.0)
+LO_CRYPT_CRYPTOAPI .
+
+The
+lo_flags
+field is a bit mask that can include zero or more of the following:
+
+LO_FLAGS_READ_ONLY
+The loopback device is read-only.
+
+LO_FLAGS_AUTOCLEAR  (since Linux 2.6.25)
+The loopback device will autodestruct on last close.
+
+LO_FLAGS_PARTSCAN  (since Linux 3.2)
+Allow automatic partition scanning.
+
+LO_FLAGS_DIRECT_IO  (since Linux 4.10)
+Use direct I/O mode to access the backing file.
+
+The only
+lo_flags
+that can be modified by
+LOOP_SET_STATUS
+are
+LO_FLAGS_AUTOCLEAR
+and
+LO_FLAGS_PARTSCAN .
+
+LOOP_GET_STATUS
+Get the status of the loop device.
+The (third)
+ioctl (2)
+argument must be a pointer to a
+struct loop_info .
+
+LOOP_CHANGE_FD  (since Linux 2.6.5)
+Switch the backing store of the loop device to the new file identified
+file descriptor specified in the (third)
+ioctl (2)
+argument, which is an integer.
+This operation is possible only if the loop device is read-only and
+the new backing store is the same size and type as the old backing store.
+
+LOOP_SET_CAPACITY  (since Linux 2.6.30)
+Resize a live loop device.
+One can change the size of the underlying backing store and then use this
+operation so that the loop driver learns about the new size.
+This operation takes no argument.
+
+LOOP_SET_DIRECT_IO  (since Linux 4.10)
+Set DIRECT I/O mode on the loop device, so that
+it can be used to open backing file.
+The (third)
+ioctl (2)
+argument is an unsigned long value.
+A nonzero represents direct I/O mode.
+
+LOOP_SET_BLOCK_SIZE  (since Linux 4.14)
+Set the block size of the loop device.
+The (third)
+ioctl (2)
+argument is an unsigned long value.
+This value must be a power of two in the range
+[512,pagesize];
+otherwise, an
+EINVAL
+error results.
+
+LOOP_CONFIGURE  (since Linux 5.8)
+Setup and configure all loop device parameters in a single step using
+the (third)
+ioctl (2)
+argument.
+This argument is a pointer to a
+loop_config
+structure, defined in
+<linux/loop.h>
+as:
+
+struct loop_config {
+    __u32               fd;
+    __u32               block_size;
+    struct loop_info64  info;
+    __u64               __reserved[8];
+};
+
+In addition to doing what
+LOOP_SET_STATUS
+can do,
+LOOP_CONFIGURE
+can also be used to do the following:
+
+set the correct block size immediately by setting
+loop_config.block_size ;
+
+explicitly request direct I/O mode by setting
+LO_FLAGS_DIRECT_IO
+in
+loop_config.info.lo_flags ;
+and
+
+explicitly request read-only mode by setting
+LO_FLAGS_READ_ONLY
+in
+loop_config.info.lo_flags .
+
+Since Linux 2.6, there are two new
+ioctl (2)
+operations:
+
+LOOP_SET_STATUS64
+LOOP_GET_STATUS64
+These are similar to
+LOOP_SET_STATUS  and  LOOP_GET_STATUS
+described above but use the
+loop_info64
+structure,
+which has some additional fields and a larger range for some other fields:
+
+struct loop_info64 {
+    uint64_t lo_device;           /* ioctl r/o */
+    uint64_t lo_inode;            /* ioctl r/o */
+    uint64_t lo_rdevice;          /* ioctl r/o */
+    uint64_t lo_offset;
+    uint64_t lo_sizelimit;  /* bytes, 0 == max available */
+    uint32_t lo_number;           /* ioctl r/o */
+    uint32_t lo_encrypt_type;
+    uint32_t lo_encrypt_key_size; /* ioctl w/o */
+    uint32_t lo_flags; i          /* ioctl r/w (r/o before
+                                     Linux 2.6.25) */
+    uint8_t  lo_file_name[LO_NAME_SIZE];
+    uint8_t  lo_crypt_name[LO_NAME_SIZE];
+    uint8_t  lo_encrypt_key[LO_KEY_SIZE]; /* ioctl w/o */
+    uint64_t lo_init[2];
+};
+
+### /dev/loop-control
+
+Since Linux 3.1,
+the kernel provides the
+/dev/loop\-control
+device, which permits an application to dynamically find a free device,
+and to add and remove loop devices from the system.
+To perform these operations, one first opens
+/dev/loop\-control
+and then employs one of the following
+ioctl (2)
+operations:
+
+LOOP_CTL_GET_FREE
+Allocate or find a free loop device for use.
+On success, the device number is returned as the result of the call.
+This operation takes no argument.
+
+LOOP_CTL_ADD
+Add the new loop device whose device number is specified
+as a long integer in the third
+ioctl (2)
+argument.
+On success, the device index is returned as the result of the call.
+If the device is already allocated, the call fails with the error
+EEXIST .
+
+LOOP_CTL_REMOVE
+Remove the loop device whose device number is specified
+as a long integer in the third
+ioctl (2)
+argument.
+On success, the device number is returned as the result of the call.
+If the device is in use, the call fails with the error
+EBUSY .
+
+### FILES
+
+/dev/loop*
+The loop block special device files.
+
+### EXAMPLES
+
+The program below uses the
+/dev/loop\-control
+device to find a free loop device, opens the loop device,
+opens a file to be used as the underlying storage for the device,
+and then associates the loop device with the backing store.
+The following shell session demonstrates the use of the program:
+
+$  dd if=/dev/zero of=file.img bs=1MiB count=10 ;
+10+0 records in
+10+0 records out
+10485760 bytes (10 MB) copied, 0.00609385 s, 1.7 GB/s
+$  sudo ./mnt_loop file.img ;
+loopname = /dev/loop5
+
+### Program source
+
+#include <err.h>
+#include <fcntl.h>
+#include <linux/loop.h>
+#include <sys/ioctl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int
+main(int argc, char *argv[])
+{
+    int loopctlfd, loopfd, backingfile;
+    long devnr;
+    char loopname[4096];
+
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s backing-file\[rs]n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    loopctlfd = open("/dev/loop-control", O_RDWR);
+    if (loopctlfd == -1)
+        err(EXIT_FAILURE, "open: /dev/loop-control");
+
+    devnr = ioctl(loopctlfd, LOOP_CTL_GET_FREE);
+    if (devnr == -1)
+        err(EXIT_FAILURE, "ioctl-LOOP_CTL_GET_FREE");
+
+    sprintf(loopname, "/dev/loop%ld", devnr);
+    printf("loopname = %s\[rs]n", loopname);
+
+    loopfd = open(loopname, O_RDWR);
+    if (loopfd == -1)
+        err(EXIT_FAILURE, "open: loopname");
+
+    backingfile = open(argv[1], O_RDWR);
+    if (backingfile == -1)
+        err(EXIT_FAILURE, "open: backing-file");
+
+    if (ioctl(loopfd, LOOP_SET_FD, backingfile) == -1)
+        err(EXIT_FAILURE, "ioctl-LOOP_SET_FD");
+
+    exit(EXIT_SUCCESS);
+}
+
+### SEE ALSO
+
+losetup (8),
+mount (8)
+
+
+# SD(4) — Linux Manual Page
+
+### NAME
+
+sd - driver for SCSI disk drives
+
+### SYNOPSIS
+
+#include <linux/hdreg.h>         /* for HDIO_GETGEO */
+#include <linux/fs.h>            /* for BLKGETSIZE and BLKRRPART */
+
+### CONFIGURATION
+
+The block device name has the following form:
+where
+l
+is a letter denoting the physical drive, and
+p
+is a number denoting the partition on that physical drive.
+Often, the partition number,
+p ,
+will be left off when the device corresponds to the whole drive.
+
+SCSI disks have a major device number of 8, and a minor device number of
+the form (16 *
+drive_number ) +  partition_number ,
+where
+drive_number
+is the number of the physical drive in order of detection, and
+partition_number
+is as follows:
+
+partition 0 is the whole drive
+
+partitions 1\[en]4 are the DOS "primary" partitions
+
+partitions 5\[en]8 are the DOS "extended" (or "logical") partitions
+
+For example,
+/dev/sda
+will have major 8, minor 0,
+and will refer to all of the first SCSI drive in the system;
+and
+/dev/sdb3
+will have major 8, minor 19,
+and will refer to the third DOS "primary" partition
+on the second SCSI drive in the system.
+
+At this time,
+only block devices are provided.
+Raw devices have not yet been implemented.
+
+### DESCRIPTION
+
+The following
+ioctl s
+are provided:
+
+HDIO_GETGEO
+Returns the BIOS disk parameters in the following structure:
+
+struct hd_geometry {
+    unsigned char  heads;
+    unsigned char  sectors;
+    unsigned short cylinders;
+    unsigned long  start;
+};
+
+A pointer to this structure is passed as the
+ioctl (2)
+parameter.
+
+The information returned in the parameter is the disk geometry of the drive
+as understood by DOS!
+This geometry is
+not
+the physical geometry of the drive.
+It is used when constructing the
+drive's partition table, however, and is needed for convenient operation
+of
+fdisk (1),
+efdisk (1),
+and
+lilo (1).
+If the geometry information is not available, zero will be returned for all
+of the parameters.
+
+BLKGETSIZE
+Returns the device size in sectors.
+The
+ioctl (2)
+parameter should be a pointer to a
+long .
+
+BLKRRPART
+Forces a reread of the SCSI disk partition tables.
+No parameter is needed.
+
+The SCSI
+ioctl (2)
+operations are also supported.
+If the
+ioctl (2)
+parameter is required, and it is NULL, then
+ioctl (2)
+fails with the error
+EINVAL .
+
+### FILES
+
+/dev/sd[a\-h]
+the whole device
+
+/dev/sd[a\-h][0\-8]
+individual block partitions
+
+
+# HD(4) — Linux Manual Page
+
+### NAME
+
+hd - MFM/IDE hard disk devices
+
+### DESCRIPTION
+
+The
+hd*
+devices are block devices to access MFM/IDE hard disk drives
+in raw mode.
+The master drive on the primary IDE controller (major device
+number 3) is
+hda ;
+the slave drive is
+hdb .
+The master drive of the second controller (major device number 22)
+is
+hdc
+and the slave is
+hdd .
+
+General IDE block device names have the form
+, or
+, where
+X
+is a letter denoting the physical drive, and
+P
+is a number denoting the partition on that physical drive.
+The first form,
+, is used to address the whole drive.
+Partition numbers are assigned in the order the partitions are discovered,
+and only nonempty, nonextended partitions get a number.
+However,
+partition numbers 1\[en]4 are given to
+the four partitions described in the MBR
+(the "primary" partitions),
+regardless of whether they are unused or extended.
+Thus,
+the first logical partition will be
+.
+Both DOS-type partitioning and BSD-disklabel partitioning are supported.
+You can have at most 63 partitions on an IDE disk.
+
+For example,
+/dev/hda
+refers to all of the first IDE drive in the system;
+and
+/dev/hdb3
+refers to the third DOS "primary" partition on the second one.
+
+They are typically created by:
+
+mknod -m 660 /dev/hda b 3 0
+mknod -m 660 /dev/hda1 b 3 1
+mknod -m 660 /dev/hda2 b 3 2
+...
+mknod -m 660 /dev/hda8 b 3 8
+mknod -m 660 /dev/hdb b 3 64
+mknod -m 660 /dev/hdb1 b 3 65
+mknod -m 660 /dev/hdb2 b 3 66
+...
+mknod -m 660 /dev/hdb8 b 3 72
+chown root:disk /dev/hd*
+
+### FILES
+
+/dev/hd*
+
+### SEE ALSO
+
+chown (1),
+mknod (1),
+sd (4),
+mount (8)
+
+
+# FUSE(4) — Linux Manual Page
+
+### NAME
+
+fuse - Filesystem in Userspace (FUSE) device
+
+### SYNOPSIS
+
+#include <linux/fuse.h>
+
+### DESCRIPTION
+
+This device is the primary interface between the FUSE filesystem driver
+and a user-space process wishing to provide the filesystem (referred to
+in the rest of this manual page as the
+filesystem daemon ).
+This manual page is intended for those
+interested in understanding the kernel interface itself.
+Those implementing a FUSE filesystem may wish to make use of
+a user-space library such as
+libfuse
+that abstracts away the low-level interface.
+
+At its core, FUSE is a simple client-server protocol, in which the Linux
+kernel is the client and the daemon is the server.
+After obtaining a file descriptor for this device, the daemon may
+read (2)
+requests from that file descriptor and is expected to
+write (2)
+back its replies.
+It is important to note that a file descriptor is
+associated with a unique FUSE filesystem.
+In particular, opening a second copy of this device,
+will not allow access to resources created
+through the first file descriptor (and vice versa).
+
+### The basic protocol
+
+Every message that is read by the daemon begins with a header described by
+the following structure:
+
+struct fuse_in_header {
+    uint32_t len;       /* Total size of the data,
+                           including this header */
+    uint32_t opcode;    /* The kind of operation (see below) */
+    uint64_t unique;    /* A unique identifier for this request */
+    uint64_t nodeid;    /* ID of the filesystem object
+                           being operated on */
+    uint32_t uid;       /* UID of the requesting process */
+    uint32_t gid;       /* GID of the requesting process */
+    uint32_t pid;       /* PID of the requesting process */
+    uint32_t padding;
+};
+
+The header is followed by a variable-size data portion
+(which may be empty) specific to the requested operation
+(the requested operation is indicated by
+opcode ).
+
+The daemon should then process the request
+and
+\[em]if applicable\[em]
+send a reply
+(almost all operations require a reply;
+if they do not,
+this is documented below),
+by performing a
+write (2)
+to the file descriptor.
+All replies must start with the following header:
+
+struct fuse_out_header {
+    uint32_t len;       /* Total size of data written to
+                           the file descriptor */
+    int32_t  error;     /* Any error that occurred (0 if none) */
+    uint64_t unique;    /* The value from the
+                           corresponding request */
+};
+
+This header is also followed by (potentially empty) variable-sized
+data depending on the executed request.
+However, if the reply is an error reply (i.e.,
+error
+is set),
+then no further payload data should be sent, independent of the request.
+
+### Exchanged messages
+
+This section should contain documentation for each of the messages
+in the protocol.
+This manual page is currently incomplete,
+so not all messages are documented.
+For each message, first the struct sent by the kernel is given,
+followed by a description of the semantics of the message.
+
+FUSE_INIT
+
+struct fuse_init_in {
+    uint32_t major;
+    uint32_t minor;
+    uint32_t max_readahead; /* Since protocol v7.6 */
+    uint32_t flags;         /* Since protocol v7.6 */
+};
+
+This is the first request sent by the kernel to the daemon.
+It is used to negotiate the protocol version and other filesystem parameters.
+Note that the protocol version may affect the layout of any structure
+in the protocol (including this structure).
+The daemon must thus remember the negotiated version
+and flags for each session.
+As of the writing of this man page,
+the highest supported kernel protocol version is
+7.26 .
+
+Users should be aware that the descriptions in this manual page
+may be incomplete or incorrect for older or more recent protocol versions.
+
+The reply for this request has the following format:
+
+struct fuse_init_out {
+    uint32_t major;
+    uint32_t minor;
+    uint32_t max_readahead;   /* Since v7.6 */
+    uint32_t flags;           /* Since v7.6; some flags bits
+                                 were introduced later */
+    uint16_t max_background;  /* Since v7.13 */
+    uint16_t congestion_threshold;  /* Since v7.13 */
+    uint32_t max_write;       /* Since v7.5 */
+    uint32_t time_gran;       /* Since v7.6 */
+    uint32_t unused[9];
+};
+
+If the major version supported by the kernel is larger than that supported
+by the daemon, the reply shall consist of only
+uint32_t major
+(following the usual header),
+indicating the largest major version supported by the daemon.
+The kernel will then issue a new
+FUSE_INIT
+request conforming to the older version.
+In the reverse case, the daemon should
+quietly fall back to the kernel's major version.
+
+The negotiated minor version is considered to be the minimum
+of the minor versions provided by the daemon and the kernel and
+both parties should use the protocol corresponding to said minor version.
+
+FUSE_GETATTR
+
+struct fuse_getattr_in {
+    uint32_t getattr_flags;
+    uint32_t dummy;
+    uint64_t fh;      /* Set only if
+                         (getattr_flags & FUSE_GETATTR_FH)
+};
+
+The requested operation is to compute the attributes to be returned
+by
+stat (2)
+and similar operations for the given filesystem object.
+The object for which the attributes should be computed is indicated
+either by
+header\->nodeid
+or, if the
+FUSE_GETATTR_FH
+flag is set, by the file handle
+fh .
+The latter case of operation is analogous to
+fstat (2).
+
+For performance reasons, these attributes may be cached in the kernel for
+a specified duration of time.
+While the cache timeout has not been exceeded,
+the attributes will be served from the cache and will not cause additional
+FUSE_GETATTR
+requests.
+
+The computed attributes and the requested
+cache timeout should then be returned in the following structure:
+
+struct fuse_attr_out {
+    /* Attribute cache duration (seconds + nanoseconds) */
+    uint64_t attr_valid;
+    uint32_t attr_valid_nsec;
+    uint32_t dummy;
+    struct fuse_attr {
+        uint64_t ino;
+        uint64_t size;
+        uint64_t blocks;
+        uint64_t atime;
+        uint64_t mtime;
+        uint64_t ctime;
+        uint32_t atimensec;
+        uint32_t mtimensec;
+        uint32_t ctimensec;
+        uint32_t mode;
+        uint32_t nlink;
+        uint32_t uid;
+        uint32_t gid;
+        uint32_t rdev;
+        uint32_t blksize;
+        uint32_t padding;
+    } attr;
+};
+
+FUSE_ACCESS
+
+struct fuse_access_in {
+    uint32_t mask;
+    uint32_t padding;
+};
+
+If the
+default_permissions
+mount options is not used, this request may be used for permissions checking.
+No reply data is expected, but errors may be indicated
+as usual by setting the
+error
+field in the reply header (in particular, access denied errors
+may be indicated by returning
+\-EACCES ).
+
+FUSE_OPEN
+FUSE_OPENDIR
+struct fuse_open_in {
+    uint32_t flags;     /* The flags that were passed
+                           to the open(2) */
+    uint32_t unused;
+};
+
+The requested operation is to open the node indicated by
+header\->nodeid .
+The exact semantics of what this means will depend on the
+filesystem being implemented.
+However, at the very least the
+filesystem should validate that the requested
+flags
+are valid for the indicated resource and then send a reply with the
+following format:
+
+struct fuse_open_out {
+    uint64_t fh;
+    uint32_t open_flags;
+    uint32_t padding;
+};
+
+The
+fh
+field is an opaque identifier that the kernel will use to refer
+to this resource
+The
+open_flags
+field is a bit mask of any number of the flags
+that indicate properties of this file handle to the kernel:
+
+FOPEN_DIRECT_IO
+Bypass page cache for this open file.
+
+FOPEN_KEEP_CACHE
+Don't invalidate the data cache on open.
+
+FOPEN_NONSEEKABLE
+The file is not seekable.
+
+FUSE_READ
+FUSE_READDIR
+
+struct fuse_read_in {
+    uint64_t fh;
+    uint64_t offset;
+    uint32_t size;
+    uint32_t read_flags;
+    uint64_t lock_owner;
+    uint32_t flags;
+    uint32_t padding;
+};
+
+The requested action is to read up to
+size
+bytes of the file or directory, starting at
+offset .
+The bytes should be returned directly following the usual reply header.
+
+FUSE_INTERRUPT
+struct fuse_interrupt_in {
+    uint64_t unique;
+};
+
+The requested action is to cancel the pending operation indicated by
+unique .
+This request requires no response.
+However, receipt of this message does
+not by itself cancel the indicated operation.
+The kernel will still expect a reply to said operation (e.g., an
+EINTR
+error or a short read).
+At most one
+FUSE_INTERRUPT
+request will be issued for a given operation.
+After issuing said operation,
+the kernel will wait uninterruptibly for completion of the indicated request.
+
+FUSE_LOOKUP
+Directly following the header is a filename to be looked up in the directory
+indicated by
+header\->nodeid .
+The expected reply is of the form:
+
+struct fuse_entry_out {
+    uint64_t nodeid;            /* Inode ID */
+    uint64_t generation;        /* Inode generation */
+    uint64_t entry_valid;
+    uint64_t attr_valid;
+    uint32_t entry_valid_nsec;
+    uint32_t attr_valid_nsec;
+    struct fuse_attr attr;
+};
+
+The combination of
+nodeid
+and
+generation
+must be unique for the filesystem's lifetime.
+
+The interpretation of timeouts and
+attr
+is as for
+FUSE_GETATTR .
+
+FUSE_FLUSH
+struct fuse_flush_in {
+    uint64_t fh;
+    uint32_t unused;
+    uint32_t padding;
+    uint64_t lock_owner;
+};
+
+The requested action is to flush any pending changes to the indicated
+file handle.
+No reply data is expected.
+However, an empty reply message
+still needs to be issued once the flush operation is complete.
+
+FUSE_RELEASE
+FUSE_RELEASEDIR
+struct fuse_release_in {
+    uint64_t fh;
+    uint32_t flags;
+    uint32_t release_flags;
+    uint64_t lock_owner;
+};
+
+These are the converse of
+FUSE_OPEN
+and
+FUSE_OPENDIR
+respectively.
+The daemon may now free any resources associated with the
+file handle
+fh
+as the kernel will no longer refer to it.
+There is no reply data associated with this request,
+but a reply still needs to be issued once the request has
+been completely processed.
+
+FUSE_STATFS
+This operation implements
+statfs (2)
+for this filesystem.
+There is no input data associated with this request.
+The expected reply data has the following structure:
+
+struct fuse_kstatfs {
+    uint64_t blocks;
+    uint64_t bfree;
+    uint64_t bavail;
+    uint64_t files;
+    uint64_t ffree;
+    uint32_t bsize;
+    uint32_t namelen;
+    uint32_t frsize;
+    uint32_t padding;
+    uint32_t spare[6];
+};
+
+struct fuse_statfs_out {
+    struct fuse_kstatfs st;
+};
+
+For the interpretation of these fields, see
+statfs (2).
+
+### ERRORS
+
+E2BIG
+Returned from
+read (2)
+operations when the kernel's request is too large for the provided buffer
+and the request was
+FUSE_SETXATTR .
+
+EINVAL
+Returned from
+write (2)
+if validation of the reply failed.
+Not all mistakes in replies will be caught by this validation.
+However, basic mistakes, such as short replies or an incorrect
+unique
+value, are detected.
+
+EIO
+Returned from
+read (2)
+operations when the kernel's request is too large for the provided buffer.
+
+Note :
+There are various ways in which incorrect use of these interfaces can cause
+operations on the provided filesystem's files and directories to fail with
+EIO .
+Among the possible incorrect uses are:
+
+changing
+mode & S_IFMT
+for an inode that has previously been reported to the kernel;
+or
+
+giving replies to the kernel that are shorter than what the kernel expected.
+
+ENODEV
+Returned from
+read (2)
+and
+write (2)
+if the FUSE filesystem was unmounted.
+
+EPERM
+Returned from operations on a
+/dev/fuse
+file descriptor that has not been mounted.
+
+### STANDARDS
+
+Linux.
+
+### NOTES
+
+The following messages are not yet documented in this manual page:
+
+FUSE_BATCH_FORGET
+FUSE_BMAP
+FUSE_CREATE
+FUSE_DESTROY
+FUSE_FALLOCATE
+FUSE_FORGET
+FUSE_FSYNC
+FUSE_FSYNCDIR
+FUSE_GETLK
+FUSE_GETXATTR
+FUSE_IOCTL
+FUSE_LINK
+FUSE_LISTXATTR
+FUSE_LSEEK
+FUSE_MKDIR
+FUSE_MKNOD
+FUSE_NOTIFY_REPLY
+FUSE_POLL
+FUSE_READDIRPLUS
+FUSE_READLINK
+FUSE_REMOVEXATTR
+FUSE_RENAME
+FUSE_RENAME2
+FUSE_RMDIR
+FUSE_SETATTR
+FUSE_SETLK
+FUSE_SETLKW
+FUSE_SYMLINK
+FUSE_UNLINK
+FUSE_WRITE
+
+### SEE ALSO
+
+fusermount (1),
+mount.fuse (8)

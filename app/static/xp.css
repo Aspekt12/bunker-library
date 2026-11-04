@@ -2028,3 +2028,111 @@ body.theme-classic-98 #xp-systray {
 .xp-start-shutdown {
     background: linear-gradient(180deg, #f87171 0%, #dc2626 100%);
 }
+
+/* --------------------------------------------------------------------------
+   10. AI Models Comparison Cards (Pros & Cons + Live Puller)
+   -------------------------------------------------------------------------- */
+.xp-mini-select {
+    background: rgba(15, 23, 42, 0.45);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: calc(var(--ui-font-size) * 0.85);
+    max-width: 135px;
+    cursor: pointer;
+}
+
+.xp-mini-select option {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+.ai-models-comparison-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ai-model-card {
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    padding: 10px 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.ai-model-card.active-model {
+    border: 2px solid #2563eb;
+    background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+}
+
+.ai-model-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.ai-model-title-group {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+.ai-model-name {
+    font-weight: bold;
+    color: #003594;
+    font-size: calc(var(--ui-font-size) * 1.05);
+}
+
+.ai-model-pill {
+    font-size: calc(var(--ui-font-size) * 0.82);
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: #e2e8f0;
+    color: #1e293b;
+    font-weight: bold;
+}
+
+.ai-model-pill.best-for {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.ai-model-pill.speed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.ai-model-pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed #cbd5e1;
+    font-size: calc(var(--ui-font-size) * 0.9);
+}
+
+.ai-pros-col strong {
+    color: #15803d;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.ai-cons-col strong {
+    color: #b45309;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.ai-pros-col ul, .ai-cons-col ul {
+    padding-left: 16px;
+    color: #334155;
+    line-height: 1.38;
+}
+

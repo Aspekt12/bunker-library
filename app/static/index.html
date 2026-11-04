@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BunkerOS XP Professional — Offline Knowledge Desktop</title>
-    <link rel="stylesheet" href="/static/xp.css?v=5">
+    <link rel="stylesheet" href="/static/xp.css?v=6">
 </head>
 <body class="theme-luna-blue wallpaper-bliss chat-mode-fb-side">
 
@@ -212,6 +212,14 @@
                                 <span class="task-link-icon" data-xp-icon="ie_globe" data-icon-size="14"></span>
                                 <span>Open Kiwix ZIM Server</span>
                             </a>
+                            <a href="javascript:void(0)" onclick="selectCategoryFilter('Linux Man Pages (Sections 1-8)')">
+                                <span class="task-link-icon" data-xp-icon="manual_tech" data-icon-size="14"></span>
+                                <span>Linux Man Pages (13,820)</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openWindow('win-settings'); switchSettingsTab('models');">
+                                <span class="task-link-icon" data-xp-icon="xp_computer" data-icon-size="14"></span>
+                                <span>AI Models (Pros &amp; Cons)</span>
+                            </a>
                             <a href="javascript:void(0)" onclick="openWindow('win-settings')">
                                 <span class="task-link-icon" data-xp-icon="control_panel" data-icon-size="14"></span>
                                 <span>Control Panel &amp; Fonts</span>
@@ -293,7 +301,8 @@
                 <div class="xp-prop-tabs">
                     <button class="xp-prop-tab active" id="tabbtn-themes" onclick="switchSettingsTab('themes')">Themes &amp; Desktop</button>
                     <button class="xp-prop-tab" id="tabbtn-interface" onclick="switchSettingsTab('interface')">Font Size &amp; Chat Bar</button>
-                    <button class="xp-prop-tab" id="tabbtn-ai" onclick="switchSettingsTab('ai')">AI Helper &amp; Persona</button>
+                    <button class="xp-prop-tab" id="tabbtn-models" onclick="switchSettingsTab('models')">AI Models (Pros &amp; Cons)</button>
+                    <button class="xp-prop-tab" id="tabbtn-ai" onclick="switchSettingsTab('ai')">AI Persona</button>
                     <button class="xp-prop-tab" id="tabbtn-bookshelf" onclick="switchSettingsTab('bookshelf')">Bookshelf Layout</button>
                 </div>
 
@@ -419,6 +428,26 @@
                                 </div>
                             </label>
                         </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2.5: AI MODELS CATALOG WITH PROS, CONS & LIVE INSTALLER -->
+                <div class="xp-prop-page" id="tabpage-models" style="display: none;">
+                    <div class="xp-fieldset" style="margin-bottom: 10px;">
+                        <div class="xp-fieldset-title">Active Local LLM Engine &amp; Custom Ollama Puller</div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 8px;">
+                            <div>
+                                Currently Active Model: <strong id="models-tab-active-badge" style="color:#003594;">elena-vancea:latest</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px; align-items: center;">
+                                <input type="text" id="custom-ollama-model-input" placeholder="Pull any Ollama tag (e.g. llama3.1:8b)" style="width: 220px;">
+                                <button type="button" class="xp-button-primary" onclick="pullCustomOllamaModel()">Pull Custom Model</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="ai-models-comparison-list" class="ai-models-comparison-list">
+                        <p>Loading AI model alternatives and pros/cons...</p>
                     </div>
                 </div>
 
@@ -751,6 +780,8 @@
                     <span id="active-chat-badge" class="ai-chat-pill">Welcome</span>
                 </div>
                 <div class="ai-drawer-actions">
+                    <select id="chat-header-model-select" class="xp-mini-select" title="Switch Active AI Model" onchange="selectAiModel(this.value)"></select>
+                    <button class="xp-mini-btn" onclick="openWindow('win-settings'); switchSettingsTab('models');" title="Compare AI Models (Pros & Cons) & Download Alternatives">Models</button>
                     <button class="xp-mini-btn" onclick="stepReaderFontSize(-1)" title="Decrease Chat & Reader Text Size">A-</button>
                     <button class="xp-mini-btn" onclick="stepReaderFontSize(1)" title="Increase Chat & Reader Text Size">A+</button>
                     <button class="xp-mini-btn" onclick="createNewChatSession(true)" title="Start a new saved chat">+ New</button>
@@ -860,6 +891,9 @@
                 <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('interface'); closeStartMenu();">
                     <span>Font Size &amp; Chat Bar</span>
                 </div>
+                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('models'); closeStartMenu();">
+                    <span>AI Models (Pros &amp; Cons)</span>
+                </div>
                 <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('ai'); closeStartMenu();">
                     <span>AI Helper Persona</span>
                 </div>
@@ -900,12 +934,12 @@
                 <button class="systray-font-btn" onclick="stepUiFontSize(1)">A+</button>
             </div>
             <span class="systray-item" id="tray-settings-btn" title="Open Control Panel" onclick="openWindow('win-settings')" data-xp-icon="control_panel" data-icon-size="15"></span>
-            <span class="systray-item" id="tray-books-count" title="Total Installed Books & ZIMs" onclick="openWindow('win-library')">7 Books</span>
-            <span class="systray-item" id="tray-ai-pill" title="Ollama Local AI Status" onclick="toggleChatDrawer(true)">AI Ready</span>
+            <span class="systray-item" id="tray-books-count" title="Total Installed Books & Man Pages" onclick="openWindow('win-library')">15 Books</span>
+            <span class="systray-item" id="tray-ai-pill" title="Active AI Model — Click to Switch" onclick="openWindow('win-settings'); switchSettingsTab('models');">AI Ready</span>
             <span class="systray-clock" id="xp-clock">12:00 PM</span>
         </div>
     </footer>
 
-    <script src="/static/xp.js?v=5"></script>
+    <script src="/static/xp.js?v=6"></script>
 </body>
 </html>

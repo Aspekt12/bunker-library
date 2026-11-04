@@ -1,0 +1,7924 @@
+# Linux Man Pages Sec. 3: C & POSIX Library Functions (5,427 Pages)
+**Overview:** Complete glibc, pthread, malloc, stdio, string, math, OpenSSL, and POSIX library manual pages.
+**Total Installed Man Pages in Section 3:** 5427
+
+---
+
+## Complete Section 3 Directory (5427 Pages)
+Use the **Table of Contents** or **Search Box** in the Reader window to open any of the 5427 man pages in Section 3 directly.
+
+`Algorithm::Diff(3)`, `Algorithm::Diff::XS(3)`, `Algorithm::DiffOld(3)`, `Algorithm::Merge(3)`, `AptPkg(3)`, `AptPkg::Cache(3)`, `AptPkg::Config(3)`, `AptPkg::PkgRecords(3)`, `AptPkg::Policy(3)`, `AptPkg::Source(3)`, `AptPkg::System(3)`, `AptPkg::Version(3)`, `AptPkg::hash(3)`, `Archive::Cpio(3)`, `Archive::Zip(3)`, `Archive::Zip::FAQ(3)`, `Archive::Zip::MemberRead(3)`, `Archive::Zip::Tree(3)`, `Authen::SASL(3)`, `Authen::SASL::Perl(3)`, `Authen::SASL::Perl::ANONYMOUS(3)`, `Authen::SASL::Perl::CRAM_MD5(3)`, `Authen::SASL::Perl::DIGEST_MD5(3)`, `Authen::SASL::Perl::EXTERNAL(3)`, `Authen::SASL::Perl::GSSAPI(3)`, `Authen::SASL::Perl::LOGIN(3)`, `Authen::SASL::Perl::OAUTHBEARER(3)`, `Authen::SASL::Perl::PLAIN(3)`, `Authen::SASL::Perl::XOAUTH2(3)`, `Bit::Vector(3)`, `Bit::Vector::Overload(3)`, `Bit::Vector::String(3)`, `Bundle::DBI(3)`, `Bytes::Random::Secure(3)`, `CGI(3)`, `CGI::Carp(3)`, `CGI::Cookie(3)`, `CGI::Fast(3)`, `CGI::HTML::Functions(3)`, `CGI::Pretty(3)`, `CGI::Push(3)`, `CGI::Util(3)`, `CIRCLEQ_EMPTY(3)`, `CIRCLEQ_ENTRY(3)`, `CIRCLEQ_FIRST(3)`, `CIRCLEQ_FOREACH(3)`, `CIRCLEQ_FOREACH_REVERSE(3)`, `CIRCLEQ_HEAD(3)`, `CIRCLEQ_HEAD_INITIALIZER(3)`, `CIRCLEQ_INIT(3)`, `CIRCLEQ_INSERT_AFTER(3)`, `CIRCLEQ_INSERT_BEFORE(3)`, `CIRCLEQ_INSERT_HEAD(3)`, `CIRCLEQ_INSERT_TAIL(3)`, `CIRCLEQ_LAST(3)`, `CIRCLEQ_LOOP_NEXT(3)`, `CIRCLEQ_LOOP_PREV(3)`, `CIRCLEQ_NEXT(3)`, `CIRCLEQ_PREV(3)`, `CIRCLEQ_REMOVE(3)`, `CMSG_ALIGN(3)`, `CMSG_DATA(3)`, `CMSG_FIRSTHDR(3)`, `CMSG_LEN(3)`, `CMSG_NXTHDR(3)`, `CMSG_SPACE(3)`, `CPU_ALLOC(3)`, `CPU_ALLOC_SIZE(3)`, `CPU_AND(3)`, `CPU_AND_S(3)`, `CPU_CLR(3)`, `CPU_CLR_S(3)`, `CPU_COUNT(3)`, `CPU_COUNT_S(3)`, `CPU_EQUAL(3)`, `CPU_EQUAL_S(3)`, `CPU_FREE(3)`, `CPU_ISSET(3)`, `CPU_ISSET_S(3)`, `CPU_OR(3)`, `CPU_OR_S(3)`, `CPU_SET(3)`, `CPU_SET_S(3)`, `CPU_XOR(3)`, `CPU_XOR_S(3)`, `CPU_ZERO(3)`, `CPU_ZERO_S(3)`, `Carp::Clan(3)`, `Clone(3)`, `Compress::Raw::Lzma(3)`, `Config::IniFiles(3)`, `Crypt::RC4(3)`, `Crypt::Random::Seed(3)`, `Crypt::SSLeay(3)`, `Crypt::SSLeay::Version(3)`, `Crypt::URandom(3)`, `DBD::DBM(3)`, `DBD::File(3)`, `DBD::File::Developers(3)`, `DBD::File::HowTo(3)`, `DBD::File::Roadmap(3)`, `DBD::Gofer(3)`, `DBD::Gofer::Policy::Base(3)`, `DBD::Gofer::Policy::classic(3)`, `DBD::Gofer::Policy::pedantic(3)`, `DBD::Gofer::Policy::rush(3)`, `DBD::Gofer::Transport::Base(3)`, `DBD::Gofer::Transport::corostream(3)`, `DBD::Gofer::Transport::null(3)`, `DBD::Gofer::Transport::pipeone(3)`, `DBD::Gofer::Transport::stream(3)`, `DBD::MariaDB(3)`, `DBD::Mem(3)`, `DBD::Proxy(3)`, `DBD::Sponge(3)`, `DBE(3)`, `DBI(3)`, `DBI::Changes(3)`, `DBI::Const::GetInfo::ANSI(3)`, `DBI::Const::GetInfo::ODBC(3)`, `DBI::Const::GetInfoReturn(3)`, `DBI::Const::GetInfoType(3)`, `DBI::DBD(3)`, `DBI::DBD::Metadata(3)`, `DBI::DBD::SqlEngine(3)`, `DBI::DBD::SqlEngine::Developers(3)`, `DBI::DBD::SqlEngine::HowTo(3)`, `DBI::Gofer::Execute(3)`, `DBI::Gofer::Request(3)`, `DBI::Gofer::Response(3)`, `DBI::Gofer::Serializer::Base(3)`, `DBI::Gofer::Serializer::DataDumper(3)`, `DBI::Gofer::Serializer::Storable(3)`, `DBI::Gofer::Transport::Base(3)`, `DBI::Gofer::Transport::pipeone(3)`, `DBI::Gofer::Transport::stream(3)`, `DBI::Profile(3)`, `DBI::ProfileData(3)`, `DBI::ProfileDumper(3)`, `DBI::ProfileDumper::Apache(3)`, `DBI::ProfileSubs(3)`, `DBI::ProxyServer(3)`, `DBI::PurePerl(3)`, `DBI::SQL::Nano(3)`, `DBI::Util::CacheMemory(3)`, `DBI::W32ODBC(3)`, `DES_FAILED(3)`, `DPMSCapable(3)`, `DPMSDisable(3)`, `DPMSEnable(3)`, `DPMSForceLevel(3)`, `DPMSGetTimeouts(3)`, `DPMSGetVersion(3)`, `DPMSInfo(3)`, `DPMSQueryExtension(3)`, `DPMSSetTimeouts(3)`, `Data::Dump(3)`, `Data::Dump::Filtered(3)`, `Data::Dump::Trace(3)`, `Data::Grove(3)`, `Data::Grove::Parent(3)`, `Data::Grove::Visitor(3)`, `Date::Calc(3)`, `Date::Calc::Object(3)`, `Date::Calc::PP(3)`, `Date::Calc::XS(3)`, `Date::Calendar(3)`, `Date::Calendar::Profiles(3)`, `Date::Calendar::Year(3)`, `Date::Format(3)`, `Date::Format::Generic(3)`, `Date::Language(3)`, `Date::Language::Afar(3)`, `Date::Language::Amharic(3)`, `Date::Language::Arabic(3)`, `Date::Language::Austrian(3)`, `Date::Language::Brazilian(3)`, `Date::Language::Bulgarian(3)`, `Date::Language::Chinese(3)`, `Date::Language::Chinese_GB(3)`, `Date::Language::Czech(3)`, `Date::Language::Danish(3)`, `Date::Language::Dutch(3)`, `Date::Language::English(3)`, `Date::Language::Finnish(3)`, `Date::Language::French(3)`, `Date::Language::Gedeo(3)`, `Date::Language::German(3)`, `Date::Language::Greek(3)`, `Date::Language::Hungarian(3)`, `Date::Language::Icelandic(3)`, `Date::Language::Italian(3)`, `Date::Language::Norwegian(3)`, `Date::Language::Occitan(3)`, `Date::Language::Oromo(3)`, `Date::Language::Portuguese(3)`, `Date::Language::Romanian(3)`, `Date::Language::Russian(3)`, `Date::Language::Russian_cp1251(3)`, `Date::Language::Russian_koi8r(3)`, `Date::Language::Sidama(3)`, `Date::Language::Somali(3)`, `Date::Language::Spanish(3)`, `Date::Language::Swedish(3)`, `Date::Language::Tigrinya(3)`, `Date::Language::TigrinyaEritrean(3)`, `Date::Language::TigrinyaEthiopian(3)`, `Date::Language::Turkish(3)`, `Date::Manip(3)`, `Date::Manip::Base(3)`, `Date::Manip::Calc(3)`, `Date::Manip::Changes5(3)`, `Date::Manip::Changes5to6(3)`, `Date::Manip::Changes6(3)`, `Date::Manip::Config(3)`, `Date::Manip::ConfigFile(3)`, `Date::Manip::DM5(3)`, `Date::Manip::DM5abbrevs(3)`, `Date::Manip::DM6(3)`, `Date::Manip::Date(3)`, `Date::Manip::Delta(3)`, `Date::Manip::Examples(3)`, `Date::Manip::History(3)`, `Date::Manip::Holidays(3)`, `Date::Manip::Interfaces(3)`, `Date::Manip::Lang(3)`, `Date::Manip::Lang::catalan(3)`, `Date::Manip::Lang::danish(3)`, `Date::Manip::Lang::dutch(3)`, `Date::Manip::Lang::english(3)`, `Date::Manip::Lang::finnish(3)`, `Date::Manip::Lang::french(3)`, `Date::Manip::Lang::german(3)`, `Date::Manip::Lang::index(3)`, `Date::Manip::Lang::italian(3)`, `Date::Manip::Lang::norwegian(3)`, `Date::Manip::Lang::polish(3)`, `Date::Manip::Lang::portugue(3)`, `Date::Manip::Lang::romanian(3)`, `Date::Manip::Lang::russian(3)`, `Date::Manip::Lang::spanish(3)`, `Date::Manip::Lang::swedish(3)`, `Date::Manip::Lang::turkish(3)`, `Date::Manip::Migration5to6(3)`, `Date::Manip::Misc(3)`, `Date::Manip::Obj(3)`, `Date::Manip::Objects(3)`, `Date::Manip::Problems(3)`, `Date::Manip::Recur(3)`, `Date::Manip::TZ(3)`, `Date::Manip::TZ_Base(3)`, `Date::Manip::TZdata(3)`, `Date::Manip::Zones(3)`, `Date::Parse(3)`, `Debian::DictionariesCommon(3)`, `DebianNet(3)`, `Digest::BubbleBabble(3)`, `Digest::HMAC(3)`, `Digest::HMAC_MD5(3)`, `Digest::HMAC_SHA1(3)`, `Digest::Perl::MD5(3)`, `Dpkg(3)`, `Dpkg::Arch(3)`, `Dpkg::Archive::Ar(3)`, `Dpkg::BuildAPI(3)`, `Dpkg::BuildDriver(3)`, `Dpkg::BuildDriver::DebianRules(3)`, `Dpkg::BuildEnv(3)`, `Dpkg::BuildFlags(3)`, `Dpkg::BuildInfo(3)`, `Dpkg::BuildOptions(3)`, `Dpkg::BuildProfiles(3)`, `Dpkg::BuildTree(3)`, `Dpkg::BuildTypes(3)`, `Dpkg::Changelog(3)`, `Dpkg::Changelog::Debian(3)`, `Dpkg::Changelog::Entry(3)`, `Dpkg::Changelog::Entry::Debian(3)`, `Dpkg::Changelog::Parse(3)`, `Dpkg::Checksums(3)`, `Dpkg::Color(3)`, `Dpkg::Compression(3)`, `Dpkg::Compression::FileHandle(3)`, `Dpkg::Compression::Process(3)`, `Dpkg::Conf(3)`, `Dpkg::Control(3)`, `Dpkg::Control::Changelog(3)`, `Dpkg::Control::Fields(3)`, `Dpkg::Control::FieldsCore(3)`, `Dpkg::Control::Hash(3)`, `Dpkg::Control::HashCore(3)`, `Dpkg::Control::HashCore::Tie(3)`, `Dpkg::Control::Info(3)`, `Dpkg::Control::Tests(3)`, `Dpkg::Control::Tests::Entry(3)`, `Dpkg::Control::Types(3)`, `Dpkg::Deps(3)`, `Dpkg::Deps::AND(3)`, `Dpkg::Deps::KnownFacts(3)`, `Dpkg::Deps::Multiple(3)`, `Dpkg::Deps::OR(3)`, `Dpkg::Deps::Simple(3)`, `Dpkg::Deps::Union(3)`, `Dpkg::Dist::Files(3)`, `Dpkg::Email::Address(3)`, `Dpkg::Email::AddressList(3)`, `Dpkg::ErrorHandling(3)`, `Dpkg::Exit(3)`, `Dpkg::File(3)`, `Dpkg::Getopt(3)`, `Dpkg::Gettext(3)`, `Dpkg::IPC(3)`, `Dpkg::Index(3)`, `Dpkg::Interface::Storable(3)`, `Dpkg::Lock(3)`, `Dpkg::OpenPGP(3)`, `Dpkg::OpenPGP::Backend(3)`, `Dpkg::OpenPGP::Backend::GnuPG(3)`, `Dpkg::OpenPGP::Backend::SOP(3)`, `Dpkg::OpenPGP::Backend::Sequoia(3)`, `Dpkg::OpenPGP::ErrorCodes(3)`, `Dpkg::OpenPGP::KeyHandle(3)`, `Dpkg::Package(3)`, `Dpkg::Path(3)`, `Dpkg::Shlibs(3)`, `Dpkg::Shlibs::Cppfilt(3)`, `Dpkg::Shlibs::Objdump(3)`, `Dpkg::Shlibs::Objdump::Object(3)`, `Dpkg::Shlibs::Symbol(3)`, `Dpkg::Shlibs::SymbolFile(3)`, `Dpkg::Source::Archive(3)`, `Dpkg::Source::BinaryFiles(3)`, `Dpkg::Source::Format(3)`, `Dpkg::Source::Functions(3)`, `Dpkg::Source::Package(3)`, `Dpkg::Source::Package::V1(3)`, `Dpkg::Source::Package::V2(3)`, `Dpkg::Source::Package::V3::Bzr(3)`, `Dpkg::Source::Package::V3::Custom(3)`, `Dpkg::Source::Package::V3::Git(3)`, `Dpkg::Source::Package::V3::Native(3)`, `Dpkg::Source::Package::V3::Quilt(3)`, `Dpkg::Source::Patch(3)`, `Dpkg::Source::Quilt(3)`, `Dpkg::Substvars(3)`, `Dpkg::SysInfo(3)`, `Dpkg::Vendor(3)`, `Dpkg::Vendor::Debian(3)`, `Dpkg::Vendor::Default(3)`, `Dpkg::Vendor::Devuan(3)`, `Dpkg::Vendor::PureOS(3)`, `Dpkg::Vendor::Ubuntu(3)`, `Dpkg::Version(3)`, `EOF(3)`, `EXIT_FAILURE(3)`, `EXIT_SUCCESS(3)`, `Encode(3)`, `Encode::Alias(3)`, `Encode::CJKConstants(3)`, `Encode::CN::HZ(3)`, `Encode::Config(3)`, `Encode::Encoder(3)`, `Encode::Encoding(3)`, `Encode::GSM0338(3)`, `Encode::Guess(3)`, `Encode::JP::H2Z(3)`, `Encode::JP::JIS7(3)`, `Encode::KR::2022_KR(3)`, `Encode::Locale(3)`, `Encode::MIME::Header(3)`, `Encode::MIME::Name(3)`, `Encode::PerlIO(3)`, `Encode::Supported(3)`, `Encode::Unicode::UTF7(3)`, `Error(3)`, `Error::Simple(3)`, `Expect(3)`, `FCGI(3)`, `FD_CLR(3)`, `FD_ISSET(3)`, `FD_SET(3)`, `FD_ZERO(3)`, `FILE(3)`, `File::BaseDir(3)`, `File::DesktopEntry(3)`, `File::FcntlLock(3)`, `File::FcntlLock::Inline(3)`, `File::FcntlLock::Pure(3)`, `File::FcntlLock::XS(3)`, `File::IconTheme(3)`, `File::Listing(3)`, `File::MimeInfo(3)`, `File::MimeInfo::Applications(3)`, `File::MimeInfo::Cookbook(3)`, `File::MimeInfo::Magic(3)`, `File::MimeInfo::Rox(3)`, `File::RandomAccess(3)`, `File::UserDirs(3)`, `Font::AFM(3)`, `Git(3)`, `HTML::AsSubs(3)`, `HTML::Element(3)`, `HTML::Element::traverse(3)`, `HTML::Entities(3)`, `HTML::Filter(3)`, `HTML::Form(3)`, `HTML::Form::FileInput(3)`, `HTML::Form::IgnoreInput(3)`, `HTML::Form::ImageInput(3)`, `HTML::Form::Input(3)`, `HTML::Form::KeygenInput(3)`, `HTML::Form::ListInput(3)`, `HTML::Form::SubmitInput(3)`, `HTML::Form::TextInput(3)`, `HTML::FormatMarkdown(3)`, `HTML::FormatPS(3)`, `HTML::FormatRTF(3)`, `HTML::FormatText(3)`, `HTML::Formatter(3)`, `HTML::HeadParser(3)`, `HTML::LinkExtor(3)`, `HTML::Parse(3)`, `HTML::Parser(3)`, `HTML::PullParser(3)`, `HTML::Tagset(3)`, `HTML::Template(3)`, `HTML::Template::FAQ(3)`, `HTML::TokeParser(3)`, `HTML::Tree(3)`, `HTML::Tree::AboutObjects(3)`, `HTML::Tree::AboutTrees(3)`, `HTML::Tree::Scanning(3)`, `HTML::TreeBuilder(3)`, `HTTP::Config(3)`, `HTTP::Cookies(3)`, `HTTP::Cookies::Netscape(3)`, `HTTP::DAV(3)`, `HTTP::DAV::Lock(3)`, `HTTP::DAV::Resource(3)`, `HTTP::DAV::Response(3)`, `HTTP::Daemon(3)`, `HTTP::Date(3)`, `HTTP::Headers(3)`, `HTTP::Headers::Util(3)`, `HTTP::Message(3)`, `HTTP::Negotiate(3)`, `HTTP::Request(3)`, `HTTP::Request::Common(3)`, `HTTP::Response(3)`, `HTTP::Status(3)` ... and 4977 more pages.
+
+
+
+# INTRO(3) — Linux Manual Page
+
+### NAME
+
+intro - C/C++ attributes
+
+### SYNOPSIS
+
+### DESCRIPTION
+
+Attributes modify the properties of a source construct,
+such as a type, a variable, or a function.
+
+The standard syntax allows specifying a
+vendor
+for non-standard attributes.
+
+### VERSIONS
+
+C and C++ dialects have provided various forms of attributes
+before standardization.
+
+This is the GNU syntax for attributes.
+It is supported by both GCC and Clang.
+
+This is the MSVC syntax for attributes.
+It is supported by Clang.
+
+### STANDARDS
+
+C23, C++23.
+
+### HISTORY
+
+C23, C++11.
+
+gcc 10, g++ 9, clang 9, clang++ 9.
+
+gcc, g++, clang, clang++.
+
+clang, clang++.
+
+
+# MALLOC(3) — Linux Manual Page
+
+### NAME
+
+malloc, free, calloc, realloc, reallocarray - allocate and free dynamic memory
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdlib.h>
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+reallocarray ():
+    Since glibc 2.29:
+        _DEFAULT_SOURCE
+    glibc 2.28 and earlier:
+        _GNU_SOURCE
+
+### DESCRIPTION
+
+### malloc()
+
+The
+malloc ()
+function allocates
+size
+bytes and returns a pointer to the allocated memory.
+The memory is not initialized .
+If
+size
+is 0, then
+malloc ()
+returns a unique pointer value that can later be successfully passed to
+free ().
+(See "Nonportable behavior" for portability issues.)
+
+### free()
+
+The
+free ()
+function frees the memory space pointed to by
+p ,
+which must have been returned by a previous call to
+malloc ()
+or related functions.
+Otherwise, or if
+p
+has already been freed, undefined behavior occurs.
+If
+p
+is NULL, no operation is performed.
+
+### calloc()
+
+The
+calloc ()
+function allocates memory for an array of
+n
+elements of
+size
+bytes each and returns a pointer to the allocated memory.
+The memory is set to zero.
+If
+n
+or
+size
+is 0, then
+calloc ()
+returns a unique pointer value that can later be successfully passed to
+free ().
+
+If the multiplication of
+n
+and
+size
+would result in integer overflow, then
+calloc ()
+returns an error.
+By contrast,
+an integer overflow would not be detected in the following call to
+malloc (),
+with the result that an incorrectly sized block of memory would be allocated:
+
+malloc(n * size);
+
+### realloc()
+
+The
+realloc ()
+function changes the size of the memory block pointed to by
+p
+to
+size
+bytes.
+The contents of the memory
+will be unchanged in the range from the start of the region
+up to the minimum of the old and new sizes.
+If the new size is larger than the old size, the added memory will
+not
+be initialized.
+
+If
+p
+is NULL, then the call is equivalent to
+malloc(size) ,
+for all values of
+size .
+
+If
+size
+is equal to zero,
+and
+p
+is not NULL, then the call is equivalent to
+free(p)
+(but see "Nonportable behavior" for portability issues).
+
+Unless
+p
+is NULL, it must have been returned by an earlier call to
+malloc
+or related functions.
+If the area pointed to was moved, a
+free(p)
+is done.
+
+### reallocarray()
+
+The
+reallocarray ()
+function changes the size of (and possibly moves)
+the memory block pointed to by
+p
+to be large enough for an array of
+n
+elements, each of which is
+size
+bytes.
+It is equivalent to the call
+
+realloc(p, n * size);
+
+However, unlike that
+realloc ()
+call,
+reallocarray ()
+fails safely in the case where the multiplication would overflow.
+If such an overflow occurs,
+reallocarray ()
+returns an error.
+
+### RETURN VALUE
+
+The
+malloc (),
+calloc (),
+realloc (),
+and
+reallocarray ()
+functions return a pointer to the allocated memory,
+which is suitably aligned for any type that fits into
+the requested size or less.
+On error, these functions return NULL and set
+errno .
+Attempting to allocate more than
+PTRDIFF_MAX
+bytes is considered an error, as an object that large
+could cause later pointer subtraction to overflow.
+
+The
+free ()
+function returns no value, and preserves
+errno .
+
+The
+realloc ()
+and
+reallocarray ()
+functions return NULL if
+p
+is not NULL and the requested size is zero;
+this is not considered an error.
+(See "Nonportable behavior" for portability issues.)
+Otherwise, the returned pointer may be the same as
+p
+if the allocation was not moved
+(e.g., there was room to expand the allocation in-place), or different from
+p
+if the allocation was moved to a new address.
+If these functions fail,
+the original block is left untouched;
+it is not freed or moved.
+
+### ERRORS
+
+calloc (),
+malloc (),
+realloc (),
+and
+reallocarray ()
+can fail with the following error:
+
+ENOMEM
+Out of memory.
+Possibly, the application hit the
+RLIMIT_AS
+or
+RLIMIT_DATA
+limit described in
+getrlimit (2).
+Another reason could be that
+the number of mappings created by the caller process
+exceeded the limit specified by
+/proc/sys/vm/max_map_count .
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+malloc (),
+free (),
+calloc (),
+realloc ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+malloc ()
+free ()
+calloc ()
+realloc ()
+C23, POSIX.1-2024.
+
+reallocarray ()
+POSIX.1-2024.
+
+### realloc(p, 0)
+
+The behavior of
+realloc(p,\~0)
+in glibc doesn't conform to any of
+C99,
+C11,
+POSIX.1-2001,
+POSIX.1-2004,
+POSIX.1-2008,
+POSIX.1-2013,
+POSIX.1-2017,
+or POSIX.1-2024.
+The C17 specification was changed to make it conforming,
+but that specification made it
+impossible to write code that reliably
+determines if the input pointer is freed after
+realloc(p,\~0) ,
+and C23 changed it again to make this undefined behavior,
+acknowledging that the C17 specification was broad enough,
+so that undefined behavior wasn't worse than that.
+
+reallocarray ()
+suffers the same issues in glibc.
+
+musl libc and the BSDs conform to all versions of ISO C and POSIX.1.
+
+gnulib provides the
+realloc-posix
+module,
+which provides wrappers
+realloc ()
+and
+reallocarray ()
+that conform to all versions of ISO C and POSIX.1.
+
+There's a proposal to standardize the BSD behavior:
+
+### HISTORY
+
+malloc ()
+free ()
+calloc ()
+realloc ()
+POSIX.1-2001, C89.
+
+reallocarray ()
+glibc 2.26.
+OpenBSD 5.6, FreeBSD 11.0.
+
+malloc ()
+and related functions rejected sizes greater than
+PTRDIFF_MAX
+starting in glibc 2.30.
+
+free ()
+preserved
+errno
+starting in glibc 2.33.
+
+### realloc(p,\~0)
+
+C89 was ambiguous in its specification of
+realloc(p,\~0) .
+C99 partially fixed this.
+
+The original implementation in glibc would have been conforming to C99.
+However, and ironically,
+trying to comply with C99 before the standard was released,
+glibc changed its behavior in glibc 2.1.1 into something that ended up
+not conforming to the final C99 specification
+(but this is debated,
+as the wording of the standard seems self-contradicting).
+
+### NOTES
+
+By default, Linux follows an optimistic memory allocation strategy.
+This means that when
+malloc ()
+returns non-NULL there is no guarantee that the memory really
+is available.
+In case it turns out that the system is out of memory,
+one or more processes will be killed by the OOM killer.
+For more information, see the description of
+/proc/sys/vm/overcommit_memory
+and
+/proc/sys/vm/oom_adj
+in
+proc (5),
+and the Linux kernel source file
+Documentation/vm/overcommit\-accounting.rst .
+
+Normally,
+malloc ()
+allocates memory from the heap, and adjusts the size of the heap
+as required, using
+sbrk (2).
+When allocating blocks of memory larger than
+MMAP_THRESHOLD
+bytes, the glibc
+malloc ()
+implementation allocates the memory as a private anonymous mapping using
+mmap (2).
+MMAP_THRESHOLD
+is 128\ kB by default, but is adjustable using
+mallopt (3).
+Prior to Linux 4.7
+allocations performed using
+mmap (2)
+were unaffected by the
+RLIMIT_DATA
+resource limit;
+since Linux 4.7, this limit is also enforced for allocations performed using
+mmap (2).
+
+To avoid corruption in multithreaded applications,
+mutexes are used internally to protect the memory-management
+data structures employed by these functions.
+In a multithreaded application in which threads simultaneously
+allocate and free memory,
+there could be contention for these mutexes.
+To scalably handle memory allocation in multithreaded applications,
+glibc creates additional
+memory allocation arenas
+if mutex contention is detected.
+Each arena is a large region of memory that is internally allocated
+by the system
+(using
+brk (2)
+or
+mmap (2)),
+and managed with its own mutexes.
+
+If your program uses a private memory allocator,
+it should do so by replacing
+malloc (),
+free (),
+calloc (),
+and
+realloc ().
+The replacement functions must implement the documented glibc behaviors,
+including
+errno
+handling, size-zero allocations, and overflow checking;
+otherwise, other library routines may crash or operate incorrectly.
+For example, if the replacement
+free ()
+does not preserve
+errno ,
+then seemingly unrelated library routines may
+fail without having a valid reason in
+errno .
+Private memory allocators may also need to replace other glibc functions;
+see "Replacing malloc" in the glibc manual for details.
+
+Crashes in memory allocators
+are almost always related to heap corruption, such as overflowing
+an allocated chunk or freeing the same pointer twice.
+
+The
+malloc ()
+implementation is tunable via environment variables;
+see
+mallopt (3)
+for details.
+
+### Nonportable behavior
+
+The behavior of
+these functions when the requested size is zero
+is glibc specific;
+other implementations may return NULL without setting
+errno ,
+and portable POSIX programs should tolerate such behavior.
+See
+realloc (3p).
+
+POSIX requires memory allocators
+to set
+errno
+upon failure.
+However, the C standard does not require this, and applications
+portable to non-POSIX platforms should not assume this.
+
+Portable programs should not use private memory allocators,
+as POSIX and the C standard do not allow replacement of
+malloc (),
+free (),
+calloc (),
+and
+realloc ().
+
+### BUGS
+
+Programmers would naturally expect by induction that
+\%realloc(p,\~size)
+is consistent with
+free(p)
+and
+malloc(size) ,
+as that is the behavior in the general case.
+This is not explicitly required by POSIX.1-2024 or C11,
+but all conforming implementations are consistent with that.
+
+The glibc implementation of
+realloc ()
+is not consistent with that,
+and as a consequence,
+it is dangerous to call
+\%realloc(p,\~0)
+in glibc.
+
+A trivial workaround for glibc is calling it as
+\%realloc(p,\~size?size:1) .
+
+The workaround for
+reallocarray ()
+in glibc
+\[em]which shares the same bug\[em]
+would be
+\%reallocarray(p,\~n?n:1,\~size?size:1) .
+
+### EXAMPLES
+
+#include <err.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MALLOCARRAY(n, type)  ((type *) my_mallocarray(n, sizeof(type)))
+#define MALLOC(type)          MALLOCARRAY(1, type)
+
+static inline void *my_mallocarray(size_t n, size_t size);
+
+int
+main(void)
+{
+    char  *p;
+
+    p = MALLOCARRAY(32, char);
+    if (p == NULL)
+        err(EXIT_FAILURE, "malloc");
+
+    strlcpy(p, "foo", 32);
+    puts(p);
+}
+
+static inline void *
+my_mallocarray(size_t n, size_t size)
+{
+    return reallocarray(NULL, n, size);
+}
+
+### SEE ALSO
+
+valgrind (1),
+brk (2),
+mmap (2),
+alloca (3),
+malloc_get_state (3),
+malloc_info (3),
+malloc_trim (3),
+malloc_usable_size (3),
+mallopt (3),
+mcheck (3),
+mtrace (3),
+posix_memalign (3)
+
+For details of the GNU C library implementation, see
+
+
+# FREE(3) — Linux Manual Page
+
+### NAME
+
+malloc, free, calloc, realloc, reallocarray - allocate and free dynamic memory
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdlib.h>
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+reallocarray ():
+    Since glibc 2.29:
+        _DEFAULT_SOURCE
+    glibc 2.28 and earlier:
+        _GNU_SOURCE
+
+### DESCRIPTION
+
+### malloc()
+
+The
+malloc ()
+function allocates
+size
+bytes and returns a pointer to the allocated memory.
+The memory is not initialized .
+If
+size
+is 0, then
+malloc ()
+returns a unique pointer value that can later be successfully passed to
+free ().
+(See "Nonportable behavior" for portability issues.)
+
+### free()
+
+The
+free ()
+function frees the memory space pointed to by
+p ,
+which must have been returned by a previous call to
+malloc ()
+or related functions.
+Otherwise, or if
+p
+has already been freed, undefined behavior occurs.
+If
+p
+is NULL, no operation is performed.
+
+### calloc()
+
+The
+calloc ()
+function allocates memory for an array of
+n
+elements of
+size
+bytes each and returns a pointer to the allocated memory.
+The memory is set to zero.
+If
+n
+or
+size
+is 0, then
+calloc ()
+returns a unique pointer value that can later be successfully passed to
+free ().
+
+If the multiplication of
+n
+and
+size
+would result in integer overflow, then
+calloc ()
+returns an error.
+By contrast,
+an integer overflow would not be detected in the following call to
+malloc (),
+with the result that an incorrectly sized block of memory would be allocated:
+
+malloc(n * size);
+
+### realloc()
+
+The
+realloc ()
+function changes the size of the memory block pointed to by
+p
+to
+size
+bytes.
+The contents of the memory
+will be unchanged in the range from the start of the region
+up to the minimum of the old and new sizes.
+If the new size is larger than the old size, the added memory will
+not
+be initialized.
+
+If
+p
+is NULL, then the call is equivalent to
+malloc(size) ,
+for all values of
+size .
+
+If
+size
+is equal to zero,
+and
+p
+is not NULL, then the call is equivalent to
+free(p)
+(but see "Nonportable behavior" for portability issues).
+
+Unless
+p
+is NULL, it must have been returned by an earlier call to
+malloc
+or related functions.
+If the area pointed to was moved, a
+free(p)
+is done.
+
+### reallocarray()
+
+The
+reallocarray ()
+function changes the size of (and possibly moves)
+the memory block pointed to by
+p
+to be large enough for an array of
+n
+elements, each of which is
+size
+bytes.
+It is equivalent to the call
+
+realloc(p, n * size);
+
+However, unlike that
+realloc ()
+call,
+reallocarray ()
+fails safely in the case where the multiplication would overflow.
+If such an overflow occurs,
+reallocarray ()
+returns an error.
+
+### RETURN VALUE
+
+The
+malloc (),
+calloc (),
+realloc (),
+and
+reallocarray ()
+functions return a pointer to the allocated memory,
+which is suitably aligned for any type that fits into
+the requested size or less.
+On error, these functions return NULL and set
+errno .
+Attempting to allocate more than
+PTRDIFF_MAX
+bytes is considered an error, as an object that large
+could cause later pointer subtraction to overflow.
+
+The
+free ()
+function returns no value, and preserves
+errno .
+
+The
+realloc ()
+and
+reallocarray ()
+functions return NULL if
+p
+is not NULL and the requested size is zero;
+this is not considered an error.
+(See "Nonportable behavior" for portability issues.)
+Otherwise, the returned pointer may be the same as
+p
+if the allocation was not moved
+(e.g., there was room to expand the allocation in-place), or different from
+p
+if the allocation was moved to a new address.
+If these functions fail,
+the original block is left untouched;
+it is not freed or moved.
+
+### ERRORS
+
+calloc (),
+malloc (),
+realloc (),
+and
+reallocarray ()
+can fail with the following error:
+
+ENOMEM
+Out of memory.
+Possibly, the application hit the
+RLIMIT_AS
+or
+RLIMIT_DATA
+limit described in
+getrlimit (2).
+Another reason could be that
+the number of mappings created by the caller process
+exceeded the limit specified by
+/proc/sys/vm/max_map_count .
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+malloc (),
+free (),
+calloc (),
+realloc ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+malloc ()
+free ()
+calloc ()
+realloc ()
+C23, POSIX.1-2024.
+
+reallocarray ()
+POSIX.1-2024.
+
+### realloc(p, 0)
+
+The behavior of
+realloc(p,\~0)
+in glibc doesn't conform to any of
+C99,
+C11,
+POSIX.1-2001,
+POSIX.1-2004,
+POSIX.1-2008,
+POSIX.1-2013,
+POSIX.1-2017,
+or POSIX.1-2024.
+The C17 specification was changed to make it conforming,
+but that specification made it
+impossible to write code that reliably
+determines if the input pointer is freed after
+realloc(p,\~0) ,
+and C23 changed it again to make this undefined behavior,
+acknowledging that the C17 specification was broad enough,
+so that undefined behavior wasn't worse than that.
+
+reallocarray ()
+suffers the same issues in glibc.
+
+musl libc and the BSDs conform to all versions of ISO C and POSIX.1.
+
+gnulib provides the
+realloc-posix
+module,
+which provides wrappers
+realloc ()
+and
+reallocarray ()
+that conform to all versions of ISO C and POSIX.1.
+
+There's a proposal to standardize the BSD behavior:
+
+### HISTORY
+
+malloc ()
+free ()
+calloc ()
+realloc ()
+POSIX.1-2001, C89.
+
+reallocarray ()
+glibc 2.26.
+OpenBSD 5.6, FreeBSD 11.0.
+
+malloc ()
+and related functions rejected sizes greater than
+PTRDIFF_MAX
+starting in glibc 2.30.
+
+free ()
+preserved
+errno
+starting in glibc 2.33.
+
+### realloc(p,\~0)
+
+C89 was ambiguous in its specification of
+realloc(p,\~0) .
+C99 partially fixed this.
+
+The original implementation in glibc would have been conforming to C99.
+However, and ironically,
+trying to comply with C99 before the standard was released,
+glibc changed its behavior in glibc 2.1.1 into something that ended up
+not conforming to the final C99 specification
+(but this is debated,
+as the wording of the standard seems self-contradicting).
+
+### NOTES
+
+By default, Linux follows an optimistic memory allocation strategy.
+This means that when
+malloc ()
+returns non-NULL there is no guarantee that the memory really
+is available.
+In case it turns out that the system is out of memory,
+one or more processes will be killed by the OOM killer.
+For more information, see the description of
+/proc/sys/vm/overcommit_memory
+and
+/proc/sys/vm/oom_adj
+in
+proc (5),
+and the Linux kernel source file
+Documentation/vm/overcommit\-accounting.rst .
+
+Normally,
+malloc ()
+allocates memory from the heap, and adjusts the size of the heap
+as required, using
+sbrk (2).
+When allocating blocks of memory larger than
+MMAP_THRESHOLD
+bytes, the glibc
+malloc ()
+implementation allocates the memory as a private anonymous mapping using
+mmap (2).
+MMAP_THRESHOLD
+is 128\ kB by default, but is adjustable using
+mallopt (3).
+Prior to Linux 4.7
+allocations performed using
+mmap (2)
+were unaffected by the
+RLIMIT_DATA
+resource limit;
+since Linux 4.7, this limit is also enforced for allocations performed using
+mmap (2).
+
+To avoid corruption in multithreaded applications,
+mutexes are used internally to protect the memory-management
+data structures employed by these functions.
+In a multithreaded application in which threads simultaneously
+allocate and free memory,
+there could be contention for these mutexes.
+To scalably handle memory allocation in multithreaded applications,
+glibc creates additional
+memory allocation arenas
+if mutex contention is detected.
+Each arena is a large region of memory that is internally allocated
+by the system
+(using
+brk (2)
+or
+mmap (2)),
+and managed with its own mutexes.
+
+If your program uses a private memory allocator,
+it should do so by replacing
+malloc (),
+free (),
+calloc (),
+and
+realloc ().
+The replacement functions must implement the documented glibc behaviors,
+including
+errno
+handling, size-zero allocations, and overflow checking;
+otherwise, other library routines may crash or operate incorrectly.
+For example, if the replacement
+free ()
+does not preserve
+errno ,
+then seemingly unrelated library routines may
+fail without having a valid reason in
+errno .
+Private memory allocators may also need to replace other glibc functions;
+see "Replacing malloc" in the glibc manual for details.
+
+Crashes in memory allocators
+are almost always related to heap corruption, such as overflowing
+an allocated chunk or freeing the same pointer twice.
+
+The
+malloc ()
+implementation is tunable via environment variables;
+see
+mallopt (3)
+for details.
+
+### Nonportable behavior
+
+The behavior of
+these functions when the requested size is zero
+is glibc specific;
+other implementations may return NULL without setting
+errno ,
+and portable POSIX programs should tolerate such behavior.
+See
+realloc (3p).
+
+POSIX requires memory allocators
+to set
+errno
+upon failure.
+However, the C standard does not require this, and applications
+portable to non-POSIX platforms should not assume this.
+
+Portable programs should not use private memory allocators,
+as POSIX and the C standard do not allow replacement of
+malloc (),
+free (),
+calloc (),
+and
+realloc ().
+
+### BUGS
+
+Programmers would naturally expect by induction that
+\%realloc(p,\~size)
+is consistent with
+free(p)
+and
+malloc(size) ,
+as that is the behavior in the general case.
+This is not explicitly required by POSIX.1-2024 or C11,
+but all conforming implementations are consistent with that.
+
+The glibc implementation of
+realloc ()
+is not consistent with that,
+and as a consequence,
+it is dangerous to call
+\%realloc(p,\~0)
+in glibc.
+
+A trivial workaround for glibc is calling it as
+\%realloc(p,\~size?size:1) .
+
+The workaround for
+reallocarray ()
+in glibc
+\[em]which shares the same bug\[em]
+would be
+\%reallocarray(p,\~n?n:1,\~size?size:1) .
+
+### EXAMPLES
+
+#include <err.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MALLOCARRAY(n, type)  ((type *) my_mallocarray(n, sizeof(type)))
+#define MALLOC(type)          MALLOCARRAY(1, type)
+
+static inline void *my_mallocarray(size_t n, size_t size);
+
+int
+main(void)
+{
+    char  *p;
+
+    p = MALLOCARRAY(32, char);
+    if (p == NULL)
+        err(EXIT_FAILURE, "malloc");
+
+    strlcpy(p, "foo", 32);
+    puts(p);
+}
+
+static inline void *
+my_mallocarray(size_t n, size_t size)
+{
+    return reallocarray(NULL, n, size);
+}
+
+### SEE ALSO
+
+valgrind (1),
+brk (2),
+mmap (2),
+alloca (3),
+malloc_get_state (3),
+malloc_info (3),
+malloc_trim (3),
+malloc_usable_size (3),
+mallopt (3),
+mcheck (3),
+mtrace (3),
+posix_memalign (3)
+
+For details of the GNU C library implementation, see
+
+
+# CALLOC(3) — Linux Manual Page
+
+### NAME
+
+malloc, free, calloc, realloc, reallocarray - allocate and free dynamic memory
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdlib.h>
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+reallocarray ():
+    Since glibc 2.29:
+        _DEFAULT_SOURCE
+    glibc 2.28 and earlier:
+        _GNU_SOURCE
+
+### DESCRIPTION
+
+### malloc()
+
+The
+malloc ()
+function allocates
+size
+bytes and returns a pointer to the allocated memory.
+The memory is not initialized .
+If
+size
+is 0, then
+malloc ()
+returns a unique pointer value that can later be successfully passed to
+free ().
+(See "Nonportable behavior" for portability issues.)
+
+### free()
+
+The
+free ()
+function frees the memory space pointed to by
+p ,
+which must have been returned by a previous call to
+malloc ()
+or related functions.
+Otherwise, or if
+p
+has already been freed, undefined behavior occurs.
+If
+p
+is NULL, no operation is performed.
+
+### calloc()
+
+The
+calloc ()
+function allocates memory for an array of
+n
+elements of
+size
+bytes each and returns a pointer to the allocated memory.
+The memory is set to zero.
+If
+n
+or
+size
+is 0, then
+calloc ()
+returns a unique pointer value that can later be successfully passed to
+free ().
+
+If the multiplication of
+n
+and
+size
+would result in integer overflow, then
+calloc ()
+returns an error.
+By contrast,
+an integer overflow would not be detected in the following call to
+malloc (),
+with the result that an incorrectly sized block of memory would be allocated:
+
+malloc(n * size);
+
+### realloc()
+
+The
+realloc ()
+function changes the size of the memory block pointed to by
+p
+to
+size
+bytes.
+The contents of the memory
+will be unchanged in the range from the start of the region
+up to the minimum of the old and new sizes.
+If the new size is larger than the old size, the added memory will
+not
+be initialized.
+
+If
+p
+is NULL, then the call is equivalent to
+malloc(size) ,
+for all values of
+size .
+
+If
+size
+is equal to zero,
+and
+p
+is not NULL, then the call is equivalent to
+free(p)
+(but see "Nonportable behavior" for portability issues).
+
+Unless
+p
+is NULL, it must have been returned by an earlier call to
+malloc
+or related functions.
+If the area pointed to was moved, a
+free(p)
+is done.
+
+### reallocarray()
+
+The
+reallocarray ()
+function changes the size of (and possibly moves)
+the memory block pointed to by
+p
+to be large enough for an array of
+n
+elements, each of which is
+size
+bytes.
+It is equivalent to the call
+
+realloc(p, n * size);
+
+However, unlike that
+realloc ()
+call,
+reallocarray ()
+fails safely in the case where the multiplication would overflow.
+If such an overflow occurs,
+reallocarray ()
+returns an error.
+
+### RETURN VALUE
+
+The
+malloc (),
+calloc (),
+realloc (),
+and
+reallocarray ()
+functions return a pointer to the allocated memory,
+which is suitably aligned for any type that fits into
+the requested size or less.
+On error, these functions return NULL and set
+errno .
+Attempting to allocate more than
+PTRDIFF_MAX
+bytes is considered an error, as an object that large
+could cause later pointer subtraction to overflow.
+
+The
+free ()
+function returns no value, and preserves
+errno .
+
+The
+realloc ()
+and
+reallocarray ()
+functions return NULL if
+p
+is not NULL and the requested size is zero;
+this is not considered an error.
+(See "Nonportable behavior" for portability issues.)
+Otherwise, the returned pointer may be the same as
+p
+if the allocation was not moved
+(e.g., there was room to expand the allocation in-place), or different from
+p
+if the allocation was moved to a new address.
+If these functions fail,
+the original block is left untouched;
+it is not freed or moved.
+
+### ERRORS
+
+calloc (),
+malloc (),
+realloc (),
+and
+reallocarray ()
+can fail with the following error:
+
+ENOMEM
+Out of memory.
+Possibly, the application hit the
+RLIMIT_AS
+or
+RLIMIT_DATA
+limit described in
+getrlimit (2).
+Another reason could be that
+the number of mappings created by the caller process
+exceeded the limit specified by
+/proc/sys/vm/max_map_count .
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+malloc (),
+free (),
+calloc (),
+realloc ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+malloc ()
+free ()
+calloc ()
+realloc ()
+C23, POSIX.1-2024.
+
+reallocarray ()
+POSIX.1-2024.
+
+### realloc(p, 0)
+
+The behavior of
+realloc(p,\~0)
+in glibc doesn't conform to any of
+C99,
+C11,
+POSIX.1-2001,
+POSIX.1-2004,
+POSIX.1-2008,
+POSIX.1-2013,
+POSIX.1-2017,
+or POSIX.1-2024.
+The C17 specification was changed to make it conforming,
+but that specification made it
+impossible to write code that reliably
+determines if the input pointer is freed after
+realloc(p,\~0) ,
+and C23 changed it again to make this undefined behavior,
+acknowledging that the C17 specification was broad enough,
+so that undefined behavior wasn't worse than that.
+
+reallocarray ()
+suffers the same issues in glibc.
+
+musl libc and the BSDs conform to all versions of ISO C and POSIX.1.
+
+gnulib provides the
+realloc-posix
+module,
+which provides wrappers
+realloc ()
+and
+reallocarray ()
+that conform to all versions of ISO C and POSIX.1.
+
+There's a proposal to standardize the BSD behavior:
+
+### HISTORY
+
+malloc ()
+free ()
+calloc ()
+realloc ()
+POSIX.1-2001, C89.
+
+reallocarray ()
+glibc 2.26.
+OpenBSD 5.6, FreeBSD 11.0.
+
+malloc ()
+and related functions rejected sizes greater than
+PTRDIFF_MAX
+starting in glibc 2.30.
+
+free ()
+preserved
+errno
+starting in glibc 2.33.
+
+### realloc(p,\~0)
+
+C89 was ambiguous in its specification of
+realloc(p,\~0) .
+C99 partially fixed this.
+
+The original implementation in glibc would have been conforming to C99.
+However, and ironically,
+trying to comply with C99 before the standard was released,
+glibc changed its behavior in glibc 2.1.1 into something that ended up
+not conforming to the final C99 specification
+(but this is debated,
+as the wording of the standard seems self-contradicting).
+
+### NOTES
+
+By default, Linux follows an optimistic memory allocation strategy.
+This means that when
+malloc ()
+returns non-NULL there is no guarantee that the memory really
+is available.
+In case it turns out that the system is out of memory,
+one or more processes will be killed by the OOM killer.
+For more information, see the description of
+/proc/sys/vm/overcommit_memory
+and
+/proc/sys/vm/oom_adj
+in
+proc (5),
+and the Linux kernel source file
+Documentation/vm/overcommit\-accounting.rst .
+
+Normally,
+malloc ()
+allocates memory from the heap, and adjusts the size of the heap
+as required, using
+sbrk (2).
+When allocating blocks of memory larger than
+MMAP_THRESHOLD
+bytes, the glibc
+malloc ()
+implementation allocates the memory as a private anonymous mapping using
+mmap (2).
+MMAP_THRESHOLD
+is 128\ kB by default, but is adjustable using
+mallopt (3).
+Prior to Linux 4.7
+allocations performed using
+mmap (2)
+were unaffected by the
+RLIMIT_DATA
+resource limit;
+since Linux 4.7, this limit is also enforced for allocations performed using
+mmap (2).
+
+To avoid corruption in multithreaded applications,
+mutexes are used internally to protect the memory-management
+data structures employed by these functions.
+In a multithreaded application in which threads simultaneously
+allocate and free memory,
+there could be contention for these mutexes.
+To scalably handle memory allocation in multithreaded applications,
+glibc creates additional
+memory allocation arenas
+if mutex contention is detected.
+Each arena is a large region of memory that is internally allocated
+by the system
+(using
+brk (2)
+or
+mmap (2)),
+and managed with its own mutexes.
+
+If your program uses a private memory allocator,
+it should do so by replacing
+malloc (),
+free (),
+calloc (),
+and
+realloc ().
+The replacement functions must implement the documented glibc behaviors,
+including
+errno
+handling, size-zero allocations, and overflow checking;
+otherwise, other library routines may crash or operate incorrectly.
+For example, if the replacement
+free ()
+does not preserve
+errno ,
+then seemingly unrelated library routines may
+fail without having a valid reason in
+errno .
+Private memory allocators may also need to replace other glibc functions;
+see "Replacing malloc" in the glibc manual for details.
+
+Crashes in memory allocators
+are almost always related to heap corruption, such as overflowing
+an allocated chunk or freeing the same pointer twice.
+
+The
+malloc ()
+implementation is tunable via environment variables;
+see
+mallopt (3)
+for details.
+
+### Nonportable behavior
+
+The behavior of
+these functions when the requested size is zero
+is glibc specific;
+other implementations may return NULL without setting
+errno ,
+and portable POSIX programs should tolerate such behavior.
+See
+realloc (3p).
+
+POSIX requires memory allocators
+to set
+errno
+upon failure.
+However, the C standard does not require this, and applications
+portable to non-POSIX platforms should not assume this.
+
+Portable programs should not use private memory allocators,
+as POSIX and the C standard do not allow replacement of
+malloc (),
+free (),
+calloc (),
+and
+realloc ().
+
+### BUGS
+
+Programmers would naturally expect by induction that
+\%realloc(p,\~size)
+is consistent with
+free(p)
+and
+malloc(size) ,
+as that is the behavior in the general case.
+This is not explicitly required by POSIX.1-2024 or C11,
+but all conforming implementations are consistent with that.
+
+The glibc implementation of
+realloc ()
+is not consistent with that,
+and as a consequence,
+it is dangerous to call
+\%realloc(p,\~0)
+in glibc.
+
+A trivial workaround for glibc is calling it as
+\%realloc(p,\~size?size:1) .
+
+The workaround for
+reallocarray ()
+in glibc
+\[em]which shares the same bug\[em]
+would be
+\%reallocarray(p,\~n?n:1,\~size?size:1) .
+
+### EXAMPLES
+
+#include <err.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MALLOCARRAY(n, type)  ((type *) my_mallocarray(n, sizeof(type)))
+#define MALLOC(type)          MALLOCARRAY(1, type)
+
+static inline void *my_mallocarray(size_t n, size_t size);
+
+int
+main(void)
+{
+    char  *p;
+
+    p = MALLOCARRAY(32, char);
+    if (p == NULL)
+        err(EXIT_FAILURE, "malloc");
+
+    strlcpy(p, "foo", 32);
+    puts(p);
+}
+
+static inline void *
+my_mallocarray(size_t n, size_t size)
+{
+    return reallocarray(NULL, n, size);
+}
+
+### SEE ALSO
+
+valgrind (1),
+brk (2),
+mmap (2),
+alloca (3),
+malloc_get_state (3),
+malloc_info (3),
+malloc_trim (3),
+malloc_usable_size (3),
+mallopt (3),
+mcheck (3),
+mtrace (3),
+posix_memalign (3)
+
+For details of the GNU C library implementation, see
+
+
+# REALLOC(3) — Linux Manual Page
+
+### NAME
+
+malloc, free, calloc, realloc, reallocarray - allocate and free dynamic memory
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdlib.h>
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+reallocarray ():
+    Since glibc 2.29:
+        _DEFAULT_SOURCE
+    glibc 2.28 and earlier:
+        _GNU_SOURCE
+
+### DESCRIPTION
+
+### malloc()
+
+The
+malloc ()
+function allocates
+size
+bytes and returns a pointer to the allocated memory.
+The memory is not initialized .
+If
+size
+is 0, then
+malloc ()
+returns a unique pointer value that can later be successfully passed to
+free ().
+(See "Nonportable behavior" for portability issues.)
+
+### free()
+
+The
+free ()
+function frees the memory space pointed to by
+p ,
+which must have been returned by a previous call to
+malloc ()
+or related functions.
+Otherwise, or if
+p
+has already been freed, undefined behavior occurs.
+If
+p
+is NULL, no operation is performed.
+
+### calloc()
+
+The
+calloc ()
+function allocates memory for an array of
+n
+elements of
+size
+bytes each and returns a pointer to the allocated memory.
+The memory is set to zero.
+If
+n
+or
+size
+is 0, then
+calloc ()
+returns a unique pointer value that can later be successfully passed to
+free ().
+
+If the multiplication of
+n
+and
+size
+would result in integer overflow, then
+calloc ()
+returns an error.
+By contrast,
+an integer overflow would not be detected in the following call to
+malloc (),
+with the result that an incorrectly sized block of memory would be allocated:
+
+malloc(n * size);
+
+### realloc()
+
+The
+realloc ()
+function changes the size of the memory block pointed to by
+p
+to
+size
+bytes.
+The contents of the memory
+will be unchanged in the range from the start of the region
+up to the minimum of the old and new sizes.
+If the new size is larger than the old size, the added memory will
+not
+be initialized.
+
+If
+p
+is NULL, then the call is equivalent to
+malloc(size) ,
+for all values of
+size .
+
+If
+size
+is equal to zero,
+and
+p
+is not NULL, then the call is equivalent to
+free(p)
+(but see "Nonportable behavior" for portability issues).
+
+Unless
+p
+is NULL, it must have been returned by an earlier call to
+malloc
+or related functions.
+If the area pointed to was moved, a
+free(p)
+is done.
+
+### reallocarray()
+
+The
+reallocarray ()
+function changes the size of (and possibly moves)
+the memory block pointed to by
+p
+to be large enough for an array of
+n
+elements, each of which is
+size
+bytes.
+It is equivalent to the call
+
+realloc(p, n * size);
+
+However, unlike that
+realloc ()
+call,
+reallocarray ()
+fails safely in the case where the multiplication would overflow.
+If such an overflow occurs,
+reallocarray ()
+returns an error.
+
+### RETURN VALUE
+
+The
+malloc (),
+calloc (),
+realloc (),
+and
+reallocarray ()
+functions return a pointer to the allocated memory,
+which is suitably aligned for any type that fits into
+the requested size or less.
+On error, these functions return NULL and set
+errno .
+Attempting to allocate more than
+PTRDIFF_MAX
+bytes is considered an error, as an object that large
+could cause later pointer subtraction to overflow.
+
+The
+free ()
+function returns no value, and preserves
+errno .
+
+The
+realloc ()
+and
+reallocarray ()
+functions return NULL if
+p
+is not NULL and the requested size is zero;
+this is not considered an error.
+(See "Nonportable behavior" for portability issues.)
+Otherwise, the returned pointer may be the same as
+p
+if the allocation was not moved
+(e.g., there was room to expand the allocation in-place), or different from
+p
+if the allocation was moved to a new address.
+If these functions fail,
+the original block is left untouched;
+it is not freed or moved.
+
+### ERRORS
+
+calloc (),
+malloc (),
+realloc (),
+and
+reallocarray ()
+can fail with the following error:
+
+ENOMEM
+Out of memory.
+Possibly, the application hit the
+RLIMIT_AS
+or
+RLIMIT_DATA
+limit described in
+getrlimit (2).
+Another reason could be that
+the number of mappings created by the caller process
+exceeded the limit specified by
+/proc/sys/vm/max_map_count .
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+malloc (),
+free (),
+calloc (),
+realloc ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+malloc ()
+free ()
+calloc ()
+realloc ()
+C23, POSIX.1-2024.
+
+reallocarray ()
+POSIX.1-2024.
+
+### realloc(p, 0)
+
+The behavior of
+realloc(p,\~0)
+in glibc doesn't conform to any of
+C99,
+C11,
+POSIX.1-2001,
+POSIX.1-2004,
+POSIX.1-2008,
+POSIX.1-2013,
+POSIX.1-2017,
+or POSIX.1-2024.
+The C17 specification was changed to make it conforming,
+but that specification made it
+impossible to write code that reliably
+determines if the input pointer is freed after
+realloc(p,\~0) ,
+and C23 changed it again to make this undefined behavior,
+acknowledging that the C17 specification was broad enough,
+so that undefined behavior wasn't worse than that.
+
+reallocarray ()
+suffers the same issues in glibc.
+
+musl libc and the BSDs conform to all versions of ISO C and POSIX.1.
+
+gnulib provides the
+realloc-posix
+module,
+which provides wrappers
+realloc ()
+and
+reallocarray ()
+that conform to all versions of ISO C and POSIX.1.
+
+There's a proposal to standardize the BSD behavior:
+
+### HISTORY
+
+malloc ()
+free ()
+calloc ()
+realloc ()
+POSIX.1-2001, C89.
+
+reallocarray ()
+glibc 2.26.
+OpenBSD 5.6, FreeBSD 11.0.
+
+malloc ()
+and related functions rejected sizes greater than
+PTRDIFF_MAX
+starting in glibc 2.30.
+
+free ()
+preserved
+errno
+starting in glibc 2.33.
+
+### realloc(p,\~0)
+
+C89 was ambiguous in its specification of
+realloc(p,\~0) .
+C99 partially fixed this.
+
+The original implementation in glibc would have been conforming to C99.
+However, and ironically,
+trying to comply with C99 before the standard was released,
+glibc changed its behavior in glibc 2.1.1 into something that ended up
+not conforming to the final C99 specification
+(but this is debated,
+as the wording of the standard seems self-contradicting).
+
+### NOTES
+
+By default, Linux follows an optimistic memory allocation strategy.
+This means that when
+malloc ()
+returns non-NULL there is no guarantee that the memory really
+is available.
+In case it turns out that the system is out of memory,
+one or more processes will be killed by the OOM killer.
+For more information, see the description of
+/proc/sys/vm/overcommit_memory
+and
+/proc/sys/vm/oom_adj
+in
+proc (5),
+and the Linux kernel source file
+Documentation/vm/overcommit\-accounting.rst .
+
+Normally,
+malloc ()
+allocates memory from the heap, and adjusts the size of the heap
+as required, using
+sbrk (2).
+When allocating blocks of memory larger than
+MMAP_THRESHOLD
+bytes, the glibc
+malloc ()
+implementation allocates the memory as a private anonymous mapping using
+mmap (2).
+MMAP_THRESHOLD
+is 128\ kB by default, but is adjustable using
+mallopt (3).
+Prior to Linux 4.7
+allocations performed using
+mmap (2)
+were unaffected by the
+RLIMIT_DATA
+resource limit;
+since Linux 4.7, this limit is also enforced for allocations performed using
+mmap (2).
+
+To avoid corruption in multithreaded applications,
+mutexes are used internally to protect the memory-management
+data structures employed by these functions.
+In a multithreaded application in which threads simultaneously
+allocate and free memory,
+there could be contention for these mutexes.
+To scalably handle memory allocation in multithreaded applications,
+glibc creates additional
+memory allocation arenas
+if mutex contention is detected.
+Each arena is a large region of memory that is internally allocated
+by the system
+(using
+brk (2)
+or
+mmap (2)),
+and managed with its own mutexes.
+
+If your program uses a private memory allocator,
+it should do so by replacing
+malloc (),
+free (),
+calloc (),
+and
+realloc ().
+The replacement functions must implement the documented glibc behaviors,
+including
+errno
+handling, size-zero allocations, and overflow checking;
+otherwise, other library routines may crash or operate incorrectly.
+For example, if the replacement
+free ()
+does not preserve
+errno ,
+then seemingly unrelated library routines may
+fail without having a valid reason in
+errno .
+Private memory allocators may also need to replace other glibc functions;
+see "Replacing malloc" in the glibc manual for details.
+
+Crashes in memory allocators
+are almost always related to heap corruption, such as overflowing
+an allocated chunk or freeing the same pointer twice.
+
+The
+malloc ()
+implementation is tunable via environment variables;
+see
+mallopt (3)
+for details.
+
+### Nonportable behavior
+
+The behavior of
+these functions when the requested size is zero
+is glibc specific;
+other implementations may return NULL without setting
+errno ,
+and portable POSIX programs should tolerate such behavior.
+See
+realloc (3p).
+
+POSIX requires memory allocators
+to set
+errno
+upon failure.
+However, the C standard does not require this, and applications
+portable to non-POSIX platforms should not assume this.
+
+Portable programs should not use private memory allocators,
+as POSIX and the C standard do not allow replacement of
+malloc (),
+free (),
+calloc (),
+and
+realloc ().
+
+### BUGS
+
+Programmers would naturally expect by induction that
+\%realloc(p,\~size)
+is consistent with
+free(p)
+and
+malloc(size) ,
+as that is the behavior in the general case.
+This is not explicitly required by POSIX.1-2024 or C11,
+but all conforming implementations are consistent with that.
+
+The glibc implementation of
+realloc ()
+is not consistent with that,
+and as a consequence,
+it is dangerous to call
+\%realloc(p,\~0)
+in glibc.
+
+A trivial workaround for glibc is calling it as
+\%realloc(p,\~size?size:1) .
+
+The workaround for
+reallocarray ()
+in glibc
+\[em]which shares the same bug\[em]
+would be
+\%reallocarray(p,\~n?n:1,\~size?size:1) .
+
+### EXAMPLES
+
+#include <err.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MALLOCARRAY(n, type)  ((type *) my_mallocarray(n, sizeof(type)))
+#define MALLOC(type)          MALLOCARRAY(1, type)
+
+static inline void *my_mallocarray(size_t n, size_t size);
+
+int
+main(void)
+{
+    char  *p;
+
+    p = MALLOCARRAY(32, char);
+    if (p == NULL)
+        err(EXIT_FAILURE, "malloc");
+
+    strlcpy(p, "foo", 32);
+    puts(p);
+}
+
+static inline void *
+my_mallocarray(size_t n, size_t size)
+{
+    return reallocarray(NULL, n, size);
+}
+
+### SEE ALSO
+
+valgrind (1),
+brk (2),
+mmap (2),
+alloca (3),
+malloc_get_state (3),
+malloc_info (3),
+malloc_trim (3),
+malloc_usable_size (3),
+mallopt (3),
+mcheck (3),
+mtrace (3),
+posix_memalign (3)
+
+For details of the GNU C library implementation, see
+
+
+# PRINTF(3) — Linux Manual Page
+
+### NAME
+
+printf, fprintf, dprintf, vprintf, vfprintf, vdprintf,
+-
+formatted output conversion
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdio.h>
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+dprintf (),
+vdprintf ():
+    Since glibc 2.10:
+        _POSIX_C_SOURCE >= 200809L
+    Before glibc 2.10:
+        _GNU_SOURCE
+
+### DESCRIPTION
+
+The functions in the
+printf ()
+family produce output according to a
+format
+as described below.
+The functions
+printf ()
+and
+vprintf ()
+write output to
+stdout ,
+the standard output stream;
+fprintf ()
+and
+vfprintf ()
+write output to the given output
+stream .
+
+The function
+dprintf ()
+is the same as
+fprintf ()
+except that it outputs to a file descriptor,
+fd ,
+instead of to a
+stdio (3)
+stream.
+
+The functions
+vprintf (),
+vfprintf (),
+vdprintf ()
+are equivalent to the functions
+printf (),
+fprintf (),
+dprintf (),
+respectively, except that they are called with a
+va_list
+instead of a variable number of arguments.
+These functions do not call the
+va_end
+macro.
+Because they invoke the
+va_arg
+macro, the value of
+ap
+is undefined after the call.
+See
+stdarg (3).
+
+All of these functions write the output under the control of a
+format
+string that specifies how subsequent arguments (or arguments accessed via
+the variable-length argument facilities of
+stdarg (3))
+are converted for output.
+
+### Format of the format string
+
+The format string is a character string, beginning and ending
+in its initial shift state, if any.
+The format string is composed of zero or more directives: ordinary
+characters (not
+% ),
+which are copied unchanged to the output stream;
+and conversion specifications, each of which results in fetching zero or
+more subsequent arguments.
+Each conversion specification is introduced by
+the character
+% ,
+and ends with a
+conversion specifier .
+In between there may be (in this order) zero or more
+flags ,
+an optional minimum
+field width ,
+an optional
+precision
+and an optional
+length modifier .
+
+The overall syntax of a conversion specification is:
+
+%[argument$][flags][width][.precision][length modifier]conversion
+
+The arguments must correspond properly (after type promotion) with the
+conversion specifier.
+By default, the arguments are used in the order
+given, where each \[aq]*\[aq] (see
+Field width
+and
+Precision
+below) and each conversion specifier asks for the next
+argument (and it is an error if insufficiently many arguments are given).
+One can also specify explicitly which argument is taken,
+at each place where an argument is required, by writing "%m$" instead
+of \[aq]%\[aq] and "*m$" instead of \[aq]*\[aq],
+where the decimal integer
+m
+denotes the position in the argument list of the desired argument,
+indexed starting from 1.
+Thus,
+
+printf("%*d", width, num);
+
+and
+
+printf("%2$*1$d", width, num);
+
+are equivalent.
+The second style allows repeated references to the
+same argument.
+The C99 standard does not include the style using \[aq]$\[aq],
+which comes from the Single UNIX Specification.
+If the style using
+\[aq]$\[aq] is used, it must be used throughout for all conversions taking an
+argument and all width and precision arguments, but it may be mixed
+with "%%" formats, which do not consume an argument.
+There may be
+no gaps in the numbers of arguments specified using \[aq]$\[aq];
+for example,
+if arguments 1 and 3 are specified,
+argument 2 must also be specified
+somewhere in the format string.
+
+For some numeric conversions a radix character ("decimal point") or
+thousands' grouping character is used.
+The actual character used
+depends on the
+LC_NUMERIC
+part of the locale.
+(See
+setlocale (3).)
+The POSIX locale
+uses \[aq].\[aq] as radix character, and does not have a grouping character.
+Thus,
+
+printf("%\[aq].2f", 1234567.89);
+
+results in "1234567.89" in the POSIX locale, in "1234567,89" in the
+nl_NL locale, and in "1.234.567,89" in the da_DK locale.
+
+### Flag characters
+
+The character % is followed by zero or more of the following flags:
+
+#
+The value should be converted to an "alternate form".
+For
+o
+conversions, the first character of the output string is made zero
+(by prefixing a 0 if it was not zero already).
+For
+x
+and
+X
+conversions, a nonzero result has the string "0x" (or "0X" for
+X
+conversions) prepended to it.
+For
+a ,
+A ,
+e ,
+E ,
+f ,
+F ,
+g ,
+and
+G
+conversions, the result will always contain a decimal point, even if no
+digits follow it (normally, a decimal point appears in the results of those
+conversions only if a digit follows).
+For
+g
+and
+G
+conversions, trailing zeros are not removed from the result as they would
+otherwise be.
+For
+m ,
+if
+errno
+contains a valid error code,
+the output of
+strerrorname_np(errno)
+is printed;
+otherwise, the value stored in
+errno
+is printed as a decimal number.
+For other conversions, the result is undefined.
+
+\&0
+The value should be zero padded.
+For
+d ,
+i ,
+o ,
+u ,
+x ,
+X ,
+a ,
+A ,
+e ,
+E ,
+f ,
+F ,
+g ,
+and
+G
+conversions, the converted value is padded on the left with zeros rather
+than blanks.
+If the
+\&0
+and
+\-
+flags both appear, the
+\&0
+flag is ignored.
+If a precision is given with an integer conversion
+( d ,
+i ,
+o ,
+u ,
+x ,
+and
+X ),
+the
+\&0
+flag is ignored.
+For other conversions, the behavior is undefined.
+
+\-
+The converted value is to be left adjusted on the field boundary.
+(The default is right justification.)
+The converted value is padded on the right with blanks, rather
+than on the left with blanks or zeros.
+A
+\-
+overrides a
+\&0
+if both are given.
+
+\[aq] \[aq]
+(a space) A blank should be left before a positive number
+(or empty string) produced by a signed conversion.
+
++
+A sign (+ or -) should always be placed before a number produced by a signed
+conversion.
+By default, a sign is used only for negative numbers.
+A
++
+overrides a space if both are used.
+
+The five flag characters above are defined in the C99 standard.
+POSIX specifies one further flag character.
+
+\[aq]
+For decimal conversion
+( i ,
+d ,
+u ,
+f ,
+F ,
+g ,
+G )
+the output is to be grouped with thousands' grouping characters
+as a
+non-monetary
+quantity.
+Misleadingly, this isn't necessarily every thousand:
+for example Karbi ("mjw_IN"), groups its digits into 3 once, then 2 repeatedly.
+Compare
+locale (7)
+grouping
+and
+thousands_sep ,
+contrast with
+mon_grouping / mon_thousands_sep
+and
+strfmon (3).
+This is a no-op in the default "C" locale.
+
+glibc 2.2 adds one further flag character.
+
+I
+For decimal integer conversion
+( i ,
+d ,
+u )
+the output uses the locale's alternative output digits, if any.
+For example, since glibc 2.2.3 this will give Arabic-Indic digits
+in the Persian ("fa_IR") locale.
+
+### Field width
+
+An optional decimal digit string (with nonzero first digit) specifying
+a minimum field width.
+If the converted value has fewer characters
+than the field width, it will be padded with spaces on the left
+(or right, if the left-adjustment flag has been given).
+Instead of a decimal digit string one may write "*" or "*m$"
+(for some decimal integer
+m )
+to specify that the field width
+is given in the next argument,
+or in the
+m -th
+argument,
+respectively,
+which must be of type
+int .
+A negative field width is taken as a \[aq]-\[aq] flag
+followed by a positive field width.
+In no case does a nonexistent or small field width
+cause truncation of a field;
+if the result of a conversion is wider than the field width,
+the field is expanded to contain the conversion result.
+
+### Precision
+
+An optional precision,
+in the form of a period (\[aq].\[aq])
+followed by
+an optional decimal digit string.
+Instead of a decimal digit string one may write "*" or "*m$"
+(for some decimal integer
+m )
+to specify that the precision
+is given in the next argument,
+or in the
+m -th
+argument,
+respectively,
+which must be of type
+int .
+If the precision is given as just \[aq].\[aq], the precision is taken to
+be zero.
+A negative precision is taken as if the precision were omitted.
+This gives the minimum number of digits to appear for
+d ,
+i ,
+o ,
+u ,
+x ,
+and
+X
+conversions, the number of digits to appear after the radix character for
+a ,
+A ,
+e ,
+E ,
+f ,
+and
+F
+conversions, the maximum number of significant digits for
+g
+and
+G
+conversions, or the maximum number of characters to be printed from a
+string for
+s
+and
+S
+conversions.
+
+### Length modifier
+
+Here, "integer conversion" stands for
+d ,
+i ,
+o ,
+u ,
+x ,
+or
+X
+conversion.
+
+hh
+A following integer conversion corresponds to a
+signed char
+or
+unsigned char
+argument, or a following
+n
+conversion corresponds to a pointer to a
+signed char
+argument.
+
+h
+A following integer conversion corresponds to a
+short
+or
+unsigned short
+argument, or a following
+n
+conversion corresponds to a pointer to a
+short
+argument.
+
+l
+(ell) A following integer conversion corresponds to a
+long
+or
+unsigned long
+argument, or a following
+n
+conversion corresponds to a pointer to a
+long
+argument, or a following
+c
+conversion corresponds to a
+wint_t
+argument, or a following
+s
+conversion corresponds to a pointer to
+wchar_t
+argument.
+On a following
+a ,
+A ,
+e ,
+E ,
+f ,
+F ,
+g ,
+or
+G
+conversion,
+this length modifier is ignored
+(C99;
+not in SUSv2).
+
+ll
+(ell-ell).
+A following integer conversion corresponds to a
+long long
+or
+unsigned long long
+argument, or a following
+n
+conversion corresponds to a pointer to a
+long long
+argument.
+
+q
+A synonym for
+ll .
+This is a nonstandard extension, derived from BSD;
+avoid its use in new code.
+
+L
+A following
+a ,
+A ,
+e ,
+E ,
+f ,
+F ,
+g ,
+or
+G
+conversion corresponds to a
+long double
+argument.
+(C99 allows %LF, but SUSv2 does not.)
+
+j
+A following integer conversion corresponds to an
+intmax_t
+or
+uintmax_t
+argument, or a following
+n
+conversion corresponds to a pointer to an
+intmax_t
+argument.
+
+A following integer conversion corresponds to an
+integer of a width of
+N
+bits
+(C23).
+
+z
+A following integer conversion corresponds to a
+size_t
+or
+ssize_t
+argument, or a following
+n
+conversion corresponds to a pointer to a
+size_t
+argument.
+
+Z
+A nonstandard synonym for
+z
+that predates the appearance of
+z .
+Do not use in new code.
+
+t
+A following integer conversion corresponds to a
+ptrdiff_t
+argument, or a following
+n
+conversion corresponds to a pointer to a
+ptrdiff_t
+argument.
+
+SUSv3 specifies all of the above,
+except for those modifiers explicitly noted as being nonstandard extensions.
+SUSv2 specified only the length modifiers
+h
+(in
+hd ,
+hi ,
+ho ,
+hx ,
+hX ,
+hn )
+and
+l
+(in
+ld ,
+li ,
+lo ,
+lx ,
+lX ,
+ln ,
+lc ,
+ls )
+and
+L
+(in
+Le ,
+LE ,
+Lf ,
+Lg ,
+LG ).
+
+As a nonstandard extension, the GNU implementations treats
+ll
+and
+L
+as synonyms, so that one can, for example, write
+llg
+(as a synonym for the standards-compliant
+Lg )
+and
+Ld
+(as a synonym for the standards compliant
+lld ).
+Such usage is nonportable.
+
+### Conversion specifiers
+
+A character that specifies the type of conversion to be applied.
+The conversion specifiers and their meanings are:
+
+d ,  i
+The
+int
+argument is converted to signed decimal notation.
+The precision, if any,
+gives the minimum number of digits that must appear;
+if the converted value requires fewer digits,
+it is padded on the left with zeros.
+The default precision is 1.
+When 0 is printed with an explicit precision 0,
+the output is empty.
+
+o ,  u ,  x ,  X
+The
+unsigned int
+argument is converted to unsigned octal
+( o ),
+unsigned decimal
+( u ),
+or unsigned hexadecimal
+( x
+and
+X )
+notation.
+The letters
+abcdef
+are used for
+x
+conversions;
+the letters
+ABCDEF
+are used for
+X
+conversions.
+The precision, if any,
+gives the minimum number of digits that must appear;
+if the converted value requires fewer digits,
+it is padded on the left with zeros.
+The default precision is 1.
+When 0 is printed with an explicit precision 0,
+the output is empty.
+
+e ,  E
+The
+double
+argument is rounded and converted in the style
+[\-]d \&. ddd e \(+-dd
+where there is one digit
+(which is nonzero if the argument is nonzero)
+before the decimal-point character
+and the number of digits after it is equal to the precision;
+if the precision is missing,
+it is taken as 6;
+if the precision is zero,
+no decimal-point character appears.
+An
+E
+conversion uses the letter
+E
+(rather than
+e )
+to introduce the exponent.
+The exponent always contains at least two digits;
+if the value is zero,
+the exponent is 00.
+
+f ,  F
+The
+double
+argument is rounded and converted to decimal notation in the style
+[\-]ddd \&. ddd,
+where the number of digits after the decimal-point character
+is equal to the precision specification.
+If the precision is missing,
+it is taken as 6;
+if the precision is explicitly zero,
+no decimal-point character appears.
+If a decimal point appears,
+at least one digit appears before it.
+
+(SUSv2 does not know about
+F
+and says that character string representations for infinity and NaN
+may be made available.
+SUSv3 adds a specification for
+F .
+The C99 standard specifies "[-]inf" or "[-]infinity"
+for infinity, and a string starting with "nan" for NaN, in the case of
+f
+conversion, and "[-]INF" or "[-]INFINITY" or "NAN" in the case of
+F
+conversion.)
+
+g ,  G
+The
+double
+argument is converted in style
+f
+or
+e
+(or
+F
+or
+E
+for
+G
+conversions).
+The precision specifies the number of significant digits.
+If the precision is missing,
+6 digits are given;
+if the precision is zero,
+it is treated as 1.
+Style
+e
+is used if the exponent from its conversion is less than -4
+or greater than or equal to the precision.
+Trailing zeros are removed from the fractional part of the result;
+a decimal point appears
+only if it is followed by at least one digit.
+
+a ,  A
+(C99;
+not in SUSv2, but added in SUSv3)
+For
+a
+conversion, the
+double
+argument is converted to hexadecimal notation (using the letters abcdef)
+in the style
+[\-] 0x h \&. hhhh p \(+-d;
+for
+A
+conversion the prefix
+0X ,
+the letters ABCDEF, and the exponent separator
+P
+is used.
+There is one hexadecimal digit before the radix point,
+and the number of digits after it is equal to the precision.
+The default precision suffices for an exact representation of the value
+if an exact representation in base 2 exists
+and otherwise is sufficiently large to distinguish values of type
+double .
+The digit before the radix point is unspecified for
+
+
+# SNPRINTF(3) — Linux Manual Page
+
+### NAME
+
+snprintf,
+vsnprintf
+-
+string print formatted
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdio.h>
+
+int snprintf( size_t size;
+int vsnprintf( size_t size;
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+snprintf (),
+vsnprintf ():
+    _XOPEN_SOURCE >= 500 || _ISOC99_SOURCE
+        || /* glibc <= 2.19: */ _BSD_SOURCE
+
+### DESCRIPTION
+
+These functions are similar to
+printf (3),
+except that they write to the character string
+str
+instead of a stream.
+
+The functions
+snprintf ()
+and
+vsnprintf ()
+write at most
+size
+bytes (including the terminating null byte (\[aq]\[rs]0\[aq])) to
+str .
+
+vsnprintf ()
+is equivalent to
+snprintf (),
+except that it is called with a
+va_list
+instead of a variable number of arguments.
+This function does not call the
+va_end
+macro.
+Because it invokes the
+va_arg
+macro, the value of
+ap
+is undefined after the call.
+See
+stdarg (3).
+
+C99 and POSIX.1-2001 specify that the results are undefined if a call to
+snprintf ()
+or
+vsnprintf ()
+would cause copying to take place between objects that overlap
+(e.g., if the target string array and one of the supplied input arguments
+refer to the same buffer).
+See CAVEATS.
+
+### Format of the format string
+
+See
+printf (3).
+
+### RETURN VALUE
+
+Upon successful return, these functions return the number of bytes
+printed (excluding the null byte used to end output to strings).
+
+The functions
+snprintf ()
+and
+vsnprintf ()
+do not write more than
+size
+bytes (including the terminating null byte (\[aq]\[rs]0\[aq])).
+If the output was truncated due to this limit, then the return value
+is the number of characters (excluding the terminating null byte)
+which would have been written to the final string if enough space
+had been available.
+Thus, a return value of
+size
+or more means that the output was truncated.
+(See also below under CAVEATS.)
+
+On error,
+a negative value is returned,
+and
+errno
+is set to indicate the error.
+
+### ERRORS
+
+See
+printf (3).
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+snprintf (),
+vsnprintf ()
+T}	Thread safety	MT-Safe locale
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+SUSv2, C99, POSIX.1-2001.
+
+Concerning the return value,
+SUSv2 and C99 contradict each other: when
+snprintf ()
+is called with
+size =0
+then SUSv2 stipulates an unspecified return value less than 1,
+while C99 allows
+str
+to be NULL in this case, and gives the return value (as always)
+as the number of characters that would have been written in case
+the output string has been large enough.
+POSIX.1-2001 and later align their specification of
+snprintf ()
+with C99.
+
+### CAVEATS
+
+Some programs imprudently rely on code such as the following
+
+snprintf(buf, countof(buf), "%s some further text", buf);
+
+to append text to
+buf .
+However, the standards explicitly note that the results are undefined
+if source and destination buffers overlap when calling
+snprintf ()
+and
+vsnprintf ().
+Depending on the version of
+gcc (1)
+used, and the compiler options employed, calls such as the above will
+not
+produce the expected results.
+
+The glibc implementation of the functions
+snprintf ()
+and
+vsnprintf ()
+conforms to the C99 standard, that is, behaves as described above,
+since glibc 2.1.
+Until glibc 2.0.6, they would return -1
+when the output was truncated.
+
+### BUGS
+
+See
+printf (3).
+
+### EXAMPLES
+
+To allocate a sufficiently large string and print into it
+(code correct for both glibc 2.0 and glibc 2.1):
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+char *
+make_message(const char *fmt, ...)
+{
+    int n = 0;
+    size_t size = 0;
+    char *p = NULL;
+    va_list ap;
+
+    /* Determine required size.  */
+
+    va_start(ap, fmt);
+    n = vsnprintf(p, size, fmt, ap);
+    va_end(ap);
+
+    if (n < 0)
+        return NULL;
+
+    size = (size_t) n + 1;      /* One extra byte for \[aq]\[rs]0\[aq] */
+    p = malloc(size);
+    if (p == NULL)
+        return NULL;
+
+    va_start(ap, fmt);
+    n = vsnprintf(p, size, fmt, ap);
+    va_end(ap);
+
+    if (n < 0) {
+        free(p);
+        return NULL;
+    }
+
+    return p;
+}
+
+If truncation occurs in glibc versions prior to glibc 2.0.6,
+this is treated as an error instead of being handled gracefully.
+
+### SEE ALSO
+
+printf (1),
+asprintf (3),
+printf (3),
+puts (3),
+scanf (3),
+setlocale (3),
+strfromd (3),
+wcrtomb (3),
+wprintf (3),
+locale (5)
+
+
+# FOPEN(3) — Linux Manual Page
+
+### NAME
+
+fopen, fdopen, freopen - stream open functions
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdio.h>
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+fdopen ():
+    _POSIX_C_SOURCE
+
+### DESCRIPTION
+
+The
+fopen ()
+function opens the file whose name is the string pointed to by
+path
+and associates a stream with it.
+
+The argument
+mode
+points to a string beginning with one of the following sequences
+(possibly followed by additional characters, as described below):
+
+r
+Open text file for reading.
+The stream is positioned at the beginning of the file.
+
+r+
+Open for reading and writing.
+The stream is positioned at the beginning of the file.
+
+w
+Truncate file to zero length or create text file for writing.
+The stream is positioned at the beginning of the file.
+
+w+
+Open for reading and writing.
+The file is created if it does not exist, otherwise it is truncated.
+The stream is positioned at the beginning of
+the file.
+
+a
+Open for appending (writing at end of file).
+The file is created if it does not exist.
+The stream is positioned at the end of the file.
+
+a+
+Open for reading and appending (writing at end of file).
+The file is created if it does not exist.
+Output is always appended to the end of the file.
+POSIX is silent on what the initial read position is when using this mode.
+For glibc, the initial file position for reading is at
+the beginning of the file, but for Android/BSD/MacOS, the
+initial file position for reading is at the end of the file.
+
+The
+mode
+string can also include the letter \[aq]b\[aq] either as a last character or as
+a character between the characters in any of the two-character strings
+described above.
+This is strictly for compatibility with ISO C
+and has no effect;
+the \[aq]b\[aq] is ignored
+on all POSIX conforming systems,
+including Linux.
+(Other systems may treat text files and binary files differently,
+and adding the \[aq]b\[aq] may be a good idea if you do I/O to a binary
+file and expect that your program may be ported to non-UNIX
+environments.)
+
+See NOTES below for details of glibc extensions for
+mode .
+
+Any created file will have the mode
+S_IRUSR  |  S_IWUSR  |   S_IRGRP  |   S_IWGRP  |  S_IROTH  |  S_IWOTH
+(0666), as modified by the process's umask value (see
+umask (2)).
+
+Reads and writes may be intermixed on read/write streams in any order.
+Note that ANSI C requires that a file positioning function intervene
+between output and input, unless an input operation encounters end-of-file.
+(If this condition is not met, then a read is allowed to return the
+result of writes other than the most recent.)
+Therefore it is good practice (and indeed sometimes necessary
+under Linux) to put an
+fseek (3)
+or
+fsetpos (3)
+operation between write and read operations on such a stream.
+This operation may be an apparent no-op
+(as in
+fseek(...,\ 0L,\ SEEK_CUR)
+called for its synchronizing side effect).
+
+Opening a file in append mode
+( a
+as the first character of
+mode )
+causes all subsequent write operations to this stream to occur
+at end-of-file, as if preceded by the call:
+
+fseek(stream, 0, SEEK_END);
+
+The file descriptor associated with the stream is opened as if by a call to
+open (2)
+with the following flags:
+allbox;
+lb lb
+ci l.
+fopen() mode	open() flags
+r	O_RDONLY
+w	O_WRONLY | O_CREAT | O_TRUNC
+a	O_WRONLY | O_CREAT | O_APPEND
+r+	O_RDWR
+w+	O_RDWR | O_CREAT | O_TRUNC
+a+	O_RDWR | O_CREAT | O_APPEND
+
+### fdopen()
+
+The
+fdopen ()
+function associates a stream with the existing file descriptor,
+fd .
+The
+mode
+of the stream (one of the values "r", "r+", "w", "w+", "a", "a+")
+must be compatible with the mode of the file descriptor.
+The file position indicator of the new stream is set to that
+belonging to
+fd ,
+and the error and end-of-file indicators are cleared.
+Modes "w" or "w+" do not cause truncation of the file.
+The file descriptor is not dup'ed, and will be closed when
+the stream created by
+fdopen ()
+is closed.
+The result of applying
+fdopen ()
+to a shared memory object is undefined.
+
+### freopen()
+
+The
+freopen ()
+function opens the file whose name is the string pointed to by
+path
+and associates the stream pointed to by
+stream
+with it.
+The original stream (if it exists) is closed.
+The
+mode
+argument is used just as in the
+fopen ()
+function.
+
+If
+path
+is a null pointer,
+freopen ()
+changes the mode of the stream to that specified in
+mode ;
+that is,
+freopen ()
+reopens the pathname that is associated with the stream.
+The specification for this behavior was added in the C99 standard, which says:
+
+In this case,
+the file descriptor associated with the stream need not be closed
+if the call to
+freopen ()
+succeeds.
+It is implementation-defined which changes of mode are permitted (if any),
+and under what circumstances.
+
+The primary use of the
+freopen ()
+function is to change the file associated with a standard text stream
+( stderr ,  stdin , or  stdout ).
+
+### RETURN VALUE
+
+Upon successful completion
+fopen (),
+fdopen (),
+and
+freopen ()
+return a
+FILE
+pointer.
+Otherwise, NULL is returned and
+errno
+is set to indicate the error.
+
+### ERRORS
+
+EINVAL
+The
+mode
+provided to
+fopen (),
+fdopen (),
+or
+freopen ()
+was invalid.
+
+The
+fopen (),
+fdopen (),
+and
+freopen ()
+functions may also fail and set
+errno
+for any of the errors specified for the routine
+malloc (3).
+
+The
+fopen ()
+function may also fail and set
+errno
+for any of the errors specified for the routine
+open (2).
+
+The
+fdopen ()
+function may also fail and set
+errno
+for any of the errors specified for the routine
+fcntl (2).
+
+The
+freopen ()
+function may also fail and set
+errno
+for any of the errors specified for the routines
+open (2),
+fclose (3),
+and
+fflush (3).
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+fopen (),
+fdopen (),
+freopen ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+fopen ()
+freopen ()
+C11, POSIX.1-2008.
+
+fdopen ()
+POSIX.1-2008.
+
+### HISTORY
+
+fopen ()
+freopen ()
+POSIX.1-2001, C89.
+
+fdopen ()
+POSIX.1-2001.
+
+### NOTES
+
+### glibc notes
+
+The GNU C library allows the following extensions for the string specified in
+mode :
+
+c  (since glibc 2.3.3)
+Do not make the open operation,
+or subsequent read and write operations,
+thread cancelation points.
+This flag is ignored for
+fdopen ().
+
+e  (since glibc 2.7)
+Open the file with the
+O_CLOEXEC
+flag.
+See
+open (2)
+for more information.
+This flag is ignored for
+fdopen ().
+
+m  (since glibc 2.3)
+Attempt to access the file using
+mmap (2),
+rather than I/O system calls
+( read (2),
+write (2)).
+Currently,
+use of
+mmap (2)
+is attempted only for a file opened for reading.
+
+x
+Open the file exclusively
+(like the
+O_EXCL
+flag of
+open (2)).
+If the file already exists,
+fopen ()
+fails, and sets
+errno
+to
+EEXIST .
+This flag is ignored for
+fdopen ().
+
+In addition to the above characters,
+fopen ()
+and
+freopen ()
+support the following syntax
+in
+mode :
+
+The given
+string
+is taken as the name of a coded character set and
+the stream is marked as wide-oriented.
+Thereafter, internal conversion functions convert I/O
+to and from the character set
+string .
+If the
+syntax is not specified,
+then the wide-orientation of the stream is
+determined by the first file operation.
+If that operation is a wide-character operation,
+the stream is marked wide-oriented,
+and functions to convert to the coded character set are loaded.
+
+### BUGS
+
+When parsing for individual flag characters in
+mode
+(i.e., the characters preceding the "ccs" specification),
+the glibc implementation of
+fopen ()
+and
+freopen ()
+limits the number of characters examined in
+mode
+to 7 (or, before glibc 2.14, to 6,
+which was not enough to include possible specifications such as "rb+cmxe").
+The current implementation of
+fdopen ()
+parses at most 5 characters in
+mode .
+
+### SEE ALSO
+
+open (2),
+fclose (3),
+fileno (3),
+fmemopen (3),
+fopencookie (3),
+open_memstream (3)
+
+
+# FREAD(3) — Linux Manual Page
+
+### NAME
+
+fread, fwrite - binary stream input/output
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdio.h>
+
+size_t fread( size_t size, size_t n;
+size_t fwrite( size_t size, size_t n;
+
+### DESCRIPTION
+
+The function
+fread ()
+reads
+n
+items of data, each
+size
+bytes long, from the stream pointed to by
+stream ,
+storing them at the location given by
+ptr .
+
+The function
+fwrite ()
+writes
+n
+items of data, each
+size
+bytes long, to the stream pointed to by
+stream ,
+obtaining them from the location given by
+ptr .
+
+For nonlocking counterparts, see
+unlocked_stdio (3).
+
+### RETURN VALUE
+
+On success,
+fread ()
+and
+fwrite ()
+return the number of items read or written.
+This number equals the number of bytes transferred only when
+size
+is 1.
+If an error occurs, or the end of the file is reached,
+the return value is a short item count (or zero).
+
+The file position indicator for the stream is advanced by the number
+of bytes successfully read or written.
+
+fread ()
+does not distinguish between end-of-file and error, and callers must use
+feof (3)
+and
+ferror (3)
+to determine which occurred.
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+fread (),
+fwrite ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001, C89.
+
+### EXAMPLES
+
+The program below demonstrates the use of
+fread ()
+by parsing /bin/sh ELF executable in binary mode and printing its
+magic and class:
+
+$  ./a.out ;
+ELF magic: 0x7f454c46
+Class: 0x02
+
+### Program source
+
+#include <stdcountof.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int
+main(void)
+{
+    FILE           *fp;
+    size_t         ret;
+    unsigned char  buffer[4];
+
+    fp = fopen("/bin/sh", "rb");
+    if (!fp) {
+        perror("fopen");
+        return EXIT_FAILURE;
+    }
+
+    ret = fread(buffer, sizeof(*buffer), countof(buffer), fp);
+    if (ret != countof(buffer)) {
+        fprintf(stderr, "fread() failed: %zu\[rs]n", ret);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("ELF magic: %#04x%02x%02x%02x\[rs]n", buffer[0], buffer[1],
+           buffer[2], buffer[3]);
+
+    ret = fread(buffer, 1, 1, fp);
+    if (ret != 1) {
+        fprintf(stderr, "fread() failed: %zu\[rs]n", ret);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Class: %#04x\[rs]n", buffer[0]);
+
+    fclose(fp);
+
+    exit(EXIT_SUCCESS);
+}
+
+### SEE ALSO
+
+read (2),
+write (2),
+feof (3),
+ferror (3),
+unlocked_stdio (3)
+
+
+# FWRITE(3) — Linux Manual Page
+
+### NAME
+
+fread, fwrite - binary stream input/output
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdio.h>
+
+size_t fread( size_t size, size_t n;
+size_t fwrite( size_t size, size_t n;
+
+### DESCRIPTION
+
+The function
+fread ()
+reads
+n
+items of data, each
+size
+bytes long, from the stream pointed to by
+stream ,
+storing them at the location given by
+ptr .
+
+The function
+fwrite ()
+writes
+n
+items of data, each
+size
+bytes long, to the stream pointed to by
+stream ,
+obtaining them from the location given by
+ptr .
+
+For nonlocking counterparts, see
+unlocked_stdio (3).
+
+### RETURN VALUE
+
+On success,
+fread ()
+and
+fwrite ()
+return the number of items read or written.
+This number equals the number of bytes transferred only when
+size
+is 1.
+If an error occurs, or the end of the file is reached,
+the return value is a short item count (or zero).
+
+The file position indicator for the stream is advanced by the number
+of bytes successfully read or written.
+
+fread ()
+does not distinguish between end-of-file and error, and callers must use
+feof (3)
+and
+ferror (3)
+to determine which occurred.
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+fread (),
+fwrite ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001, C89.
+
+### EXAMPLES
+
+The program below demonstrates the use of
+fread ()
+by parsing /bin/sh ELF executable in binary mode and printing its
+magic and class:
+
+$  ./a.out ;
+ELF magic: 0x7f454c46
+Class: 0x02
+
+### Program source
+
+#include <stdcountof.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int
+main(void)
+{
+    FILE           *fp;
+    size_t         ret;
+    unsigned char  buffer[4];
+
+    fp = fopen("/bin/sh", "rb");
+    if (!fp) {
+        perror("fopen");
+        return EXIT_FAILURE;
+    }
+
+    ret = fread(buffer, sizeof(*buffer), countof(buffer), fp);
+    if (ret != countof(buffer)) {
+        fprintf(stderr, "fread() failed: %zu\[rs]n", ret);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("ELF magic: %#04x%02x%02x%02x\[rs]n", buffer[0], buffer[1],
+           buffer[2], buffer[3]);
+
+    ret = fread(buffer, 1, 1, fp);
+    if (ret != 1) {
+        fprintf(stderr, "fread() failed: %zu\[rs]n", ret);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Class: %#04x\[rs]n", buffer[0]);
+
+    fclose(fp);
+
+    exit(EXIT_SUCCESS);
+}
+
+### SEE ALSO
+
+read (2),
+write (2),
+feof (3),
+ferror (3),
+unlocked_stdio (3)
+
+
+# FCLOSE(3) — Linux Manual Page
+
+### NAME
+
+fclose - close a stream
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdio.h>
+
+### DESCRIPTION
+
+The
+fclose ()
+function flushes the stream pointed to by
+stream
+(writing any buffered output data using
+fflush (3))
+and closes the underlying file descriptor.
+
+The behaviour of
+fclose ()
+is undefined if the
+stream
+parameter is an illegal pointer, or is a descriptor already passed
+to a previous invocation of
+fclose ().
+
+### RETURN VALUE
+
+Upon successful completion, 0 is returned.
+Otherwise,
+EOF
+is returned and
+errno
+is set to indicate the error.
+In either case, any further access
+(including another call to
+fclose ())
+to the stream results in undefined behavior.
+
+### ERRORS
+
+EBADF
+The file descriptor underlying
+stream
+is not valid.
+
+The
+fclose ()
+function may also fail and set
+errno
+for any of the errors specified for the routines
+close (2),
+write (2),
+or
+fflush (3).
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+fclose ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+C89, POSIX.1-2001.
+
+### NOTES
+
+Note that
+fclose ()
+flushes only the user-space buffers provided by the
+C library.
+To ensure that the data is physically stored
+on disk the kernel buffers must be flushed too, for example, with
+sync (2)
+or
+fsync (2).
+
+### SEE ALSO
+
+close (2),
+fcloseall (3),
+fflush (3),
+fileno (3),
+fopen (3),
+setbuf (3)
+
+
+# MEMCPY(3) — Linux Manual Page
+
+### NAME
+
+memcpy - memory copy
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include\~<string.h>   // see memory.h(3head)
+
+void *memcpy( size_t n;
+
+### DESCRIPTION
+
+The
+memcpy ()
+function copies
+n
+bytes from memory area
+src
+to memory area
+dest .
+The memory areas must not overlap.
+Use
+memmove (3)
+if the memory areas do overlap.
+
+### RETURN VALUE
+
+The
+memcpy ()
+function returns a pointer to
+dest .
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+memcpy ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001, C89, SVr4, 4.3BSD.
+
+### CAVEATS
+
+Failure to observe the requirement that the memory areas
+do not overlap has been the source of significant bugs.
+(POSIX and the C standards are explicit that employing
+memcpy ()
+with overlapping areas produces undefined behavior.)
+Most notably, in glibc 2.13
+a performance optimization of
+memcpy ()
+on some platforms (including x86-64) included changing the order
+in which bytes were copied from
+src
+to
+dest .
+
+This change revealed breakages in a number of applications that performed
+copying with overlapping areas.
+Under the previous implementation,
+the order in which the bytes were copied had fortuitously hidden the bug,
+which was revealed when the copying order was reversed.
+In glibc 2.14,
+a versioned symbol was added so that old binaries
+(i.e., those linked against glibc versions earlier than 2.14)
+employed a
+memcpy ()
+implementation that safely handles the overlapping buffers case
+(by providing an "older"
+memcpy ()
+implementation that was aliased to
+memmove (3)).
+
+### SEE ALSO
+
+memory.h (3head),
+memmove (3),
+mempcpy (3),
+wmemcpy (3)
+
+
+# MEMMOVE(3) — Linux Manual Page
+
+### NAME
+
+memmove - memory move
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include\~<string.h>   // see memory.h(3head)
+
+void *memmove( size_t n;
+
+### DESCRIPTION
+
+This function is similar to
+memcpy (3),
+but the memory areas may overlap.
+
+### RETURN VALUE
+
+See
+memcpy (3).
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+memmove ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001, C89, SVr4, 4.3BSD.
+
+### SEE ALSO
+
+memory.h (3head),
+memcpy (3),
+wmemmove (3)
+
+
+# MEMSET(3) — Linux Manual Page
+
+### NAME
+
+memset - memory set
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include\~<string.h>   // see memory.h(3head)
+
+void *memset( size_t n;
+
+### DESCRIPTION
+
+The
+memset ()
+function fills the first
+n
+bytes of the
+memory area pointed to by
+a
+with the constant byte
+c .
+
+### RETURN VALUE
+
+The
+memset ()
+function returns a pointer to the memory area
+a .
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+memset ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001, C89, SVr4, 4.3BSD.
+
+### CAVEATS
+
+If the compiler deduces that the operation is unnecessary,
+it may totally or partially remove the call.
+To ensure the setting happens regardless of optimizations,
+use
+memset_explicit (3).
+
+### SEE ALSO
+
+memory.h (3head),
+bzero (3),
+swab (3),
+wmemset (3)
+
+
+# STRCMP(3) — Linux Manual Page
+
+### NAME
+
+strcmp - strings compare
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <string.h>
+
+### DESCRIPTION
+
+The
+strcmp ()
+function compares the two strings
+s1
+and
+s2 ,
+as if by calling
+memcmp (3).
+
+It is equivalent to
+
+memcmp(s1, s2, MIN(strlen(s1),strlen(s2))+1)
+
+### RETURN VALUE
+
+See
+memcmp (3).
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+strcmp ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001, C89, SVr4, 4.3BSD.
+
+### CAVEATS
+
+The locale is not taken into account (for a locale-aware comparison, see
+strcoll (3)).
+
+### EXAMPLES
+
+The program below can be used to demonstrate the operation of
+strcmp ().
+
+$  ./strcmp ABC ABC ;
+<str1> and <str2> are equal
+$  ./strcmp ABC AB ;      # \[aq]C\[aq] is ASCII 67; \[aq]C\[aq] \- \[aq]\[rs]0\[aq] = 67
+<str1> is greater than <str2> (67)
+$  ./strcmp ABA ABZ ;     # \[aq]A\[aq] is ASCII 65; \[aq]Z\[aq] is ASCII 90
+<str1> is less than <str2> (-25)
+$  ./strcmp ABJ ABC ;
+<str1> is greater than <str2> (7)
+$  ./strcmp $\[aq]\[rs]201\[aq] A ;   # 0201 \- 0101 = 0100 (or 64 decimal)
+<str1> is greater than <str2> (64)
+
+The last example uses
+bash (1)-specific
+syntax to produce a string containing an 8-bit ASCII code;
+the result demonstrates that the string comparison uses unsigned
+characters.
+
+### Program source
+
+// strcmp.c
+// Licensed under GNU General Public License v2 or later.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int
+main(int argc, char *argv[])
+{
+    int res;
+
+    if (argc != 3) {
+        fprintf(stderr, "Usage: %s <str1> <str2>\[rs]n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    res = strcmp(argv[1], argv[2]);
+
+    if (res == 0) {
+        printf("<str1> and <str2> are equal");
+        printf("\[rs]n");
+    } else if (res < 0) {
+        printf("<str1> is less than <str2> (%d)\[rs]n", res);
+    } else {
+        printf("<str1> is greater than <str2> (%d)\[rs]n", res);
+    }
+
+    exit(EXIT_SUCCESS);
+}
+
+### SEE ALSO
+
+memcmp (3),
+strcasecmp (3),
+strcoll (3),
+streq (3),
+string (3),
+strverscmp (3),
+wcscmp (3)
+
+
+# STRLEN(3) — Linux Manual Page
+
+### NAME
+
+strlen - string length
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <string.h>
+
+### DESCRIPTION
+
+The
+strlen ()
+function calculates the length of the string pointed to by
+s ,
+excluding the terminating null byte (\[aq]\[rs]0\[aq]).
+
+It is equivalent to
+
+strnul(s) - s
+
+### RETURN VALUE
+
+The
+strlen ()
+function returns the number of bytes in the string pointed to by
+s .
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+strlen ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001, C89, SVr4, 4.3BSD.
+
+### SEE ALSO
+
+string (3),
+strnul (3),
+wcslen (3)
+
+
+# STRTOK(3) — Linux Manual Page
+
+### NAME
+
+strtok - string tokenize
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <string.h>
+
+", const char *restrict " delim );
+
+### DESCRIPTION
+
+The
+strtok ()
+function breaks a string into a sequence of zero or more nonempty tokens.
+On the first call to
+strtok (),
+the string to be parsed should be
+specified in
+str .
+In each subsequent call that should parse the same string,
+str
+must be NULL.
+
+The
+delim
+argument specifies a set of bytes that
+delimit the tokens in the parsed string.
+The caller may specify different strings in
+delim
+in successive
+calls that parse the same string.
+
+Each call to
+strtok ()
+returns a pointer to a
+null-terminated string containing the next token.
+This string does not include the delimiting byte.
+If no more tokens are found,
+strtok ()
+returns NULL.
+
+A sequence of calls to
+strtok ()
+that operate on the same string maintains a pointer
+that determines the point from which to start searching for the next token.
+The first call to
+strtok ()
+sets this pointer to point to the first byte of the string.
+The start of the next token is determined by scanning forward
+for the next nondelimiter byte in
+str .
+If such a byte is found, it is taken as the start of the next token.
+If no such byte is found,
+then there are no more tokens, and
+strtok ()
+returns NULL.
+(A string that is empty or that contains only delimiters
+will thus cause
+strtok ()
+to return NULL on the first call.)
+
+The end of each token is found by scanning forward until either
+the next delimiter byte is found or until the
+terminating null byte (\[aq]\[rs]0\[aq]) is encountered.
+If a delimiter byte is found, it is overwritten with
+a null byte to terminate the current token, and
+strtok ()
+saves a pointer to the following byte;
+that pointer will be used as the starting point
+when searching for the next token.
+In this case,
+strtok ()
+returns a pointer to the start of the found token.
+
+From the above description,
+it follows that a sequence of two or more contiguous delimiter bytes in
+the parsed string is considered to be a single delimiter, and that
+delimiter bytes at the start or end of the string are ignored.
+Put another way: the tokens returned by
+strtok ()
+are always nonempty strings.
+Thus, for example, given the string
+\[dq] aaa;;bbb, \[dq],
+successive calls to
+strtok ()
+that specify the delimiter string
+\[dq] ;, \[dq]
+would return the strings
+\[dq] aaa \[dq]
+and
+\[dq] bbb \[dq],
+and then a null pointer.
+
+### RETURN VALUE
+
+strtok ()
+returns a pointer to the next token,
+or NULL if there are no more tokens.
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+strtok ()
+T}	Thread safety	MT-Unsafe race:strtok
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001, C89, SVr4, 4.3BSD.
+
+### CAVEATS
+
+Be cautious when using this function.
+If you do use it, note that:
+
+The identity of the delimiting byte is lost.
+
+The
+strtok ()
+function uses a static buffer while parsing, so it's not thread safe.
+Use
+strtok_r (3)
+if this matters to you.
+
+### EXAMPLES
+
+See
+getaddrinfo_a (3).
+
+### SEE ALSO
+
+string (3),
+strsep (3),
+strtok_r (3),
+wcstok (3)
+
+
+# PTHREAD_CREATE(3) — Linux Manual Page
+
+### NAME
+
+pthread_create - create a new thread
+
+### LIBRARY
+
+POSIX threads library
+( libpthread ,\~ \-lpthread )
+
+### SYNOPSIS
+
+#include <pthread.h>
+
+### DESCRIPTION
+
+The
+pthread_create ()
+function starts a new thread in the calling process.
+The new thread starts execution by invoking
+start_routine ();
+arg
+is passed as the sole argument of
+start_routine ().
+
+The new thread terminates in one of the following ways:
+
+It calls
+pthread_exit (3),
+specifying an exit status value that is available to another thread
+in the same process that calls
+pthread_join (3).
+
+It returns from
+start_routine ().
+This is equivalent to calling
+pthread_exit (3)
+with the value supplied in the
+return
+statement.
+
+It is canceled (see
+pthread_cancel (3)).
+
+Any of the threads in the process calls
+exit (3),
+or the main thread performs a return from
+main ().
+This causes the termination of all threads in the process.
+
+The
+attr
+argument points to a
+pthread_attr_t
+structure whose contents are used at thread creation time to
+determine attributes for the new thread;
+this structure is initialized using
+pthread_attr_init (3)
+and related functions.
+If
+attr
+is NULL,
+then the thread is created with default attributes.
+
+Before returning, a successful call to
+pthread_create ()
+stores the ID of the new thread in the buffer pointed to by
+thread ;
+this identifier is used to refer to the thread
+in subsequent calls to other pthreads functions.
+
+The new thread inherits a copy of the creating thread's signal mask
+( pthread_sigmask (3)).
+The set of pending signals for the new thread is empty
+( sigpending (2)).
+The new thread does not inherit the creating thread's
+alternate signal stack
+( sigaltstack (2)).
+
+The new thread inherits the calling thread's floating-point environment
+( fenv (3)).
+
+The initial value of the new thread's CPU-time clock is 0
+(see
+pthread_getcpuclockid (3)).
+
+### Linux-specific details
+
+The new thread inherits copies of the calling thread's capability sets
+(see
+capabilities (7))
+and CPU affinity mask (see
+sched_setaffinity (2)).
+
+### RETURN VALUE
+
+On success,
+pthread_create ()
+returns 0;
+on error, it returns an error number, and the contents of
+*thread
+are undefined.
+
+### ERRORS
+
+EAGAIN
+Insufficient resources to create another thread.
+
+EAGAIN
+A system-imposed limit on the number of threads was encountered.
+There are a number of limits that may trigger this error: the
+RLIMIT_NPROC
+soft resource limit (set via
+setrlimit (2)),
+which limits the number of processes and threads for a real user ID,
+was reached;
+the kernel's system-wide limit on the number of processes and threads,
+/proc/sys/kernel/threads\-max ,
+was reached (see
+proc (5));
+or the maximum number of PIDs,
+/proc/sys/kernel/pid_max ,
+was reached (see
+proc (5)).
+
+EINVAL
+Invalid settings in
+attr .
+
+EPERM
+No permission to set the scheduling policy and parameters specified in
+attr .
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+pthread_create ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001.
+
+### NOTES
+
+See
+pthread_self (3)
+for further information on the thread ID returned in
+*thread
+by
+pthread_create ().
+Unless real-time scheduling policies are being employed,
+after a call to
+pthread_create (),
+it is indeterminate which thread\[em]the caller or the new thread\[em]will
+next execute.
+
+A thread may either be
+joinable
+or
+detached .
+If a thread is joinable, then another thread can call
+pthread_join (3)
+to wait for the thread to terminate and fetch its exit status.
+Only when a terminated joinable thread has been joined are
+the last of its resources released back to the system.
+When a detached thread terminates,
+its resources are automatically released back to the system:
+it is not possible to join with the thread in order to obtain
+its exit status.
+Making a thread detached is useful for some types of daemon threads
+whose exit status the application does not need to care about.
+By default, a new thread is created in a joinable state, unless
+attr
+was set to create the thread in a detached state (using
+pthread_attr_setdetachstate (3)).
+
+Under the NPTL threading implementation, if the
+RLIMIT_STACK
+soft resource limit
+at the time the program started
+has any value other than "unlimited",
+then it determines the default stack size of new threads.
+Using
+pthread_attr_setstacksize (3),
+the stack size attribute can be explicitly set in the
+attr
+argument used to create a thread,
+in order to obtain a stack size other than the default.
+If the
+RLIMIT_STACK
+resource limit is set to "unlimited",
+a per-architecture value is used for the stack size:
+2 MB on most architectures;
+4 MB on POWER and Sparc-64.
+
+### BUGS
+
+In the obsolete LinuxThreads implementation,
+each of the threads in a process has a different process ID.
+This is in violation of the POSIX threads specification,
+and is the source of many other nonconformances to the standard;
+see
+pthreads (7).
+
+### EXAMPLES
+
+The program below demonstrates the use of
+pthread_create (),
+as well as a number of other functions in the pthreads API.
+
+In the following run,
+on a system providing the NPTL threading implementation,
+the stack size defaults to the value given by the
+"stack size" resource limit:
+
+$  ulimit \-s
+8192            # The stack size limit is 8 MB (0x800000 bytes)
+$  ./a.out hola salut servus
+Thread 1: top of stack near 0xb7dd03b8; argv_string=hola
+Thread 2: top of stack near 0xb75cf3b8; argv_string=salut
+Thread 3: top of stack near 0xb6dce3b8; argv_string=servus
+Joined with thread 1; returned value was HOLA
+Joined with thread 2; returned value was SALUT
+Joined with thread 3; returned value was SERVUS
+
+In the next run, the program explicitly sets a stack size of 1\ MB (using
+pthread_attr_setstacksize (3))
+for the created threads:
+
+$  ./a.out \-s 0x100000 hola salut servus
+Thread 1: top of stack near 0xb7d723b8; argv_string=hola
+Thread 2: top of stack near 0xb7c713b8; argv_string=salut
+Thread 3: top of stack near 0xb7b703b8; argv_string=servus
+Joined with thread 1; returned value was HOLA
+Joined with thread 2; returned value was SALUT
+Joined with thread 3; returned value was SERVUS
+
+### Program source
+
+#include <ctype.h>
+#include <err.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+struct thread_info {    /* Used as argument to thread_start() */
+    pthread_t thread_id;        /* ID returned by pthread_create() */
+    int       thread_num;       /* Application-defined thread # */
+    char     *argv_string;      /* From command-line argument */
+};
+
+/* Thread start function: display address near top of our stack,
+   and return upper-cased copy of argv_string.  */
+
+static void *
+thread_start(void *arg)
+{
+    struct thread_info *tinfo = arg;
+    char *uargv;
+
+    printf("Thread %d: top of stack near %p; argv_string=%s\[rs]n",
+           tinfo->thread_num, (void *) &tinfo, tinfo->argv_string);
+
+    uargv = strdup(tinfo->argv_string);
+    if (uargv == NULL)
+        err(EXIT_FAILURE, "strdup");
+
+    for (char *p = uargv; *p != \[aq]\[rs]0\[aq]; p++)
+        *p = toupper(*p);
+
+    return uargv;
+}
+
+int
+main(int argc, char *argv[])
+{
+    int                 s, opt;
+    void                *res;
+    size_t              num_threads;
+    ssize_t             stack_size;
+    pthread_attr_t      attr;
+    struct thread_info  *tinfo;
+
+    /* The "-s" option specifies a stack size for our threads.  */
+
+    stack_size = -1;
+    while ((opt = getopt(argc, argv, "s:")) != -1) {
+        switch (opt) {
+        case \[aq]s\[aq]:
+            stack_size = strtoul(optarg, NULL, 0);
+            break;
+
+        default:
+            fprintf(stderr, "Usage: %s [-s stack-size] arg...\[rs]n",
+                    argv[0]);
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    num_threads = argc - optind;
+
+    /* Initialize thread creation attributes.  */
+
+    s = pthread_attr_init(&attr);
+    if (s != 0)
+        errc(EXIT_FAILURE, s, "pthread_attr_init");
+
+    if (stack_size > 0) {
+        s = pthread_attr_setstacksize(&attr, stack_size);
+        if (s != 0)
+            errc(EXIT_FAILURE, s, "pthread_attr_setstacksize");
+    }
+
+    /* Allocate memory for pthread_create() arguments.  */
+
+    tinfo = calloc(num_threads, sizeof(*tinfo));
+    if (tinfo == NULL)
+        err(EXIT_FAILURE, "calloc");
+
+    /* Create one thread for each command-line argument.  */
+
+    for (size_t tnum = 0; tnum < num_threads; tnum++) {
+        tinfo[tnum].thread_num = tnum + 1;
+        tinfo[tnum].argv_string = argv[optind + tnum];
+
+        /* The pthread_create() call stores the thread ID into
+           corresponding element of tinfo[].  */
+
+        s = pthread_create(&tinfo[tnum].thread_id, &attr,
+                           &thread_start, &tinfo[tnum]);
+        if (s != 0)
+            errc(EXIT_FAILURE, s, "pthread_create");
+    }
+
+    /* Destroy the thread attributes object, since it is no
+       longer needed.  */
+
+    s = pthread_attr_destroy(&attr);
+    if (s != 0)
+        errc(EXIT_FAILURE, s, "pthread_attr_destroy");
+
+    /* Now join with each thread, and display its returned value.  */
+
+    for (size_t tnum = 0; tnum < num_threads; tnum++) {
+        s = pthread_join(tinfo[tnum].thread_id, &res);
+        if (s != 0)
+            errc(EXIT_FAILURE, s, "pthread_join");
+
+        printf("Joined with thread %d; returned value was %s\[rs]n",
+               tinfo[tnum].thread_num, (char *) res);
+        free(res);      /* Free memory allocated by thread */
+    }
+
+    free(tinfo);
+    exit(EXIT_SUCCESS);
+}
+
+### SEE ALSO
+
+getrlimit (2),
+pthread_attr_init (3),
+pthread_cancel (3),
+pthread_detach (3),
+pthread_equal (3),
+pthread_exit (3),
+pthread_getattr_np (3),
+pthread_join (3),
+pthread_self (3),
+pthread_setattr_default_np (3),
+pthreads (7)
+
+
+# PTHREAD_JOIN(3) — Linux Manual Page
+
+### NAME
+
+pthread_join - join with a terminated thread
+
+### LIBRARY
+
+POSIX threads library
+( libpthread ,\~ \-lpthread )
+
+### SYNOPSIS
+
+#include <pthread.h>
+
+### DESCRIPTION
+
+The
+pthread_join ()
+function waits for the thread specified by
+thread
+to terminate.
+If that thread has already terminated, then
+pthread_join ()
+returns immediately.
+The thread specified by
+thread
+must be joinable.
+
+If
+retval
+is not NULL, then
+pthread_join ()
+copies the exit status of the target thread
+(i.e., the value that the target thread supplied to
+pthread_exit (3))
+into the location pointed to by
+retval .
+If the target thread was canceled, then
+PTHREAD_CANCELED
+is placed in the location pointed to by
+retval .
+
+If multiple threads simultaneously try to join with the same thread,
+the results are undefined.
+If the thread calling
+pthread_join ()
+is canceled, then the target thread will remain joinable
+(i.e., it will not be detached).
+
+### RETURN VALUE
+
+On success,
+pthread_join ()
+returns 0;
+on error, it returns an error number.
+
+### ERRORS
+
+EDEADLK
+A deadlock was detected
+(e.g., two threads tried to join with each other);
+or
+thread
+specifies the calling thread.
+
+EINVAL
+thread
+is not a joinable thread.
+
+EINVAL
+Another thread is already waiting to join with this thread.
+
+ESRCH
+No thread with the ID
+thread
+could be found.
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+pthread_join ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001.
+
+### NOTES
+
+After a successful call to
+pthread_join (),
+the caller is guaranteed that the target thread has terminated.
+The caller may then choose to do any clean-up that is required
+after termination of the thread (e.g., freeing memory or other
+resources that were allocated to the target thread).
+
+Joining with a thread that has previously been joined results in
+undefined behavior.
+
+Failure to join with a thread that is joinable
+(i.e., one that is not detached),
+produces a "zombie thread".
+Avoid doing this,
+since each zombie thread consumes some system resources,
+and when enough zombie threads have accumulated,
+it will no longer be possible to create new threads (or processes).
+
+There is no pthreads analog of
+waitpid(\-1,\ &status,\ 0) ,
+that is, "join with any terminated thread".
+If you believe you need this functionality,
+you probably need to rethink your application design.
+
+All of the threads in a process are peers:
+any thread can join with any other thread in the process.
+
+### EXAMPLES
+
+See
+pthread_create (3).
+
+### SEE ALSO
+
+pthread_cancel (3),
+pthread_create (3),
+pthread_detach (3),
+pthread_exit (3),
+pthread_tryjoin_np (3),
+pthreads (7)
+
+
+# PTHREAD_MUTEX_LOCK(3) — Linux Manual Page
+
+### NAME
+
+pthread_mutex_init,
+pthread_mutex_lock,
+pthread_mutex_trylock,
+pthread_mutex_unlock,
+pthread_mutex_destroy
+-
+operations on mutexes
+
+### SYNOPSIS
+
+#include <pthread.h>
+
+### DESCRIPTION
+
+A mutex is a MUTual EXclusion device,
+and is useful for
+protecting shared data structures from concurrent modifications,
+and implementing critical sections and monitors.
+
+A mutex has two possible states:
+unlocked (not owned by any thread),
+and locked (owned by one thread).
+A mutex can never be owned by two different threads simultaneously.
+A thread attempting to lock a mutex
+that is already locked by another thread
+is suspended until the owning thread unlocks the mutex first.
+
+pthread_mutex_init ()
+initializes the mutex object pointed to by
+mutex
+according to the mutex attributes specified in
+mutexattr .
+If
+mutexattr
+is NULL,
+default attributes are used instead.
+
+The LinuxThreads implementation supports only one mutex attributes,
+the
+mutex kind ,
+which is either "fast",
+"recursive",
+or "error checking".
+The kind of a mutex determines
+whether it can be locked again by a thread that already owns it.
+The default kind is "fast".
+See
+pthread_mutexattr_init (3)
+for more information on mutex attributes.
+
+Variables of type
+pthread_mutex_t
+can also be initialized statically,
+using the constants
+PTHREAD_MUTEX_INITIALIZER
+(for fast mutexes),
+PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP
+(for recursive mutexes),
+and
+PTHREAD_ERRORCHECK_MUTEX_INITIALIZER_NP
+(for error checking mutexes).
+
+pthread_mutex_lock ()
+locks the given mutex.
+If the mutex is currently unlocked,
+it becomes locked and owned by the calling thread,
+and
+pthread_mutex_lock ()
+returns immediately.
+If the mutex is already locked by another thread,
+pthread_mutex_lock ()
+suspends the calling thread
+until the mutex is unlocked.
+
+If the mutex is already locked by the calling thread,
+the behavior of
+pthread_mutex_lock ()
+depends on the kind of the mutex.
+If the mutex is of the "fast" kind,
+the calling thread is suspended until the mutex is unlocked,
+thus effectively causing the calling thread to deadlock.
+If the mutex is of the "error checking" kind,
+pthread_mutex_lock ()
+returns immediately with the error code
+EDEADLK .
+If the mutex is of the "recursive" kind,
+pthread_mutex_lock ()
+succeeds and returns immediately,
+recording the number of times the calling thread has locked the mutex.
+An equal number of
+pthread_mutex_unlock ()
+operations
+must be performed before the mutex returns to the unlocked state.
+
+pthread_mutex_trylock ()
+behaves identically to
+pthread_mutex_lock (),
+except that it does not block the calling thread
+if the mutex is already locked by another thread
+(or by the calling thread in the case of a "fast" mutex).
+Instead,
+pthread_mutex_trylock ()
+returns immediately
+with the error code
+EBUSY .
+
+pthread_mutex_unlock ()
+unlocks the given mutex.
+The mutex is assumed to be locked and owned by the calling thread
+on entrance to
+pthread_mutex_unlock ().
+If the mutex is of the "fast" kind,
+pthread_mutex_unlock ()
+always returns it to the unlocked state.
+If it is of the "recursive" kind,
+it decrements the locking count of the mutex
+(number of
+pthread_mutex_lock ()
+operations
+performed on it by the calling thread),
+and only when this count reaches zero is the mutex actually unlocked.
+
+On "error checking" and "recursive" mutexes,
+pthread_mutex_unlock ()
+actually checks at run-time
+that the mutex is locked on entrance,
+and that it was locked by the same thread
+that is now calling
+pthread_mutex_unlock ().
+If these conditions are not met,
+an error code is returned and the mutex remains unchanged.
+"Fast" mutexes perform no such checks,
+thus allowing a locked mutex to be
+unlocked by a thread other than its owner.
+This is non-portable behavior and must not be relied upon.
+
+pthread_mutex_destroy ()
+destroys a mutex object,
+freeing the resources it might hold.
+The mutex must be unlocked on entrance.
+In the LinuxThreads implementation,
+no resources are associated with mutex objects,
+thus
+pthread_mutex_destroy ()
+actually does nothing
+except checking that the mutex is unlocked.
+
+### CANCELLATION
+
+None of the mutex functions is a cancelation point,
+not even
+pthread_mutex_lock (),
+in spite of the fact that it can suspend a thread for arbitrary durations.
+This way,
+the status of mutexes at cancelation points is predictable,
+allowing cancelation handlers
+to unlock precisely those mutexes that need to be unlocked
+before the thread stops executing.
+Consequently,
+threads using deferred cancelation
+should never hold a mutex for extended periods of time.
+
+### ASYNC-SIGNAL SAFETY
+
+The mutex functions are not async-signal safe.
+What this means is that they should not be called from a signal handler.
+In particular,
+calling
+pthread_mutex_lock ()
+or
+pthread_mutex_unlock ()
+from a signal handler
+may deadlock the calling thread.
+
+### RETURN VALUE
+
+pthread_mutex_init ()
+always returns 0.
+The other mutex functions
+return 0 on success and a non-zero error code on error.
+
+### ERRORS
+
+The
+pthread_mutex_lock ()
+function returns
+the following error code on error:
+
+EINVAL
+The mutex has not been properly initialized.
+
+EDEADLK
+The mutex is already locked by the calling thread
+("error checking" mutexes only).
+
+The
+pthread_mutex_trylock ()
+function returns
+the following error codes on error:
+
+EBUSY
+The mutex could not be acquired because it was currently locked.
+
+EINVAL
+The mutex has not been properly initialized.
+
+The
+pthread_mutex_unlock ()
+function returns
+the following error code on error:
+
+EINVAL
+The mutex has not been properly initialized.
+
+EPERM
+The calling thread does not own the mutex
+("error checking" mutexes only).
+
+The
+pthread_mutex_destroy ()
+function returns
+the following error code on error:
+
+EBUSY
+The mutex is currently locked.
+
+### SEE ALSO
+
+pthread_mutexattr_init (3),
+pthread_mutexattr_setkind_np (3),
+pthread_cancel (3).
+
+### EXAMPLE
+
+A shared global variable
+x
+can be protected by a mutex as follows:
+
+int x;
+pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
+
+All accesses and modifications to
+x
+should be bracketed by calls to
+pthread_mutex_lock ()
+and
+pthread_mutex_unlock ()
+as follows:
+
+pthread_mutex_lock(&mut);
+/* operate on x */
+pthread_mutex_unlock(&mut);
+
+
+# DLOPEN(3) — Linux Manual Page
+
+### NAME
+
+dlclose, dlopen, dlmopen -
+open and close a shared object
+
+### LIBRARY
+
+Dynamic linking library
+( libdl ,\~ \-ldl )
+
+### SYNOPSIS
+
+#include <dlfcn.h>
+
+#define _GNU_SOURCE
+
+#include <dlfcn.h>
+
+### DESCRIPTION
+
+### dlopen()
+
+The function
+dlopen ()
+loads the dynamic shared object (shared library)
+file named by the null-terminated
+string
+path
+and returns an opaque "handle" for the loaded object.
+This handle is employed with other functions in the dlopen API, such as
+dlsym (3),
+dladdr (3),
+dlinfo (3),
+and
+dlclose ().
+
+If
+path
+is NULL, then the returned handle is for the main program.
+If
+path
+contains a slash ("/"), then it is interpreted as a (relative
+or absolute) pathname.
+Otherwise, the dynamic linker searches for the object as follows
+(see
+ld.so (8)
+for further details):
+
+(ELF only) If the calling object
+(i.e., the shared library or executable from which
+dlopen ()
+is called)
+contains a DT_RPATH tag, and does not contain a DT_RUNPATH tag,
+then the directories listed in the DT_RPATH tag are searched.
+
+If, at the time that the program was started, the environment variable
+LD_LIBRARY_PATH
+was defined to contain a colon-separated list of directories,
+then these are searched.
+(As a security measure, this variable is ignored for set-user-ID and
+set-group-ID programs.)
+
+(ELF only) If the calling object
+contains a DT_RUNPATH tag, then the directories listed in that tag
+are searched.
+
+The cache file
+/etc/ld.so.cache
+(maintained by
+ldconfig (8))
+is checked to see whether it contains an entry for
+path .
+
+The directories
+/lib
+and
+/usr/lib
+are searched (in that order).
+
+If the object specified by
+path
+has dependencies on other shared objects,
+then these are also automatically loaded by the dynamic linker
+using the same rules.
+(This process may occur recursively,
+if those objects in turn have dependencies, and so on.)
+
+One of the following two values must be included in
+flags :
+
+RTLD_LAZY
+Perform lazy binding.
+Resolve symbols only as the code that references them is executed.
+If the symbol is never referenced, then it is never resolved.
+(Lazy binding is performed only for function references;
+references to variables are always immediately bound when
+the shared object is loaded.)
+Since glibc 2.1.1,
+this flag is overridden by the effect of the
+LD_BIND_NOW
+environment variable.
+
+RTLD_NOW
+If this value is specified, or the environment variable
+LD_BIND_NOW
+is set to a nonempty string,
+all undefined symbols in the shared object are resolved before
+dlopen ()
+returns.
+If this cannot be done, an error is returned.
+
+Zero or more of the following values may also be ORed in
+flags :
+
+RTLD_GLOBAL
+The symbols defined by this shared object will be
+made available for symbol resolution of subsequently loaded shared objects.
+
+RTLD_LOCAL
+This is the converse of
+RTLD_GLOBAL ,
+and the default if neither flag is specified.
+Symbols defined in this shared object are not made available to resolve
+references in subsequently loaded shared objects.
+
+RTLD_NODELETE  (since glibc 2.2)
+Do not unload the shared object during
+dlclose ().
+Consequently, the object's static and global variables are not reinitialized
+if the object is reloaded with
+dlopen ()
+at a later time.
+
+RTLD_NOLOAD  (since glibc 2.2)
+Don't load the shared object.
+This can be used to test if the object is already resident
+( dlopen ()
+returns NULL if it is not, or the object's handle if it is resident).
+This flag can also be used to promote the flags on a shared object
+that is already loaded.
+For example, a shared object that was previously loaded with
+RTLD_LOCAL
+can be reopened with
+RTLD_NOLOAD\ |\ RTLD_GLOBAL .
+
+RTLD_DEEPBIND  (since glibc 2.3.4)
+Place the lookup scope of the symbols in this
+shared object ahead of the global scope.
+This means that a self-contained object will use
+its own symbols in preference to global symbols with the same name
+contained in objects that have already been loaded.
+
+If
+path
+is NULL, then the returned handle is for the main program.
+When given to
+dlsym (3),
+this handle causes a search for a symbol in the main program,
+followed by all shared objects loaded at program startup,
+and then all shared objects loaded by
+dlopen ()
+with the flag
+RTLD_GLOBAL .
+
+Symbol references in the shared object are resolved using (in order):
+symbols in the link map of objects loaded for the main program and its
+dependencies;
+symbols in shared objects (and their dependencies)
+that were previously opened with
+dlopen ()
+using the
+RTLD_GLOBAL
+flag;
+and definitions in the shared object itself
+(and any dependencies that were loaded for that object).
+
+Any global symbols in the executable that were placed into
+its dynamic symbol table by
+ld (1)
+can also be used to resolve references in a dynamically loaded shared object.
+Symbols may be placed in the dynamic symbol table
+either because the executable was linked with the flag "-rdynamic"
+(or, synonymously, "--export-dynamic"), which causes all of
+the executable's global symbols to be placed in the dynamic symbol table,
+or because
+ld (1)
+noted a dependency on a symbol in another object during static linking.
+
+If the same shared object is opened again with
+dlopen (),
+the same object handle is returned.
+The dynamic linker maintains reference
+counts for object handles, so a dynamically loaded shared object is not
+deallocated until
+dlclose ()
+has been called on it as many times as
+dlopen ()
+has succeeded on it.
+Constructors (see below) are called only when the object is actually loaded
+into memory (i.e., when the reference count increases to 1).
+
+A subsequent
+dlopen ()
+call that loads the same shared object with
+RTLD_NOW
+may force symbol resolution for a shared object earlier loaded with
+RTLD_LAZY .
+Similarly, an object that was previously opened with
+RTLD_LOCAL
+can be promoted to
+RTLD_GLOBAL
+in a subsequent
+dlopen ().
+
+If
+dlopen ()
+fails for any reason, it returns NULL.
+
+### dlmopen()
+
+This function performs the same task as
+dlopen ()\[em]the
+path
+and
+flags
+arguments, as well as the return value, are the same,
+except for the differences noted below.
+
+The
+dlmopen ()
+function differs from
+dlopen ()
+primarily in that it accepts an additional argument,
+lmid ,
+that specifies the link-map list (also referred to as a
+namespace )
+in which the shared object should be loaded.
+(By comparison,
+dlopen ()
+adds the dynamically loaded shared object to the same namespace as
+the shared object from which the
+dlopen ()
+call is made.)
+The
+Lmid_t
+type is an opaque handle that refers to a namespace.
+
+The
+lmid
+argument is either the ID of an existing namespace
+(which can be obtained using the
+dlinfo (3)
+RTLD_DI_LMID
+request) or one of the following special values:
+
+LM_ID_BASE
+Load the shared object in the initial namespace
+(i.e., the application's namespace).
+
+LM_ID_NEWLM
+Create a new namespace and load the shared object in that namespace.
+The object must have been correctly linked
+to reference all of the other shared objects that it requires,
+since the new namespace is initially empty.
+
+If
+path
+is NULL, then the only permitted value for
+lmid
+is
+LM_ID_BASE .
+
+### dlclose()
+
+The function
+dlclose ()
+decrements the reference count on the
+dynamically loaded shared object referred to by
+handle .
+
+If the object's reference count drops to zero
+and no symbols in this object are required by other objects,
+then the object is unloaded
+after first calling any destructors defined for the object.
+(Symbols in this object might be required in another object
+because this object was opened with the
+RTLD_GLOBAL
+flag and one of its symbols satisfied a relocation in another object.)
+
+All shared objects that were automatically loaded when
+dlopen ()
+was invoked on the object referred to by
+handle
+are recursively closed in the same manner.
+
+A successful return from
+dlclose ()
+does not guarantee that the symbols associated with
+handle
+are removed from the caller's address space.
+In addition to references resulting from explicit
+dlopen ()
+calls, a shared object may have been implicitly loaded
+(and reference counted) because of dependencies in other shared objects.
+Only when all references have been released can the shared object
+be removed from the address space.
+
+### RETURN VALUE
+
+On success,
+dlopen ()
+and
+dlmopen ()
+return a non-NULL handle for the loaded object.
+On error
+(file could not be found, was not readable, had the wrong format,
+or caused errors during loading),
+these functions return NULL.
+
+On success,
+dlclose ()
+returns 0;
+on error, it returns a nonzero value.
+
+Errors from these functions can be diagnosed using
+dlerror (3).
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+dlopen (),
+dlmopen (),
+dlclose ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+dlopen ()
+dlclose ()
+POSIX.1-2008.
+
+dlmopen ()
+RTLD_NOLOAD
+RTLD_NODELETE
+GNU.
+
+RTLD_DEEPBIND
+Solaris.
+
+### HISTORY
+
+dlopen ()
+dlclose ()
+glibc 2.0.
+POSIX.1-2001.
+
+dlmopen ()
+glibc 2.3.4.
+
+### NOTES
+
+### dlmopen() and namespaces
+
+A link-map list defines an isolated namespace for the
+resolution of symbols by the dynamic linker.
+Within a namespace,
+dependent shared objects are implicitly loaded according to the usual rules,
+and symbol references are likewise resolved according to the usual rules,
+but such resolution is confined to the definitions provided by the
+objects that have been (explicitly and implicitly) loaded into the namespace.
+
+The
+dlmopen ()
+function permits object-load isolation\[em]the ability
+to load a shared object in a new namespace without
+exposing the rest of the application to the symbols
+made available by the new object.
+Note that the use of the
+RTLD_LOCAL
+flag is not sufficient for this purpose,
+since it prevents a shared object's symbols from being available to
+any
+other shared object.
+In some cases,
+we may want to make the symbols provided by a dynamically
+loaded shared object available to (a subset of) other shared objects
+without exposing those symbols to the entire application.
+This can be achieved by using a separate namespace and the
+RTLD_GLOBAL
+flag.
+
+The
+dlmopen ()
+function also can be used to provide better isolation than the
+RTLD_LOCAL
+flag.
+In particular, shared objects loaded with
+RTLD_LOCAL
+may be promoted to
+RTLD_GLOBAL
+if they are dependencies of another shared object loaded with
+RTLD_GLOBAL .
+Thus,
+RTLD_LOCAL
+is insufficient to isolate a loaded shared object except in the (uncommon)
+case where one has explicit control over all shared object dependencies.
+
+Possible uses of
+dlmopen ()
+are plugins where the author of the plugin-loading framework
+can't trust the plugin authors and does not wish
+any undefined symbols from the plugin framework to be resolved to plugin
+symbols.
+Another use is to load the same object more than once.
+Without the use of
+dlmopen (),
+this would require the creation of distinct copies of the shared object file.
+Using
+dlmopen (),
+this can be achieved by loading the same shared object file into
+different namespaces.
+
+The glibc implementation supports a maximum of
+16 namespaces.
+
+### Initialization and finalization functions
+
+Shared objects may export functions using the
+__attribute__((constructor))
+and
+__attribute__((destructor))
+function attributes.
+Constructor functions are executed before
+dlopen ()
+returns, and destructor functions are executed before
+dlclose ()
+returns.
+A shared object may export multiple constructors and destructors,
+and priorities can be associated with each function
+to determine the order in which they are executed.
+See the
+gcc
+info pages (under "Function attributes")
+for further information.
+
+An older method of (partially) achieving the same result is via the use of
+two special symbols recognized by the linker:
+_init
+and
+_fini .
+If a dynamically loaded shared object exports a routine named
+_init (),
+then that code is executed after loading a shared object, before
+dlopen ()
+returns.
+If the shared object exports a routine named
+_fini (),
+then that routine is called just before the object is unloaded.
+In this case, one must avoid linking against the system startup files,
+which contain default versions of these files;
+this can be done by using the
+gcc (1)
+\-nostartfiles
+command-line option.
+
+Use of
+_init
+and
+_fini
+is now deprecated in favor of the aforementioned
+constructors and destructors,
+which among other advantages,
+permit multiple initialization and finalization functions to be defined.
+
+Since glibc 2.2.3,
+atexit (3)
+can be used to register an exit handler that is automatically
+called when a shared object is unloaded.
+
+### History
+
+These functions are part of the dlopen API, derived from SunOS.
+
+### BUGS
+
+As at glibc 2.24, specifying the
+RTLD_GLOBAL
+flag when calling
+dlmopen ()
+generates an error.
+Furthermore, specifying
+RTLD_GLOBAL
+when calling
+dlopen ()
+results in a program crash
+( SIGSEGV )
+if the call is made from any object loaded in a
+namespace other than the initial namespace.
+
+### EXAMPLES
+
+The program below loads the (glibc) math library,
+looks up the address of the
+cos (3)
+function, and prints the cosine of 2.0.
+The following is an example of building and running the program:
+
+$  cc dlopen_demo.c \-ldl ;
+$  ./a.out ;
+-0.416147
+
+### Program source
+
+#include <dlfcn.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <gnu/lib-names.h>  /* Defines LIBM_SO (which will be a
+                               string such as "libm.so.6") */
+int
+main(void)
+{
+    void *handle;
+    typeof(double (double)) *cosine;
+    char *error;
+
+    handle = dlopen(LIBM_SO, RTLD_LAZY);
+    if (!handle) {
+        fprintf(stderr, "%s\[rs]n", dlerror());
+        exit(EXIT_FAILURE);
+    }
+
+    dlerror();    /* Clear any existing error */
+
+    cosine = dlsym(handle, "cos");
+
+    /* The 2013 Technical Corrigendum 1 to POSIX.1-2008
+       required that conforming implementations support
+       converting \[aq]void *\[aq] to a function pointer.  */
+
+    error = dlerror();
+    if (error != NULL) {
+        fprintf(stderr, "%s\[rs]n", error);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("%f\[rs]n", (*cosine)
+
+
+# DLSYM(3) — Linux Manual Page
+
+### NAME
+
+dlsym, dlvsym - obtain address of a symbol in a shared object or executable
+
+### LIBRARY
+
+Dynamic linking library
+( libdl ,\~ \-ldl )
+
+### SYNOPSIS
+
+#include <dlfcn.h>
+
+#define _GNU_SOURCE
+#include <dlfcn.h>
+
+### DESCRIPTION
+
+The function
+dlsym ()
+takes a "handle" of a dynamic loaded shared object returned by
+dlopen (3)
+along with a null-terminated symbol name,
+and returns the address where that symbol is
+loaded into memory.
+If the symbol is not found, in the specified
+object or any of the shared objects that were automatically loaded by
+dlopen (3)
+when that object was loaded,
+dlsym ()
+returns NULL.
+(The search performed by
+dlsym ()
+is breadth first through the dependency tree of these shared objects.)
+
+In unusual cases (see NOTES) the value of the symbol could actually be NULL.
+Therefore, a NULL return from
+dlsym ()
+need not indicate an error.
+The correct way to distinguish an error from a symbol whose value is NULL
+is to call
+dlerror (3)
+to clear any old error conditions, then call
+dlsym (),
+and then call
+dlerror (3)
+again, saving its return value into a variable, and check whether
+this saved value is not NULL.
+
+There are two special pseudo-handles that may be specified in
+handle :
+
+RTLD_DEFAULT
+Find the first occurrence of the desired symbol
+using the default shared object search order.
+The search will include global symbols in the executable
+and its dependencies,
+as well as symbols in shared objects that were dynamically loaded with the
+RTLD_GLOBAL
+flag.
+
+RTLD_NEXT
+Find the next occurrence of the desired symbol in the search order
+after the current object.
+This allows one to provide a wrapper
+around a function in another shared object, so that, for example,
+the definition of a function in a preloaded shared object
+(see
+LD_PRELOAD
+in
+ld.so (8))
+can find and invoke the "real" function provided in another shared object
+(or for that matter, the "next" definition of the function in cases
+where there are multiple layers of preloading).
+
+The
+_GNU_SOURCE
+feature test macro must be defined in order to obtain the
+definitions of
+RTLD_DEFAULT
+and
+RTLD_NEXT
+from
+<dlfcn.h> .
+
+The function
+dlvsym ()
+does the same as
+dlsym ()
+but takes a version string as an additional argument.
+
+### RETURN VALUE
+
+On success,
+these functions return the address associated with
+symbol .
+On failure, they return NULL;
+the error can be diagnosed using
+dlerror (3).
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+dlsym (),
+dlvsym ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+dlsym ()
+POSIX.1-2008.
+
+dlvsym ()
+GNU.
+
+### HISTORY
+
+dlsym ()
+glibc 2.0.
+POSIX.1-2001.
+
+dlvsym ()
+glibc 2.1.
+
+### NOTES
+
+There are several scenarios when the address of a global symbol is NULL.
+For example, a symbol can be placed at zero address by the linker, via
+a linker script or with
+\-\-defsym
+command-line option.
+Undefined weak symbols also have NULL value.
+Finally, the symbol value may be the result of
+a GNU indirect function (IFUNC) resolver function that returns
+NULL as the resolved value.
+In the latter case,
+dlsym ()
+also returns NULL without error.
+However, in the former two cases, the
+behavior of GNU dynamic linker is inconsistent: relocation processing
+succeeds and the symbol can be observed to have NULL value, but
+dlsym ()
+fails and
+dlerror ()
+indicates a lookup error.
+
+### History
+
+The
+dlsym ()
+function is part of the dlopen API, derived from SunOS.
+That system does not have
+dlvsym ().
+
+### EXAMPLES
+
+See
+dlopen (3).
+
+### SEE ALSO
+
+dl_iterate_phdr (3),
+dladdr (3),
+dlerror (3),
+dlinfo (3),
+dlopen (3),
+ld.so (8)
+
+
+# ERRNO(3) — Linux Manual Page
+
+### NAME
+
+errno - number of last error
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <errno.h>
+
+### DESCRIPTION
+
+The
+<errno.h>
+header file defines the integer variable
+errno ,
+which is set by system calls and some library functions in the event
+of an error to indicate what went wrong.
+
+### errno
+
+The value in
+errno
+is significant only when the return value of
+the call indicated an error
+(i.e., -1 from most system calls;
+-1 or NULL from most library functions);
+a function that succeeds
+is
+allowed to change
+errno .
+The value of
+errno
+is never set to zero by any system call or library function.
+
+For some system calls and library functions (e.g.,
+getpriority (2)),
+-1 is a valid return on success.
+In such cases, a successful return can be distinguished from an error
+return by setting
+errno
+to zero before the call, and then,
+if the call returns a status that indicates that an error
+may have occurred, checking to see if
+errno
+has a nonzero value.
+
+errno
+is defined by the ISO C standard to be a modifiable lvalue
+of type
+int ,
+and must not be explicitly declared;
+errno
+may be a macro.
+errno
+is thread-local;
+setting it in one thread
+does not affect its value in any other thread.
+
+### Error numbers and names
+
+Valid error numbers are all positive numbers.
+The
+<errno.h>
+header file defines symbolic names for each
+of the possible error numbers that may appear in
+errno .
+
+All the error names specified by POSIX.1
+must have distinct values, with the exception of
+EAGAIN
+and
+EWOULDBLOCK ,
+which may be the same.
+On Linux, these two have the same value on all architectures.
+
+The error numbers that correspond to each symbolic name
+vary across UNIX systems,
+and even across different architectures on Linux.
+Therefore, numeric values are not included as part of the list of
+error names below.
+The
+perror (3)
+and
+strerror (3)
+functions can be used to convert these names to
+corresponding textual error messages.
+
+On any particular Linux system,
+one can obtain a list of all symbolic error names and
+the corresponding error numbers using the
+errno (1)
+command (part of the
+moreutils
+package):
+
+$  errno \-l ;
+EPERM 1 Operation not permitted
+ENOENT 2 No such file or directory
+ESRCH 3 No such process
+EINTR 4 Interrupted system call
+EIO 5 Input/output error
+...
+
+The
+errno (1)
+command can also be used to look up individual error numbers and names,
+and to search for errors using strings from the error description,
+as in the following examples:
+
+$  errno 2 ;
+ENOENT 2 No such file or directory
+$  errno ESRCH ;
+ESRCH 3 No such process
+$  errno \-s permission ;
+EACCES 13 Permission denied
+
+### List of error names
+
+In the list of the symbolic error names below,
+various names are marked as follows:
+
+POSIX.1-2001
+The name is defined by POSIX.1-2001,
+and is defined in later POSIX.1 versions, unless otherwise indicated.
+
+POSIX.1-2008
+The name is defined in POSIX.1-2008,
+but was not present in earlier POSIX.1 standards.
+
+C99
+The name is defined by C99.
+
+Below is a list of the symbolic error names that are defined on Linux:
+
+E2BIG
+Argument list too long (POSIX.1-2001).
+
+EACCES
+Permission denied (POSIX.1-2001).
+
+EADDRINUSE
+Address already in use (POSIX.1-2001).
+
+EADDRNOTAVAIL
+Address not available (POSIX.1-2001).
+
+EAFNOSUPPORT
+Address family not supported (POSIX.1-2001).
+
+EAGAIN
+Resource temporarily unavailable (may be the same value as
+EWOULDBLOCK )
+(POSIX.1-2001).
+
+EALREADY
+Connection already in progress (POSIX.1-2001).
+
+EBADE
+Invalid exchange.
+
+EBADF
+Bad file descriptor (POSIX.1-2001).
+
+EBADFD
+File descriptor in bad state.
+
+EBADMSG
+Bad message (POSIX.1-2001).
+
+EBADR
+Invalid request descriptor.
+
+EBADRQC
+Invalid request code.
+
+EBADSLT
+Invalid slot.
+
+EBUSY
+Device or resource busy (POSIX.1-2001).
+
+ECANCELED
+Operation canceled (POSIX.1-2001).
+
+ECHILD
+No child processes (POSIX.1-2001).
+
+ECHRNG
+Channel number out of range.
+
+ECOMM
+Communication error on send.
+
+ECONNABORTED
+Connection aborted (POSIX.1-2001).
+
+ECONNREFUSED
+Connection refused (POSIX.1-2001).
+
+ECONNRESET
+Connection reset (POSIX.1-2001).
+
+EDEADLK
+Resource deadlock avoided (POSIX.1-2001).
+
+EDEADLOCK
+On most architectures, a synonym for
+EDEADLK .
+On some architectures (e.g., Linux MIPS, PowerPC, SPARC),
+it is a separate error code "File locking deadlock error".
+
+EDESTADDRREQ
+Destination address required (POSIX.1-2001).
+
+EDOM
+Mathematics argument out of domain of function (POSIX.1, C99).
+
+EDQUOT
+Disk quota exceeded (POSIX.1-2001).
+
+EEXIST
+File exists (POSIX.1-2001).
+
+EFAULT
+Bad address (POSIX.1-2001).
+
+EFBIG
+File too large (POSIX.1-2001).
+
+EHOSTDOWN
+Host is down.
+
+EHOSTUNREACH
+Host is unreachable (POSIX.1-2001).
+
+EHWPOISON
+Memory page has hardware error.
+
+EIDRM
+Identifier removed (POSIX.1-2001).
+
+EILSEQ
+Invalid or incomplete multibyte or wide character (POSIX.1, C99).
+
+The text shown here is the glibc error description;
+in POSIX.1, this error is described as "Illegal byte sequence".
+
+EINPROGRESS
+Operation in progress (POSIX.1-2001).
+
+EINTR
+Interrupted function call (POSIX.1-2001);
+see
+signal (7).
+
+EINVAL
+Invalid argument (POSIX.1-2001).
+
+EIO
+Input/output error (POSIX.1-2001).
+
+EISCONN
+Socket is connected (POSIX.1-2001).
+
+EISDIR
+Is a directory (POSIX.1-2001).
+
+EISNAM
+Is a named type file.
+
+EKEYEXPIRED
+Key has expired.
+
+EKEYREJECTED
+Key was rejected by service.
+
+EKEYREVOKED
+Key has been revoked.
+
+EL2HLT
+Level 2 halted.
+
+EL2NSYNC
+Level 2 not synchronized.
+
+EL3HLT
+Level 3 halted.
+
+EL3RST
+Level 3 reset.
+
+ELIBACC
+Cannot access a needed shared library.
+
+ELIBBAD
+Accessing a corrupted shared library.
+
+ELIBMAX
+Attempting to link in too many shared libraries.
+
+ELIBSCN
+.lib section in a.out corrupted
+
+ELIBEXEC
+Cannot exec a shared library directly.
+
+ELNRNG
+Link number out of range.
+
+ELOOP
+Too many levels of symbolic links (POSIX.1-2001).
+
+EMEDIUMTYPE
+Wrong medium type.
+
+EMFILE
+Too many open files (POSIX.1-2001).
+Commonly caused by exceeding the
+RLIMIT_NOFILE
+resource limit described in
+getrlimit (2).
+Can also be caused by exceeding the limit specified in
+/proc/sys/fs/nr_open .
+
+EMLINK
+Too many links (POSIX.1-2001).
+
+EMSGSIZE
+Message too long (POSIX.1-2001).
+
+EMULTIHOP
+Multihop attempted (POSIX.1-2001).
+
+ENAMETOOLONG
+Filename too long (POSIX.1-2001).
+
+ENETDOWN
+Network is down (POSIX.1-2001).
+
+ENETRESET
+Connection aborted by network (POSIX.1-2001).
+
+ENETUNREACH
+Network unreachable (POSIX.1-2001).
+
+ENFILE
+Too many open files in system (POSIX.1-2001).
+On Linux, this is probably a result of encountering the
+/proc/sys/fs/file\-max
+limit (see
+proc (5)).
+
+ENOANO
+No anode.
+
+ENOBUFS
+No buffer space available (POSIX.1 (XSI STREAMS option)).
+
+ENODATA
+The named attribute does not exist,
+or the process has no access to this attribute;
+see
+xattr (7).
+
+In POSIX.1-2001 (XSI STREAMS option),
+this error was described as
+"No message is available on the STREAM head read queue".
+
+ENODEV
+No such device (POSIX.1-2001).
+
+ENOENT
+No such file or directory (POSIX.1-2001).
+
+Typically, this error results when a specified pathname does not exist,
+or one of the components in the directory prefix of a pathname does not exist,
+or the specified pathname is a dangling symbolic link.
+
+ENOEXEC
+Exec format error (POSIX.1-2001).
+
+ENOKEY
+Required key not available.
+
+ENOLCK
+No locks available (POSIX.1-2001).
+
+ENOLINK
+Link has been severed (POSIX.1-2001).
+
+ENOMEDIUM
+No medium found.
+
+ENOMEM
+Not enough space/cannot allocate memory (POSIX.1-2001).
+
+ENOMSG
+No message of the desired type (POSIX.1-2001).
+
+ENONET
+Machine is not on the network.
+
+ENOPKG
+Package not installed.
+
+ENOPROTOOPT
+Protocol not available (POSIX.1-2001).
+
+ENOSPC
+No space left on device (POSIX.1-2001).
+
+ENOSR
+No STREAM resources (POSIX.1 (XSI STREAMS option)).
+
+ENOSTR
+Not a STREAM (POSIX.1 (XSI STREAMS option)).
+
+ENOSYS
+Function not implemented (POSIX.1-2001).
+
+ENOTBLK
+Block device required.
+
+ENOTCONN
+The socket is not connected (POSIX.1-2001).
+
+ENOTDIR
+Not a directory (POSIX.1-2001).
+
+ENOTEMPTY
+Directory not empty (POSIX.1-2001).
+
+ENOTRECOVERABLE
+State not recoverable (POSIX.1-2008).
+
+ENOTSOCK
+Not a socket (POSIX.1-2001).
+
+ENOTSUP
+Operation not supported (POSIX.1-2001).
+
+ENOTTY
+Inappropriate I/O control operation (POSIX.1-2001).
+
+ENOTUNIQ
+Name not unique on network.
+
+ENXIO
+No such device or address (POSIX.1-2001).
+
+EOPNOTSUPP
+Operation not supported (POSIX.1-2001).
+According to POSIX.1 this is "Operation not supported on socket",
+but on Linux it effectively means just "Operation not supported".
+
+( ENOTSUP
+and
+EOPNOTSUPP
+have the same value on Linux.)
+
+EOVERFLOW
+Value too large to be stored in data type (POSIX.1-2001).
+
+EOWNERDEAD
+Owner died (POSIX.1-2008).
+
+EPERM
+Operation not permitted (POSIX.1-2001).
+
+EPFNOSUPPORT
+Protocol family not supported.
+
+EPIPE
+Broken pipe (POSIX.1-2001).
+
+EPROTO
+Protocol error (POSIX.1-2001).
+
+EPROTONOSUPPORT
+Protocol not supported (POSIX.1-2001).
+
+EPROTOTYPE
+Protocol wrong type for socket (POSIX.1-2001).
+
+ERANGE
+Result too large (POSIX.1, C99).
+
+EREMCHG
+Remote address changed.
+
+EREMOTE
+Object is remote.
+
+EREMOTEIO
+Remote I/O error.
+
+ERESTART
+Interrupted system call should be restarted.
+
+ERFKILL
+Operation not possible due to RF-kill.
+
+EROFS
+Read-only filesystem (POSIX.1-2001).
+
+ESHUTDOWN
+Cannot send after transport endpoint shutdown.
+
+ESPIPE
+Invalid seek (POSIX.1-2001).
+
+ESOCKTNOSUPPORT
+Socket type not supported.
+
+ESRCH
+No such process (POSIX.1-2001).
+
+ESTALE
+Stale file handle (POSIX.1-2001).
+
+This error can occur for NFS and for other filesystems.
+
+ESTRPIPE
+Streams pipe error.
+
+ETIME
+Timer expired
+(POSIX.1 (XSI STREAMS option)).
+
+(POSIX.1 says "STREAM
+ioctl (2)
+timeout".)
+
+ETIMEDOUT
+Connection timed out (POSIX.1-2001).
+
+ETOOMANYREFS
+Too many references: cannot splice.
+
+ETXTBSY
+Text file busy (POSIX.1-2001).
+
+EUCLEAN
+Structure needs cleaning.
+
+EUNATCH
+Protocol driver not attached.
+
+EUSERS
+Too many users.
+
+EWOULDBLOCK
+Operation would block (may be same value as
+EAGAIN )
+(POSIX.1-2001).
+
+EXDEV
+Invalid cross-device link (POSIX.1-2001).
+
+EXFULL
+Exchange full.
+
+### NOTES
+
+A common mistake is to do
+
+if (somecall() == -1) {
+    printf("somecall() failed\[rs]n");
+    if (errno == ...) { ...; }
+}
+
+where
+errno
+no longer needs to have the value it had upon return from
+somecall ()
+(i.e., it may have been changed by the
+printf (3)).
+If the value of
+errno
+should be preserved across a library call, it must be saved:
+
+if (somecall() == -1) {
+    int errsv = errno;
+    printf("somecall() failed\[rs]n");
+    if (errsv == ...) { ...; }
+}
+
+Note that the POSIX threads APIs do
+not
+set
+errno
+on error.
+Instead, on failure they return an error number as the function result.
+These error numbers have the same meanings as the error numbers returned in
+errno
+by other APIs.
+
+On some ancient systems,
+<errno.h>
+was not present or did not declare
+errno ,
+so that it was necessary to declare
+errno
+manually
+(i.e.,
+extern int errno ).
+Do not do this .
+It long ago ceased to be necessary,
+and it will cause problems with modern versions of the C library.
+
+### SEE ALSO
+
+errno (1),  \ In the moreutils package
+err (3),
+error (3),
+perror (3),
+strerror (3)
+
+
+# PERROR(3) — Linux Manual Page
+
+### NAME
+
+perror - print a system error message
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdio.h>
+
+#include <errno.h>
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+sys_errlist ,
+sys_nerr :
+    From glibc 2.19 to glibc 2.31:
+        _DEFAULT_SOURCE
+    glibc 2.19 and earlier:
+        _BSD_SOURCE
+
+### DESCRIPTION
+
+The
+perror ()
+function produces a message on standard error describing the last
+error encountered during a call to a system or library function.
+
+First (if
+s
+is not NULL and
+*s
+is not a null byte (\[aq]\[rs]0\[aq])), the argument string
+s
+is printed, followed by a colon and a blank.
+Then an error message corresponding to the current value of
+errno
+and a new-line.
+
+To be of most use, the argument string should include the name
+of the function that incurred the error.
+
+The global error list
+sys_errlist [],
+which can be indexed by
+errno ,
+can be used to obtain the error message without the newline.
+The largest message number provided in the table is
+sys_nerr \-1.
+Be careful when directly accessing this list,
+because new error values
+may not have been added to
+sys_errlist [].
+The use of
+sys_errlist []
+is nowadays deprecated;
+use
+strerror (3)
+instead.
+
+When a system call fails,
+it usually returns -1
+and sets the variable
+errno
+to a value describing what went wrong.
+(These values can be found in
+<errno.h> .)
+Many library functions do likewise.
+The function
+perror ()
+serves to translate this error code into human-readable form.
+Note that
+errno
+is undefined after a successful system call or library function call:
+this call may well change this variable, even though it succeeds,
+for example because it internally used some other library function that failed.
+Thus, if a failing call is not immediately followed by a call to
+perror (),
+the value of
+errno
+should be saved.
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+perror ()
+T}	Thread safety	MT-Safe race:stderr
+
+### STANDARDS
+
+errno
+perror ()
+C11, POSIX.1-2008.
+
+sys_nerr
+sys_errlist
+BSD.
+
+### HISTORY
+
+errno
+perror ()
+POSIX.1-2001, C89, 4.3BSD.
+
+sys_nerr
+sys_errlist
+Removed in glibc 2.32.
+
+### SEE ALSO
+
+err (3),
+errno (3),
+error (3),
+strerror (3)
+
+
+# STRERROR(3) — Linux Manual Page
+
+### NAME
+
+strerror, strerrorname_np, strerrordesc_np, strerror_r, strerror_l
+-
+string error-string
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <string.h>
+
+int strerror_r( size_t size;
+               /* XSI-compliant */
+
+char *strerror_r( size_t size;
+               /* GNU-specific */
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+strerrorname_np (),
+strerrordesc_np ():
+    _GNU_SOURCE
+
+strerror_r ():
+    The XSI-compliant version is provided if:
+        (_POSIX_C_SOURCE >= 200112L) && ! _GNU_SOURCE
+    Otherwise, the GNU-specific version is provided.
+
+### DESCRIPTION
+
+The
+strerror ()
+function returns a pointer to a string that describes the error
+code passed in the argument
+errnum ,
+possibly using the
+LC_MESSAGES
+part of the current locale to select the appropriate language.
+(For example, if
+errnum
+is
+EINVAL ,
+the returned description will be "Invalid argument".)
+This string must not be modified by the application,
+and the returned pointer will be invalidated on a subsequent call to
+strerror ()
+or
+strerror_l (),
+or if the thread that obtained the string exits.
+No other library function, including
+perror (3),
+will modify this string.
+
+Like
+strerror (),
+the
+strerrordesc_np ()
+function returns a pointer to a string that describes the error
+code passed in the argument
+errnum ,
+with the difference that the returned string is not translated
+according to the current locale.
+
+The
+strerrorname_np ()
+function returns a pointer to a string containing the name of the error
+code passed in the argument
+errnum .
+For example, given
+EPERM
+as an argument, this function returns a pointer to the string "EPERM".
+Given
+0
+as an argument,
+this function returns a pointer to the string "0".
+
+### strerror_r()
+
+strerror_r ()
+is like
+strerror (),
+but might use the supplied buffer
+buf
+instead of allocating one internally.
+This function is available in two versions:
+an XSI-compliant version specified in POSIX.1-2001
+(available since glibc 2.3.4, but not POSIX-compliant until glibc 2.13),
+and a GNU-specific version (available since glibc 2.0).
+The XSI-compliant version is provided with the feature test macros
+settings shown in the SYNOPSIS;
+otherwise the GNU-specific version is provided.
+If no feature test macros are explicitly defined,
+then (since glibc 2.4)
+_POSIX_C_SOURCE
+is defined by default with the value
+200112L, so that the XSI-compliant version of
+strerror_r ()
+is provided by default.
+
+The XSI-compliant
+strerror_r ()
+is preferred for portable applications.
+It returns the error string in the user-supplied buffer
+buf
+of size
+size .
+
+The GNU-specific
+strerror_r ()
+returns a pointer to a string containing the error message.
+This may be either a pointer to a string that the function stores in
+buf ,
+or a pointer to some (immutable) static string
+(in which case
+buf
+is unused).
+If the function stores a string in
+buf ,
+then at most
+size
+bytes are stored (the string may be truncated if
+size
+is too small and
+errnum
+is unknown).
+The string always includes a terminating null byte (\[aq]\[rs]0\[aq]).
+
+### strerror_l()
+
+strerror_l ()
+is like
+strerror (),
+but maps
+errnum
+to a locale-dependent error message in the locale specified by
+locale .
+The behavior of
+strerror_l ()
+is undefined if
+locale
+is the special locale object
+LC_GLOBAL_LOCALE
+or is not a valid locale object handle.
+
+### RETURN VALUE
+
+The
+strerror (),
+strerror_l (),
+and the GNU-specific
+strerror_r ()
+functions return
+the appropriate error description string,
+or an "Unknown error nnn" message if the error number is unknown.
+
+On success,
+strerrorname_np ()
+and
+strerrordesc_np ()
+return the appropriate error description string.
+If
+errnum
+is an invalid error number, these functions return NULL.
+
+The XSI-compliant
+strerror_r ()
+function returns 0 on success.
+On error,
+a (positive) error number is returned (since glibc 2.13),
+or -1 is returned and
+errno
+is set to indicate the error (before glibc 2.13).
+
+POSIX.1-2001 and POSIX.1-2008 require that a successful call to
+strerror ()
+or
+strerror_l ()
+shall leave
+errno
+unchanged, and note that,
+since no function return value is reserved to indicate an error,
+an application that wishes to check for errors should initialize
+errno
+to zero before the call,
+and then check
+errno
+after the call.
+
+### ERRORS
+
+EINVAL
+The value of
+errnum
+is not a valid error number.
+
+ERANGE
+Insufficient storage was supplied to contain the error description string.
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lb lb lbx
+l l l.
+Interface	Attribute	Value
+T{
+strerror ()
+T}	Thread safety	T{
+MT-Safe
+T}
+T{
+strerrorname_np (),
+strerrordesc_np ()
+T}	Thread safety	MT-Safe
+T{
+strerror_r (),
+strerror_l ()
+T}	Thread safety	MT-Safe
+
+Before glibc 2.32,
+strerror ()
+is not MT-Safe.
+
+### STANDARDS
+
+strerror ()
+C11, POSIX.1-2008.
+
+strerror_r ()
+strerror_l ()
+POSIX.1-2008.
+
+strerrorname_np ()
+strerrordesc_np ()
+GNU.
+
+POSIX.1-2001 permits
+strerror ()
+to set
+errno
+if the call encounters an error, but does not specify what
+value should be returned as the function result in the event of an error.
+On some systems,
+strerror ()
+returns NULL if the error number is unknown.
+On other systems,
+strerror ()
+returns a string something like "Error nnn occurred" and sets
+errno
+to
+EINVAL
+if the error number is unknown.
+C99 and POSIX.1-2008 require the return value to be non-NULL.
+
+### HISTORY
+
+strerror ()
+POSIX.1-2001, C89.
+
+strerror_r ()
+POSIX.1-2001.
+
+strerror_l ()
+glibc 2.6.
+POSIX.1-2008.
+
+strerrorname_np ()
+strerrordesc_np ()
+glibc 2.32.
+
+### NOTES
+
+strerrorname_np ()
+and
+strerrordesc_np ()
+are thread-safe and async-signal-safe.
+
+### SEE ALSO
+
+err (3),
+errno (3),
+error (3),
+perror (3),
+strsignal (3),
+locale (7),
+signal-safety (7)
+
+
+# QSORT(3) — Linux Manual Page
+
+### NAME
+
+qsort, qsort_r - sort an array
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdlib.h>
+
+void qsort( size_t n, size_t size;
+void qsort_r( size_t n, size_t size;
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+qsort_r ():
+    _GNU_SOURCE
+
+### DESCRIPTION
+
+The
+qsort ()
+function sorts an array with
+n
+elements of size
+size .
+The
+base
+argument points to the start of the
+array.
+
+The contents of the array are sorted in ascending order according to a
+comparison function pointed to by
+compar ,
+which is called with two
+arguments that point to the objects being compared.
+
+The comparison function must return an integer less than, equal to, or
+greater than zero if the first argument is considered to be respectively
+less than, equal to, or greater than the second.
+If two members compare as equal,
+their order in the sorted array is undefined.
+
+The
+qsort_r ()
+function is identical to
+qsort ()
+except that the comparison function
+compar
+takes a third argument.
+A pointer is passed to the comparison function via
+arg .
+In this way, the comparison function does not need to use global variables to
+pass through arbitrary arguments, and is therefore reentrant and safe to
+use in threads.
+
+### RETURN VALUE
+
+The
+qsort ()
+and
+qsort_r ()
+functions return no value.
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+qsort (),
+qsort_r ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+qsort ()
+C11, POSIX.1-2008.
+
+### HISTORY
+
+qsort ()
+POSIX.1-2001, C89, SVr4, 4.3BSD.
+
+qsort_r ()
+glibc 2.8.
+
+### NOTES
+
+To compare C strings, the comparison function can call
+strcmp (3),
+as shown in the example below.
+
+### EXAMPLES
+
+For one example of use, see the example under
+bsearch (3).
+
+Another example is the following program,
+which sorts the strings given in its command-line arguments:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+static int
+cmpstringp(const void *p1, const void *p2)
+{
+    /* The actual arguments to this function are "pointers to
+       pointers to char", but strcmp(3) arguments are "pointers
+       to char", hence the following cast plus dereference.  */
+
+    return strcmp(*(const char **) p1, *(const char **) p2);
+}
+
+int
+main(int argc, char *argv[])
+{
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <string>...\[rs]n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    qsort(&argv[1], argc - 1, sizeof(char *), cmpstringp);
+
+    for (size_t j = 1; j < argc; j++)
+        puts(argv[j]);
+    exit(EXIT_SUCCESS);
+}
+
+### SEE ALSO
+
+sort (1),
+alphasort (3),
+strcmp (3),
+versionsort (3)
+
+
+# BSEARCH(3) — Linux Manual Page
+
+### NAME
+
+bsearch - binary search of a sorted array
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdlib.h>
+
+void *bsearch( size_t n, size_t size;
+
+### DESCRIPTION
+
+The
+bsearch ()
+function searches an array of
+n
+objects,
+the initial member of which is pointed to by
+base ,
+for a member
+that matches the object pointed to by
+key .
+The size of each member
+of the array is specified by
+size .
+
+The contents of the array should be in ascending sorted order according
+to the comparison function referenced by
+compar .
+The
+compar
+routine is expected to have two arguments which point to the
+key
+object and to an array member, in that order, and should return an integer
+less than, equal to, or greater than zero if the
+key
+object is found,
+respectively, to be less than, to match, or be greater than the array
+member.
+
+### RETURN VALUE
+
+The
+bsearch ()
+function returns a pointer to a matching member of the
+array, or NULL if no match is found.
+If there are multiple elements that
+match the key, the element returned is unspecified.
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+bsearch ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001, C89, C99, SVr4, 4.3BSD.
+
+### EXAMPLES
+
+The example below first sorts an array of structures using
+qsort (3),
+then retrieves desired elements using
+bsearch ().
+
+#include <stdcountof.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct mi {
+    int         nr;
+    const char  *name;
+};
+
+static struct mi  months[] = {
+    { 1, "jan" }, { 2, "feb" }, { 3, "mar" }, { 4, "apr" },
+    { 5, "may" }, { 6, "jun" }, { 7, "jul" }, { 8, "aug" },
+    { 9, "sep" }, {10, "oct" }, {11, "nov" }, {12, "dec" }
+};
+
+static int
+compmi(const void *m1, const void *m2)
+{
+    const struct mi *mi1 = m1;
+    const struct mi *mi2 = m2;
+
+    return strcmp(mi1->name, mi2->name);
+}
+
+int
+main(int argc, char *argv[])
+{
+    qsort(months, countof(months), sizeof(months[0]), compmi);
+    for (size_t i = 1; i < argc; i++) {
+        struct mi key;
+        struct mi *res;
+
+        key.name = argv[i];
+        res = bsearch(&key, months, countof(months),
+                      sizeof(months[0]), compmi);
+        if (res == NULL)
+            printf("\[aq]%s\[aq]: unknown month\[rs]n", argv[i]);
+        else
+            printf("%s: month #%d\[rs]n", res->name, res->nr);
+    }
+    exit(EXIT_SUCCESS);
+}
+
+### SEE ALSO
+
+hsearch (3),
+lsearch (3),
+qsort (3),
+tsearch (3)
+
+
+# GETENV(3) — Linux Manual Page
+
+### NAME
+
+getenv, secure_getenv - get an environment variable
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdlib.h>
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+secure_getenv ():
+    _GNU_SOURCE
+
+### DESCRIPTION
+
+The
+getenv ()
+function searches the environment list to find the
+environment variable
+name ,
+and returns a pointer to the corresponding
+value
+string.
+
+The
+secure_getenv ()
+function is just like
+getenv ()
+except that it returns NULL in cases where "secure execution" is required.
+Secure execution is required if one of the following conditions
+was true when the program run by the calling process was loaded:
+
+the process's effective user ID did not match its real user ID or
+the process's effective group ID did not match its real group ID
+(typically this is the result of executing a set-user-ID or
+set-group-ID program);
+
+the effective capability bit was set on the executable file;
+or
+
+the process has a nonempty permitted capability set.
+
+Secure execution may also be required if triggered
+by some Linux security modules.
+
+The
+secure_getenv ()
+function is intended for use in general-purpose libraries
+to avoid vulnerabilities that could occur if
+set-user-ID or set-group-ID programs accidentally
+trusted the environment.
+
+### RETURN VALUE
+
+The
+getenv ()
+function returns a pointer to the value in the
+environment, or NULL if there is no match.
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+getenv (),
+secure_getenv ()
+T}	Thread safety	MT-Safe env
+
+### STANDARDS
+
+getenv ()
+C11, POSIX.1-2008.
+
+secure_getenv ()
+POSIX.1-2024.
+
+### HISTORY
+
+getenv ()
+POSIX.1-2001, C89, C99, SVr4, 4.3BSD.
+
+secure_getenv ()
+POSIX.1-2024, glibc 2.17.
+
+### NOTES
+
+The strings in the environment list are of the form
+name=value .
+
+As typically implemented,
+getenv ()
+returns a pointer to a string within the environment list.
+The caller must take care not to modify this string,
+since that would change the environment of the process.
+
+The implementation of
+getenv ()
+is not required to be reentrant.
+The string pointed to by the return value of
+getenv ()
+may be statically allocated,
+and can be modified by a subsequent call to
+getenv (),
+putenv (3),
+setenv (3),
+or
+unsetenv (3).
+
+The "secure execution" mode of
+secure_getenv ()
+is controlled by the
+AT_SECURE
+flag contained in the auxiliary vector passed from the kernel to user space.
+
+### SEE ALSO
+
+clearenv (3),
+getauxval (3),
+putenv (3),
+setenv (3),
+unsetenv (3),
+capabilities (7),
+environ (7)
+
+
+# SYSTEM(3) — Linux Manual Page
+
+### NAME
+
+system - execute a shell command
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdlib.h>
+
+### DESCRIPTION
+
+The
+system ()
+library function behaves as if it used
+fork (2)
+to create a child process that executed the shell command specified in
+command
+using
+execl (3)
+as follows:
+
+execl("/bin/sh", "sh", "-c", command, (char *) NULL);
+
+system ()
+returns after the command has been completed.
+
+During execution of the command,
+SIGCHLD
+will be blocked, and
+SIGINT
+and
+SIGQUIT
+will be ignored, in the process that calls
+system ().
+(These signals will be handled according to their defaults inside
+the child process that executes
+command .)
+
+If
+command
+is NULL, then
+system ()
+returns a status indicating whether a shell is available on the system.
+
+### RETURN VALUE
+
+The return value of
+system ()
+is one of the following:
+
+If
+command
+is NULL, then a nonzero value if a shell is available,
+or 0 if no shell is available.
+
+If a child process could not be created,
+or its status could not be retrieved,
+the return value is -1 and
+errno
+is set to indicate the error.
+
+If a shell could not be executed in the child process,
+then the return value is as though the child shell terminated by calling
+_exit (3)
+with the status 127.
+
+If all system calls succeed,
+then the return value is the termination status of the child shell
+used to execute
+command .
+(The termination status of a shell is the termination status of
+the last command it executes.)
+
+In the last two cases,
+the return value is a "wait status" that can be examined using
+the macros described in
+waitpid (2).
+(i.e.,
+WIFEXITED (),
+WEXITSTATUS (),
+and so on).
+
+system ()
+does not affect the wait status of any other children.
+
+### ERRORS
+
+system ()
+can fail with any of the same errors as
+fork (2).
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+system ()
+T}	Thread safety	MT-Safe
+
+### STANDARDS
+
+C11, POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001, C89.
+
+### NOTES
+
+system ()
+provides simplicity and convenience:
+it handles all of the details of calling
+fork (2),
+execl (3),
+and
+waitpid (2),
+as well as the necessary manipulations of signals;
+in addition,
+the shell performs the usual substitutions and I/O redirections for
+command .
+The main cost of
+system ()
+is inefficiency:
+additional system calls are required to create the process that
+runs the shell and to execute the shell.
+
+If the
+_XOPEN_SOURCE
+feature test macro is defined
+(before including
+any
+header files),
+then the macros described in
+waitpid (2)
+( WEXITSTATUS (),
+etc.) are made available when including
+<stdlib.h> .
+
+As mentioned,
+system ()
+ignores
+SIGINT
+and
+SIGQUIT .
+This may make programs that call it
+from a loop uninterruptible, unless they take care themselves
+to check the exit status of the child.
+For example:
+
+while (something) {
+    int ret = system("foo");
+
+    if (WIFSIGNALED(ret) &&
+        (WTERMSIG(ret) == SIGINT || WTERMSIG(ret) == SIGQUIT))
+            break;
+}
+
+According to POSIX.1, it is unspecified whether handlers registered using
+pthread_atfork (3)
+are called during the execution of
+system ().
+In the glibc implementation, such handlers are not called.
+
+Before glibc 2.1.3, the check for the availability of
+/bin/sh
+was not actually performed if
+command
+was NULL;
+instead it was always assumed to be available,
+and
+system ()
+always returned 1 in this case.
+Since glibc 2.1.3,
+this check is performed because,
+even though
+POSIX.1-2001 requires a conforming implementation to provide a shell,
+that shell may not be available or executable
+if the calling program has previously called
+chroot (2)
+(which is not specified by POSIX.1-2001).
+
+It is possible for the shell command to terminate with a status of 127,
+which yields a
+system ()
+return value that is indistinguishable from the case
+where a shell could not be executed in the child process.
+
+### Caveats
+
+Do not use
+system ()
+from a privileged program
+(a set-user-ID or set-group-ID program, or a program with capabilities)
+because strange values for some environment variables
+might be used to subvert system integrity.
+For example,
+PATH
+could be manipulated so that an arbitrary program
+is executed with privilege.
+Use the
+exec (3)
+family of functions instead, but not
+execlp (3)
+or
+execvp (3)
+(which also use the
+PATH
+environment variable to search for an executable).
+
+system ()
+will not, in fact, work properly from programs with set-user-ID or
+set-group-ID privileges on systems on which
+/bin/sh
+is bash version 2: as a security measure, bash 2 drops privileges on startup.
+(Debian uses a different shell,
+dash (1),
+which does not do this when invoked as
+sh .)
+
+Any user input that is employed as part of
+command
+should be
+carefully
+sanitized, to ensure that unexpected shell commands or command options
+are not executed.
+Such risks are especially grave when using
+system ()
+from a privileged program.
+
+### BUGS
+
+If the command name starts with a hyphen,
+sh (1)
+interprets the command name as an option,
+and the behavior is undefined.
+(See the
+\-c
+option to
+sh (1).)
+To work around this problem,
+prepend the command with a space as in the following call:
+
+    system(" -unfortunate-command-name");
+
+### SEE ALSO
+
+sh (1),
+execve (2),
+fork (2),
+sigaction (2),
+sigprocmask (2),
+wait (2),
+exec (3),
+signal (7)
+
+
+# POPEN(3) — Linux Manual Page
+
+### NAME
+
+popen, pclose - pipe stream to or from a process
+
+### LIBRARY
+
+Standard C library
+( libc ,\~ \-lc )
+
+### SYNOPSIS
+
+#include <stdio.h>
+
+Feature Test Macro Requirements for glibc (see
+feature_test_macros (7)):
+
+popen (),
+pclose ():
+    _POSIX_C_SOURCE >= 2
+        || /* glibc <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+### DESCRIPTION
+
+The
+popen ()
+function opens a process by creating a pipe, forking, and invoking the
+shell.
+Since a pipe is by definition unidirectional, the
+type
+argument may specify only reading or writing, not both;
+the resulting stream
+is correspondingly read-only or write-only.
+
+The
+command
+argument is a pointer to a null-terminated string containing a shell
+command line.
+This command is passed to
+/bin/sh
+using the
+\-c
+flag;
+interpretation, if any, is performed by the shell.
+
+The
+type
+argument is a pointer to a null-terminated string which must contain
+either the letter \[aq]r\[aq] for reading or the letter \[aq]w\[aq] for writing.
+Since glibc 2.9,
+this argument can additionally include the letter \[aq]e\[aq],
+which causes the close-on-exec flag
+( FD_CLOEXEC )
+to be set on the underlying file descriptor;
+see the description of the
+O_CLOEXEC
+flag in
+open (2)
+for reasons why this may be useful.
+
+The return value from
+popen ()
+is a normal standard I/O stream in all respects save that it must be closed
+with
+pclose ()
+rather than
+fclose (3).
+Writing to such a stream
+writes to the standard input of the command;
+the command's standard output
+is the same as that of the process that called
+popen (),
+unless this is altered by the command itself.
+Conversely,
+reading from the stream
+reads the command's standard output,
+and the command's standard input
+is the same as that of the process that called
+popen ().
+
+Note that output
+popen ()
+streams are block buffered by default.
+
+The
+pclose ()
+function waits for the associated process to terminate and returns the exit
+status of the command as returned by
+wait4 (2).
+
+### RETURN VALUE
+
+popen ():
+on success, returns a pointer to an open stream that
+can be used to read or write to the pipe;
+if the
+fork (2)
+or
+pipe (2)
+calls fail, or if the function cannot allocate memory,
+NULL is returned.
+
+pclose ():
+on success,
+returns the exit status of the command;
+if
+wait4 (2)
+returns an error,
+or some other error is detected,
+-1 is returned.
+
+On failure,
+both functions set
+errno
+to indicate the error.
+
+### ERRORS
+
+The
+popen ()
+function does not set
+errno
+if memory allocation fails.
+If the underlying
+fork (2)
+or
+pipe (2)
+fails,
+errno
+is set to indicate the error.
+If the
+type
+argument is invalid, and this condition is detected,
+errno
+is set to
+EINVAL .
+
+If
+pclose ()
+cannot obtain the child status,
+errno
+is set to
+ECHILD .
+
+### ATTRIBUTES
+
+For an explanation of the terms used in this section, see
+attributes (7).
+allbox;
+lbx lb lb
+l l l.
+Interface	Attribute	Value
+T{
+popen (),
+pclose ()
+T}	Thread safety	MT-Safe
+
+### VERSIONS
+
+The \[aq]e\[aq] value for
+type
+is a Linux extension.
+
+### STANDARDS
+
+POSIX.1-2008.
+
+### HISTORY
+
+POSIX.1-2001.
+
+### CAVEATS
+
+Carefully read Caveats in
+system (3).
+
+### BUGS
+
+Since the standard input of a command opened for reading shares its seek
+offset with the process that called
+popen (),
+if the original process has done a buffered read, the command's input
+position may not be as expected.
+Similarly, the output from a command
+opened for writing may become intermingled with that of the original
+process.
+The latter can be avoided by calling
+fflush (3)
+before
+popen ().
+
+Failure to execute the shell is indistinguishable from the shell's failure
+to execute the command, or an immediate exit of the command.
+The only hint is an exit status of 127.
+
+### SEE ALSO
+
+sh (1),
+fork (2),
+pipe (2),
+wait4 (2),
+fclose (3),
+fflush (3),
+fopen (3),
+stdio (3),
+system (3)

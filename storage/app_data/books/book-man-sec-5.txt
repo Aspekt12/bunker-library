@@ -1,0 +1,3912 @@
+# Linux Man Pages Sec. 5: File Formats & /proc (718 Pages)
+**Overview:** System file formats and virtual filesystems: proc, sysfs, elf, passwd, shadow, fstab, resolv.conf, systemd.unit.
+**Total Installed Man Pages in Section 5:** 718
+
+---
+
+## Complete Section 5 Directory (718 Pages)
+Use the **Table of Contents** or **Search Box** in the Reader window to open any of the 718 man pages in Section 5 directly.
+
+`Compose(5)`, `Dockerfile(5)`, `GeoIP.conf(5)`, `NetworkManager.conf(5)`, `XCompose(5)`, `Xsession(5)`, `Xsession.options(5)`, `Xsession.options.d(5)`, `Xwrapper.config(5)`, `access.conf(5)`, `acct(5)`, `acl(5)`, `adduser.conf(5)`, `adjtime_config(5)`, `american-english(5)`, `apparmor.d(5)`, `apparmor.vim(5)`, `apt.conf(5)`, `apt_auth.conf(5)`, `apt_preferences(5)`, `atoprc(5)`, `authorized_keys(5)`, `avahi-daemon.conf(5)`, `avahi.hosts(5)`, `avahi.service(5)`, `binfmt.d(5)`, `btrfs(5)`, `build.xml(5)`, `bup-config(5)`, `capsule@.service(5)`, `charmap(5)`, `classes.conf(5)`, `client.conf(5)`, `confext.conf(5)`, `confext.conf.d(5)`, `config(5)`, `console-setup(5)`, `containerd-config.toml(5)`, `core(5)`, `coredump.conf(5)`, `coredump.conf.d(5)`, `crontab(5)`, `crypt(5)`, `crypttab(5)`, `cups-browsed.conf(5)`, `cups-files.conf(5)`, `cups-snmp.conf(5)`, `cupsd-logs(5)`, `cupsd.conf(5)`, `customizable_types(5)`, `deb-buildinfo(5)`, `deb-changelog(5)`, `deb-changes(5)`, `deb-conffiles(5)`, `deb-control(5)`, `deb-extra-override(5)`, `deb-md5sums(5)`, `deb-old(5)`, `deb-origin(5)`, `deb-override(5)`, `deb-postinst(5)`, `deb-postrm(5)`, `deb-preinst(5)`, `deb-prerm(5)`, `deb-shlibs(5)`, `deb-split(5)`, `deb-src-control(5)`, `deb-src-files(5)`, `deb-src-rules(5)`, `deb-src-symbols(5)`, `deb-substvars(5)`, `deb-symbols(5)`, `deb-triggers(5)`, `deb(5)`, `deb822(5)`, `default_contexts(5)`, `default_type(5)`, `deluser.conf(5)`, `depmod.d(5)`, `dhclient.conf(5)`, `dhclient.leases(5)`, `dhcp-eval(5)`, `dhcp-options(5)`, `dhcpcd.conf(5)`, `dhcpd.conf(5)`, `dhcpd.leases(5)`, `dir_colors(5)`, `docker-config-json(5)`, `dpkg.cfg(5)`, `dsc(5)`, `e2fsck.conf(5)`, `editrc(5)`, `elf(5)`, `enchant(5)`, `environment(5)`, `environment.d(5)`, `erofs(5)`, `ethers(5)`, `etter.conf(5)`, `ext2(5)`, `ext3(5)`, `ext4(5)`, `extendedopacity(5)`, `extension-release(5)`, `faillock.conf(5)`, `failsafe_context(5)`, `file_contexts(5)`, `file_contexts.homedirs(5)`, `file_contexts.local(5)`, `file_contexts.subs(5)`, `file_contexts.subs_dist(5)`, `filesystems(5)`, `fips_config(5)`, `firewalld.conf(5)`, `firewalld.dbus(5)`, `firewalld.direct(5)`, `firewalld.helper(5)`, `firewalld.icmptype(5)`, `firewalld.ipset(5)`, `firewalld.policies(5)`, `firewalld.policy-set-gateway(5)`, `firewalld.policy-sets(5)`, `firewalld.policy(5)`, `firewalld.richlanguage(5)`, `firewalld.service(5)`, `firewalld.zone(5)`, `firewalld.zones(5)`, `fmtutil.cnf(5)`, `fonts-conf(5)`, `freetds.conf(5)`, `freshclam.conf(5)`, `fs(5)`, `fstab(5)`, `fwupd-remotes.d(5)`, `fwupd.conf(5)`, `gai.conf(5)`, `gemfile(5)`, `geoclue(5)`, `gimprc-3.2(5)`, `gimprc-3(5)`, `gimprc(5)`, `gitattributes(5)`, `gitformat-bundle(5)`, `gitformat-chunk(5)`, `gitformat-commit-graph(5)`, `gitformat-index(5)`, `gitformat-loose(5)`, `gitformat-pack(5)`, `gitformat-signature(5)`, `githooks(5)`, `gitignore(5)`, `gitmailmap(5)`, `gitmodules(5)`, `gitprotocol-capabilities(5)`, `gitprotocol-common(5)`, `gitprotocol-http(5)`, `gitprotocol-pack(5)`, `gitprotocol-v2(5)`, `gitrepository-layout(5)`, `gitweb.conf(5)`, `group(5)`, `group.conf(5)`, `gshadow(5)`, `hdparm.conf(5)`, `host.conf(5)`, `hostname(5)`, `hosts(5)`, `hosts.allow(5)`, `hosts.deny(5)`, `hosts.equiv(5)`, `hosts_access(5)`, `hosts_options(5)`, `idmapd.conf(5)`, `inetsim.conf(5)`, `info(5)`, `init-d-script(5)`, `initramfs.conf(5)`, `initrd-release(5)`, `interfaces(5)`, `intro(5)`, `iocost.conf(5)`, `ipptoolfile(5)`, `issue(5)`, `journald.conf(5)`, `journald.conf.d(5)`, `journald@.conf(5)`, `kernel-img.conf(5)`, `key.dns_resolver.conf(5)`, `keyboard(5)`, `keymaps(5)`, `kitty.conf(5)`, `ld.so.conf(5)`, `ldap.conf(5)`, `ldif(5)`, `libao.conf(5)`, `libaudit.conf(5)`, `libnftables-json(5)`, `libsasl(5)`, `limits.conf(5)`, `lmhosts(5)`, `locale(5)`, `locale.conf(5)`, `locale.gen(5)`, `localtime(5)`, `login.defs(5)`, `logind.conf(5)`, `logind.conf.d(5)`, `logrotate.conf(5)`, `ltrace.conf(5)`, `luaotfload.conf(5)`, `mac-vendor(5)`, `machine-id(5)`, `machine-info(5)`, `magic(5)`, `mailcap(5)`, `mailcap.order(5)`, `mailto.conf(5)`, `manpath(5)`, `media(5)`, `mib2c.conf(5)`, `mime.convs(5)`, `mime.types(5)`, `miredo.conf(5)`, `mke2fs.conf(5)`, `modprobe.conf(5)`, `modprobe.d(5)`, `modules-load.d(5)`, `modules.dep(5)`, `modules.dep.bin(5)`, `moduli(5)`, `mono-config(5)`, `mosquitto.conf(5)`, `motd(5)`, `namespace.conf(5)`, `nanorc(5)`, `netconfig(5)`, `networkd.conf(5)`, `networkd.conf.d(5)`, `networks(5)`, `nfs(5)`, `nfs.conf(5)`, `nfsmount.conf(5)`, `nfsrahead(5)`, `nm-settings-dbus(5)`, `nm-settings-keyfile(5)`, `nm-settings-nmcli(5)`, `nm-settings(5)`, `nm-system-settings.conf(5)`, `nologin(5)`, `npm-extension(5)`, `npmrc(5)`, `nss(5)`, `nsswitch.conf(5)`, `odbc.ini(5)`, `odbcinst.ini(5)`, `opensc.conf(5)`, `openvpn-examples(5)`, `org.bluez.Adapter(5)`, `org.bluez.AdminPolicySet(5)`, `org.bluez.AdminPolicyStatus(5)`, `org.bluez.AdvertisementMonitor(5)`, `org.bluez.AdvertisementMonitorManager(5)`, `org.bluez.Agent(5)`, `org.bluez.AgentManager(5)`, `org.bluez.Battery(5)`, `org.bluez.BatteryProvider(5)`, `org.bluez.BatteryProviderManager(5)`, `org.bluez.Bearer.BREDR(5)`, `org.bluez.Bearer.LE(5)`, `org.bluez.Call(5)`, `org.bluez.Device(5)`, `org.bluez.DeviceSet(5)`, `org.bluez.GattCharacteristic(5)`, `org.bluez.GattDescriptor(5)`, `org.bluez.GattManager(5)`, `org.bluez.GattProfile(5)`, `org.bluez.GattService(5)`, `org.bluez.Input(5)`, `org.bluez.LEAdvertisement(5)`, `org.bluez.LEAdvertisingManager(5)`, `org.bluez.Media(5)`, `org.bluez.MediaAssistant(5)`, `org.bluez.MediaControl(5)`, `org.bluez.MediaEndpoint(5)`, `org.bluez.MediaFolder(5)`, `org.bluez.MediaItem(5)`, `org.bluez.MediaPlayer(5)`, `org.bluez.MediaTransport(5)`, `org.bluez.Network(5)`, `org.bluez.NetworkServer(5)`, `org.bluez.Profile(5)`, `org.bluez.ProfileManager(5)`, `org.bluez.Telephony(5)`, `org.bluez.Thermometer(5)`, `org.bluez.ThermometerManager(5)`, `org.bluez.ThermometerWatcher(5)`, `org.bluez.obex.Agent(5)`, `org.bluez.obex.AgentManager(5)`, `org.bluez.obex.Client(5)`, `org.bluez.obex.FileTransfer(5)`, `org.bluez.obex.Image(5)`, `org.bluez.obex.Message(5)`, `org.bluez.obex.MessageAccess(5)`, `org.bluez.obex.ObjectPush(5)`, `org.bluez.obex.PhonebookAccess(5)`, `org.bluez.obex.Session(5)`, `org.bluez.obex.Synchronization(5)`, `org.bluez.obex.Transfer(5)`, `org.freedesktop.LogControl1(5)`, `org.freedesktop.hostname1(5)`, `org.freedesktop.locale1(5)`, `org.freedesktop.login1(5)`, `org.freedesktop.machine1(5)`, `org.freedesktop.network1(5)`, `org.freedesktop.portable1(5)`, `org.freedesktop.systemd1(5)`, `org.freedesktop.timedate1(5)`, `org.freedesktop.timesync1(5)`, `os-release(5)`, `package-json(5)`, `package-lock-json(5)`, `pam(5)`, `pam.conf(5)`, `pam.d(5)`, `pam_env.conf(5)`, `paperspecs(5)`, `passwd(5)`, `pbm(5)`, `pc(5)`, `pcap-savefile(5)`, `pci.ids(5)`, `pfm(5)`, `pgm(5)`, `pipewire-client.conf(5)`, `pipewire-filter-chain.conf(5)`, `pipewire-jack.conf(5)`, `pipewire-pulse.conf(5)`, `pipewire.conf(5)`, `pkcs15-profile(5)`, `pkgconf-personality(5)`, `png(5)`, `pnm(5)`, `polkitd.conf(5)`, `polybar(5)`, `poolset(5)`, `portals.conf(5)`, `postgresqlrc(5)`, `ppdcfile(5)`, `ppm(5)`, `printers.conf(5)`, `proc(5)`, `proc_apm(5)`, `proc_buddyinfo(5)`, `proc_bus(5)`, `proc_cgroups(5)`, `proc_cmdline(5)`, `proc_config.gz(5)`, `proc_cpuinfo(5)`, `proc_crypto(5)`, `proc_devices(5)`, `proc_diskstats(5)`, `proc_dma(5)`, `proc_driver(5)`, `proc_execdomains(5)`, `proc_fb(5)`, `proc_filesystems(5)`, `proc_fs(5)`, `proc_ide(5)`, `proc_interrupts(5)`, `proc_iomem(5)`, `proc_ioports(5)`, `proc_kallsyms(5)`, `proc_kcore(5)`, `proc_key-users(5)`, `proc_keys(5)`, `proc_kmsg(5)`, `proc_kpagecgroup(5)`, `proc_kpagecount(5)`, `proc_kpageflags(5)`, `proc_ksyms(5)`, `proc_loadavg(5)`, `proc_locks(5)`, `proc_malloc(5)`, `proc_meminfo(5)`, `proc_modules(5)`, `proc_mounts(5)`, `proc_mtrr(5)`, `proc_net(5)`, `proc_partitions(5)`, `proc_pci(5)`, `proc_pid(5)`, `proc_pid_attr(5)`, `proc_pid_autogroup(5)`, `proc_pid_auxv(5)`, `proc_pid_cgroup(5)`, `proc_pid_clear_refs(5)`, `proc_pid_cmdline(5)`, `proc_pid_comm(5)`, `proc_pid_coredump_filter(5)`, `proc_pid_cpuset(5)`, `proc_pid_cwd(5)`, `proc_pid_environ(5)`, `proc_pid_exe(5)`, `proc_pid_fd(5)`, `proc_pid_fdinfo(5)`, `proc_pid_gid_map(5)`, `proc_pid_io(5)`, `proc_pid_limits(5)`, `proc_pid_map_files(5)`, `proc_pid_maps(5)`, `proc_pid_mem(5)`, `proc_pid_mountinfo(5)`, `proc_pid_mounts(5)`, `proc_pid_mountstats(5)`, `proc_pid_net(5)`, `proc_pid_ns(5)`, `proc_pid_numa_maps(5)`, `proc_pid_oom_adj(5)`, `proc_pid_oom_score(5)`, `proc_pid_oom_score_adj(5)`, `proc_pid_pagemap(5)`, `proc_pid_personality(5)`, `proc_pid_projid_map(5)`, `proc_pid_root(5)`, `proc_pid_seccomp(5)`, `proc_pid_setgroups(5)`, `proc_pid_smaps(5)`, `proc_pid_stack(5)`, `proc_pid_stat(5)`, `proc_pid_statm(5)`, `proc_pid_status(5)`, `proc_pid_syscall(5)`, `proc_pid_task(5)`, `proc_pid_timers(5)`, `proc_pid_timerslack_ns(5)`, `proc_pid_uid_map(5)`, `proc_pid_wchan(5)`, `proc_profile(5)`, `proc_scsi(5)`, `proc_self(5)`, `proc_slabinfo(5)`, `proc_stat(5)`, `proc_swaps(5)`, `proc_sys(5)`, `proc_sys_abi(5)`, `proc_sys_debug(5)`, `proc_sys_dev(5)`, `proc_sys_fs(5)`, `proc_sys_kernel(5)`, `proc_sys_net(5)` ... and 268 more pages.
+
+
+
+# INTRO(5) — Linux Manual Page
+
+### NAME
+
+intro - introduction to file formats and filesystems
+
+### DESCRIPTION
+
+Section 5 of the manual describes various file formats,
+as well as the corresponding C structures, if any.
+
+In addition,
+this section contains a number of pages that document various filesystems.
+
+### NOTES
+
+### Authors and copyright conditions
+
+Look at the header of the manual page source for the author(s) and copyright
+conditions.
+Note that these can be different from page to page!
+
+### SEE ALSO
+
+standards (7)
+
+
+# PROC(5) — Linux Manual Page
+
+### NAME
+
+proc - process information, system information, and sysctl pseudo-filesystem
+
+### DESCRIPTION
+
+The
+proc
+filesystem is a pseudo-filesystem which provides an interface to
+kernel data structures.
+It is commonly mounted at
+/proc .
+Typically, it is mounted automatically by the system,
+but it can also be mounted manually using a command such as:
+
+mount -t proc proc /proc
+
+Most of the files in the
+proc
+filesystem are read-only,
+but some files are writable, allowing kernel variables to be changed.
+
+### Mount options
+
+The
+proc
+filesystem supports the following mount options:
+
+hidepid= \f[I]n\f[] (since Linux 3.3)
+This option controls who can access the information in
+/proc/ pid
+directories.
+The argument,
+n ,
+is one of the following values:
+
+0
+Everybody may access all
+/proc/ pid
+directories.
+This is the traditional behavior,
+and the default if this mount option is not specified.
+
+1
+Users may not access files and subdirectories inside any
+/proc/ pid
+directories but their own (the
+/proc/ pid
+directories themselves remain visible).
+Sensitive files such as
+/proc/ pid /cmdline
+and
+/proc/ pid /status
+are now protected against other users.
+This makes it impossible to learn whether any user is running a
+specific program
+(so long as the program doesn't otherwise reveal itself by its behavior).
+
+2
+As for mode 1, but in addition the
+/proc/ pid
+directories belonging to other users become invisible.
+This means that
+/proc/ pid
+entries can no longer be used to discover the PIDs on the system.
+This doesn't hide the fact that a process with a specific PID value exists
+(it can be learned by other means, for example, by "kill -0 $PID"),
+but it hides a process's UID and GID,
+which could otherwise be learned by employing
+stat (2)
+on a
+/proc/ pid
+directory.
+This greatly complicates an attacker's task of gathering
+information about running processes (e.g., discovering whether
+some daemon is running with elevated privileges,
+whether another user is running some sensitive program,
+whether other users are running any program at all, and so on).
+
+gid= \f[I]gid\f[] (since Linux 3.3)
+Specifies the ID of a group whose members are authorized to
+learn process information otherwise prohibited by
+hidepid
+(i.e., users in this group behave as though
+/proc
+was mounted with
+hidepid=0 ).
+This group should be used instead of approaches such as putting
+nonroot users into the
+sudoers (5)
+file.
+
+subset=pid  (since Linux 5.8)
+Show only the specified subset of procfs,
+hiding all top level files and directories in the procfs
+that are not related to tasks.
+
+### Overview
+
+Underneath
+/proc ,
+there are the following general groups of files and subdirectories:
+
+/proc/ pid subdirectories
+See
+proc_pid (5).
+
+Each one of these subdirectories contains files and subdirectories
+exposing information about the process with the corresponding process ID.
+
+Underneath each of the
+/proc/ pid
+directories, a
+task
+subdirectory contains subdirectories of the form
+task/ tid,
+which contain corresponding information about each of the threads
+in the process, where
+tid
+is the kernel thread ID of the thread.
+
+The
+/proc/ pid
+subdirectories are visible when iterating through
+/proc
+with
+getdents (2)
+(and thus are visible when one uses
+ls (1)
+to view the contents of
+/proc ).
+
+/proc/ tid subdirectories
+See
+proc_tid (5).
+
+Each one of these subdirectories contains files and subdirectories
+exposing information about the thread with the corresponding thread ID.
+The contents of these directories are the same as the corresponding
+/proc/ pid /task/ tid
+directories.
+
+The
+/proc/ tid
+subdirectories are
+not
+visible when iterating through
+/proc
+with
+getdents (2)
+(and thus are
+not
+visible when one uses
+ls (1)
+to view the contents of
+/proc ).
+
+/proc/self
+See
+proc_self (5).
+
+When a process accesses this magic symbolic link,
+it resolves to the process's own
+/proc/ pid
+directory.
+
+/proc/thread\-self
+See
+proc_thread-self (5).
+
+When a thread accesses this magic symbolic link,
+it resolves to the process's own
+/proc/self/task/ tid
+directory.
+
+/proc/[a\-z]*
+
+Various other files and subdirectories under
+/proc
+expose system-wide information.
+
+See also:
+
+proc_apm (5)
+proc_buddyinfo (5)
+proc_bus (5)
+proc_cgroups (5)
+proc_cmdline (5)
+proc_config.gz (5)
+proc_cpuinfo (5)
+proc_crypto (5)
+proc_devices (5)
+proc_diskstats (5)
+proc_dma (5)
+proc_driver (5)
+proc_execdomains (5)
+proc_fb (5)
+proc_filesystems (5)
+proc_fs (5)
+proc_ide (5)
+proc_interrupts (5)
+proc_iomem (5)
+proc_ioports (5)
+proc_kallsyms (5)
+proc_kcore (5)
+proc_key-users (5)
+proc_keys (5)
+proc_kmsg (5)
+proc_kpagecgroup (5)
+proc_kpagecount (5)
+proc_kpageflags (5)
+proc_ksyms (5)
+proc_loadavg (5)
+proc_locks (5)
+proc_malloc (5)
+proc_meminfo (5)
+proc_modules (5)
+proc_mounts (5)
+proc_mtrr (5)
+proc_net (5)
+proc_partitions (5)
+proc_pci (5)
+proc_profile (5)
+proc_scsi (5)
+proc_slabinfo (5)
+proc_stat (5)
+proc_swaps (5)
+proc_sys (5)
+proc_sysrq-trigger (5)
+proc_sysvipc (5)
+proc_timer_list (5)
+proc_timer_stats (5)
+proc_tty (5)
+proc_uptime (5)
+proc_version (5)
+proc_vmstat (5)
+proc_zoneinfo (5)
+
+### NOTES
+
+Many files contain strings (e.g., the environment and command line)
+that are in the internal format,
+with subfields terminated by null bytes (\[aq]\[rs]0\[aq]).
+When inspecting such files, you may find that the results are more readable
+if you use a command of the following form to display them:
+
+$  cat \f[I]file\f[] | tr \[aq]\[rs]000\[aq] \[aq]\[rs]n\[aq]
+
+### SEE ALSO
+
+cat (1),
+dmesg (1),
+find (1),
+free (1),
+htop (1),
+init (1),
+ps (1),
+pstree (1),
+tr (1),
+uptime (1),
+chroot (2),
+mmap (2),
+readlink (2),
+syslog (2),
+slabinfo (5),
+sysfs (5),
+hier (7),
+namespaces (7),
+time (7),
+arp (8),
+hdparm (8),
+ifconfig (8),
+lsmod (8),
+lspci (8),
+mount (8),
+netstat (8),
+procinfo (8),
+route (8),
+sysctl (8)
+
+The Linux kernel source files:
+Documentation/filesystems/proc.rst ,
+Documentation/admin\-guide/sysctl/fs.rst ,
+Documentation/admin\-guide/sysctl/kernel.rst ,
+Documentation/admin\-guide/sysctl/net.rst ,
+and
+Documentation/admin\-guide/sysctl/vm.rst .
+
+
+# SYSFS(5) — Linux Manual Page
+
+### NAME
+
+sysfs - a filesystem for exporting kernel objects
+
+### DESCRIPTION
+
+The
+sysfs
+filesystem is a pseudo-filesystem which provides an interface to
+kernel data structures.
+(More precisely, the files and directories in
+sysfs
+provide a view of the
+kobject
+structures defined internally within the kernel.)
+The files under
+sysfs
+provide information about devices, kernel modules, filesystems,
+and other kernel components.
+
+The
+sysfs
+filesystem is commonly mounted at
+/sys .
+Typically, it is mounted automatically by the system,
+but it can also be mounted manually using a command such as:
+
+mount -t sysfs sysfs /sys
+
+Many of the files in the
+sysfs
+filesystem are read-only,
+but some files are writable, allowing kernel variables to be changed.
+To avoid redundancy,
+symbolic links are heavily used to connect entries across the filesystem tree.
+
+### Files and directories
+
+The following list describes some of the files and directories under the
+/sys
+hierarchy.
+
+/sys/block
+This subdirectory contains one symbolic link for each block device
+that has been discovered on the system.
+The symbolic links point to corresponding directories under
+/sys/devices .
+
+/sys/bus
+This directory contains one subdirectory for each of the bus types
+in the kernel.
+Inside each of these directories are two subdirectories:
+
+devices
+This subdirectory contains symbolic links to entries in
+/sys/devices
+that correspond to the devices discovered on this bus.
+
+drivers
+This subdirectory contains one subdirectory for each device driver
+that is loaded on this bus.
+
+/sys/class
+This subdirectory contains a single layer of further subdirectories
+for each of the device classes that have been registered on the system
+(e.g., terminals, network devices, block devices, graphics devices,
+sound devices, and so on).
+Inside each of these subdirectories are symbolic links for each of the
+devices in this class.
+These symbolic links refer to entries in the
+/sys/devices
+directory.
+
+/sys/class/net
+Each of the entries in this directory is a symbolic link
+representing one of the real or virtual networking devices
+that are visible in the network namespace of the process
+that is accessing the directory.
+Each of these symbolic links refers to entries in the
+/sys/devices
+directory.
+
+/sys/dev
+This directory contains two subdirectories
+block/
+and
+char/ ,
+corresponding, respectively,
+to the block and character devices on the system.
+Inside each of these subdirectories are symbolic links with names of the form
+major-ID : minor-ID ,
+where the ID values correspond to the major and minor ID of a specific device.
+Each symbolic link points to the
+sysfs
+directory for a device.
+The symbolic links inside
+/sys/dev
+thus provide an easy way to look up the
+sysfs
+interface using the device IDs returned by a call to
+stat (2)
+(or similar).
+
+The following shell session shows an example from
+/sys/dev :
+
+$  stat \-c \[dq]%t %T\[dq] /dev/null ;
+1 3
+$  readlink /sys/dev/char/1\[rs]:3 ;
+../../devices/virtual/mem/null
+$  ls \-Fd /sys/devices/virtual/mem/null ;
+/sys/devices/virtual/mem/null/
+$  ls \-d1 /sys/devices/virtual/mem/null/* ;
+/sys/devices/virtual/mem/null/dev
+/sys/devices/virtual/mem/null/power/
+/sys/devices/virtual/mem/null/subsystem@
+/sys/devices/virtual/mem/null/uevent
+
+/sys/devices
+This is a directory that contains a filesystem representation of
+the kernel device tree,
+which is a hierarchy of
+device
+structures within the kernel.
+
+/sys/firmware
+This subdirectory contains interfaces for viewing and manipulating
+firmware-specific objects and attributes.
+
+/sys/fs
+This directory contains subdirectories for some filesystems.
+A filesystem will have a subdirectory here only if it chose
+to explicitly create the subdirectory.
+
+/sys/fs/cgroup
+This directory conventionally is used as a mount point for a
+tmpfs (5)
+filesystem containing mount points for
+cgroups (7)
+filesystems.
+
+/sys/fs/smackfs
+The directory contains configuration files for the SMACK LSM.
+See the kernel source file
+Documentation/admin\-guide/LSM/Smack.rst .
+
+/sys/hypervisor
+[To be documented]
+
+/sys/kernel
+This subdirectory contains various files and subdirectories that provide
+information about the running kernel.
+
+/sys/kernel/cgroup/
+For information about the files in this directory, see
+cgroups (7).
+
+/sys/kernel/debug/tracing
+Mount point for the
+tracefs
+filesystem used by the kernel's
+ftrace
+facility.
+(For information on
+ftrace ,
+see the kernel source file
+Documentation/trace/ftrace.rst .)
+
+/sys/kernel/mm
+This subdirectory contains various files and subdirectories that provide
+information about the kernel's memory management subsystem.
+
+/sys/kernel/mm/hugepages
+This subdirectory contains one subdirectory for each of the
+huge page sizes that the system supports.
+The subdirectory name indicates the huge page size (e.g.,
+hugepages\-2048kB ).
+Within each of these subdirectories is a set of files
+that can be used to view and (in some cases) change settings
+associated with that huge page size.
+For further information, see the kernel source file
+Documentation/admin\-guide/mm/hugetlbpage.rst .
+
+/sys/module
+This subdirectory contains one subdirectory
+for each module that is loaded into the kernel.
+The name of each directory is the name of the module.
+In each of the subdirectories, there may be following files:
+
+coresize
+[to be documented]
+
+initsize
+[to be documented]
+
+initstate
+[to be documented]
+
+refcnt
+[to be documented]
+
+srcversion
+[to be documented]
+
+taint
+[to be documented]
+
+uevent
+[to be documented]
+
+version
+[to be documented]
+
+In each of the subdirectories, there may be following subdirectories:
+
+drivers
+[To be documented]
+
+holders
+[To be documented]
+
+notes
+[To be documented]
+
+parameters
+This directory contains one file for each module parameter,
+with each file containing the value of the corresponding parameter.
+Some of these files are writable, allowing the parameters to be changed.
+
+sections
+This subdirectories contains files with information about module sections.
+This information is mainly used for debugging.
+
+[To be documented]
+
+/sys/power
+[To be documented]
+
+### STANDARDS
+
+Linux.
+
+### HISTORY
+
+Linux 2.6.0.
+
+### NOTES
+
+This manual page is incomplete, possibly inaccurate, and is the kind
+of thing that needs to be updated very often.
+
+### SEE ALSO
+
+proc (5),
+udev (7)
+
+P. Mochel (2005).
+The sysfs filesystem .
+Proceedings of the 2005 Ottawa Linux Symposium.
+
+The kernel source file
+Documentation/filesystems/sysfs.rst
+and various other files in
+Documentation/ABI
+and
+Documentation/*/sysfs.rst .
+
+
+# ELF(5) — Linux Manual Page
+
+### NAME
+
+elf - format of Executable and Linking Format (ELF) files
+
+### SYNOPSIS
+
+#include <elf.h>
+
+### DESCRIPTION
+
+The header file
+<elf.h>
+defines the format of ELF executable binary files.
+Amongst these files are
+normal executable files, relocatable object files, core files, and shared
+objects.
+
+An executable file using the ELF file format consists of an ELF header,
+followed by a program header table or a section header table, or both.
+The ELF header is always at offset zero of the file.
+The program header
+table and the section header table's offset in the file are defined in the
+ELF header.
+The two tables describe the rest of the particularities of
+the file.
+
+This header file describes the above mentioned headers as C structures
+and also includes structures for dynamic sections, relocation sections and
+symbol tables.
+
+### Basic types
+
+The following types are used for N-bit architectures (N=32,64,
+ElfN
+stands for
+Elf32
+or
+Elf64 ,
+uintN_t
+stands for
+uint32_t
+or
+uint64_t ):
+
+ElfN_Addr       Unsigned program address, uintN_t
+ElfN_Off        Unsigned file offset, uintN_t
+ElfN_Section    Unsigned section index, uint16_t
+ElfN_Versym     Unsigned version symbol information, uint16_t
+Elf_Byte        unsigned char
+ElfN_Half       uint16_t
+ElfN_Sword      int32_t
+ElfN_Word       uint32_t
+ElfN_Sxword     int64_t
+ElfN_Xword      uint64_t
+
+(Note: the *BSD terminology is a bit different.
+There,
+Elf64_Half
+is
+twice as large as
+Elf32_Half ,
+and
+Elf64Quarter
+is used for
+uint16_t .
+In order to avoid confusion these types are replaced by explicit ones
+in the below.)
+
+All data structures that the file format defines follow the
+"natural"
+size and alignment guidelines for the relevant class.
+If necessary,
+data structures contain explicit padding to ensure 4-byte alignment
+for 4-byte objects, to force structure sizes to a multiple of 4, and so on.
+
+### ELF header (Ehdr)
+
+The ELF header is described by the type
+Elf32_Ehdr
+or
+Elf64_Ehdr :
+
+#define EI_NIDENT 16
+
+typedef struct {
+    unsigned char e_ident[EI_NIDENT];
+    uint16_t      e_type;
+    uint16_t      e_machine;
+    uint32_t      e_version;
+    ElfN_Addr     e_entry;
+    ElfN_Off      e_phoff;
+    ElfN_Off      e_shoff;
+    uint32_t      e_flags;
+    uint16_t      e_ehsize;
+    uint16_t      e_phentsize;
+    uint16_t      e_phnum;
+    uint16_t      e_shentsize;
+    uint16_t      e_shnum;
+    uint16_t      e_shstrndx;
+} ElfN_Ehdr;
+
+The fields have the following meanings:
+
+e_ident
+This array of bytes specifies how to interpret the file,
+independent of the processor or the file's remaining contents.
+Within this array everything is named by macros, which start with
+the prefix
+EI_
+and may contain values which start with the prefix
+ELF .
+The following macros are defined:
+
+EI_MAG0
+The first byte of the magic number.
+It must be filled with
+ELFMAG0 .
+(0: 0x7f)
+
+EI_MAG1
+The second byte of the magic number.
+It must be filled with
+ELFMAG1 .
+(1: \[aq]E\[aq])
+
+EI_MAG2
+The third byte of the magic number.
+It must be filled with
+ELFMAG2 .
+(2: \[aq]L\[aq])
+
+EI_MAG3
+The fourth byte of the magic number.
+It must be filled with
+ELFMAG3 .
+(3: \[aq]F\[aq])
+
+EI_CLASS
+The fifth byte identifies the architecture for this binary:
+
+ELFCLASSNONE
+This class is invalid.
+
+ELFCLASS32
+This defines the 32-bit architecture.
+It supports machines with files
+and virtual address spaces up to 4 Gigabytes.
+
+ELFCLASS64
+This defines the 64-bit architecture.
+
+EI_DATA
+The sixth byte specifies the data encoding of the processor-specific
+data in the file.
+Currently, these encodings are supported:
+
+ELFDATANONE
+Unknown data format.
+
+ELFDATA2LSB
+Two's complement, little-endian.
+
+ELFDATA2MSB
+Two's complement, big-endian.
+
+EI_VERSION
+The seventh byte is the version number of the ELF specification:
+
+EV_NONE
+Invalid version.
+
+EV_CURRENT
+Current version.
+
+EI_OSABI
+The eighth byte identifies the operating system
+and ABI to which the object is targeted.
+Some fields in other ELF structures have flags
+and values that have platform-specific meanings;
+the interpretation of those fields is determined by the value of this byte.
+For example:
+
+ELFOSABI_NONE
+Same as ELFOSABI_SYSV
+
+ELFOSABI_SYSV
+UNIX System V ABI
+
+ELFOSABI_HPUX
+HP-UX ABI
+
+ELFOSABI_NETBSD
+NetBSD ABI
+
+ELFOSABI_LINUX
+Linux ABI
+
+ELFOSABI_SOLARIS
+Solaris ABI
+
+ELFOSABI_IRIX
+IRIX ABI
+
+ELFOSABI_FREEBSD
+FreeBSD ABI
+
+ELFOSABI_TRU64
+TRU64 UNIX ABI
+
+ELFOSABI_ARM
+ARM architecture ABI
+
+ELFOSABI_STANDALONE
+Stand-alone (embedded) ABI
+
+EI_ABIVERSION
+The ninth byte identifies the version of the ABI
+to which the object is targeted.
+This field is used to distinguish among incompatible versions of an ABI.
+The interpretation of this version number
+is dependent on the ABI identified by the
+EI_OSABI
+field.
+Applications conforming to this specification use the value 0.
+
+EI_PAD
+Start of padding.
+These bytes are reserved and set to zero.
+Programs
+which read them should ignore them.
+The value for
+EI_PAD
+will change in
+the future if currently unused bytes are given meanings.
+
+EI_NIDENT
+The size of the
+e_ident
+array.
+
+e_type
+This member of the structure identifies the object file type:
+
+ET_NONE
+An unknown type.
+
+ET_REL
+A relocatable file.
+
+ET_EXEC
+An executable file.
+
+ET_DYN
+A shared object.
+
+ET_CORE
+A core file.
+
+e_machine
+This member specifies the required architecture for an individual file.
+For example:
+
+EM_NONE
+An unknown machine
+
+EM_M32
+AT&T WE 32100
+
+EM_SPARC
+Sun Microsystems SPARC
+
+EM_386
+Intel 80386
+
+EM_68K
+Motorola 68000
+
+EM_88K
+Motorola 88000
+
+EM_860
+Intel 80860
+
+EM_MIPS
+MIPS RS3000 (big-endian only)
+
+EM_PARISC
+HP/PA
+
+EM_SPARC32PLUS
+SPARC with enhanced instruction set
+
+EM_PPC
+PowerPC
+
+EM_PPC64
+PowerPC 64-bit
+
+EM_S390
+IBM S/390
+
+EM_ARM
+Advanced RISC Machines
+
+EM_SH
+Renesas SuperH
+
+EM_SPARCV9
+SPARC v9 64-bit
+
+EM_IA_64
+Intel Itanium
+
+EM_X86_64
+AMD x86-64
+
+EM_VAX
+DEC Vax
+
+e_version
+This member identifies the file version:
+
+EV_NONE
+Invalid version
+
+EV_CURRENT
+Current version
+
+e_entry
+This member gives the virtual address to which the system first transfers
+control, thus starting the process.
+If the file has no associated entry
+point, this member holds zero.
+
+e_phoff
+This member holds the program header table's file offset in bytes.
+If
+the file has no program header table, this member holds zero.
+
+e_shoff
+This member holds the section header table's file offset in bytes.
+If the
+file has no section header table, this member holds zero.
+
+e_flags
+This member holds processor-specific flags associated with the file.
+Flag names take the form EF_`machine_flag'.
+The defined flags and their meanings
+depend on the target architecture and its ABI.
+
+e_ehsize
+This member holds the ELF header's size in bytes.
+
+e_phentsize
+This member holds the size in bytes
+of one entry in the file's program header table;
+all entries are the same size.
+
+e_phnum
+This member holds the number of entries in the program header
+table.
+Thus the product of
+e_phentsize
+and
+e_phnum
+gives the table's size
+in bytes.
+If a file has no program header,
+e_phnum
+holds the value zero.
+
+If the number of entries in the program header table is
+larger than or equal to
+PN_XNUM
+(0xffff), this member holds
+PN_XNUM
+(0xffff) and the real number of entries in the program header table is held
+in the
+sh_info
+member of the initial entry in section header table.
+Otherwise, the
+sh_info
+member of the initial entry contains the value zero.
+
+PN_XNUM
+This is defined as 0xffff, the largest number
+e_phnum
+can have, specifying where the actual number of program headers is assigned.
+
+e_shentsize
+This member holds a sections header's size in bytes.
+A section header is
+one entry in the section header table;
+all entries are the same size.
+
+e_shnum
+This member holds the number of entries in the section header table.
+Thus
+the product of
+e_shentsize
+and
+e_shnum
+gives the section header table's size in bytes.
+If a file has no section
+header table,
+e_shnum
+holds the value of zero.
+
+If the number of entries in the section header table is
+larger than or equal to
+SHN_LORESERVE
+(0xff00),
+e_shnum
+holds the value zero and the real number of entries in the section header
+table is held in the
+sh_size
+member of the initial entry in section header table.
+Otherwise, the
+sh_size
+member of the initial entry in the section header table holds
+the value zero.
+
+e_shstrndx
+This member holds the section header table index of the entry associated
+with the section name string table.
+If the file has no section name string
+table, this member holds the value
+SHN_UNDEF .
+
+If the index of section name string table section is
+larger than or equal to
+SHN_LORESERVE
+(0xff00), this member holds
+SHN_XINDEX
+(0xffff) and the real index of the section name string table section
+is held in the
+sh_link
+member of the initial entry in section header table.
+Otherwise, the
+sh_link
+member of the initial entry in section header table contains the value zero.
+
+### Program header (Phdr)
+
+An executable or shared object file's program header table is an array of
+structures, each describing a segment or other information the system needs
+to prepare the program for execution.
+An object file
+segment
+contains one or more
+sections .
+Program headers are meaningful only for executable and shared object files.
+A file specifies its own program header size with the ELF header's
+e_phentsize
+and
+e_phnum
+members.
+The ELF program header is described by the type
+Elf32_Phdr
+or
+Elf64_Phdr
+depending on the architecture:
+
+typedef struct {
+    uint32_t   p_type;
+    Elf32_Off  p_offset;
+    Elf32_Addr p_vaddr;
+    Elf32_Addr p_paddr;
+    uint32_t   p_filesz;
+    uint32_t   p_memsz;
+    uint32_t   p_flags;
+    uint32_t   p_align;
+} Elf32_Phdr;
+
+typedef struct {
+    uint32_t   p_type;
+    uint32_t   p_flags;
+    Elf64_Off  p_offset;
+    Elf64_Addr p_vaddr;
+    Elf64_Addr p_paddr;
+    uint64_t   p_filesz;
+    uint64_t   p_memsz;
+    uint64_t   p_align;
+} Elf64_Phdr;
+
+The main difference between the 32-bit and the 64-bit program header lies
+in the location of the
+p_flags
+member in the total struct.
+
+p_type
+This member of the structure indicates what kind of segment this array
+element describes or how to interpret the array element's information.
+
+PT_NULL
+The array element is unused and the other members' values are undefined.
+This lets the program header have ignored entries.
+
+PT_LOAD
+The array element specifies a loadable segment, described by
+p_filesz
+and
+p_memsz .
+The bytes from the file are mapped to the beginning of the memory
+segment.
+If the segment's memory size
+p_memsz
+is larger than the file size
+p_filesz ,
+the
+"extra"
+bytes are defined to hold the value 0 and to follow the segment's
+initialized area.
+The file size may not be larger than the memory size.
+Loadable segment entries in the program header table appear in ascending
+order, sorted on the
+p_vaddr
+member.
+
+PT_DYNAMIC
+The array element specifies dynamic linking information.
+
+PT_INTERP
+The array element specifies the location and size of a null-terminated
+pathname to invoke as an interpreter.
+This segment type is meaningful
+only for executable files (though it may occur for shared objects).
+However it may not occur more than once in a file.
+If it is present, it must precede any loadable segment entry.
+
+PT_NOTE
+The array element specifies the location of notes (ElfN_Nhdr).
+
+PT_SHLIB
+This segment type is reserved but has unspecified semantics.
+Programs that
+contain an array element of this type do not conform to the ABI.
+
+PT_PHDR
+The array element, if present,
+specifies the location and size of the program header table itself,
+both in the file and in the memory image of the program.
+This segment type may not occur more than once in a file.
+Moreover, it may
+occur only if the program header table is part of the memory image of the
+program.
+If it is present, it must precede any loadable segment entry.
+
+PT_LOPROC
+PT_HIPROC
+Values in the inclusive range
+[ PT_LOPROC ,
+PT_HIPROC ]
+are reserved for processor-specific semantics.
+
+PT_GNU_STACK
+GNU extension which is used by the Linux kernel to control the state of the
+stack via the flags set in the
+p_flags
+member.
+
+p_offset
+This member holds the offset from the beginning of the file at which
+the first byte of the segment resides.
+
+p_vaddr
+This member holds the virtual address at which the first byte of the
+segment resides in memory.
+
+p_paddr
+On systems for which physical addressing is relevant, this member is
+reserved for the segment's physical address.
+Under
+BSD
+this member is
+not used and must be zero.
+
+p_filesz
+This member holds the number of bytes in the file image of the segment.
+It may be zero.
+
+p_memsz
+This member holds the number of bytes in the memory image of the segment.
+It may be zero.
+
+p_flags
+This member holds a bit mask of flags relevant to the segment:
+
+PF_X
+An executable segment.
+
+PF_W
+A writable segment.
+
+PF_R
+A readable segment.
+
+A text segment commonly has the flags
+PF_X
+and
+PF_R .
+A data segment commonly has
+PF_W
+and
+PF_R .
+
+p_align
+This member holds the value to which the segments are aligned in memory
+and in the file.
+Loadable process segments must have congruent values for
+p_vaddr
+and
+p_offset ,
+modulo the page size.
+Values of zero and one mean no alignment is required.
+Otherwise,
+p_align
+should be a positive, integral power of two, and
+p_vaddr
+should equal
+p_offset ,
+modulo
+p_align .
+
+### Section header (Shdr)
+
+A file's section header table lets one locate all the file's sections.
+The
+section header table is an array of
+Elf32_Shdr
+or
+Elf64_Shdr
+structures.
+The
+ELF header's
+e_shoff
+member gives the byte offset from the beginning of the file to the section
+header table.
+e_shnum
+holds the number of entries the section header table contains.
+e_shentsize
+holds the size in bytes of each entry.
+
+A section header table index is a subscript into this array.
+Some section
+header table indices are reserved:
+the initial entry and the indices between
+SHN_LORESERVE
+and
+SHN_HIRESERVE .
+The initial entry is used in ELF extensions for
+e_phnum ,
+e_shnum ,
+and
+e_shstrndx ;
+in other cases, each field in the initial entry is set to zero.
+An object file does not have
+
+
+# PASSWD(5) — Linux Manual Page
+
+### NAME
+
+passwd - the password file
+
+### DESCRIPTION
+
+/etc/passwd
+contains one line for each user account, with seven fields delimited by colons (\(lq:\(rq). These fields are:
+
+\h'-04'\(bu\h'+03'\c
+
+login name
+
+\h'-04'\(bu\h'+03'\c
+
+optional encrypted password
+
+\h'-04'\(bu\h'+03'\c
+
+numerical user ID
+
+\h'-04'\(bu\h'+03'\c
+
+numerical group ID
+
+\h'-04'\(bu\h'+03'\c
+
+user name or comment field
+
+\h'-04'\(bu\h'+03'\c
+
+user home directory
+
+\h'-04'\(bu\h'+03'\c
+
+optional user command interpreter
+
+If the
+password
+field is a lower-case
+\(lqx\(rq, then the encrypted password is actually stored in the
+shadow(5)
+file instead; there
+must
+be a corresponding line in the
+/etc/shadow
+file, or else the user account is invalid.
+
+The encrypted
+password
+field may be empty, in which case no password is required to authenticate as the specified login name. However, some applications which read the
+/etc/passwd
+file may decide not to permit
+any
+access at all if the
+password
+field is blank.
+
+A
+password
+field which starts with an exclamation mark means that the password is locked. The remaining characters on the line represent the
+password
+field before the password was locked.
+
+Refer to
+crypt(3)
+for details on how this string is interpreted.
+
+If the password field contains some string that is not a valid result of
+crypt(3), for instance ! or *, the user will not be able to use a unix password to log in (but the user may log in the system by other means).
+
+The comment field, also known as the gecos field, is used by various system utilities, such as
+finger(1). The use of an ampersand here will be replaced by the capitalised login name when the field is used or displayed by such system utilities.
+
+The home directory field provides the name of the initial working directory. The
+login
+program uses this information to set the value of the
+$HOME
+environmental variable.
+
+The command interpreter field provides the name of the user\*(Aqs command language interpreter, or the name of the initial program to execute. The
+login
+program uses this information to set the value of the
+$SHELL
+environmental variable. If this field is empty, it defaults to the value
+/bin/sh.
+
+### FILES
+
+/etc/passwd
+User account information.
+
+/etc/shadow
+Optional encrypted password file.
+
+/etc/passwd-
+Backup file for /etc/passwd.
+
+Note that this file is used by the tools of the shadow toolsuite, but not by all user and password management tools.
+
+### CAVEATS
+
+Unprivileged users may write arbitrary non-ASCII characters in the GECOS field, notably including C1 control characters. When reading this file, use the C locale. Otherwise, the contents may look different than they are.
+
+### SEE ALSO
+
+crypt(3),
+getent(1),
+getpwnam(3),
+login(1),
+passwd(1),
+pwck(8),
+pwconv(8),
+pwunconv(8),
+shadow(5),
+su(1),
+sulogin(8).
+
+
+# SHADOW(5) — Linux Manual Page
+
+### NAME
+
+shadow - shadowed password file
+
+### DESCRIPTION
+
+shadow
+is a file which contains the password information for the system\*(Aqs accounts and optional aging information.
+
+This file must not be readable by regular users if password security is to be maintained.
+
+Each line of this file contains 9 fields, separated by colons (\(lq:\(rq), in the following order:
+
+login name
+It must be a valid account name, which exists on the system.
+
+encrypted password
+If the password field is empty, the user can log in without a password. However, some applications that read the
+/etc/shadow
+file might block access if the password field is empty.
+
+If the password field begins with an exclamation mark
+!, the password is locked. The remaining characters on the line represent the password hash.
+
+If the password hash consists of a star
+*, password access is effectively disallowed; this is because no password can produce a hash like this.
+
+Refer to
+crypt(3)
+for details on how this string is interpreted.
+
+If the password field contains a string that is not a valid result of
+crypt(3), for instance ! or *, the user cannot use a UNIX password to log in. However, the user may log in the system by other means.
+
+date of last password change
+The date of the last password change, expressed as the number of days since 1970-01-01 00:00:00 UTC.
+
+The value 0 indicates that the user must change their password the next time they log in to the system.
+
+An empty field means that password aging features are disabled.
+
+minimum password age
+This deprecated field should be empty, and is ignored.
+
+maximum password age
+The maximum password age is the number of days after which the user must change their password.
+
+After this number of days has elapsed, the password may still be valid. The user is prompted to change their password at the next login.
+
+An empty field means that there are no maximum password age, no password warning period, and no password inactivity period (see below).
+
+If the maximum password age is lower than the minimum password age, the user cannot change her password.
+
+password warning period
+The number of days before a password expires (see the maximum password age above) during which the user is warned.
+
+An empty field and value 0 mean that there is no password warning period.
+
+password inactivity period
+The number of days after a password expires (see the maximum password age above) during which the password is still accepted, and the user must update their password at the next login.
+
+After the password expires and the password inactivity period elapses, the user cannot log in and must contact their administrator.
+
+An empty string means that no inactivity period is enforced.
+
+account expiration date
+The date when the account expires, expressed as the number of days since 1970-01-01.
+
+Note that account expiration differs from password expiration. Account expiration prevents the user from logging in, whereas password expiration only prevents users from logging in with their password.
+
+An empty field means that the account never expires.
+
+The value 0 should not be used, as it is interpreted either as an account with no expiration or as an expiration date of 1970-01-01.
+
+reserved field
+This field is reserved for future use.
+
+### FILES
+
+/etc/passwd
+User account information.
+
+/etc/shadow
+Secure user account information.
+
+/etc/shadow-
+Backup file for /etc/shadow.
+
+Note that this file is used by the tools of the shadow toolsuite, but not by all user and password management tools.
+
+### SEE ALSO
+
+chage(1),
+login(1),
+passwd(1),
+passwd(5),
+pwck(8),
+pwconv(8),
+pwunconv(8),
+su(1),
+sulogin(8).
+
+
+# GROUP(5) — Linux Manual Page
+
+### NAME
+
+group - user group file
+
+### DESCRIPTION
+
+The
+/etc/group
+file is a text file that defines the groups on the system.
+There is one entry per line, with the following format:
+
+group_name:password:GID:user_list
+
+The fields are as follows:
+
+group_name
+the name of the group.
+
+password
+the (encrypted) group password.
+If this field is empty, no password is needed.
+
+GID
+the numeric group ID.
+
+user_list
+a list of the usernames that are members of this group, separated by commas.
+
+### FILES
+
+/etc/group
+
+### BUGS
+
+As the 4.2BSD
+initgroups (3)
+man page says: no one seems to keep
+/etc/group
+up-to-date.
+
+### SEE ALSO
+
+chgrp (1),
+gpasswd (1),
+groups (1),
+login (1),
+newgrp (1),
+sg (1),
+getgrent (3),
+getgrnam (3),
+gshadow (5),
+passwd (5),
+vigr (8)
+
+
+# FSTAB(5) — Linux Manual Page
+
+\\$2 <\\$1>\\$3
+
+### NAME
+
+fstab - static information about the filesystems
+
+### SYNOPSIS
+
+/etc/fstab
+
+### DESCRIPTION
+
+The file fstab contains descriptive information about the filesystems the system can mount. fstab is only read by programs, and not written; it is the duty of the system administrator to properly create and maintain this file. The order of records in fstab is important because fsck(8), mount(8), and umount(8) sequentially iterate through fstab doing their thing.
+
+The file is not read by mount(8) only but often is used by many other tools and daemons, and proper functionality may require additional steps. For example, on systemd-based systems, it\(cqs recommended to use systemctl daemon-reload after fstab modification.
+
+See the swapon(8) man page for details about swap area fstab configuration.
+
+Each filesystem is described on a separate line, with fields separated by tabs or spaces. The line is split into fields before being parsed. This means that any spaces or tabs within the fields must be escaped using \(rs040 or \(rs011, even within quoted strings (e.g. LABEL="foo\(rs040bar").
+
+Lines starting with \*(Aq#\*(Aq are comments. Blank lines are ignored.
+
+The following is a typical example of an fstab entry:
+
+LABEL=t-home2   /home      ext4    defaults,auto_da_alloc      0  2
+
+### The first field (\fIfs_spec\fP).
+
+This field describes the block special device, remote filesystem or filesystem image for loop device to be mounted or swap file or swap device to be enabled.
+
+For ordinary mounts, it will hold (a link to) a block special device node (as created by mknod(2)) for the device to be mounted, like /dev/cdrom or /dev/sdb7. For NFS mounts, this field is <host>:<dir>, e.g., knuth.aeb.nl:/. For filesystems with no storage, any string can be used, and will show up in df(1) output, for example. Typical usage is proc for procfs; mem, none, or tmpfs for tmpfs. Other special filesystems, like udev and sysfs, are typically not listed in fstab.
+
+LABEL=<label> or UUID=<uuid> may be given instead of a device name. This is the recommended method, as device names are often a coincidence of hardware detection order, and can change when other disks are added or removed. For example, \*(AqLABEL=Boot\*(Aq or \*(AqUUID=3e6be9de-8139-11d1-9106-a43f08d823a6\*(Aq. (Use a filesystem-specific tool like e2label(8), xfs_admin(8), or fatlabel(8) to set LABELs on filesystems).
+
+It\(cqs also possible to use PARTUUID= and PARTLABEL=. These partitions identifiers are supported for example for GUID Partition Table (GPT).
+
+See mount(8), blkid(8) or lsblk(8) for more details about device identifiers.
+
+Note that mount(8) uses UUIDs as strings. The string representation of the UUID should be based on lower case characters. But when specifying the volume ID of FAT or NTFS file systems upper case characters are used (e.g UUID="A40D-85E7" or UUID="61DB7756DB7779B3").
+
+### The second field (\fIfs_file\fP).
+
+This field describes the mount point (target) for the filesystem. For swap area, this field should be specified as `none\*(Aq. If the name of the mount point contains spaces or tabs these can be escaped as `\(rs040\*(Aq and \*(Aq\(rs011\*(Aq respectively.
+
+### The third field (\fIfs_vfstype\fP).
+
+This field describes the type of the filesystem. Linux supports many filesystem types: ext4, xfs, btrfs, f2fs, vfat, ntfs, hfsplus, tmpfs, sysfs, proc, iso9660, udf, squashfs, nfs, cifs, and many more. For more details, see mount(8).
+
+An entry swap denotes a file or partition to be used for swapping, cf. swapon(8). An entry none is useful for bind or move mounts.
+
+More than one type may be specified in a comma-separated list.
+
+mount(8) and umount(8) support filesystem subtypes. The subtype is defined by \*(Aq.subtype\*(Aq suffix. For example \*(Aqfuse.sshfs\*(Aq. It\(cqs recommended to use subtype notation rather than add any prefix to the first fstab field (for example \*(Aqsshfs#example.com\*(Aq is deprecated).
+
+### The fourth field (\fIfs_mntops\fP).
+
+This field describes the mount options associated with the filesystem.
+
+It is formatted as a comma-separated list of options and is optional for mount(8) or swapon(8). The usual convention is to use at least "defaults" keyword there.
+
+It usually contains the type of mount (ro or rw, the default is rw), plus any additional options appropriate to the filesystem type (including performance-tuning options). For details, see mount(8) or swapon(8).
+
+Basic filesystem-independent options are:
+
+defaults
+use default options. The default depends on the kernel and the filesystem. mount(8) does not have any hardcoded set of default options. The kernel default is usually rw, suid, dev, exec, auto, nouser, and async.
+
+noauto
+do not mount when mount -a is given (e.g., at boot time)
+
+user
+allow a user to mount
+
+owner
+allow device owner to mount
+
+comment
+or x-<name> for use by fstab-maintaining programs
+
+nofail
+do not report errors for this device if it does not exist.
+
+### The fifth field (\fIfs_freq\fP).
+
+This field is used by dump(8) to determine which filesystems need to be dumped. Defaults to zero (don\(cqt dump) if not present.
+
+### The sixth field (\fIfs_passno\fP).
+
+This field is used by fsck(8) to determine the order in which filesystem checks are done at boot time. The root filesystem should be specified with a fs_passno of 1. Other filesystems should have a fs_passno of 2. Filesystems within a drive will be checked sequentially, but filesystems on different drives will be checked at the same time to utilize parallelism available in the hardware. Defaults to zero (don\(cqt check the filesystem) if not present.
+
+### FILES
+
+/etc/fstab,
+<fstab.h>
+
+### NOTES
+
+The proper way to read records from fstab is to use the routines getmntent(3) or libmount.
+
+The keyword ignore as a filesystem type (3rd field) is no longer supported by the pure libmount based mount utility (since util-linux v2.22).
+
+This document describes handling of fstab by util-linux and libmount. For systemd, read systemd documentation. There are slight differences.
+
+### HISTORY
+
+The ancestor of this fstab file format appeared in 4.0BSD.
+
+### SEE ALSO
+
+getmntent(3),
+fs(5),
+findmnt(8),
+mount(8),
+swapon(8)
+
+### REPORTING BUGS
+
+For bug reports, use the \c
+
+### AVAILABILITY
+
+fstab is part of the util-linux package which can be downloaded from \c
+
+
+# HOSTS(5) — Linux Manual Page
+
+### NAME
+
+hosts - static table lookup for hostnames
+
+### SYNOPSIS
+
+/etc/hosts
+
+### DESCRIPTION
+
+This manual page describes the format of the
+/etc/hosts
+file.
+This file is a simple text file that associates IP addresses
+with hostnames, one line per IP address.
+For each host a single
+line should be present with the following information:
+
+IP_address canonical_hostname [aliases...]
+
+The IP address can conform to either IPv4 or IPv6.
+Fields of the entry are separated by any number of blanks and/or
+tab characters.
+Text from a "#" character until the end of the line is
+a comment, and is ignored.
+Host names may contain only alphanumeric
+characters, minus signs ("-"), and periods (".").
+They must begin with an
+alphabetic character and end with an alphanumeric character.
+Optional aliases provide for name changes, alternate spellings,
+shorter hostnames, or generic hostnames (for example,
+localhost ).
+If required, a host may have two separate entries in this file;
+one for each version of the Internet Protocol (IPv4 and IPv6).
+
+The Berkeley Internet Name Domain (BIND) Server implements the
+Internet name server for UNIX systems.
+It augments or replaces the
+/etc/hosts
+file or hostname lookup, and frees a host from relying on
+/etc/hosts
+being up to date and complete.
+
+In modern systems, even though the host table has been superseded by
+DNS, it is still widely used for:
+
+bootstrapping
+Most systems have a small host table containing the name and address
+information for important hosts on the local network.
+This is useful
+when DNS is not running, for example during system bootup.
+
+NIS
+Sites that use NIS use the host table as input to the NIS host
+database.
+Even though NIS can be used with DNS, most NIS sites still
+use the host table with an entry for all local hosts as a backup.
+
+isolated nodes
+Very small sites that are isolated from the network use the host table
+instead of DNS.
+If the local information rarely changes, and the
+network is not connected to the Internet, DNS offers little
+advantage.
+
+### FILES
+
+/etc/hosts
+
+### NOTES
+
+Modifications to this file normally take effect immediately,
+except in cases where the file is cached by applications.
+
+### Historical notes
+
+RFC\ 952 gave the original format for the host table, though it has
+since changed.
+
+Before the advent of DNS, the host table was the only way of resolving
+hostnames on the fledgling Internet.
+Indeed, this file could be
+created from the official host data base maintained at the Network
+Information Control Center (NIC), though local changes were often
+required to bring it up to date regarding unofficial aliases and/or
+unknown hosts.
+The NIC no longer maintains the hosts.txt files,
+though looking around at the time of writing (circa 2000), there are
+historical hosts.txt files on the WWW.
+I just found three, from 92,
+94, and 95.
+
+### EXAMPLES
+
+# The following lines are desirable for IPv4 capable hosts
+127.0.0.1       localhost
+
+# 127.0.1.1 is often used for the FQDN of the machine
+127.0.1.1       thishost.example.org   thishost
+192.168.1.10    foo.example.org        foo
+192.168.1.13    bar.example.org        bar
+146.82.138.7    master.debian.org      master
+209.237.226.90  www.opensource.org
+
+# The following lines are desirable for IPv6 capable hosts
+::1             localhost ip6-localhost ip6-loopback
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+
+### SEE ALSO
+
+hostname (1),
+resolver (3),
+host.conf (5),
+resolv.conf (5),
+resolver (5),
+hostname (7),
+named (8)
+
+Internet RFC\ 952
+
+
+# RESOLV.CONF(5) — Linux Manual Page
+
+### NAME
+
+resolv.conf - resolver configuration file
+
+### SYNOPSIS
+
+/etc/resolv.conf
+
+### DESCRIPTION
+
+The
+resolver
+is a set of routines in the C library
+that provide access to the Internet Domain Name System (DNS).
+The resolver configuration file contains information that is read
+by the resolver routines the first time they are invoked by a process.
+The file is designed to be human readable and contains a list of
+keywords with values that provide various types of resolver information.
+The configuration file is considered a trusted source of DNS information;
+see the
+trust-ad
+option below for details.
+
+If this file does not exist, only the name server on the local machine
+will be queried, and the search list contains the local domain name
+determined from the hostname.
+
+The different configuration options are:
+
+nameserver  Name server IP address
+Internet address of a name server that the resolver should query,
+either an IPv4 address (in dot notation),
+or an IPv6 address in colon (and possibly dot) notation as per RFC 2373.
+Up to
+MAXNS
+(currently 3, see
+<res_state.h> )
+name servers may be listed,
+one per keyword.
+If there are multiple servers,
+the resolver library queries them in the order listed.
+If no
+nameserver
+entries are present,
+the default is to use the name server on the local machine.
+(The algorithm used is to try a name server, and if the query times out,
+try the next, until out of name servers,
+then repeat trying all the name servers
+until a maximum number of retries are made.)
+
+search  Search list for host-name lookup.
+By default, the search list contains one entry, the local domain name.
+It is determined from the local hostname returned by
+gethostname (2);
+the local domain name is taken to be everything after the first
+\[aq].\[aq].
+Finally, if the hostname does not contain a \[aq].\[aq], the
+root domain is assumed as the local domain name.
+
+This may be changed by listing the desired domain search path
+following the
+search
+keyword with spaces or tabs separating
+the names.
+Resolver queries having fewer than
+ndots
+dots (default is 1) in them will be attempted using each component
+of the search path in turn until a match is found.
+For environments with multiple subdomains please read
+below to avoid man-in-the-middle attacks and unnecessary
+traffic for the root-dns-servers.
+Note that this process may be slow and will generate a lot of network
+traffic if the servers for the listed domains are not local,
+and that queries will time out if no server is available
+for one of the domains.
+
+If there are multiple
+search
+directives, only the search list from the last instance is used.
+
+In glibc 2.25 and earlier, the search list is limited to six domains
+with a total of 256 characters.
+Since glibc 2.26,
+the search list is unlimited.
+
+The
+domain
+directive is an obsolete name for the
+search
+directive that handles one search list entry only.
+
+sortlist
+This option allows addresses returned by
+gethostbyname (3)
+to be sorted.
+A sortlist is specified by IP-address-netmask pairs.
+The netmask is
+optional and defaults to the natural netmask of the net.
+The IP address
+and optional network pairs are separated by slashes.
+Up to 10 pairs may
+be specified.
+Here is an example:
+
+sortlist 130.155.160.0/255.255.240.0 130.155.0.0
+
+options
+Options allows certain internal resolver variables to be modified.
+The syntax is
+
+where
+option
+is one of the following:
+
+debug
+Sets
+RES_DEBUG
+in
+_res.options
+(effective only if glibc was built with debug support;
+see
+resolver (3)).
+
+Sets a threshold for the number of dots which
+must appear in a name given to
+res_query (3)
+(see
+resolver (3))
+before an
+initial absolute query
+will be made.
+The default for
+n
+is 1, meaning that if there are any dots in a name, the name
+will be tried first as an absolute name before any
+search list
+elements are appended to it.
+The value for this option is silently capped to 15.
+
+Sets the amount of time the resolver will wait for a
+response from a remote name server before retrying the
+query via a different name server.
+This may
+not
+be the total time taken by any resolver API call and there is no
+guarantee that a single resolver API call maps to a single timeout.
+Measured in seconds,
+the default is
+RES_TIMEOUT
+(currently 5, see
+<resolv.h> ).
+The value for this option is silently capped to 30.
+
+Sets the number of times the resolver will send a
+query to its name servers before giving up and returning
+an error to the calling application.
+The default is
+RES_DFLRETRY
+(currently 2, see
+<resolv.h> ).
+The value for this option is silently capped to 5.
+
+rotate
+Sets
+RES_ROTATE
+in
+_res.options ,
+which causes round-robin selection of name servers from among those listed.
+This has the effect of spreading the query load among all listed servers,
+rather than having all clients try the first listed server first every time.
+
+no\-aaaa (since glibc 2.36)
+Sets
+RES_NOAAAA
+in
+_res.options ,
+which suppresses AAAA queries made by the stub resolver,
+including AAAA lookups triggered by NSS-based interfaces such as
+getaddrinfo (3).
+Only DNS lookups are affected: IPv6 data in
+hosts (5)
+is still used,
+getaddrinfo (3)
+with
+AI_PASSIVE
+will still produce IPv6 addresses,
+and configured IPv6 name servers are still used.
+To produce correct Name Error (NXDOMAIN) results,
+AAAA queries are translated to A queries.
+This option is intended preliminary for diagnostic purposes,
+to rule out that AAAA DNS queries have adverse impact.
+It is incompatible with EDNS0 usage and DNSSEC validation by applications.
+
+no\-check\-names
+Sets
+RES_NOCHECKNAME
+in
+_res.options ,
+which disables the modern BIND checking of incoming hostnames and
+mail names for invalid characters such as underscore (_), non-ASCII,
+or control characters.
+
+inet6
+Sets
+RES_USE_INET6
+in
+_res.options .
+This has the effect of trying an AAAA query before an A query inside the
+gethostbyname (3)
+function, and of mapping IPv4 responses in IPv6 "tunneled form"
+if no AAAA records are found but an A record set exists.
+Since glibc 2.25,
+this option is deprecated;
+applications should use
+getaddrinfo (3),
+rather than
+gethostbyname (3).
+
+Some programs behave strangely when this option is turned on.
+
+ip6\-bytestring  (since glibc 2.3.4 to glibc 2.24)
+Sets
+RES_USEBSTRING
+in
+_res.options .
+This causes reverse IPv6 lookups to be made using the bit-label format
+described in RFC\ 2673;
+if this option is not set (which is the default), then nibble format is used.
+This option was removed in glibc 2.25,
+since it relied on a backward-incompatible
+DNS extension that was never deployed on the Internet.
+
+ip6\-dotint / no\-ip6\-dotint  (glibc 2.3.4 to glibc 2.24)
+Clear/set
+RES_NOIP6DOTINT
+in
+_res.options .
+When this option is clear
+( ip6\-dotint ),
+reverse IPv6 lookups are made in the (deprecated)
+ip6.int
+zone;
+when this option is set
+( no\-ip6\-dotint ),
+reverse IPv6 lookups are made in the
+ip6.arpa
+zone by default.
+These options are available up to glibc 2.24, where
+no\-ip6\-dotint
+is the default.
+Since
+ip6\-dotint
+support long ago ceased to be available on the Internet,
+these options were removed in glibc 2.25.
+
+edns0  (since glibc 2.6)
+Sets
+RES_USE_EDNS0
+in
+_res.options .
+This enables support for the DNS extensions described in RFC\ 2671.
+
+single\-request  (since glibc 2.10)
+Sets
+RES_SNGLKUP
+in
+_res.options .
+By default, glibc performs IPv4 and IPv6 lookups in parallel since
+glibc 2.9.
+Some appliance DNS servers
+cannot handle these queries properly and make the requests time out.
+This option disables the behavior and makes glibc perform the IPv6
+and IPv4 requests sequentially (at the cost of some slowdown of the
+resolving process).
+
+single\-request\-reopen  (since glibc 2.9)
+Sets
+RES_SNGLKUPREOP
+in
+_res.options .
+The resolver uses the same socket for the A and AAAA requests.
+Some hardware mistakenly sends back only one reply.
+When that happens the client system will sit and wait for the second reply.
+Turning this option on changes this behavior
+so that if two requests from the same port are not handled correctly it will
+close the socket and open a new one before sending the second request.
+
+no\-tld\-query  (since glibc 2.14)
+Sets
+RES_NOTLDQUERY
+in
+_res.options .
+This option causes
+res_nsearch ()
+to not attempt to resolve an unqualified name
+as if it were a top level domain (TLD).
+This option can cause problems if the site has ``localhost'' as a TLD
+rather than having localhost on one or more elements of the search list.
+This option has no effect if neither RES_DEFNAMES or RES_DNSRCH is set.
+
+use\-vc  (since glibc 2.14)
+Sets
+RES_USEVC
+in
+_res.options .
+This option forces the use of TCP for DNS resolutions.
+
+no\-reload  (since glibc 2.26)
+Sets
+RES_NORELOAD
+in
+_res.options .
+This option disables automatic reloading of a changed configuration file.
+
+trust\-ad  (since glibc 2.31)
+Sets
+RES_TRUSTAD
+in
+_res.options .
+This option controls the AD bit behavior of the stub resolver.
+If a validating resolver sets the AD bit in a response,
+it indicates that the data in the response was verified according
+to the DNSSEC protocol.
+In order to rely on the AD bit, the local system has to
+trust both the DNSSEC-validating resolver and the network path to it,
+which is why an explicit opt-in is required.
+If the
+trust\-ad
+option is active, the stub resolver sets the AD bit in outgoing DNS
+queries (to enable AD bit support), and preserves the AD bit in responses.
+Without this option, the AD bit is not set in queries,
+and it is always removed from responses before they are returned to the
+application.
+This means that applications can trust the AD bit in responses if the
+trust\-ad
+option has been set correctly.
+
+In glibc 2.30 and earlier,
+the AD is not set automatically in queries,
+and is passed through unchanged to applications in responses.
+
+The
+search
+keyword of a system's
+resolv.conf
+file can be
+overridden on a per-process basis by setting the environment variable
+LOCALDOMAIN
+to a space-separated list of search domains.
+
+The
+options
+keyword of a system's
+resolv.conf
+file can be
+amended on a per-process basis by setting the environment variable
+RES_OPTIONS
+to a space-separated list of resolver options
+as explained above under
+options .
+
+The keyword and value must appear on a single line, and the keyword
+(e.g.,
+nameserver )
+must start the line.
+The value follows the keyword, separated by white space.
+
+Lines that contain a semicolon (;) or hash character (#)
+in the first column are treated as comments.
+
+### FILES
+
+/etc/resolv.conf ,
+<resolv.h>
+
+### SEE ALSO
+
+gethostbyname (3),
+resolver (3),
+host.conf (5),
+hosts (5),
+nsswitch.conf (5),
+hostname (7),
+named (8)
+
+Name Server Operations Guide for BIND
+
+
+# NSSWITCH.CONF(5) — Linux Manual Page
+
+### NAME
+
+nsswitch.conf - Name Service Switch configuration file
+
+### DESCRIPTION
+
+The Name Service Switch (NSS) configuration file,
+/etc/nsswitch.conf ,
+is used by the GNU C Library and certain other applications to determine
+the sources from which to obtain name-service information in
+a range of categories,
+and in what order.
+Each category of information is identified by a database name.
+
+The file is plain ASCII text, with columns separated by spaces or tab
+characters.
+The first column specifies the database name.
+The remaining columns describe the order of sources to query and a
+limited set of actions that can be performed by lookup result.
+
+The following databases are understood by the GNU C Library:
+
+aliases
+Mail aliases, used by
+getaliasent (3)
+and related functions.
+
+ethers
+Ethernet numbers.
+
+group
+Groups of users, used by
+getgrent (3)
+and related functions.
+
+hosts
+Host names and numbers, used by
+gethostbyname (3)
+and related functions.
+
+initgroups
+Supplementary group access list, used by
+getgrouplist (3)
+function.
+
+netgroup
+Network-wide list of hosts and users, used for access rules.
+C libraries before glibc 2.1 supported netgroups only over NIS.
+
+networks
+Network names and numbers, used by
+getnetent (3)
+and related functions.
+
+passwd
+User passwords, used by
+getpwent (3)
+and related functions.
+
+protocols
+Network protocols, used by
+getprotoent (3)
+and related functions.
+
+publickey
+Public and secret keys for Secure_RPC used by NFS and NIS+.
+
+rpc
+Remote procedure call names and numbers, used by
+getrpcbyname (3)
+and related functions.
+
+services
+Network services, used by
+getservent (3)
+and related functions.
+
+shadow
+Shadow user passwords, used by
+getspnam (3)
+and related functions.
+
+The GNU C Library ignores databases with unknown names.
+Some applications use this to implement special handling for their own
+databases.
+For example,
+sudo (8)
+consults the
+sudoers
+database.
+Delegation of subordinate user/group IDs
+can be configured using the
+subid
+database.
+Refer to
+subuid (5)
+and
+subgid (5)
+for more details.
+
+Here is an example
+/etc/nsswitch.conf
+file:
+
+passwd:         compat
+group:          compat
+shadow:         compat
+
+hosts:          dns [!UNAVAIL=return] files
+networks:       nis [NOTFOUND=return] files
+ethers:         nis [NOTFOUND=return] files
+protocols:      nis [NOTFOUND=return] files
+rpc:            nis [NOTFOUND=return] files
+services:       nis [NOTFOUND=return] files
+
+The first column is the database name.
+The remaining columns specify:
+
+One or more service specifications, for example, "files", "db", or "nis".
+The order of the services on the line determines the order in which
+those services will be queried, in turn, until a result is found.
+
+Optional actions to perform if a particular result is obtained
+from the preceding service, for example, "[NOTFOUND=return]".
+
+The service specifications supported on your system depend on the
+presence of shared libraries, and are therefore extensible.
+Libraries called
+/lib/libnss_SERVICE.so. X
+will provide the named
+SERVICE .
+On a standard installation, you can use
+"files", "db", "nis", and "nisplus".
+For the
+hosts
+database, you can additionally specify "dns".
+For the
+passwd ,
+group ,
+and
+shadow
+databases, you can additionally specify
+"compat" (see
+Compatibility mode
+below).
+The version number
+X
+may be 1 for glibc 2.0, or 2 for glibc 2.1 and later.
+On systems with additional libraries installed, you may have access to
+further services such as "hesiod", "ldap", "winbind", and "wins".
+
+An action may also be specified following a service specification.
+The action modifies the behavior following a result obtained
+from the preceding data source.
+Action items take the general form:
+
+[ STATUS = ACTION ]
+
+[! STATUS = ACTION ]
+
+where
+
+STATUS
+=>
+success
+|
+notfound
+|
+unavail
+|
+tryagain
+
+ACTION
+=>
+return
+|
+continue
+|
+merge
+
+The ! negates the test, matching all possible results except the
+one specified.
+The case of the keywords is not significant.
+
+The
+STATUS
+value is matched against the result of the lookup function called by
+the preceding service specification, and can be one of:
+
+success
+No error occurred and the requested entry is returned.
+The default action for this condition is "return".
+
+notfound
+The lookup succeeded, but the requested entry was not found.
+The default action for this condition is "continue".
+
+unavail
+The service is permanently unavailable.
+This can mean either that the
+required file cannot be read, or, for network services, that the server
+is not available or does not allow queries.
+The default action for this condition is "continue".
+
+tryagain
+The service is temporarily unavailable.
+This could mean a file is
+locked or a server currently cannot accept more connections.
+The default action for this condition is "continue".
+
+The
+ACTION
+value can be one of:
+
+return
+Return a result now.
+Do not call any further lookup functions.
+However, for compatibility reasons, if this is the selected action for the
+group
+database and the
+notfound
+status, and the configuration file does not contain the
+initgroups
+line, the next lookup function is always called,
+without affecting the search result.
+
+continue
+Call the next lookup function.
+
+merge
+[SUCCESS=merge]
+is used between two database entries.
+When a group is located in the first of the two group entries,
+processing will continue on to the next one.
+If the group is also found in the next entry (and the group name and GID
+are an exact match), the member list of the second entry will be added
+to the group object to be returned.
+Available since glibc 2.24.
+Note that merging will not be done for
+getgrent (3)
+nor will duplicate members be pruned when they occur in both entries
+being merged.
+
+### Compatibility mode (compat)
+
+The NSS "compat" service is similar to "files" except that it
+additionally permits special entries in corresponding files
+for granting users or members of netgroups access to the system.
+The following entries are valid in this mode:
+
+For
+passwd
+and
+shadow
+databases:
+
+Include the specified
+user
+from the NIS passwd/shadow map.
+
+Include the specified
+user
+from the NIS passwd map, but override with non-empty passwd fields.
+
+Include all users in the given
+netgroup .
+
+Exclude the specified
+user
+from the NIS passwd/shadow map.
+
+Exclude all users in the given
+netgroup .
+
++
+Include every user, except previously excluded ones, from the
+NIS passwd/shadow map.
+
+For
+group
+database:
+
+Include the specified
+group
+from the NIS group map.
+
+Exclude the specified
+group
+from the NIS group map.
+
++
+Include every group, except previously excluded ones, from the
+NIS group map.
+
+By default, the source is "nis", but this may be
+overridden by specifying any NSS service except "compat" itself
+as the source for the pseudo-databases
+passwd_compat ,
+group_compat ,
+and
+shadow_compat .
+
+### FILES
+
+A service named
+SERVICE
+is implemented by a shared object library named
+libnss_SERVICE.so. X
+that resides in
+/lib .
+
+/etc/nsswitch.conf
+NSS configuration file.
+
+/lib/libnss_compat.so. X
+implements "compat" source.
+
+/lib/libnss_db.so. X
+implements "db" source.
+
+/lib/libnss_dns.so. X
+implements "dns" source.
+
+/lib/libnss_files.so. X
+implements "files" source.
+
+/lib/libnss_hesiod.so. X
+implements "hesiod" source.
+
+/lib/libnss_nis.so. X
+implements "nis" source.
+
+/lib/libnss_nisplus.so. X
+implements "nisplus" source.
+
+The following files are read when "files" source is specified
+for respective databases:
+
+aliases
+/etc/aliases
+
+ethers
+/etc/ethers
+
+group
+/etc/group
+
+hosts
+/etc/hosts
+
+initgroups
+/etc/group
+
+netgroup
+/etc/netgroup
+
+networks
+/etc/networks
+
+passwd
+/etc/passwd
+
+protocols
+/etc/protocols
+
+publickey
+/etc/publickey
+
+rpc
+/etc/rpc
+
+services
+/etc/services
+
+shadow
+/etc/shadow
+
+### NOTES
+
+Starting with glibc 2.33,
+nsswitch.conf
+is automatically reloaded if the file is changed.
+In earlier versions, the entire file was read only once within each process.
+If the file was later changed,
+the process would continue using the old configuration.
+
+Traditionally, there was only a single source for service information,
+often in the form of a single configuration
+file (e.g.,
+/etc/passwd ).
+However, as other name services, such as the Network Information
+Service (NIS) and the Domain Name Service (DNS), became popular,
+a method was needed
+that would be more flexible than fixed search orders coded into
+the C library.
+The Name Service Switch mechanism,
+which was based on the mechanism used by
+Sun Microsystems in the Solaris 2 C library,
+introduced a cleaner solution to the problem.
+
+### SEE ALSO
+
+getent (1),
+nss (5)
+
+
+# CRONTAB(5) — Linux Manual Page
+
+### NAME
+
+crontab - tables for driving cron
+
+### DESCRIPTION
+
+A
+crontab
+file contains instructions to the
+cron(8)
+daemon of the general form:
+\(lqrun this command at this time on this date\(rq. Each user has their own crontab, and commands in any given crontab will be executed as the user who owns the crontab. Uucp and News will usually have their own crontabs, eliminating the need for explicitly running
+su(1)
+as part of a cron command.
+
+Note that comments on the same line as cron commands are not interpreted as comments in the cron sense, but are considered part of the command and passed to the shell. This is similarly true for comments on the same line as environment variable settings.
+
+An active line in a crontab will be either an environment setting or a cron command. An environment setting is of the form,
+
+name = value
+      
+
+where the spaces around the equal-sign (=) are optional, and any subsequent non-leading spaces in
+value
+will be part of the value assigned to
+name. The
+value
+string may be placed in quotes (single or double, but matching) to preserve leading or trailing blanks. To define an empty variable, quotes can be used.
+
+The
+value
+string is not parsed for environmental substitutions or replacement of variables or tilde(~) expansion, thus lines like
+
+PATH=$HOME/bin:$PATH
+PATH=~/bin:/usr/bin
+	
+
+will not work as you might expect. And neither will this work.
+
+A=1
+B=2
+C=$A $B
+	
+
+There will not be any substitution for the defined variables in the last value. However, with most shells you can also try e.g.,:
+
+P=PATH=/a/b/c:$PATH
+33 22 1 2 3 eval $P && some commands
+	
+
+Several environment variables are set up automatically by the
+cron(8)
+daemon.
+SHELL
+is set to
+/usr/bin/sh, and
+LOGNAME
+and
+HOME
+are set from the
+/etc/passwd
+line of the crontab\*(Aqs owner.
+HOME
+and
+SHELL
+may be overridden by settings in the crontab;
+LOGNAME
+may not.
+
+(Another note: the
+LOGNAME
+variable is sometimes called
+USER
+on BSD systems... on these systems,
+USER
+will be set also.)
+
+In addition to
+LOGNAME,
+HOME, and
+SHELL,
+cron(8)
+will look at
+MAILTO
+if it has any reason to send mail as a result of running commands in
+\(lqthis\(rq
+crontab. If
+MAILTO
+is defined (and non-empty), mail is sent to the user so named. If MAILTO
+is defined but empty (MAILTO=""), no mail will be sent. Otherwise mail is sent to the owner of the crontab. This option is useful if you decide on
+/usr/bin/mail
+instead of
+/usr/lib/sendmail
+as your mailer when you install cron --
+/usr/bin/mail
+doesn\*(Aqt do aliasing, and UUCP usually doesn\*(Aqt read its mail.
+
+The format of a cron command is very much the V7 standard, with a number of upward-compatible extensions. Each line has five time and date fields, followed by a command, followed by a newline character (\*(Aq\n\*(Aq). The system crontab (/etc/crontab) uses the same format, except that the username for the command is specified after the time and date fields and before the command. The fields may be separated by spaces or tabs. The maximum permitted length for the command field is 998 characters.
+
+Commands are executed by
+cron(8)
+when the minute, hour, and month of year fields match the current time, and when at least one of the two day fields (day of month, or day of week) match the current time (see
+\(lqNote\(rq
+below).
+cron(8)
+examines cron entries once every minute. The time and date fields are:
+allbox tab(:);
+lB lB.
+T{
+field
+T}:T{
+allowed\ values\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+T}
+l l
+l l
+l l
+l l
+l l.
+T{
+minute
+T}:T{
+0-59
+T}
+T{
+hour
+T}:T{
+0-23
+T}
+T{
+day of month
+T}:T{
+1-31
+T}
+T{
+month
+T}:T{
+1-12 (or names, see below)
+T}
+T{
+day of week
+T}:T{
+0-7 (0 or 7 is Sun, or use names)
+T}
+
+A field may be an asterisk (*), which always stands for
+\(lqfirst-last\(rq.
+
+Ranges of numbers are allowed. Ranges are two numbers separated with a hyphen. The specified range is inclusive. For example, 8-11 for an
+\(lqhours\(rq
+entry specifies execution at hours 8, 9, 10 and 11.
+
+Lists are allowed. A list is a set of numbers (or ranges) separated by commas. Examples:
+\(lq1,2,5,9\(rq,
+\(lq0-4,8-12\(rq.
+
+Step values can be used in conjunction with ranges. Following a range with
+\(lq/<number>\(rq
+specifies skips of the number\*(Aqs value through the range. For example,
+\(lq0-23/2\(rq
+can be used in the hours field to specify command execution every other hour (the alternative in the V7 standard is
+\(lq0,2,4,6,8,10,12,14,16,18,20,22\(rq). Steps are also permitted after an asterisk, so if you want to say
+\(lqevery two hours\(rq, just use
+\(lq*/2\(rq.
+
+Names can also be used for the
+\(lqmonth\(rq
+and
+\(lqday of week\(rq
+fields. Use the first three letters of the particular day or month (case doesn\*(Aqt matter). Examples for the month are:
+\(lqJan-Mar\(rq
+or
+\(lqJan,Mar\(rq
+. Examples for the day of week are;
+\(lqMon-Wed\(rq
+or
+\(lqMon-Wed\(rq. Names are in English language.
+
+The
+\(lqsixth\(rq
+field (the rest of the line) specifies the command to be run. The entire command portion of the line, up to a newline or % character, will be executed by
+/usr/bin/sh
+or by the shell specified in the
+SHELL
+variable of the cronfile. Percent-signs (%) in the command, unless escaped with backslash (\), will be changed into newline characters, and all data after the first % will be sent to the command as standard input.
+
+Note: The day of a command\*(Aqs execution can be specified by two fields \(em day of month, and day of week. If both fields are restricted (i.e., aren\*(Aqt *), the command will be run when either field matches the current time. For example,
+\(lq30 4 1,15 * 5\(rq
+would cause a command to be run at 4:30 am on the 1st and 15th of each month, plus every Friday. One can, however, achieve the desired result by adding a test to the command (see the last example in EXAMPLE CRON FILE below).
+
+Instead of the first five fields, one of eight special strings may appear:
+allbox tab(:);
+lB lB.
+T{
+string
+T}:T{
+meaning\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+T}
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+@reboot
+T}:T{
+Run once, at startup.
+T}
+T{
+@yearly
+T}:T{
+Run once a year, "0 0 1 1 *".
+T}
+T{
+@annually
+T}:T{
+(same as @yearly)
+T}
+T{
+@monthly
+T}:T{
+Run once a month, "0 0 1 * *".
+T}
+T{
+@weekly
+T}:T{
+Run once a week, "0 0 * * 0".
+T}
+T{
+@daily
+T}:T{
+Run once a day, "0 0 * * *".
+T}
+T{
+@midnight
+T}:T{
+(same as @daily)
+T}
+T{
+@hourly
+T}:T{
+Run once an hour, "0 * * * *".
+T}
+
+Please note that startup, as far as @reboot is concerned, is the time when the
+cron(8)
+daemon startup. In particular, it may be before some system daemons, or other facilities, were startup. This is due to the boot order sequence of the machine.
+
+### EXAMPLE CRON FILE
+
+# use /usr/bin/sh to run commands, no matter what /etc/passwd says
+SHELL=/usr/bin/sh
+# mail any output to `paul\*(Aq, no matter whose crontab this is
+MAILTO=paul
+#
+# run five minutes after midnight, every day
+5 0 * * *       $HOME/bin/daily.job >> $HOME/tmp/out 2>&1
+# run at 2:15pm on the first of every month -- output mailed to paul
+15 14 1 * *     $HOME/bin/monthly
+# run at 10 pm on weekdays, annoy Joe
+0 22 * * 1-5    mail -s "It\*(Aqs 10pm" joe%Joe,%%Where are your kids?%
+23 0-23/2 * * * echo "run 23 minutes after midn, 2am, 4am ..., everyday"
+5 4 * * sun     echo "run at 5 after 4 every Sunday"
+0 */4 1 * mon   echo "run every 4th hour on the 1st and on every Monday"
+0 0 */2 * sun   echo "run at midn on every Sunday that\*(Aqs an uneven date"
+# Run on every second Saturday of the month
+0 4 8-14 * *    test $(date +\%u) -eq 6 && echo "2nd Saturday"
+# Same thing, efficient too:
+0 4 * * * Sat   d=$(date +e) && test $d -ge 8 -a $d -le 14 && echo "2nd Saturday"
+#Execute early the next morning following the first
+#Thursday of each month
+57 2 * * 5 case $(date +d) in 0[2-8]) echo "After 1st Thursday"; esac
+      
+
+All the above examples run non-interactive programs. If you wish to run a program that interacts with the user\*(Aqs desktop you have to make sure the proper environment variable
+DISPLAY
+is set.
+
+# Execute a program and run a notification every day at 10:00 am
+0 10 * * *  $HOME/bin/program | DISPLAY=:0 notify-send "Program run" "$(cat)"
+      
+
+### EXAMPLE SYSTEM CRON FILE
+
+The following lists the content of a regular system-wide crontab file. Unlike a user\*(Aqs crontab, this file has the username field, as used by
+/etc/crontab.
+
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don\*(Aqt have to run the `crontab\*(Aq
+# command to install the new version when you edit this file
+# and files in /etc/cron.d.  These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# m h dom mon dow usercommand
+17 * * * *  root  cd / && run-parts --report /etc/cron.hourly
+25 6 * * *  root  test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6 * * 7  root  test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6 1 * *  root  test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+#
+       
+
+Note that all the system-wide tasks will run, by default, from 6 am to 7 am. In the case of systems that are not powered on during that period of time, only the hourly tasks will be executed unless the defaults above are changed.
+
+### YET ANOTHER EXAMPLE
+
+In that example one can see that numbers can be prepended some 0, in order to line up columns.
+
+17  * * * *  root  cd / && run-parts --report /etc/cron.hourly
+25 16 * * *  root  test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 06 * * 7  root  test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 06 1 * *  root  test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+       
+
+### SEE ALSO
+
+cron(8),
+crontab(1)
+
+### EXTENSIONS
+
+When specifying day of week, both day 0 and day 7 will be considered Sunday. BSD and AT&T seem to disagree about this.
+
+Lists and ranges are allowed to co-exist in the same field. "1-3,7-9" would be rejected by AT&T or BSD cron -- they want to see "1-3" or "7,8,9" ONLY.
+
+Ranges can include "steps", so "1-9/2" is the same as "1,3,5,7,9".
+
+Names of months or days of the week can be specified by name.
+
+Environment variables can be set in the crontab. In BSD or AT&T, the environment handed to child processes is basically the one from
+/etc/rc.
+
+Command output is mailed to the crontab owner (BSD can\*(Aqt do this), can be mailed to a person other than the crontab owner (SysV can\*(Aqt do this), or the feature can be turned off and no mail will be sent at all (SysV can\*(Aqt do this either).
+
+All of the
+\(lq@\(rq
+commands that can appear in place of the first five fields are extensions.
+
+### LIMITATIONS
+
+The
+cron
+daemon runs with a defined timezone. It currently does not support per-user timezones. All the tasks: system\*(Aqs and user\*(Aqs will be run based on the configured timezone. Even if a user specifies the
+TZ
+environment variable in his crontab this will affect only the commands executed in the crontab, not the execution of the crontab tasks themselves. If one wants to specify a particular timezone for crontab tasks, one may check the date in the child script, for example:
+
+# m h  dom mon dow   command
+
+TZ=UTC
+0 * * * * [ "$(date +\%R)" = 00:00 ] && run_some_script
+       
+
+POSIX specifies that the day of month and the day of week fields both need to match the current time if either of them
+is
+a *. However, this implementation only checks if the
+first character
+is a *. This is why "0 0 */2 * sun" runs every Sunday that\*(Aqs an uneven date while the POSIX standard would have it run every Sunday and on every uneven date.
+
+The
+crontab
+syntax does not make it possible to define all possible periods one can imagine. For example, it is not straightforward to define the last weekday of a month. To have a task run in a time period that cannot be defined using
+crontab
+syntax, the best approach would be to have the program itself check the date and time information and continue execution only if the period matches the desired one.
+
+If the program itself cannot do the checks then a wrapper script would be required. Useful tools that could be used for date analysis are
+ncal(1)
+or
+calendar(1). For example, to run a program the last Saturday of every month you could use the following wrapper code:
+
+0 4 * * Sat   [ "$(date +\%e)" = "$(LANG=C ncal | sed -n \*(Aqs/^Sa .* \([0-9]\+\) *$/\1/p\*(Aq)" ] && echo "Last Saturday" && program_to_run
+      
+
+The maximum permitted length for the command field is 998 characters.
+
+The recommended length should be less than 80 characters, like lines in readable source files. When one must use a long command, it is worth creating a dedicated script, which in turn can contain valuable comments.
+
+### USING EVAL TO WRAP MISC ENVIRONMENT SETTINGS
+
+The following tip is kindly provided by 積丹尼 Dan Jacobson:
+
+CONTENT_TYPE="text/plain; charset=UTF-8"
+d=eval LANG=zh_TW.UTF-8 w3m -dump
+26 22 16 1-12 * $d https://www.ptt.cc/bbs/transgender/index.html
+      
+
+it won\*(Aqt work without the eval. Saying
+
+d=LANG=zh_TW.UTF-8 w3m -dump
+      
+
+will get
+
+/bin/sh: LANG=zh_TW.UTF-8: command not found
+      
+
+### DIAGNOSTICS
+
+cron requires that each entry in a crontab end in a newline character. If the last entry in a crontab is missing a newline (i.e. terminated by EOF), cron will consider the crontab (at least partially) broken. A warning will be written to syslog.
+
+### AUTHORS
+
+Paul Vixie <paul@vix.com>
+Wrote this manpage (1994).
+
+Steve Greenland <stevegr@debian.org>
+Maintained the package (1996-2005).
+
+Javier Fern\('andez-Sanguino Pe\(~na <jfs@debian.org>
+Maintained the package (2005-2014).
+
+Christian Kastner <ckk@debian.org>
+Maintained the pack
+
+
+# SUDOERS(5) — Linux Manual Page
+
+The
+policy plugin determines a user's
+privileges.
+It is the default
+policy plugin.
+The policy is driven by
+the
+file or, optionally, in LDAP.
+The policy format is described in detail in the
+section.
+For information on storing
+policy information
+in LDAP, see
+consults the
+file to determine which plugins to load.
+If no
+file is present, or if it contains no
+lines,
+will be used for auditing, policy decisions and I/O logging.
+To explicitly configure
+to use the
+plugin, the following configuration can be used.
+Plugin sudoers_audit sudoers.so
+Plugin sudoers_policy sudoers.so
+Plugin sudoers_io sudoers.so
+Starting with
+1.8.5, it is possible to specify optional arguments to the
+plugin in the
+file.
+Plugin arguments, if any, should be listed after the path to the plugin
+(i.e., after
+The arguments are only effective for the plugin that opens (and parses) the
+file.
+For
+version 1.9.1 and higher, this is the
+plugin.
+For older versions, it is the
+plugin.
+Multiple arguments may be specified, separated by white space.
+For example:
+Plugin sudoers_audit sudoers.so sudoers_mode=0400 error_recovery=false
+The following plugin arguments are supported:
+The
+argument can be used to control whether
+should attempt to recover from syntax errors in the
+file.
+If set to
+(the default),
+will try to recover from a syntax error by discarding the portion
+of the line that contains the error until the end of the line.
+A value of
+will disable error recovery.
+Prior to version 1.9.3, no error recovery was performed.
+The
+argument can be used to disable security checks when loading the
+file.
+If enabled, the
+file will be loaded regardless of the owner or file mode.
+This argument is intended to be used for testing purposes and
+should not be enabled on production systems.
+The
+argument can be used to override the default path to the
+file.
+The
+argument can be used to override the default path to the
+file.
+The
+argument can be used to override the default path to the
+file.
+The
+argument can be used to override the default owner of the sudoers file.
+It should be specified as a numeric user-ID.
+The
+argument can be used to override the default group of the sudoers file.
+It must be specified as a numeric group-ID (not a group name).
+The
+argument can be used to override the default file mode for the sudoers file.
+It should be specified as an octal value.
+For more information on configuring
+refer to its manual.
+The
+security policy requires that most users authenticate
+themselves before they can use
+A password is not required
+if the invoking user is
+if the target user is the same as the invoking user, or if the
+policy has disabled authentication for the user or command.
+Unlike
+when
+requires
+authentication, it validates the invoking user's credentials, not
+the target user's (or
+credentials.
+This can be changed via
+the
+and
+flags, described later.
+If a user who is not listed in the policy tries to run a command
+via
+mail is sent to the proper authorities.
+The address
+used for such mail is configurable via the
+Defaults entry
+(described later) and defaults to
+No mail will be sent if an unauthorized user tries to run
+with the
+or
+option unless there is an authentication error and
+either the
+or
+flags are enabled.
+This allows users to
+determine for themselves whether or not they are allowed to use
+By default, all attempts to run
+(successful or not)
+are logged, regardless of whether or not mail is sent.
+If
+is run by
+and the
+environment variable
+is set, the
+policy will use this value to determine who
+the actual user is.
+This can be used by a user to log commands
+through sudo even when a
+shell has been invoked.
+It also
+allows the
+option to remain useful even when invoked via a
+sudo-run script or program.
+Note, however, that the
+file lookup is still done for
+not the user specified by
+uses per-user time stamp files for credential caching.
+Once a user has been authenticated, a record is written
+containing the user-ID that was used to authenticate, the
+terminal session ID, the start time of the session leader
+(or parent process) and a time stamp
+(using a monotonic clock if one is available).
+The user may then use
+without a password for a short period of time (15 minutes
+unless overridden by the
+option).
+By default,
+uses a separate record for each terminal, which means that
+a user's login sessions are authenticated separately.
+The
+option can be used to select the type of time stamp record
+will use.
+The
+utility, included with the sudo source distribution, can be used to
+display the contents of a time stamp file.
+See
+for details of the time stamp file format.
+By default,
+logs both successful and unsuccessful attempts (as well
+as errors).
+The
+and
+flags can be used to control this behavior.
+Messages can be logged to
+a log file, or both.
+The default is to log to
+but this is configurable via the
+and
+settings.
+See
+for a description of the log file format.
+is also capable of running a command in a pseudo-terminal and logging
+input and/or output.
+The standard input, standard output, and standard error can be logged
+even when not associated with a terminal.
+For more information about I/O logging, see the
+section.
+Starting with version 1.9, the
+setting may be used to send event and I/O log data to a remote server running
+or another service that implements the protocol described by
+Since environment variables can influence program behavior,
+provides a means to restrict which variables from the user's
+environment are inherited by the command to be run.
+There are two
+distinct ways
+can deal with environment variables.
+By default, the
+flag is enabled.
+This causes commands
+to be executed with a new, minimal environment.
+On AIX (and Linux
+systems without PAM), the environment is initialized with the
+contents of the
+file.
+On
+systems, if the
+flag is enabled, the environment is initialized
+based on the
+and
+settings in
+The
+and
+environment variables are initialized based on the target user
+and the
+variables are set based on the invoking user.
+Additional variables, such as
+and
+are preserved from the invoking user's environment if permitted by the
+or
+options.
+A few environment variables are treated specially.
+If the
+and
+variables are not preserved from the user's environment, they will be set
+to default values.
+The
+and
+are handled as a single entity.
+If one of them is preserved (or removed) from the user's environment,
+the other will be as well.
+If
+and
+are to be preserved but only one of them is present in the user's environment,
+the other will be set to the same value.
+This avoids an inconsistent environment where one of the variables
+describing the user name is set to the invoking user and one is
+set to the target user.
+Environment variables with a value beginning with
+are removed unless both the name and value parts are matched by
+or
+as they may be interpreted as functions by the
+shell.
+Prior to version 1.8.11, such variables were always removed.
+If, however, the
+flag is disabled, any variables not
+explicitly denied by the
+and
+options are allowed and their values are
+inherited from the invoking process.
+Prior to version 1.8.21, environment variables with a value beginning with
+were always removed.
+Beginning with version 1.8.21, a pattern in
+is used to match
+shell functions instead.
+Since it is not possible
+to block all potentially dangerous environment variables, use
+of the default
+behavior is encouraged.
+Environment variables specified by
+or
+may include one or more
+characters which will match zero or more characters.
+No other wildcard characters are supported.
+By default, environment variables are matched by name.
+However, if the pattern includes an equal sign
+both the variables name and value must match.
+For example, a
+shell function could be matched as follows:
+env_keep += "BASH_FUNC_my_func%%=()*"
+Without the
+suffix, this would not match, as
+shell functions are not preserved by default.
+The complete list of environment variables that are preserved or removed,
+as modified by global Defaults parameters in
+is displayed when
+is run by
+with the
+option.
+The list of environment variables to remove
+varies based on the operating system
+is running on.
+Other settings may influence the command environment:
+options such as
+and
+Command tags, such as
+and
+Note that
+is implied if the command matched is
+options, such as
+and
+On systems that support PAM where the
+module is enabled for
+variables in the PAM environment may be merged in to the environment.
+If a variable in the PAM environment is already present in the
+user's environment, the value will only be overridden if the variable
+was not preserved by
+When
+is enabled, variables preserved from the invoking user's environment
+by the
+list take precedence over those in the PAM environment.
+When
+is disabled, variables present the invoking user's environment
+take precedence over those in the PAM environment unless they
+match a pattern in the
+list.
+The dynamic linker on most operating systems will remove variables
+that can control dynamic linking from the environment of set-user-ID
+executables, including
+Depending on the operating
+system this may include
+and others.
+These type of variables are
+removed from the environment before
+even begins execution
+and, as such, it is not possible for
+to preserve them.
+As a special case, if the
+option (initial login) is
+specified,
+will initialize the environment regardless
+of the value of
+The
+and
+variables remain unchanged;
+and
+are set based on the target user.
+On AIX (and Linux
+systems without PAM), the contents of
+are also
+included.
+On
+systems, if the
+flag is
+enabled, the
+and
+variables in
+are also applied.
+All other environment variables are removed unless permitted by
+or
+described above.
+Finally, the
+and
+files are applied, if present.
+The variables in
+are applied first and are subject to the same restrictions as the
+invoking user's environment, as detailed above.
+The variables in
+are applied last and are not subject to these restrictions.
+In both cases, variables present in the files will only be set to
+their specified values if they would not conflict with an existing
+environment variable.
+The
+file is composed of two types of entries: aliases
+(basically variables) and user specifications (which specify who
+may run what).
+When multiple entries match for a user, they are applied in order.
+Where there are multiple matches, the last match is used (which is
+not necessarily the most specific match).
+The
+file grammar will be described below in Extended Backus-Naur
+Form (EBNF).
+Don't despair if you are unfamiliar with EBNF; it is fairly simple,
+and the definitions below are annotated.
+By default,
+uses the operating system's native method of setting resource limits
+for the target user.
+On Linux systems, resource limits are usually set by the
+PAM module.
+On some BSD systems, the
+file specifies resource limits for the user.
+On AIX systems, resource limits are configured in the
+file.
+If there is no system mechanism to set per-user resource limits,
+the command will run with the same limits as the invoking user.
+The one exception to this is the core dump file size, which is set by
+to 0 by default.
+Disabling core dumps by default makes it possible to avoid potential
+security problems where the core file is treated as trusted input.
+Resource limits may also be set in the
+file itself, in which case they override those set by the system.
+See the
+options described below.
+Resource limits in
+may be specified in one of the following formats:
+Both the soft and hard resource limits are set to the same value.
+The special value
+can be used to indicate that the value is unlimited.
+Two comma-separated values.
+The soft limit is set to the first value and the hard limit is set
+to the second.
+Both values must either be enclosed in a set of double quotes,
+or the comma must be escaped with a backslash
+The special value
+may be used in place of either value.
+The default resource limit for the user will be used.
+This may be a user-specific value (see above) or the value of the
+resource limit when
+was invoked for systems that don't support per-user limits.
+The invoking user's resource limits will be preserved when running
+the command.
+For example, to restore the historic core dump file size behavior,
+a line like the following may be used.
+
+Resource limits in
+are only supported by version 1.8.7 or higher.
+EBNF is a concise and exact way of describing the grammar of a language.
+Each EBNF definition is made up of
+For example:
+symbol ::= definition | alternate1 | alternate2 ...
+Each
+references others and thus makes up a
+grammar for the language.
+EBNF also contains the following
+operators, which many readers will recognize from regular
+expressions.
+Do not, however, confuse them with
+characters, which have different meanings.
+Means that the preceding symbol (or group of symbols) is optional.
+That is, it may appear once or not at all.
+Means that the preceding symbol (or group of symbols) may appear
+zero or more times.
+Means that the preceding symbol (or group of symbols) may appear
+one or more times.
+Parentheses may be used to group symbols together.
+For clarity,
+we will use single quotes
+to designate what is a verbatim character string (as opposed to a symbol name).
+There are four kinds of aliases:
+and
+Beginning with
+1.9.0,
+may be used in place of
+if desired.
+Alias ::= 'User_Alias'  User_Alias_Spec (':' User_Alias_Spec)* |
+          'Runas_Alias' Runas_Alias_Spec (':' Runas_Alias_Spec)* |
+          'Host_Alias'  Host_Alias_Spec (':' Host_Alias_Spec)* |
+          'Cmnd_Alias'  Cmnd_Alias_Spec (':' Cmnd_Alias_Spec)* |
+          'Cmd_Alias'   Cmnd_Alias_Spec (':' Cmnd_Alias_Spec)*
+
+User_Alias ::= NAME
+
+User_Alias_Spec ::= User_Alias '=' User_List
+
+Runas_Alias ::= NAME
+
+Runas_Alias_Spec ::= Runas_Alias '=' Runas_List
+
+Host_Alias ::= NAME
+
+Host_Alias_Spec ::= Host_Alias '=' Host_List
+
+Cmnd_Alias ::= NAME
+
+Cmnd_Alias_Spec ::= Cmnd_Alias '=' Cmnd_List
+
+NAME ::= [A\(enZ]([A\(enZ][0\(en9]_)*
+Each
+definition is of the form
+Alias_Type NAME = item1, item2, ...
+where
+is one of
+or
+A
+is a string of uppercase letters, nu
+
+
+# SYSCTL.CONF(5) — Linux Manual Page
+
+### NAME
+
+sysctl.conf - Linux kernel configuration parameters
+
+### DESCRIPTION
+
+sysctl.conf
+is a set of configuration files that contain
+Linux kernel configuration parameters
+to be read and set by
+sysctl (8).
+
+This man page describes the configuration files for
+procps
+sysctl .
+If you are using
+systemd\-sysctl (8),
+refer to
+sysctl.d (5)
+and note that it won't use the file
+\%/etc/\:\%sysctl\:\%.conf .
+
+### Configuration Format
+
+Each line of a file read by
+procps
+sysctl
+describes a kernel parameter in the following format.
+
+token = value
+
+There is no need to use quotation marks for value, even if the value
+is a list of items.
+
+Blank lines and lines that start with
+\[lq] # \[rq]
+or
+\[lq] ; \[rq]
+are ignored.
+
+If a line begins with a single
+\[lq] \- \[rq],
+a failing attempt to set the value is ignored.
+
+### FILES
+
+procps
+sysctl ,
+when run with the
+\%\-\-system
+option,
+reads files from directories
+in the order shown below.
+
+/etc/sysctl.d/ * .conf
+/run/sysctl.d/ * .conf
+/usr/local/lib/sysctl.d/ * .conf
+/usr/lib/sysctl.d/ * .conf
+/lib/sysctl.d/ * .conf
+
+Finally,
+procps
+sysctl
+reads
+\%/etc/\:\%sysctl\:\%.conf .
+This file is not used by
+systemd\-sysctl ,
+which means that some kernel parameters are not set depending on the
+implementation of
+sysctl
+that is installed.
+
+### BUGS
+
+The maximum supported length of
+value
+is 4096 characters due to a limitation on
+/proc
+entry length in the Linux kernel.
+
+### EXAMPLES
+
+#
+#
+kernel.domainname = example.com
+; A value containing a space is written to the sysctl.
+kernel.modprobe = /sbin/mod probe
+# A list of items for the value
+net.ipv4.ip_local_reserved_ports=8080,9148
+
+### SEE ALSO
+
+sysctl.d (5),
+sysctl (8),
+systemd\-sysctl (8)
+
+
+# OS-RELEASE(5) — Linux Manual Page
+
+### NAME
+
+os-release, initrd-release, extension-release - Operating system identification
+
+### SYNOPSIS
+
+/etc/os-release
+/usr/lib/os-release
+/etc/initrd-release
+/usr/lib/extension-release.d/extension-release.IMAGE
+
+### DESCRIPTION
+
+The
+/etc/os-release
+and
+/usr/lib/os-release
+files contain operating system identification data.
+
+The format of
+os-release
+is a newline-separated list of environment-like shell-compatible variable assignments. It is possible to source the configuration from Bourne shell scripts, however, beyond mere variable assignments, no shell features are supported (this means variable expansion is explicitly not supported), allowing applications to read the file without implementing a shell compatible execution engine. Variable assignment values must be enclosed in double or single quotes if they include spaces, semicolons or other special characters outside of A\(enZ, a\(enz, 0\(en9. (Assignments that do not include these special characters may be enclosed in quotes too, but this is optional.) Shell special characters ("$", quotes, backslash, backtick) must be escaped with backslashes, following shell style. All strings should be in UTF-8 encoding, and non-printable characters should not be used. Concatenation of multiple individually quoted strings is not supported. Lines beginning with "#" are treated as comments. Blank lines are permitted and ignored.
+
+The file
+/etc/os-release
+takes precedence over
+/usr/lib/os-release. Applications should check for the former, and exclusively use its data if it exists, and only fall back to
+/usr/lib/os-release
+if that is missing. Applications should not combine the data from both files.
+/usr/lib/os-release
+is the recommended place to store OS release information as part of vendor trees.
+/etc/os-release
+should be a relative symlink to
+/usr/lib/os-release, to provide compatibility with applications only looking at
+/etc/. A relative symlink instead of an absolute symlink is necessary to avoid breaking the link in a chroot or initrd environment.
+
+os-release
+contains data that is defined by the operating system vendor and should generally not be changed by the administrator.
+
+As this file only encodes names and identifiers it should not be localized.
+
+The
+/etc/os-release
+and
+/usr/lib/os-release
+files might be symlinks to other files, but it is important that the file is available from earliest boot on, and hence must be located on the root file system.
+
+os-release
+must not contain repeating keys. Nevertheless, readers should pick the entries later in the file in case of repeats, similarly to how a shell sourcing the file would. A reader may warn about repeating entries.
+
+For a longer rationale for
+os-release
+please refer to the
+\m[blue]Announcement of /etc/os-release\m[]\s-2\u[1]\d\s+2.
+
+### /etc/initrd\-release
+
+In the
+\m[blue]initrd\m[]\s-2\u[2]\d\s+2
+and exitrd,
+/etc/initrd-release
+plays the same role as
+os-release
+in the main system. Additionally, the presence of that file means that the system is in the initrd/exitrd phase.
+/etc/os-release
+should be symlinked to
+/etc/initrd-release
+(or vice versa), so programs that only look for
+/etc/os-release
+(as described above) work correctly.
+
+The rest of this document that talks about
+os-release
+should be understood to apply to
+initrd-release
+too.
+
+### /usr/lib/extension\-release\&.d/extension\-release\&.\fIIMAGE\fR
+
+/usr/lib/extension-release.d/extension-release.IMAGE
+plays the same role for extension images as
+os-release
+for the main system, and follows the syntax and rules as described in the
+\m[blue]Portable Services\m[]\s-2\u[3]\d\s+2
+page. The purpose of this file is to identify the extension and to allow the operating system to verify that the extension image matches the base OS. This is typically implemented by checking that the extension
+ID=
+option either matches the host
+ID=
+option or is included the host
+ID_LIKE=
+option, and either
+SYSEXT_LEVEL=
+exists and matches too, or if it is not present,
+VERSION_ID=
+exists and matches. This ensures ABI/API compatibility between the layers and prevents merging of an incompatible image in an overlay.
+
+In order to identify the extension image itself, the same fields defined below can be added to the
+extension-release
+file with a
+SYSEXT_
+prefix (to disambiguate from fields used to match on the base image). E.g.:
+SYSEXT_ID=myext,
+SYSEXT_VERSION_ID=1.2.3.
+
+In the
+extension-release.IMAGE
+filename, the
+IMAGE
+part must exactly match the file name of the containing image with the suffix removed. In case it is not possible to guarantee that an image file name is stable and does not change between the build and the deployment phases, it is possible to relax this check: if exactly one file whose name matches
+"extension-release.*"
+is present in this directory, and the file is tagged with a
+user.extension-release.strict
+xattr(7)
+set to the string
+"0", it will be used instead.
+
+The rest of this document that talks about
+os-release
+should be understood to apply to
+extension-release
+too.
+
+### OPTIONS
+
+The following OS identifications parameters may be set using
+os-release:
+
+### General information identifying the operating system
+
+NAME=
+A string identifying the operating system, without a version component, and suitable for presentation to the user. If not set, a default of
+"NAME=Linux"
+may be used.
+
+Examples:
+"NAME=Fedora",
+"NAME="Debian GNU/Linux"".
+
+ID=
+A lower-case string (no spaces or other characters outside of 0\(en9, a\(enz, ".", "_" and "-") identifying the operating system, excluding any version information and suitable for processing by scripts or usage in generated filenames. If not set, a default of
+"ID=linux"
+may be used. Note that even though this string may not include characters that require shell quoting, quoting may nevertheless be used.
+
+Examples:
+"ID=fedora",
+"ID=debian".
+
+ID_LIKE=
+A space-separated list of operating system identifiers in the same syntax as the
+ID=
+setting. It should list identifiers of operating systems that are closely related to the local operating system in regards to packaging and programming interfaces, for example listing one or more OS identifiers the local OS is a derivative from. An OS should generally only list other OS identifiers it itself is a derivative of, and not any OSes that are derived from it, though symmetric relationships are possible. Build scripts and similar should check this variable if they need to identify the local operating system and the value of
+ID=
+is not recognized. Operating systems should be listed in order of how closely the local operating system relates to the listed ones, starting with the closest. This field is optional.
+
+Examples: for an operating system with
+"ID=centos", an assignment of
+"ID_LIKE="rhel fedora""
+would be appropriate. For an operating system with
+"ID=ubuntu", an assignment of
+"ID_LIKE=debian"
+is appropriate.
+
+PRETTY_NAME=
+A pretty operating system name in a format suitable for presentation to the user. May or may not contain a release code name or OS version of some kind, as suitable. If not set, a default of
+"PRETTY_NAME="Linux""
+may be used.
+
+Example:
+"PRETTY_NAME="Fedora 17 (Beefy Miracle)""
+
+FANCY_NAME=
+Similar to
+PRETTY_NAME=, but may contain ANSI sequences and fancy UTF-8 characters such as emojis. If defined this shall preferably used when displaying the OS name on modern terminal emulators. If the terminal emulator does not support emojis,
+PRETTY_NAME=
+shall be shown instead, possibly with
+ANSI_COLOR=
+coloring. Use
+"\033"
+to encode the ESC character and
+"\\"
+to encode the backslash character.
+
+Unlike
+PRETTY_NAME=
+this field must not contain information that is present in other fields, in particular the version (already specified in
+VERSION=) or the codename (already specified in
+VERSION_CODENAME=).
+
+Example:
+"FANCY_NAME="🍅 \033[31mTomato\033[0;1mOS\033[0m""
+
+Added in version 260.
+
+CPE_NAME=
+A CPE name for the operating system, in URI binding syntax, following the
+\m[blue]Common Platform Enumeration Specification\m[]\s-2\u[4]\d\s+2
+as proposed by the NIST. This field is optional.
+
+Example:
+"CPE_NAME="cpe:/o:fedoraproject:fedora:17""
+
+VARIANT=
+A string identifying a specific variant or edition of the operating system suitable for presentation to the user. This field may be used to inform the user that the configuration of this system is subject to a specific divergent set of rules or default configuration settings. This field is optional and may not be implemented on all systems.
+
+Examples:
+"VARIANT="Server Edition"",
+"VARIANT="Smart Refrigerator Edition"".
+
+Note: this field is for display purposes only. The
+VARIANT_ID
+field should be used for making programmatic decisions.
+
+Added in version 220.
+
+VARIANT_ID=
+A lower-case string (no spaces or other characters outside of 0\(en9, a\(enz, ".", "_" and "-"), identifying a specific variant or edition of the operating system. This may be interpreted by other packages in order to determine a divergent default configuration. This field is optional and may not be implemented on all systems.
+
+Examples:
+"VARIANT_ID=server",
+"VARIANT_ID=embedded".
+
+Added in version 220.
+
+### Information about the version of the operating system
+
+VERSION=
+A string identifying the operating system version, excluding any OS name information, possibly including a release code name, and suitable for presentation to the user. This field is optional.
+
+Examples:
+"VERSION=17",
+"VERSION="17 (Beefy Miracle)"".
+
+VERSION_ID=
+A string (lower-case recommended, no spaces or other characters outside of 0\(en9, a\(enz, A-Z, ".", "-", "~", "^", "+" and "_") identifying the operating system version, excluding any OS name information or release code name, and suitable for processing by scripts or usage in generated filenames. This field is optional.
+
+It is recommended to follow the
+\m[blue]UAPI.10 Version Format Specification\m[]\s-2\u[5]\d\s+2
+for this version string, but this is generally not enforced.
+
+Examples:
+"VERSION_ID=17",
+"VERSION_ID=11.04".
+
+VERSION_CODENAME=
+A string (lower-case recommended, no spaces or other characters outside of 0\(en9, a\(enz, A-Z, ".", "-", "~", "^", "+", and "_") identifying the operating system release code name, excluding any OS name information or release version, and suitable for processing by scripts or usage in generated filenames. This field is optional and may not be implemented on all systems.
+
+Examples:
+"VERSION_CODENAME=buster",
+"VERSION_CODENAME=xenial".
+
+Added in version 231.
+
+BUILD_ID=
+A string uniquely identifying the system image originally used as the installation base. In most cases,
+VERSION_ID
+or
+IMAGE_ID+IMAGE_VERSION
+are updated when the entire system image is replaced during an update.
+BUILD_ID
+may be used in distributions where the original installation image version is important:
+VERSION_ID
+would change during incremental system updates, but
+BUILD_ID
+would not. This field is optional.
+
+Examples:
+"BUILD_ID="2013-03-20.3"",
+"BUILD_ID=201303203".
+
+Added in version 200.
+
+IMAGE_ID=
+A lower-case string (no spaces or other characters outside of 0\(en9, a\(enz, ".", "_" and "-"), identifying a specific image of the operating system. This is supposed to be used for environments where OS images are prepared, built, shipped and updated as comprehensive, consistent OS images. This field is optional and may not be implemented on all systems, in particularly not on those that are not managed via images but put together and updated from individual packages and on the local system.
+
+Examples:
+"IMAGE_ID=vendorx-cashier-system",
+"IMAGE_ID=netbook-image".
+
+Added in version 249.
+
+IMAGE_VERSION=
+A string (lower-case recommended, no spaces or other characters outside of 0\(en9, a\(enz, A-Z, ".", "-", "~", "^", "+" and "_") identifying the OS image version. This is supposed to be used together with
+IMAGE_ID
+described above, to discern different versions of the same image.
+
+It is recommended to follow the
+\m[blue]UAPI.10 Version Format Specification\m[]\s-2\u[5]\d\s+2
+for this version string, but this is generally not enforced.
+
+Examples:
+"IMAGE_VERSION=33",
+"IMAGE_VERSION=47.1rc1".
+
+Added in version 249.
+
+RELEASE_TYPE=
+A lower-case string (no spaces or other characters outside of 0-9, a-z, ".", "_", and "-"), describing what kind of release this version of the OS is. Known values follow:
+
+\h'-04'\(bu\h'+03'\c
+
+"stable"
+is for normal releases of the system, suitable for production use. Generally, stable releases become end-of-life soon after the next major stable release is out, although this might not be the case if, for example, a distribution adopts a rolling release model and still be production ready. Examples include Fedora 40, Ubuntu 23.10, OpenSUSE Tumbleweed, and Arch Linux.
+
+\h'-04'\(bu\h'+03'\c
+
+"lts"
+is for long term support releases of the system, suitable for production use and supported for an extended period of time. Generally, LTS releases continue to receive support even if newer major releases of the distribution are available. Examples include Ubuntu 24.04, Debian 12 Bookworm, and RHEL 9.4.
+
+\h'-04'\(bu\h'+03'\c
+
+"development"
+is for unstable versions of the system, unsuitable for production use, such as alpha, beta, or rolling unstable releases. Examples include Fedora Rawhide, Debian Testing, Fedora 40 Beta, and GNOME OS Nightly.
+
+\h'-04'\(bu\h'+03'\c
+
+"experiment"
+is for experimental builds of the system, created specifically to test some work-in-progress feature. This is meant to be used in combination with
+EXPERIMENT=.
+
+If unset, or an unknown value, assume that the release is
+"stable".
+
+Examples:
+"RELEASE_TYPE=development",
+"RELEASE_TYPE=lts".
+
+Added in version 257.
+
+To summarize: if the image updates are built and shipped as comprehensive units,
+IMAGE_ID+IMAGE_VERSION
+is the best fit. Otherwise, if updates eventually completely replace previously installed contents, as in a typical binary distribution,
+VERSION_ID
+should be used to identify major releases of the operating system.
+BUILD_ID
+may be used instead or in addition to
+VERSION_ID
+when the

@@ -10,7 +10,11 @@ storage/app_data/books/*
 !storage/app_data/books/book-time-machine.txt
 !storage/app_data/books/book-frankenstein.txt
 !storage/app_data/books/book-linux-syscalls-full.txt
+!storage/app_data/books/book-man-sec-*.txt
 !storage/app_data/books/manifest.json
+!storage/app_data/manpages/
+storage/app_data/manpages/*
+!storage/app_data/manpages/man_index.json
 
 storage/ollama_data/*
 !storage/ollama_data/.gitkeep

@@ -1,13 +1,13 @@
 """
-Real Books & Kiwix ZIM Catalog for BunkerOS XP.
-Loads full-text books stored in /data/app_data/books/ and provides one-click
-downloading for additional Project Gutenberg full-text books and Kiwix .ZIM archives.
+Real Books, Complete Linux Man Pages (Sections 1-8), Kiwix ZIM Catalog,
+and Local AI Model Alternatives (with Pros & Cons) for BunkerOS XP.
 """
 
-from typing import Dict, List
+from typing import Any, Dict, List
 
 # Built-in default book manifest (files stored in /data/app_data/books/)
 DEFAULT_REAL_BOOKS: List[Dict[str, str]] = [
+    # --- Shelf 1: Strategy & Philosophy (Unabridged Classics) ---
     {
         "id": "book-art-of-war",
         "title": "The Art of War",
@@ -52,6 +52,7 @@ DEFAULT_REAL_BOOKS: List[Dict[str, str]] = [
         "gutenberg_url": "https://www.gutenberg.org/cache/epub/45109/pg45109.txt",
         "summary": "Complete handbook of practical Stoic ethical and mental resilience principles.",
     },
+    # --- Shelf 2: Classic Literature & Sci-Fi (Unabridged) ---
     {
         "id": "book-time-machine",
         "title": "The Time Machine",
@@ -74,6 +75,7 @@ DEFAULT_REAL_BOOKS: List[Dict[str, str]] = [
         "gutenberg_url": "https://www.gutenberg.org/cache/epub/84/pg84.txt",
         "summary": "Complete unabridged gothic science-fiction novel.",
     },
+    # --- Shelf 3: Systems & Kernel Engineering ---
     {
         "id": "book-linux-syscalls-full",
         "title": "Linux x86_64 Complete Syscall Reference",
@@ -83,12 +85,294 @@ DEFAULT_REAL_BOOKS: List[Dict[str, str]] = [
         "icon_type": "manual_tech",
         "filename": "book-linux-syscalls-full.txt",
         "gutenberg_url": "",
-        "summary": "Complete table of all 360+ Linux x86_64 system calls extracted from kernel headers.",
+        "summary": "Complete table of all 385 Linux x86_64 system calls extracted from kernel headers.",
+    },
+    # --- Shelf 4: Complete Linux Man Pages (13,820 Pages across Sections 1-8) ---
+    {
+        "id": "book-man-sec-1",
+        "title": "Linux Man Pages Sec. 1: User Commands (4,515 Pages)",
+        "author": "Linux Programmer's Manual (man1)",
+        "category": "Linux Man Pages (Sections 1-8)",
+        "spine_color": "#0f172a",
+        "icon_type": "manual_tech",
+        "filename": "book-man-sec-1.txt",
+        "man_section": "1",
+        "gutenberg_url": "",
+        "summary": "All 4,515 Section 1 user commands, shells, compilers, git, ssh, tar, grep, find, awk, sed, and CLI tools.",
+    },
+    {
+        "id": "book-man-sec-2",
+        "title": "Linux Man Pages Sec. 2: System Calls (886 Pages)",
+        "author": "Linux Kernel Man Pages (man2)",
+        "category": "Linux Man Pages (Sections 1-8)",
+        "spine_color": "#1e3a8a",
+        "icon_type": "manual_tech",
+        "filename": "book-man-sec-2.txt",
+        "man_section": "2",
+        "gutenberg_url": "",
+        "summary": "All 886 Section 2 kernel system calls: open, read, write, mmap, clone, fork, execve, futex, epoll, bpf, socket.",
+    },
+    {
+        "id": "book-man-sec-3",
+        "title": "Linux Man Pages Sec. 3: C & POSIX Library (5,427 Pages)",
+        "author": "GNU C Library & POSIX Manual (man3)",
+        "category": "Linux Man Pages (Sections 1-8)",
+        "spine_color": "#1d4ed8",
+        "icon_type": "manual_tech",
+        "filename": "book-man-sec-3.txt",
+        "man_section": "3",
+        "gutenberg_url": "",
+        "summary": "All 5,427 Section 3 C library, glibc, pthread, stdio, malloc, string, math, and OpenSSL functions.",
+    },
+    {
+        "id": "book-man-sec-4",
+        "title": "Linux Man Pages Sec. 4: Devices & /dev (55 Pages)",
+        "author": "Linux Kernel Device Manual (man4)",
+        "category": "Linux Man Pages (Sections 1-8)",
+        "spine_color": "#065f46",
+        "icon_type": "manual_tech",
+        "filename": "book-man-sec-4.txt",
+        "man_section": "4",
+        "gutenberg_url": "",
+        "summary": "All 55 Section 4 special files and device drivers: null, zero, urandom, tty, pts, console, mem, loop, sd.",
+    },
+    {
+        "id": "book-man-sec-5",
+        "title": "Linux Man Pages Sec. 5: File Formats & /proc (718 Pages)",
+        "author": "Linux System Formats Manual (man5)",
+        "category": "Linux Man Pages (Sections 1-8)",
+        "spine_color": "#115e59",
+        "icon_type": "manual_tech",
+        "filename": "book-man-sec-5.txt",
+        "man_section": "5",
+        "gutenberg_url": "",
+        "summary": "All 718 Section 5 configuration files and virtual filesystems: proc, sysfs, elf, passwd, fstab, resolv.conf.",
+    },
+    {
+        "id": "book-man-sec-6",
+        "title": "Linux Man Pages Sec. 6: Games & Demos (44 Pages)",
+        "author": "UNIX Manual (man6)",
+        "category": "Linux Man Pages (Sections 1-8)",
+        "spine_color": "#4c1d95",
+        "icon_type": "manual_tech",
+        "filename": "book-man-sec-6.txt",
+        "man_section": "6",
+        "gutenberg_url": "",
+        "summary": "All 44 Section 6 UNIX terminal games and graphical screen demonstrations.",
+    },
+    {
+        "id": "book-man-sec-7",
+        "title": "Linux Man Pages Sec. 7: Kernel, Protocols & Standards (845 Pages)",
+        "author": "Linux Kernel & Standards Manual (man7)",
+        "category": "Linux Man Pages (Sections 1-8)",
+        "spine_color": "#7c2d12",
+        "icon_type": "manual_tech",
+        "filename": "book-man-sec-7.txt",
+        "man_section": "7",
+        "gutenberg_url": "",
+        "summary": "All 845 Section 7 overview pages: namespaces, cgroups, capabilities, signal, socket, ip, tcp, udp, netlink, epoll.",
+    },
+    {
+        "id": "book-man-sec-8",
+        "title": "Linux Man Pages Sec. 8: Sysadmin & Networking (1,330 Pages)",
+        "author": "Linux Administration Manual (man8)",
+        "category": "Linux Man Pages (Sections 1-8)",
+        "spine_color": "#991b1b",
+        "icon_type": "manual_tech",
+        "filename": "book-man-sec-8.txt",
+        "man_section": "8",
+        "gutenberg_url": "",
+        "summary": "All 1,330 Section 8 system administration tools: mount, ip, iptables, nft, ss, sysctl, modprobe, fdisk, sshd.",
     },
 ]
 
 
-# Downloadable Catalog in "Add or Remove Books" (Includes both Instant Real Books & Official Kiwix ZIMs)
+# Curated Catalog of Alternative Local AI Models with Detailed Pros & Cons
+AI_MODEL_ALTERNATIVES: List[Dict[str, Any]] = [
+    {
+        "id": "elena-vancea:latest",
+        "name": "Elena Vancea 7B (BunkerOS Default)",
+        "family": "Qwen 2.5 7B Custom",
+        "params": "7.6B",
+        "download_size": "4.7 GB",
+        "ram_required": "5.5 GB RAM / VRAM",
+        "speed_tier": "Fast",
+        "best_for": "Default Bilingual Librarian & Archive RAG",
+        "pros": [
+            "Pre-installed in your vault with custom BunkerOS XP librarian instructions",
+            "Fluent in both English and Romanian with strong technical precision",
+            "Automatically cites local books, Linux man pages, and ZIM archives",
+        ],
+        "cons": [
+            "Requires ~5.5 GB RAM; can be heavy on older 4 GB RAM laptops",
+            "Formal archivist tone by default unless overridden in Persona settings",
+        ],
+    },
+    {
+        "id": "qwen2.5:7b-instruct-q4_K_M",
+        "name": "Qwen 2.5 7B Instruct (Q4_K_M)",
+        "family": "Alibaba Qwen 2.5",
+        "params": "7.6B",
+        "download_size": "4.7 GB",
+        "ram_required": "5.5 GB RAM / VRAM",
+        "speed_tier": "Fast",
+        "best_for": "General Knowledge, Math & Multilingual Q&A",
+        "pros": [
+            "Already pre-installed locally (instant switch with zero download)",
+            "Leading 7B model on instruction following, structured output, and 29+ languages",
+            "Excellent balance of speed, coding ability, and prose comprehension",
+        ],
+        "cons": [
+            "Generic assistant voice compared to specialized coding or reasoning models",
+        ],
+    },
+    {
+        "id": "qwen2.5-coder:7b",
+        "name": "Qwen 2.5 Coder 7B Instruct",
+        "family": "Alibaba Qwen 2.5 Coder",
+        "params": "7.6B",
+        "download_size": "4.7 GB",
+        "ram_required": "5.5 GB RAM / VRAM",
+        "speed_tier": "Fast",
+        "best_for": "Linux Kernel, C, Assembly, Bash & Syscall Engineering",
+        "pros": [
+            "State-of-the-art 7B open-weights coding specialist across 92 programming languages",
+            "Best model for writing C, x86_64 assembly, shell scripts, and explaining Linux man(2)/man(3) pages",
+            "Matches or beats many 14B-30B models on code repair and debugging",
+        ],
+        "cons": [
+            "More terse and code-focused; less expressive when discussing philosophy or fiction",
+        ],
+    },
+    {
+        "id": "deepseek-r1:7b",
+        "name": "DeepSeek-R1 Distill 7B (Reasoning)",
+        "family": "DeepSeek R1",
+        "params": "7.6B",
+        "download_size": "4.7 GB",
+        "ram_required": "5.5 GB RAM / VRAM",
+        "speed_tier": "Deliberate (Chain-of-Thought)",
+        "best_for": "Complex Logic, Algorithms, Strategy & Deep Analysis",
+        "pros": [
+            "Performs explicit step-by-step Chain-of-Thought reasoning before outputting its final answer",
+            "Self-corrects logic mistakes on hard math, architecture, and strategic problems",
+            "Distilled directly from the frontier 671B DeepSeek-R1 model",
+        ],
+        "cons": [
+            "Slower time-to-final-answer because it generates internal thinking tokens first",
+            "Can overthink simple factual lookups",
+        ],
+    },
+    {
+        "id": "llama3.2:3b",
+        "name": "Meta Llama 3.2 3B Instruct",
+        "family": "Meta Llama 3.2",
+        "params": "3.2B",
+        "download_size": "2.0 GB",
+        "ram_required": "2.8 GB RAM",
+        "speed_tier": "Ultra-Fast",
+        "best_for": "Fast Everyday Chat & Book Summarization on Any CPU",
+        "pros": [
+            "Runs 2x-3x faster than 7B models on CPU-only hardware with low RAM usage",
+            "Optimized by Meta specifically for summarizing long texts and local RAG",
+            "Small 2.0 GB download size",
+        ],
+        "cons": [
+            "Less memorized depth on obscure Linux kernel structures when no man page is attached",
+            "Weaker non-English grammar than Qwen 2.5 7B",
+        ],
+    },
+    {
+        "id": "qwen2.5:1.5b",
+        "name": "Qwen 2.5 1.5B Instruct (Featherweight)",
+        "family": "Alibaba Qwen 2.5",
+        "params": "1.5B",
+        "download_size": "986 MB",
+        "ram_required": "1.5 GB RAM",
+        "speed_tier": "Instant",
+        "best_for": "Low-RAM Laptops, Battery Saving & Instant Replies",
+        "pros": [
+            "Under 1 GB download; responds almost instantaneously even on older CPUs",
+            "Leaves almost all system RAM free for other containers and tools",
+            "Surprisingly capable when grounded with local book & man-page excerpts",
+        ],
+        "cons": [
+            "Limited complex reasoning capacity; relies heavily on RAG excerpts for accuracy",
+        ],
+    },
+    {
+        "id": "phi3.5:3.8b",
+        "name": "Microsoft Phi-3.5 Mini 3.8B",
+        "family": "Microsoft Phi-3.5",
+        "params": "3.8B",
+        "download_size": "2.2 GB",
+        "ram_required": "3.0 GB RAM",
+        "speed_tier": "Very Fast",
+        "best_for": "Compact Science, Logic & Textbook Q&A",
+        "pros": [
+            "Trained on high-density textbook data; punches far above its 3.8B parameter count",
+            "128K context window support with minimal memory footprint",
+            "Fast inference on both integrated GPUs and CPUs",
+        ],
+        "cons": [
+            "Primarily English-focused; noticeably weaker in Romanian than Qwen models",
+        ],
+    },
+    {
+        "id": "mistral:7b",
+        "name": "Mistral 7B Instruct v0.3",
+        "family": "Mistral AI",
+        "params": "7.3B",
+        "download_size": "4.1 GB",
+        "ram_required": "5.0 GB RAM / VRAM",
+        "speed_tier": "Fast",
+        "best_for": "Classic Literature, Philosophy & Creative Prose",
+        "pros": [
+            "Natural, articulate literary style—ideal for discussing Sun Tzu, Marcus Aurelius, Machiavelli, and novels",
+            "Strong European language understanding and low refusal rate",
+        ],
+        "cons": [
+            "Outpaced by Qwen 2.5 Coder 7B on modern C/Python coding benchmarks",
+        ],
+    },
+    {
+        "id": "gemma2:9b",
+        "name": "Google Gemma 2 9B Instruct",
+        "family": "Google Gemma 2",
+        "params": "9.2B",
+        "download_size": "5.4 GB",
+        "ram_required": "6.8 GB RAM / VRAM",
+        "speed_tier": "Moderate",
+        "best_for": "High-Precision Reading Comprehension & Nuanced Analysis",
+        "pros": [
+            "Knowledge-distilled from larger Gemini models; beats most 7B-8B models in blind evaluations",
+            "Exceptional at synthesizing long book chapters and comparing philosophical arguments",
+        ],
+        "cons": [
+            "Requires ~6.8 GB RAM/VRAM and generates tokens ~25% slower than 7B models",
+        ],
+    },
+    {
+        "id": "qwen2.5:14b",
+        "name": "Qwen 2.5 14B Instruct (Workstation Pro)",
+        "family": "Alibaba Qwen 2.5",
+        "params": "14.7B",
+        "download_size": "9.0 GB",
+        "ram_required": "11.0 GB RAM / VRAM",
+        "speed_tier": "Heavyweight",
+        "best_for": "Maximum Offline Intelligence (16GB+ RAM Systems)",
+        "pros": [
+            "Near-frontier offline accuracy across kernel engineering, mathematics, philosophy, and multilingual translation",
+            "Handles complex multi-source synthesis with minimal hallucination",
+        ],
+        "cons": [
+            "Large 9.0 GB download and requires ~11 GB free RAM/VRAM; slow on CPU-only hardware",
+        ],
+    },
+]
+
+
+# Downloadable Catalog in "Add or Remove Books" (Includes Instant Real Books & Official Kiwix ZIMs)
 DOWNLOAD_CATALOG: List[Dict[str, str]] = [
     # --- Instant Full-Text Real Books (Project Gutenberg) ---
     {

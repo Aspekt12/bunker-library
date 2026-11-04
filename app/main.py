@@ -10,6 +10,7 @@ Provides:
 """
 
 import asyncio
+import gzip
 import html
 import json
 import os
@@ -28,11 +29,12 @@ from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from seed_books import DEFAULT_REAL_BOOKS, DOWNLOAD_CATALOG
+from seed_books import AI_MODEL_ALTERNATIVES, DEFAULT_REAL_BOOKS, DOWNLOAD_CATALOG
 
 ZIM_DIR = Path(os.environ.get("ZIM_DIR", "/data/zim_files"))
 APP_DATA_DIR = Path(os.environ.get("APP_DATA_DIR", "/data/app_data"))
 BOOKS_DIR = APP_DATA_DIR / "books"
+MAN_DIR = APP_DATA_DIR / "manpages"
 DB_PATH = APP_DATA_DIR / "bunker_xp.db"
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
@@ -45,6 +47,7 @@ KIWIX_BASE_URL = f"http://127.0.0.1:{KIWIX_INTERNAL_PORT}"
 ZIM_DIR.mkdir(parents=True, exist_ok=True)
 APP_DATA_DIR.mkdir(parents=True, exist_ok=True)
 BOOKS_DIR.mkdir(parents=True, exist_ok=True)
+MAN_DIR.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(title="BunkerOS XP - Offline Knowledge Desktop")
 
@@ -59,9 +62,11 @@ async def disable_static_cache(request: Request, call_next):
     return response
 
 
-# Global state for kiwix-serve subprocess and active downloads
+# Global state for kiwix-serve subprocess, active downloads, and Ollama model pulls
 kiwix_proc: Optional[subprocess.Popen] = None
 active_downloads: Dict[str, Dict[str, Any]] = {}
+active_model_pulls: Dict[str, Dict[str, Any]] = {}
+man_index_cache: Optional[Dict[str, Any]] = None
 
 
 # ==============================================================================
@@ -535,6 +540,7 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "xp_theme": "luna-blue",           # luna-blue | luna-olive | luna-silver | royale-noir | classic-98
     "wallpaper": "wallpaper-bliss",    # wallpaper-bliss | wallpaper-autumn | wallpaper-azul | wallpaper-ascent | wallpaper-mahogany | wallpaper-teal | custom
     "custom_wallpaper": "",            # Data URL or external URL if wallpaper == 'custom'
+    "active_ai_model": DEFAULT_MODEL,  # Currently active Ollama model
     "ai_name": "Elena Vancea",
     "ai_avatar": "xp_agent_f",         # xp_agent_f | xp_agent_m | xp_clippy | xp_rover | xp_msn | xp_computer
     "ai_role_title": "Executive Secretary & Chief Technical Librarian",
@@ -599,11 +605,307 @@ async def api_save_settings(payload: Dict[str, Any]) -> Dict[str, Any]:
     return load_settings_dict()
 
 
+# ==============================================================================
+# 4B. Local AI Model Manager (Pros/Cons Catalog, Model Switcher & Live Puller)
+# ==============================================================================
+async def get_installed_ollama_models() -> Dict[str, Dict[str, Any]]:
+    installed: Dict[str, Dict[str, Any]] = {}
+    try:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            r = await client.get(f"{OLLAMA_BASE_URL}/api/tags")
+            if r.status_code == 200:
+                for m in r.json().get("models", []):
+                    name = m.get("name", "")
+                    if name:
+                        installed[name] = {
+                            "name": name,
+                            "size_bytes": m.get("size", 0),
+                            "size_label": format_bytes(m.get("size", 0)) if m.get("size") else "Installed",
+                            "modified_at": m.get("modified_at", ""),
+                        }
+    except Exception:
+        pass
+    return installed
+
+
+@app.get("/api/ai/models")
+async def api_list_ai_models() -> Dict[str, Any]:
+    settings = load_settings_dict()
+    active_model = settings.get("active_ai_model") or DEFAULT_MODEL
+    installed_map = await get_installed_ollama_models()
+
+    out_models: List[Dict[str, Any]] = []
+    seen_ids = set()
+
+    for alt in AI_MODEL_ALTERNATIVES:
+        mid = alt["id"]
+        seen_ids.add(mid)
+        # Check exact match or base tag match (e.g. qwen2.5:7b vs qwen2.5:7b-instruct-q4_K_M)
+        is_inst = mid in installed_map
+        inst_info = installed_map.get(mid)
+        out_models.append(
+            {
+                **alt,
+                "installed": is_inst,
+                "installed_size": inst_info["size_label"] if inst_info else alt["download_size"],
+                "active": active_model == mid,
+                "pull_state": active_model_pulls.get(mid),
+            }
+        )
+
+    # Also include any other local Ollama models not in AI_MODEL_ALTERNATIVES
+    for mname, minfo in installed_map.items():
+        if mname not in seen_ids:
+            out_models.append(
+                {
+                    "id": mname,
+                    "name": f"{mname} (Custom Local Model)",
+                    "family": "Local Ollama Model",
+                    "params": "Custom",
+                    "download_size": minfo["size_label"],
+                    "ram_required": "Varies",
+                    "speed_tier": "Local",
+                    "best_for": "Custom Imported Ollama Model",
+                    "pros": ["Already installed in your local Ollama storage"],
+                    "cons": ["Custom model parameters"],
+                    "installed": True,
+                    "installed_size": minfo["size_label"],
+                    "active": active_model == mname,
+                    "pull_state": active_model_pulls.get(mname),
+                }
+            )
+
+    return {
+        "active_model": active_model,
+        "installed_models": list(installed_map.keys()),
+        "models": out_models,
+        "active_pulls": active_model_pulls,
+    }
+
+
+class ModelSelectRequest(BaseModel):
+    model: str
+
+
+@app.post("/api/ai/models/select")
+async def api_select_ai_model(req: ModelSelectRequest) -> Dict[str, Any]:
+    model_id = req.model.strip()
+    if not model_id:
+        raise HTTPException(status_code=400, detail="Missing model ID")
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO app_settings (key, value) VALUES ('active_ai_model', ?) "
+        "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+        (json.dumps(model_id),),
+    )
+    cur.execute("UPDATE chats SET model = ?", (model_id,))
+    conn.commit()
+    conn.close()
+    return {"status": "ok", "active_model": model_id}
+
+
+async def run_ollama_pull_job(model_id: str) -> None:
+    active_model_pulls[model_id] = {
+        "model": model_id,
+        "status": "pulling",
+        "percent": 2,
+        "message": f"Connecting to Ollama registry for {model_id}...",
+    }
+    try:
+        async with httpx.AsyncClient(timeout=None) as client:
+            async with client.stream(
+                "POST",
+                f"{OLLAMA_BASE_URL}/api/pull",
+                json={"name": model_id, "stream": True},
+            ) as resp:
+                if resp.status_code != 200:
+                    active_model_pulls[model_id] = {
+                        "model": model_id,
+                        "status": "error",
+                        "percent": 0,
+                        "message": f"Ollama returned HTTP {resp.status_code}",
+                    }
+                    return
+                async for line in resp.aiter_lines():
+                    if not line.strip():
+                        continue
+                    try:
+                        data = json.loads(line)
+                    except Exception:
+                        continue
+                    if "error" in data:
+                        active_model_pulls[model_id] = {
+                            "model": model_id,
+                            "status": "error",
+                            "percent": 0,
+                            "message": str(data["error"]),
+                        }
+                        return
+                    status_txt = data.get("status", "Downloading...")
+                    total = data.get("total") or 0
+                    completed = data.get("completed") or 0
+                    pct = active_model_pulls[model_id].get("percent", 5)
+                    if total > 0:
+                        pct = min(99, max(3, int((completed / total) * 100)))
+                    active_model_pulls[model_id] = {
+                        "model": model_id,
+                        "status": "pulling",
+                        "percent": pct,
+                        "message": f"{status_txt} ({pct}%)" if total else status_txt,
+                    }
+
+        # Auto-activate newly pulled model
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO app_settings (key, value) VALUES ('active_ai_model', ?) "
+            "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+            (json.dumps(model_id),),
+        )
+        conn.commit()
+        conn.close()
+
+        active_model_pulls[model_id] = {
+            "model": model_id,
+            "status": "completed",
+            "percent": 100,
+            "message": f"Installed {model_id} and set as Active Model!",
+        }
+    except Exception as exc:
+        active_model_pulls[model_id] = {
+            "model": model_id,
+            "status": "error",
+            "percent": 0,
+            "message": str(exc),
+        }
+
+
+@app.post("/api/ai/models/pull")
+async def api_pull_ai_model(req: ModelSelectRequest) -> Dict[str, Any]:
+    model_id = req.model.strip()
+    if not model_id:
+        raise HTTPException(status_code=400, detail="Missing model ID")
+    existing = active_model_pulls.get(model_id)
+    if existing and existing.get("status") == "pulling":
+        return {"status": "already_pulling", "job": existing}
+    asyncio.create_task(run_ollama_pull_job(model_id))
+    return {"status": "started", "model": model_id}
+
+
+# ==============================================================================
+# 4C. Complete Linux Man Pages (13,820 Pages Across Sections 1-8) API
+# ==============================================================================
+def get_man_index() -> Dict[str, Any]:
+    global man_index_cache
+    if man_index_cache is not None:
+        return man_index_cache
+    idx_path = MAN_DIR / "man_index.json"
+    if idx_path.exists():
+        try:
+            man_index_cache = json.loads(idx_path.read_text(encoding="utf-8"))
+            return man_index_cache
+        except Exception:
+            pass
+    return {"total": 0, "sections": {}}
+
+
+def render_man_file_to_markdown(sec: str, filename: str, page_name: str) -> str:
+    p = MAN_DIR / f"man{sec}" / filename
+    if not p.exists():
+        return ""
+    raw = (
+        gzip.open(p, "rt", encoding="utf-8", errors="replace").read()
+        if filename.endswith(".gz")
+        else p.read_text(encoding="utf-8", errors="replace")
+    )
+    # Follow .so manX/file redirects
+    m_so = re.match(r"^\.so\s+man([1-8])/([^\s]+)", raw.strip())
+    if m_so:
+        t_sec, t_name = m_so.group(1), m_so.group(2)
+        for cand in (t_name, t_name + ".gz"):
+            tp = MAN_DIR / f"man{t_sec}" / cand
+            if tp.exists():
+                raw = (
+                    gzip.open(tp, "rt", encoding="utf-8", errors="replace").read()
+                    if cand.endswith(".gz")
+                    else tp.read_text(encoding="utf-8", errors="replace")
+                )
+                break
+
+    lines = [f"# {page_name.upper()}({sec}) — Linux Programmer's Manual\n"]
+    for line in raw.splitlines():
+        if line.startswith('.\\"') or line.startswith("'\\\""):
+            continue
+        m_sh = re.match(r"^\.(?:SH|SS)\s+(.*)", line)
+        if m_sh:
+            hdr = m_sh.group(1).strip().strip('"')
+            lines.append(f"\n## {hdr}\n")
+            continue
+        if re.match(r"^\.(?:TP|IP|PP|LP|P|br|sp)\b", line):
+            lines.append("\n")
+            continue
+        m_bi = re.match(r"^\.(?:B|I|BR|IB|RB|RI|IR|SM)\s+(.*)", line)
+        if m_bi:
+            lines.append(m_bi.group(1).replace('"', ""))
+            continue
+        if line.startswith("."):
+            continue
+        s = re.sub(r"\\f[BIPR0-9]|\\f\([A-Za-z]{2}", "", line)
+        s = (
+            s.replace("\\-", "-")
+            .replace("\\(aq", "'")
+            .replace("\\(dq", '"')
+            .replace("\\&", "")
+            .replace("\\e", "\\")
+        )
+        lines.append(s)
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(lines)).strip()
+
+
+@app.get("/api/man/search")
+async def api_search_man_pages(q: str = "", sec: str = "") -> Dict[str, Any]:
+    idx = get_man_index()
+    q_clean = q.strip().lower()
+    sections_to_check = [sec] if sec in ("1", "2", "3", "4", "5", "6", "7", "8") else ["1", "2", "3", "4", "5", "6", "7", "8"]
+
+    results = []
+    for s in sections_to_check:
+        for entry in idx.get("sections", {}).get(s, []):
+            ename = entry["name"].lower()
+            if not q_clean or q_clean in ename:
+                score = 0 if ename == q_clean else (1 if ename.startswith(q_clean) else 2)
+                results.append({**entry, "score": score})
+                if len(results) >= 250 and not q_clean:
+                    break
+    results.sort(key=lambda x: (x["score"], x["sec"], x["name"]))
+    return {"total_archive": idx.get("total", 0), "results": results[:120]}
+
+
+@app.get("/api/man/page/{sec}/{page_name}")
+async def api_get_man_page(sec: str, page_name: str) -> Dict[str, Any]:
+    idx = get_man_index()
+    entries = idx.get("sections", {}).get(str(sec), [])
+    target = next((e for e in entries if e["name"].lower() == page_name.lower()), None)
+    if not target:
+        raise HTTPException(status_code=404, detail=f"Man page {page_name}({sec}) not found")
+    content = render_man_file_to_markdown(str(sec), target["file"], target["name"])
+    return {
+        "name": target["name"],
+        "sec": sec,
+        "title": f"{target['name']}({sec}) — Linux Manual Page",
+        "content": content,
+        "word_count": len(content.split()),
+    }
+
+
 @app.get("/api/system/status")
 async def api_system_status() -> Dict[str, Any]:
     disk = shutil.disk_usage(str(ZIM_DIR))
     zim_count = len(list(ZIM_DIR.glob("*.zim")))
     kiwix_running = kiwix_proc is not None and kiwix_proc.poll() is None
+    settings = load_settings_dict()
+    preferred_model = settings.get("active_ai_model") or DEFAULT_MODEL
 
     ollama_online = False
     ollama_models: List[str] = []
@@ -616,17 +918,24 @@ async def api_system_status() -> Dict[str, Any]:
     except Exception:
         pass
 
+    active_model = (
+        preferred_model
+        if preferred_model in ollama_models
+        else (DEFAULT_MODEL if DEFAULT_MODEL in ollama_models else (ollama_models[0] if ollama_models else preferred_model))
+    )
+    man_idx = get_man_index()
     items = get_all_library_items()
     return {
         "disk_free_gb": round(disk.free / (1024**3), 1),
         "disk_total_gb": round(disk.total / (1024**3), 1),
         "disk_used_percent": round((disk.used / disk.total) * 100, 1),
         "zim_count": zim_count,
+        "man_pages_count": man_idx.get("total", 0),
         "total_books": len(items),
         "kiwix_running": kiwix_running,
         "ollama_online": ollama_online,
         "ollama_models": ollama_models,
-        "active_model": DEFAULT_MODEL if DEFAULT_MODEL in ollama_models else (ollama_models[0] if ollama_models else DEFAULT_MODEL),
+        "active_model": active_model,
     }
 
 
@@ -646,7 +955,7 @@ async def api_get_library() -> Dict[str, Any]:
 
 @app.get("/api/library/volume/{vol_id}")
 async def api_get_volume(vol_id: str) -> Dict[str, Any]:
-    # 1. Check installed full-text books
+    # 1. Check installed full-text books (and Linux Man Page Section volumes)
     for bdef in get_all_book_definitions():
         if bdef["id"] == vol_id:
             fpath = BOOKS_DIR / bdef["filename"]
@@ -655,6 +964,11 @@ async def api_get_volume(vol_id: str) -> Dict[str, Any]:
                 chapters = parse_book_chapters(raw_text, bdef["title"])
                 stat = fpath.stat()
                 total_words = sum(ch.get("word_count", 0) for ch in chapters)
+                man_sec = bdef.get("man_section", "")
+                man_pages_list = []
+                if man_sec:
+                    idx = get_man_index()
+                    man_pages_list = [e["name"] for e in idx.get("sections", {}).get(str(man_sec), [])]
                 return {
                     "id": bdef["id"],
                     "title": bdef["title"],
@@ -665,6 +979,8 @@ async def api_get_volume(vol_id: str) -> Dict[str, Any]:
                     "size_label": format_bytes(stat.st_size),
                     "word_count": total_words,
                     "summary": bdef["summary"],
+                    "man_section": man_sec,
+                    "man_pages_list": man_pages_list,
                     "chapters": chapters,
                     "content": chapters[0]["content"] if chapters else raw_text[:12000],
                 }
@@ -1045,7 +1361,28 @@ async def search_all_archives(query: str) -> List[Dict[str, str]]:
             )
     conn.close()
 
-    # 3. Search live Kiwix ZIM server if running
+    # 3. Search across all 13,820 Linux Man Pages (Sections 1-8)
+    man_idx = get_man_index()
+    for sec in ("2", "3", "1", "7", "8", "5", "4"):
+        for entry in man_idx.get("sections", {}).get(sec, []):
+            ename = entry["name"].lower()
+            if ename in tokens:
+                man_md = render_man_file_to_markdown(sec, entry["file"], entry["name"])
+                if man_md:
+                    matches.append(
+                        {
+                            "id": f"man::{sec}::{entry['name']}",
+                            "man_sec": sec,
+                            "man_name": entry["name"],
+                            "title": f"man {entry['name']}({sec})",
+                            "type": "man_page",
+                            "snippet": man_md[:850],
+                            "score": "10",
+                        }
+                    )
+                    break
+
+    # 4. Search live Kiwix ZIM server if running
     if kiwix_proc and kiwix_proc.poll() is None:
         try:
             async with httpx.AsyncClient(timeout=4.0) as client:
@@ -1227,7 +1564,7 @@ async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, A
     )
 
     reply_text = ""
-    target_model = req.model or chat_row["model"] or DEFAULT_MODEL
+    target_model = req.model or current_settings.get("active_ai_model") or chat_row["model"] or DEFAULT_MODEL
 
     try:
         async with httpx.AsyncClient(timeout=90.0) as client:

@@ -20,6 +20,7 @@ let appSettings = {
     chat_layout: "fb-side",
     font_size_px: 12,
     reader_font_size_px: 15,
+    active_ai_model: "elena-vancea:latest",
 };
 
 let libraryData = { total: 0, items: [], categories: {} };
@@ -29,10 +30,13 @@ let selectedCategory = "ALL";
 let currentReaderBook = null;
 let currentBookChapters = [];
 let currentChapterIndex = 0;
+let activeManPageName = null;
 
 let savedChats = [];
 let activeChatId = null;
 let downloadPollTimer = null;
+let aiModelsData = { active_model: "elena-vancea:latest", models: [] };
+let modelPullPollTimer = null;
 
 // ==========================================================================
 // 0. AUTHENTIC WINDOWS XP 3D VECTOR ICON ENGINE (ZERO EMOJI SLOP)
@@ -403,6 +407,7 @@ async function refreshAll() {
         loadSystemStatus(),
         loadLibrary(),
         loadCatalog(),
+        loadAiModels(),
     ]);
 }
 
@@ -596,12 +601,206 @@ function populateSettingsForm(cfg) {
 }
 
 function switchSettingsTab(tabName) {
-    ["themes", "interface", "ai", "bookshelf"].forEach((t) => {
+    ["themes", "interface", "models", "ai", "bookshelf"].forEach((t) => {
         const btn = document.getElementById(`tabbtn-${t}`);
         const page = document.getElementById(`tabpage-${t}`);
         if (btn) btn.classList.toggle("active", t === tabName);
         if (page) page.style.display = t === tabName ? "block" : "none";
     });
+    if (tabName === "models") {
+        loadAiModels();
+    }
+}
+
+// --------------------------------------------------------------------------
+// 2b. AI Models Switcher, Pros & Cons Comparison & Ollama Pull Manager
+// --------------------------------------------------------------------------
+async function loadAiModels() {
+    try {
+        const res = await fetch("/api/ai/models");
+        aiModelsData = await res.json();
+        appSettings.active_ai_model = aiModelsData.active_model;
+        renderAiModelsComparison();
+        populateChatHeaderModelDropdown();
+    } catch (err) {
+        console.error("Failed to load AI models:", err);
+    }
+}
+
+function populateChatHeaderModelDropdown() {
+    const sel = document.getElementById("chat-header-model-select");
+    if (!sel) return;
+
+    const models = aiModelsData.models || [];
+    const installed = models.filter((m) => m.installed);
+    const notInstalled = models.filter((m) => !m.installed);
+
+    let html = "";
+    if (installed.length > 0) {
+        html += `<optgroup label="Installed Local Models">`;
+        installed.forEach((m) => {
+            const isSel = m.id === aiModelsData.active_model ? "selected" : "";
+            html += `<option value="${escapeAttr(m.id)}" ${isSel}>${escapeHtml(m.name)} (${escapeHtml(m.params)})</option>`;
+        });
+        html += `</optgroup>`;
+    }
+    if (notInstalled.length > 0) {
+        html += `<optgroup label="Available to Pull (Click Models)">`;
+        notInstalled.forEach((m) => {
+            const isSel = m.id === aiModelsData.active_model ? "selected" : "";
+            html += `<option value="${escapeAttr(m.id)}" ${isSel}>[Pull] ${escapeHtml(m.name)} (${escapeHtml(m.download_size)})</option>`;
+        });
+        html += `</optgroup>`;
+    }
+    sel.innerHTML = html;
+}
+
+function renderAiModelsComparison() {
+    const container = document.getElementById("ai-models-comparison-list");
+    if (!container) return;
+
+    let anyPulling = false;
+    let html = "";
+
+    (aiModelsData.models || []).forEach((m) => {
+        const pull = m.pull_state;
+        const isPulling = pull && pull.status === "pulling";
+        if (isPulling) anyPulling = true;
+
+        const prosHtml = (m.pros || []).map((p) => `<li>${escapeHtml(p)}</li>`).join("");
+        const consHtml = (m.cons || []).map((c) => `<li>${escapeHtml(c)}</li>`).join("");
+
+        let actionHtml = "";
+        if (m.active) {
+            actionHtml = `
+                <span style="color:#065f46;font-weight:bold;display:inline-flex;align-items:center;gap:4px;">
+                    ${xpIcon("status_ok", 16)} <span>Active Model</span>
+                </span>
+            `;
+        } else if (m.installed) {
+            actionHtml = `
+                <button class="xp-button-primary" onclick="selectAiModel('${escapeAttr(m.id)}')">
+                    Activate Model
+                </button>
+            `;
+        } else if (isPulling) {
+            const pct = pull.percent || 10;
+            actionHtml = `
+                <div style="width:200px;">
+                    <div style="font-size:10.5px;color:#003c9d;margin-bottom:2px;">${escapeHtml(pull.message || "Pulling...")}</div>
+                    <div class="xp-progress-outer"><div class="xp-progress-inner" style="width:${pct}%;"></div></div>
+                </div>
+            `;
+        } else {
+            actionHtml = `
+                <div style="display:flex;gap:5px;align-items:center;">
+                    <button class="xp-button" onclick="pullAiModel('${escapeAttr(m.id)}')">
+                        Pull &amp; Install (${escapeHtml(m.download_size)})
+                    </button>
+                </div>
+            `;
+        }
+
+        html += `
+            <div class="ai-model-card ${m.active ? "active-model" : ""}">
+                <div class="ai-model-header">
+                    <div class="ai-model-title-group">
+                        ${xpIcon("xp_computer", 18)}
+                        <span class="ai-model-name">${escapeHtml(m.name)}</span>
+                        <code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border:1px solid #cbd5e1;border-radius:3px;">${escapeHtml(m.id)}</code>
+                        <span class="ai-model-badge badge-params">${escapeHtml(m.params)}</span>
+                        <span class="ai-model-badge badge-ram">${escapeHtml(m.ram_required)}</span>
+                        <span class="ai-model-badge badge-speed">${escapeHtml(m.speed_tier)}</span>
+                        ${m.installed ? `<span class="ai-model-badge badge-installed">Installed (${escapeHtml(m.installed_size || m.download_size)})</span>` : ""}
+                        ${m.active ? `<span class="ai-model-badge badge-active">ACTIVE</span>` : ""}
+                    </div>
+                    <div>${actionHtml}</div>
+                </div>
+                <div class="ai-model-bestfor">
+                    <strong>Best For:</strong> ${escapeHtml(m.best_for || "")}
+                </div>
+                <div class="ai-model-pros-cons">
+                    <div class="ai-pros-box">
+                        <strong>Pros (Strengths)</strong>
+                        <ul>${prosHtml}</ul>
+                    </div>
+                    <div class="ai-cons-box">
+                        <strong>Cons (Trade-offs)</strong>
+                        <ul>${consHtml}</ul>
+                    </div>
+                </div>
+                ${pull && pull.status === "error" ? `<div style="color:#dc2626;font-size:11px;margin-top:4px;">Pull Error: ${escapeHtml(pull.message)}</div>` : ""}
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+
+    if (anyPulling) {
+        if (!modelPullPollTimer) {
+            modelPullPollTimer = setInterval(async () => {
+                await loadAiModels();
+                await loadSystemStatus();
+            }, 1500);
+        }
+    } else if (modelPullPollTimer) {
+        clearInterval(modelPullPollTimer);
+        modelPullPollTimer = null;
+        loadSystemStatus();
+    }
+}
+
+async function selectAiModel(modelId) {
+    if (!modelId) return;
+    const target = (aiModelsData.models || []).find((m) => m.id === modelId);
+    if (target && !target.installed) {
+        const wantPull = confirm(`Model "${target.name}" (${target.id}) is not installed locally yet (${target.download_size}). Would you like to pull & install it now via Ollama?`);
+        if (wantPull) {
+            openWindow("win-settings");
+            switchSettingsTab("models");
+            await pullAiModel(modelId);
+        } else {
+            populateChatHeaderModelDropdown();
+        }
+        return;
+    }
+
+    try {
+        await fetch("/api/ai/models/select", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ model_id: modelId }),
+        });
+        await loadAiModels();
+        await loadSystemStatus();
+    } catch (err) {
+        console.error("Failed to select AI model:", err);
+    }
+}
+
+async function pullAiModel(modelId) {
+    if (!modelId) return;
+    try {
+        await fetch("/api/ai/models/pull", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ model_id: modelId }),
+        });
+        await loadAiModels();
+    } catch (err) {
+        console.error("Failed to pull model:", err);
+    }
+}
+
+async function pullCustomOllamaModel() {
+    const input = document.getElementById("custom-ollama-model-input");
+    const tag = (input?.value || "").trim();
+    if (!tag) {
+        alert("Enter an Ollama model tag (e.g. llama3.2:1b, codellama:7b, mistral-nemo:12b).");
+        return;
+    }
+    input.value = "";
+    await pullAiModel(tag);
 }
 
 function quickSelectTheme(themeKey) {
@@ -783,7 +982,7 @@ function toggleFbSessionsList() {
 }
 
 function handleDrawerHeaderClick(e) {
-    if (e.target.tagName === "BUTTON") return;
+    if (e.target.tagName === "BUTTON" || e.target.tagName === "SELECT" || e.target.tagName === "OPTION") return;
     toggleChatDrawer();
 }
 
@@ -1286,10 +1485,12 @@ async function openLibraryItem(itemId) {
                 ? vol.chapters
                 : [{ index: 0, title: vol.title, content: vol.content || "", word_count: (vol.content || "").split(/\s+/).length }];
             currentChapterIndex = 0;
+            activeManPageName = null;
 
             const wcEl = document.getElementById("reader-wordcount-text");
             if (wcEl) {
-                wcEl.textContent = `${(vol.word_count || 0).toLocaleString()} words (${vol.size_label || ""}) — ${currentBookChapters.length} sections`;
+                const manExtra = vol.man_pages_list ? ` + ${vol.man_pages_list.length.toLocaleString()} raw man(${vol.man_section}) pages` : "";
+                wcEl.textContent = `${(vol.word_count || 0).toLocaleString()} words (${vol.size_label || ""}) — ${currentBookChapters.length} sections${manExtra}`;
             }
 
             renderBookTocList();
@@ -1313,7 +1514,7 @@ function renderBookTocList() {
             const inContent = ch.content.toLowerCase().includes(filter);
             if (!inTitle && !inContent) return;
         }
-        const isActive = idx === currentChapterIndex;
+        const isActive = !activeManPageName && idx === currentChapterIndex;
         html += `
             <div class="reader-toc-item ${isActive ? "active" : ""}" onclick="selectBookChapter(${idx})">
                 <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${idx + 1}. ${escapeHtml(ch.title)}</span>
@@ -1321,6 +1522,34 @@ function renderBookTocList() {
             </div>
         `;
     });
+
+    // If this volume is a Linux Man Pages Section (1..8), list the raw on-demand man pages too!
+    if (currentReaderBook && currentReaderBook.man_section && Array.isArray(currentReaderBook.man_pages_list)) {
+        const sec = currentReaderBook.man_section;
+        const allManPages = currentReaderBook.man_pages_list;
+        const matchingPages = filter
+            ? allManPages.filter((p) => p.toLowerCase().includes(filter))
+            : allManPages;
+
+        const displaySlice = matchingPages.slice(0, 200);
+        html += `
+            <div style="padding:6px 8px;background:#dce6f7;border-top:1px solid #94a3b8;border-bottom:1px solid #94a3b8;font-weight:bold;color:#1e3a8a;font-size:11px;">
+                All man(${sec}) Pages (${matchingPages.length.toLocaleString()} available — click any to open)
+            </div>
+        `;
+        displaySlice.forEach((pName) => {
+            const isManActive = activeManPageName === `${sec}:${pName}`;
+            html += `
+                <div class="reader-toc-item ${isManActive ? "active" : ""}" onclick="openManPage('${escapeAttr(sec)}', '${escapeAttr(pName)}')">
+                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Lucida Console',monospace;">man ${escapeHtml(pName)}(${sec})</span>
+                    <small>.gz</small>
+                </div>
+            `;
+        });
+        if (matchingPages.length > displaySlice.length) {
+            html += `<div style="padding:6px 8px;color:#475569;font-size:11px;">Showing first 200 of ${matchingPages.length.toLocaleString()} man(${sec}) pages. Type in the filter box above to jump to any page!</div>`;
+        }
+    }
 
     if (!html) {
         html = `<div style="padding:10px;color:#64748b;">No chapters matched "${escapeHtml(filter)}".</div>`;
@@ -1334,6 +1563,7 @@ function filterBookChapters() {
 
 function selectBookChapter(idx) {
     if (!currentBookChapters.length) return;
+    activeManPageName = null;
     currentChapterIndex = Math.max(0, Math.min(currentBookChapters.length - 1, idx));
     renderBookTocList();
 
@@ -1370,6 +1600,50 @@ function selectBookChapter(idx) {
     const statusEl = document.getElementById("reader-status-text");
     if (statusEl && currentReaderBook) {
         statusEl.textContent = `${currentReaderBook.title} — Section ${currentChapterIndex + 1}/${currentBookChapters.length}: ${ch.title}`;
+    }
+}
+
+async function openManPage(sec, pageName) {
+    openWindow("win-reader");
+    const volDiv = document.getElementById("reader-volume-content");
+    const iframe = document.getElementById("reader-kiwix-iframe");
+    const tocSidebar = document.getElementById("reader-toc-sidebar");
+    if (iframe) iframe.style.display = "none";
+    if (volDiv) volDiv.style.display = "block";
+    if (tocSidebar) tocSidebar.style.display = "flex";
+
+    activeManPageName = `${sec}:${pageName}`;
+    renderBookTocList();
+
+    document.getElementById("reader-win-icon").innerHTML = xpIcon("book_slate", 16);
+    document.getElementById("reader-win-title").textContent = `man ${pageName}(${sec}) — Linux Man Pages Archive`;
+    document.getElementById("reader-location-bar").value = `C:\\Bunker_Library\\ManPages\\man${sec}\\${pageName}.${sec}.gz`;
+
+    if (volDiv) {
+        volDiv.innerHTML = `<p>Decompressing and formatting <code>man ${escapeHtml(pageName)}(${escapeHtml(sec)})</code>...</p>`;
+    }
+
+    try {
+        const res = await fetch(`/api/man/page/${encodeURIComponent(sec)}/${encodeURIComponent(pageName)}`);
+        const data = await res.json();
+        if (volDiv) {
+            volDiv.innerHTML = `
+                <div class="reader-book-header-box">
+                    <h1>${escapeHtml(data.title || `${pageName}(${sec})`)}</h1>
+                    <div class="meta-sub"><strong>Linux Manual Section:</strong> man(${escapeHtml(sec)}) &bull; <strong>Source Archive:</strong> <code>/data/app_data/manpages/man${escapeHtml(sec)}/${escapeHtml(pageName)}.${escapeHtml(sec)}.gz</code> &bull; <strong>Words:</strong> ${(data.word_count || 0).toLocaleString()}</div>
+                </div>
+                <div class="reader-chapter-prose">${renderMarkdown(data.content || "")}</div>
+            `;
+            volDiv.scrollTop = 0;
+        }
+        const statusEl = document.getElementById("reader-status-text");
+        if (statusEl) {
+            statusEl.textContent = `Viewing Linux Man Page: man ${pageName}(${sec}) (${(data.word_count || 0).toLocaleString()} words)`;
+        }
+    } catch (err) {
+        if (volDiv) {
+            volDiv.innerHTML = `<p style="color:#dc2626;">Failed to load man ${escapeHtml(pageName)}(${escapeHtml(sec)}): ${escapeHtml(String(err))}</p>`;
+        }
     }
 }
 
@@ -1663,6 +1937,9 @@ function renderMessagesStream(messages) {
                 .map((s) => {
                     if (s.type === "zim_article" && s.url) {
                         return `<span class="source-chip" onclick="openKiwixBrowser('${escapeAttr(s.url)}')">${xpIcon("zim_disc", 13)} <span>${escapeHtml(s.title)}</span></span>`;
+                    }
+                    if (s.type === "man_page" && s.man_sec && s.man_name) {
+                        return `<span class="source-chip" onclick="openManPage('${escapeAttr(s.man_sec)}', '${escapeAttr(s.man_name)}')">${xpIcon("book_slate", 13)} <span>${escapeHtml(s.title)}</span></span>`;
                     }
                     return `<span class="source-chip" onclick="openLibraryItem('${escapeAttr(s.id)}')">${xpIcon("book_blue", 13)} <span>${escapeHtml(s.title)}</span></span>`;
                 })
