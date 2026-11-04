@@ -1,13 +1,27 @@
 /* ==========================================================================
-   BunkerOS XP — Client Controller (Window Manager, Dynamic Bookshelf & AI Chat)
+   BunkerOS XP — Client Controller
+   1:1 Windows XP Themes, Settings App, 4 Bookshelf Layouts & FB Side Chat
    ========================================================================== */
 
 let highestZ = 40;
 let dragState = null;
 
+let appSettings = {
+    xp_theme: "luna-blue",
+    wallpaper: "wallpaper-bliss",
+    custom_wallpaper: "",
+    ai_name: "Elena Vancea",
+    ai_avatar: "👩‍💼",
+    ai_role_title: "Executive Secretary & Chief Technical Librarian",
+    ai_personality: "",
+    bookshelf_layout: "spines-3d",
+    shelf_density: "normal",
+    chat_layout: "fb-side",
+    font_size_px: 12,
+};
+
 let libraryData = { total: 0, items: [], categories: {} };
 let selectedCategory = "ALL";
-let currentLibraryView = "shelf"; // 'shelf' or 'folders'
 let currentReaderBook = null;
 
 let savedChats = [];
@@ -16,10 +30,42 @@ let downloadPollTimer = null;
 
 const WINDOW_META = {
     "win-library":    { title: "My Library (Bookshelf)", icon: "🏛️" },
+    "win-settings":   { title: "Control Panel & Settings", icon: "⚙️" },
     "win-downloader": { title: "Add/Remove Books (ZIM)", icon: "📦" },
     "win-reader":     { title: "Document Viewer",        icon: "📘" },
     "win-chats":      { title: "Saved Chats Folder",     icon: "💬" },
     "win-new-book":   { title: "Write New Volume",       icon: "📝" },
+};
+
+const PERSONA_PRESETS = {
+    librarian: {
+        name: "Elena Vancea",
+        avatar: "👩‍💼",
+        role: "Executive Secretary & Chief Technical Librarian",
+        prompt:
+            "You are {ai_name}, {ai_role_title} inside BunkerOS XP. Answer with rigorous technical precision in the user's language (Romanian or English). Always ground your answers in the local archive excerpts and cite the volume title.",
+    },
+    clippy: {
+        name: "Clippy XP",
+        avatar: "📎",
+        role: "Windows XP Office & Archive Assistant",
+        prompt:
+            "You are {ai_name} ({ai_role_title}). Start occasionally with a nostalgic 'It looks like you're researching...' and provide super helpful, enthusiastic, accurate technical answers grounded in the local BunkerOS XP archives!",
+    },
+    hacker: {
+        name: "Root0x86",
+        avatar: "🤖",
+        role: "Low-Level Kernel & Systems Architect",
+        prompt:
+            "You are {ai_name}, {ai_role_title}. Provide terse, high-signal low-level engineering answers with register tables, assembly snippets, and C/POSIX examples from the local vault.",
+    },
+    medic: {
+        name: "Dr. Vance",
+        avatar: "🦉",
+        role: "Field Resilience & Emergency Medical Officer",
+        prompt:
+            "You are {ai_name}, {ai_role_title}. Provide clear, step-by-step survival, off-grid engineering, and emergency medical protocols strictly grounded in the local reference manuals.",
+    },
 };
 
 // --------------------------------------------------------------------------
@@ -29,11 +75,11 @@ window.addEventListener("DOMContentLoaded", async () => {
     updateClock();
     setInterval(updateClock, 15000);
 
-    // Attach mousedown focus handler to all XP windows
     document.querySelectorAll(".xp-window").forEach((win) => {
         win.addEventListener("mousedown", () => focusWindow(win.id));
     });
 
+    await loadSettings();
     renderTaskbarTabs();
     await refreshAll();
     await loadChatsList(true);
@@ -55,7 +101,229 @@ async function refreshAll() {
 }
 
 // --------------------------------------------------------------------------
-// 2. Windows XP Window Manager (Open, Close, Minimize, Maximize, Drag, Taskbar)
+// 2. Settings & Control Panel Management (/api/settings)
+// --------------------------------------------------------------------------
+async function loadSettings() {
+    try {
+        const res = await fetch("/api/settings");
+        appSettings = await res.json();
+        applySettingsToDOM(appSettings);
+        populateSettingsForm(appSettings);
+    } catch (err) {
+        console.error("Failed to load settings:", err);
+        applySettingsToDOM(appSettings);
+    }
+}
+
+function applySettingsToDOM(cfg) {
+    const themeCls = `theme-${cfg.xp_theme || "luna-blue"}`;
+    const wallCls = cfg.wallpaper || "wallpaper-bliss";
+    const chatCls = `chat-mode-${cfg.chat_layout || "fb-side"}`;
+
+    document.body.className = `${themeCls} ${wallCls} ${chatCls}`;
+
+    if (cfg.wallpaper === "custom" && cfg.custom_wallpaper) {
+        document.body.style.backgroundImage = `url("${cfg.custom_wallpaper}")`;
+    } else {
+        document.body.style.backgroundImage = "";
+    }
+
+    // Apply Font Size CSS Variable
+    const fontPx = parseInt(cfg.font_size_px || 12, 10);
+    document.documentElement.style.setProperty("--ui-font-size", `${fontPx}px`);
+
+    // Apply AI Helper Name & Avatar across Chat Dock + Start Menu
+    const aiName = cfg.ai_name || "Elena Vancea";
+    const aiAvatar = cfg.ai_avatar || "👩‍💼";
+
+    const setEl = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+    };
+    setEl("chat-header-avatar", aiAvatar);
+    setEl("chat-header-name", aiName);
+    setEl("cmd-bar-avatar", aiAvatar);
+    setEl("cmd-bar-name", aiName);
+    setEl("start-menu-ai-icon", aiAvatar);
+    setEl("start-menu-ai-name", `${aiName} AI`);
+
+    const chatInput = document.getElementById("ai-chat-input");
+    if (chatInput) {
+        chatInput.placeholder = `Message ${aiName}...`;
+    }
+
+    // Apply Bookshelf Layout Mode
+    updateBookshelfLayoutVisibility(cfg.bookshelf_layout || "spines-3d");
+    renderLibraryViews();
+}
+
+function populateSettingsForm(cfg) {
+    const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val ?? "";
+    };
+    setVal("set-xp-theme", cfg.xp_theme || "luna-blue");
+    setVal("set-wallpaper", cfg.wallpaper || "wallpaper-bliss");
+    setVal("set-custom-wallpaper", cfg.custom_wallpaper || "");
+    setVal("set-ai-name", cfg.ai_name || "Elena Vancea");
+    setVal("set-ai-avatar", cfg.ai_avatar || "👩‍💼");
+    setVal("set-ai-role", cfg.ai_role_title || "");
+    setVal("set-ai-personality", cfg.ai_personality || "");
+    setVal("set-shelf-density", cfg.shelf_density || "normal");
+    setVal("set-font-size", cfg.font_size_px || 12);
+
+    const fontLabel = document.getElementById("font-size-val-label");
+    if (fontLabel) fontLabel.textContent = `${cfg.font_size_px || 12}px`;
+
+    document.querySelectorAll('input[name="set_bookshelf_layout"]').forEach((r) => {
+        r.checked = r.value === (cfg.bookshelf_layout || "spines-3d");
+    });
+    document.querySelectorAll('input[name="set_chat_layout"]').forEach((r) => {
+        r.checked = r.value === (cfg.chat_layout || "fb-side");
+    });
+
+    previewThemeAndWallpaper();
+}
+
+function switchSettingsTab(tabName) {
+    ["themes", "ai", "bookshelf", "interface"].forEach((t) => {
+        const btn = document.getElementById(`tabbtn-${t}`);
+        const page = document.getElementById(`tabpage-${t}`);
+        if (btn) btn.classList.toggle("active", t === tabName);
+        if (page) page.style.display = t === tabName ? "block" : "none";
+    });
+}
+
+function previewThemeAndWallpaper() {
+    const theme = document.getElementById("set-xp-theme")?.value || "luna-blue";
+    const wall = document.getElementById("set-wallpaper")?.value || "wallpaper-bliss";
+    const customUrl = document.getElementById("set-custom-wallpaper")?.value.trim() || "";
+
+    appSettings.xp_theme = theme;
+    appSettings.wallpaper = wall;
+    appSettings.custom_wallpaper = customUrl;
+    applySettingsToDOM(appSettings);
+
+    const screen = document.getElementById("settings-monitor-preview");
+    if (screen) {
+        if (wall === "custom" && customUrl) {
+            screen.style.background = `url("${customUrl}") center/cover`;
+        } else if (wall === "wallpaper-autumn") {
+            screen.style.background = "linear-gradient(180deg, #451a03 0%, #ea580c 70%, #78350f 100%)";
+        } else if (wall === "wallpaper-azul") {
+            screen.style.background = "linear-gradient(180deg, #075985 0%, #38bdf8 70%, #0369a1 100%)";
+        } else if (wall === "wallpaper-ascent") {
+            screen.style.background = "linear-gradient(180deg, #090d16 0%, #312e81 75%, #0f172a 100%)";
+        } else if (wall === "wallpaper-mahogany") {
+            screen.style.background = "radial-gradient(circle, #451a03 0%, #120601 100%)";
+        } else if (wall === "wallpaper-teal") {
+            screen.style.background = "#008080";
+        } else {
+            screen.style.background = "linear-gradient(180deg, #1b65d6 0%, #4da1ff 55%, #52b718 56%)";
+        }
+    }
+}
+
+function onCustomWallpaperInput() {
+    const val = document.getElementById("set-custom-wallpaper")?.value.trim();
+    if (val) {
+        document.getElementById("set-wallpaper").value = "custom";
+        previewThemeAndWallpaper();
+    }
+}
+
+function handleWallpaperFileUpload(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const dataUrl = e.target.result;
+        document.getElementById("set-custom-wallpaper").value = dataUrl;
+        document.getElementById("set-wallpaper").value = "custom";
+        previewThemeAndWallpaper();
+    };
+    reader.readAsDataURL(file);
+}
+
+function applyPersonaPreset(key) {
+    const p = PERSONA_PRESETS[key];
+    if (!p) return;
+    document.getElementById("set-ai-name").value = p.name;
+    document.getElementById("set-ai-avatar").value = p.avatar;
+    document.getElementById("set-ai-role").value = p.role;
+    document.getElementById("set-ai-personality").value = p.prompt;
+}
+
+function previewFontSize(pxVal) {
+    const px = parseInt(pxVal, 10) || 12;
+    document.getElementById("set-font-size").value = px;
+    const label = document.getElementById("font-size-val-label");
+    if (label) label.textContent = `${px}px`;
+    appSettings.font_size_px = px;
+    document.documentElement.style.setProperty("--ui-font-size", `${px}px`);
+}
+
+async function saveAndApplySettings(closeAfter = false) {
+    const selectedShelfLayout =
+        document.querySelector('input[name="set_bookshelf_layout"]:checked')?.value || "spines-3d";
+    const selectedChatLayout =
+        document.querySelector('input[name="set_chat_layout"]:checked')?.value || "fb-side";
+
+    const newSettings = {
+        xp_theme: document.getElementById("set-xp-theme").value,
+        wallpaper: document.getElementById("set-wallpaper").value,
+        custom_wallpaper: document.getElementById("set-custom-wallpaper").value.trim(),
+        ai_name: document.getElementById("set-ai-name").value.trim() || "Elena Vancea",
+        ai_avatar: document.getElementById("set-ai-avatar").value,
+        ai_role_title: document.getElementById("set-ai-role").value.trim(),
+        ai_personality: document.getElementById("set-ai-personality").value.trim(),
+        bookshelf_layout: selectedShelfLayout,
+        shelf_density: document.getElementById("set-shelf-density").value,
+        chat_layout: selectedChatLayout,
+        font_size_px: parseInt(document.getElementById("set-font-size").value, 10) || 12,
+    };
+
+    try {
+        const res = await fetch("/api/settings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newSettings),
+        });
+        appSettings = await res.json();
+        applySettingsToDOM(appSettings);
+        if (closeAfter) {
+            closeWindow("win-settings");
+        }
+    } catch (err) {
+        console.error("Failed saving settings:", err);
+    }
+}
+
+async function toggleChatLayoutQuick() {
+    appSettings.chat_layout = appSettings.chat_layout === "fb-side" ? "bottom-bar" : "fb-side";
+    applySettingsToDOM(appSettings);
+    populateSettingsForm(appSettings);
+    await fetch("/api/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_layout: appSettings.chat_layout }),
+    });
+}
+
+function toggleFbSessionsList() {
+    const dock = document.getElementById("ai-bottom-dock");
+    if (dock) {
+        dock.classList.toggle("fb-history-open");
+    }
+}
+
+function handleDrawerHeaderClick(e) {
+    if (e.target.tagName === "BUTTON") return;
+    toggleChatDrawer();
+}
+
+// --------------------------------------------------------------------------
+// 3. Windows XP Window Manager
 // --------------------------------------------------------------------------
 function focusWindow(winId) {
     const win = document.getElementById(winId);
@@ -75,6 +343,8 @@ function openWindow(winId) {
         loadCatalog();
     } else if (winId === "win-chats") {
         loadChatsList(false);
+    } else if (winId === "win-settings") {
+        populateSettingsForm(appSettings);
     }
 }
 
@@ -163,7 +433,7 @@ function startDrag(e, winId) {
 window.addEventListener("mousemove", (e) => {
     if (!dragState) return;
     const x = Math.max(0, Math.min(window.innerWidth - 120, e.clientX - dragState.offsetX));
-    const y = Math.max(0, Math.min(window.innerHeight - 120, e.clientY - dragState.offsetY));
+    const y = Math.max(0, Math.min(window.innerHeight - 100, e.clientY - dragState.offsetY));
     dragState.win.style.left = `${x}px`;
     dragState.win.style.top = `${y}px`;
 });
@@ -172,7 +442,7 @@ window.addEventListener("mouseup", () => {
     dragState = null;
 });
 
-function selectDesktopIcon(el, winIdToOpenOnSingleClick) {
+function selectDesktopIcon(el) {
     document.querySelectorAll(".desktop-icon").forEach((i) => i.classList.remove("selected"));
     el.classList.add("selected");
 }
@@ -196,13 +466,8 @@ function closeStartMenu() {
     if (menu) menu.style.display = "none";
 }
 
-function setWallpaper(cls) {
-    document.body.className = cls;
-    closeStartMenu();
-}
-
 // --------------------------------------------------------------------------
-// 3. System Status & Storage Gauge
+// 4. System Status & Storage Gauge
 // --------------------------------------------------------------------------
 async function loadSystemStatus() {
     try {
@@ -214,7 +479,7 @@ async function loadSystemStatus() {
 
         const trayAi = document.getElementById("tray-ai-pill");
         if (trayAi) {
-            trayAi.textContent = data.ollama_online ? `🟢 AI: ${data.active_model.split(":")[0]}` : "🟡 AI Starting";
+            trayAi.textContent = data.ollama_online ? `🟢 ${appSettings.ai_name.split(" ")[0]}` : "🟡 AI Standby";
         }
 
         const diskText = document.getElementById("sidebar-disk-text");
@@ -228,12 +493,12 @@ async function loadSystemStatus() {
         const aiStatus = document.getElementById("sidebar-ai-status");
         if (aiStatus) {
             aiStatus.textContent = data.ollama_online
-                ? `🟢 Ollama Ready (${data.active_model})`
-                : "🟡 Ollama Standby (Archive Search Active)";
+                ? `🟢 Ollama Ready (${data.active_model.split(":")[0]})`
+                : "🟡 Ollama Standby";
         }
         const dlSpace = document.getElementById("downloader-free-space");
         if (dlSpace) {
-            dlSpace.textContent = `Free Disk Space: ${data.disk_free_gb} GB`;
+            dlSpace.textContent = `Free Space: ${data.disk_free_gb} GB`;
         }
     } catch (err) {
         console.error("Status check failed:", err);
@@ -241,7 +506,7 @@ async function loadSystemStatus() {
 }
 
 // --------------------------------------------------------------------------
-// 4. Dynamic Library Bookshelf & Desktop Folder Population
+// 5. Dynamic Library Bookshelf (4 Configurable Layouts) & Desktop Folders
 // --------------------------------------------------------------------------
 async function loadLibrary() {
     try {
@@ -255,16 +520,45 @@ async function loadLibrary() {
     }
 }
 
-function setLibraryView(mode) {
-    currentLibraryView = mode;
-    document.getElementById("btn-view-shelf").classList.toggle("active", mode === "shelf");
-    document.getElementById("btn-view-folders").classList.toggle("active", mode === "folders");
-    document.getElementById("library-shelf-view").style.display = mode === "shelf" ? "block" : "none";
-    document.getElementById("library-folders-view").style.display = mode === "folders" ? "grid" : "none";
+async function setBookshelfLayout(layoutMode) {
+    appSettings.bookshelf_layout = layoutMode;
+    updateBookshelfLayoutVisibility(layoutMode);
+    renderLibraryViews();
+    await fetch("/api/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookshelf_layout: layoutMode }),
+    });
+}
+
+function cycleBookshelfLayout() {
+    const order = ["spines-3d", "covers-grid", "xp-tiles", "xp-details"];
+    const idx = order.indexOf(appSettings.bookshelf_layout || "spines-3d");
+    const next = order[(idx + 1) % order.length];
+    setBookshelfLayout(next);
+}
+
+function updateBookshelfLayoutVisibility(mode) {
+    const map = {
+        "spines-3d": { view: "library-shelf-view", btn: "btn-layout-spines", display: "block" },
+        "covers-grid": { view: "library-covers-view", btn: "btn-layout-covers", display: "grid" },
+        "xp-tiles": { view: "library-folders-view", btn: "btn-layout-tiles", display: "grid" },
+        "xp-details": { view: "library-details-view", btn: "btn-layout-details", display: "block" },
+    };
+    Object.keys(map).forEach((k) => {
+        const vEl = document.getElementById(map[k].view);
+        const bEl = document.getElementById(map[k].btn);
+        if (vEl) vEl.style.display = k === mode ? map[k].display : "none";
+        if (bEl) bEl.classList.toggle("active", k === mode);
+    });
 }
 
 function selectCategoryFilter(cat) {
     selectedCategory = cat;
+    const addr = document.getElementById("library-address-text");
+    if (addr) {
+        addr.value = cat === "ALL" ? "C:\\Bunker_Library\\All_Shelves" : `C:\\Bunker_Library\\${cat.replace(/\s+/g, "_")}`;
+    }
     renderCategorySidebar();
     renderLibraryViews();
     openWindow("win-library");
@@ -289,7 +583,6 @@ function renderDynamicDesktopFolders() {
     if (!container) return;
 
     let html = "";
-    // 1. Render a desktop folder for each active category
     const cats = Object.keys(libraryData.categories || {});
     cats.forEach((cat) => {
         const count = (libraryData.categories[cat] || []).length;
@@ -301,7 +594,6 @@ function renderDynamicDesktopFolders() {
         `;
     });
 
-    // 2. Also render individual desktop icons for every downloaded .ZIM archive!
     (libraryData.items || [])
         .filter((item) => item.type === "zim")
         .forEach((zitem) => {
@@ -319,7 +611,7 @@ function renderDynamicDesktopFolders() {
 function renderLibraryViews() {
     const badge = document.getElementById("shelf-count-badge");
     if (badge) {
-        badge.textContent = `${libraryData.total} Volumes on Shelf`;
+        badge.textContent = `${libraryData.total} Volumes`;
     }
 
     const filterQuery = (document.getElementById("library-search-input")?.value || "").trim().toLowerCase();
@@ -333,14 +625,15 @@ function renderLibraryViews() {
         );
     });
 
-    // Group filtered items by shelf category
     const grouped = {};
     allItems.forEach((item) => {
         grouped[item.category] = grouped[item.category] || [];
         grouped[item.category].push(item);
     });
 
-    // Render VIEW A: Wooden Library Shelves with 3D Book Spines
+    const densityCls = `density-${appSettings.shelf_density || "normal"}`;
+
+    // 1. 3D Wooden Bookshelf View
     const shelvesEl = document.getElementById("bookshelf-shelves-container");
     if (shelvesEl) {
         let shelfHtml = "";
@@ -350,12 +643,11 @@ function renderLibraryViews() {
         } else {
             catNames.forEach((cat) => {
                 const books = grouped[cat];
-                // Fill remaining slots up to at least 8 per shelf with ghost book slots so user sees shelf filling up!
                 const ghostCount = Math.max(1, 8 - books.length);
                 let spinesHtml = "";
                 books.forEach((b) => {
                     spinesHtml += `
-                        <div class="book-spine"
+                        <div class="book-spine ${densityCls}"
                              style="background: linear-gradient(90deg, ${b.spine_color} 0%, ${b.spine_color}dd 65%, #111827 100%);"
                              title="${escapeAttr(b.title)} (${escapeAttr(b.size_label)})\n${escapeAttr(b.summary)}"
                              onclick="openLibraryItem('${escapeAttr(b.id)}')">
@@ -385,27 +677,81 @@ function renderLibraryViews() {
         shelvesEl.innerHTML = shelfHtml;
     }
 
-    // Render VIEW B: Classic XP Folders & Files Grid
+    // 2. Front-Cover Showcase View
+    const coversEl = document.getElementById("library-covers-view");
+    if (coversEl) {
+        coversEl.innerHTML = allItems
+            .map(
+                (b) => `
+            <div class="book-cover-card"
+                 style="background: linear-gradient(145deg, ${b.spine_color} 0%, #0f172a 100%);"
+                 onclick="openLibraryItem('${escapeAttr(b.id)}')">
+                <div class="cover-card-top">
+                    <div class="cover-card-icon">${b.icon || "📘"}</div>
+                    <div class="cover-card-title">${escapeHtml(b.title)}</div>
+                </div>
+                <div class="cover-card-footer">
+                    ${escapeHtml(b.category)}<br><strong>${escapeHtml(b.size_label)}</strong>
+                </div>
+            </div>
+        `
+            )
+            .join("");
+    }
+
+    // 3. Windows XP Tiles View
     const foldersEl = document.getElementById("library-folders-view");
     if (foldersEl) {
-        let gridHtml = "";
-        allItems.forEach((b) => {
-            gridHtml += `
-                <div class="xp-file-card" onclick="openLibraryItem('${escapeAttr(b.id)}')">
-                    <div class="xp-file-icon">${b.icon || "📘"}</div>
-                    <div class="xp-file-meta">
-                        <strong>${escapeHtml(b.title)}</strong>
-                        <small>${escapeHtml(b.category)} &bull; ${escapeHtml(b.size_label)}</small>
-                    </div>
+        foldersEl.innerHTML = allItems
+            .map(
+                (b) => `
+            <div class="xp-file-card" onclick="openLibraryItem('${escapeAttr(b.id)}')">
+                <div class="xp-file-icon">${b.icon || "📘"}</div>
+                <div class="xp-file-meta">
+                    <strong>${escapeHtml(b.title)}</strong>
+                    <small>${escapeHtml(b.category)} &bull; ${escapeHtml(b.size_label)}</small>
                 </div>
-            `;
-        });
-        foldersEl.innerHTML = gridHtml;
+            </div>
+        `
+            )
+            .join("");
+    }
+
+    // 4. Windows XP Details Table View
+    const detailsEl = document.getElementById("library-details-view");
+    if (detailsEl) {
+        const rows = allItems
+            .map(
+                (b) => `
+            <tr onclick="openLibraryItem('${escapeAttr(b.id)}')">
+                <td>${b.icon || "📘"} <strong>${escapeHtml(b.title)}</strong></td>
+                <td>${escapeHtml(b.category)}</td>
+                <td>${b.type === "zim" ? "Kiwix ZIM Archive" : "Reference Volume"}</td>
+                <td>${escapeHtml(b.size_label)}</td>
+                <td>${escapeHtml(b.author || "Local Vault")}</td>
+            </tr>
+        `
+            )
+            .join("");
+        detailsEl.innerHTML = `
+            <table class="xp-details-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Folder / Category</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Author / Source</th>
+                    </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            </table>
+        `;
     }
 }
 
 // --------------------------------------------------------------------------
-// 5. Opening Books & Kiwix ZIM Archives in the XP Reader Window
+// 6. Opening Books & Kiwix ZIM Archives in the XP Reader Window
 // --------------------------------------------------------------------------
 async function openLibraryItem(itemId) {
     const item = (libraryData.items || []).find((x) => x.id === itemId);
@@ -427,13 +773,13 @@ async function openLibraryItem(itemId) {
         iframe.style.display = "block";
         homeBtn.style.display = "inline-block";
         const targetUrl = item.reader_url || "/kiwix/";
-        document.getElementById("reader-location-bar").textContent = `http://localhost${targetUrl} (${item.zim_filename})`;
+        document.getElementById("reader-location-bar").value = `http://localhost${targetUrl} (${item.zim_filename})`;
         iframe.src = targetUrl;
     } else {
         iframe.style.display = "none";
         homeBtn.style.display = "none";
         volDiv.style.display = "block";
-        document.getElementById("reader-location-bar").textContent = `C:\\Bunker_Library\\Volumes\\${item.id}.md`;
+        document.getElementById("reader-location-bar").value = `C:\\Bunker_Library\\Volumes\\${item.id}.md`;
         volDiv.innerHTML = "<p>Loading volume from vault...</p>";
 
         try {
@@ -451,7 +797,7 @@ function openKiwixBrowser(urlPath = "/kiwix/") {
     openWindow("win-reader");
     document.getElementById("reader-win-icon").textContent = "🌐";
     document.getElementById("reader-win-title").textContent = "Kiwix Offline ZIM Server — Explorer";
-    document.getElementById("reader-location-bar").textContent = `http://localhost${urlPath}`;
+    document.getElementById("reader-location-bar").value = `http://localhost${urlPath}`;
     document.getElementById("reader-volume-content").style.display = "none";
     document.getElementById("btn-reader-home").style.display = "inline-block";
     const iframe = document.getElementById("reader-kiwix-iframe");
@@ -461,14 +807,20 @@ function openKiwixBrowser(urlPath = "/kiwix/") {
 
 function askAiAboutCurrentBook() {
     if (!currentReaderBook) return;
+    openChatAndFocus(`Summarize the key technical details from "${currentReaderBook.title}"`);
+}
+
+function openChatAndFocus(prefill = "") {
     toggleChatDrawer(true);
     const input = document.getElementById("ai-chat-input");
-    input.value = `Summarize the key technical details from "${currentReaderBook.title}"`;
-    input.focus();
+    if (input) {
+        if (prefill) input.value = prefill;
+        input.focus();
+    }
 }
 
 // --------------------------------------------------------------------------
-// 6. Add / Remove Books (ZIM Downloader) & Custom Volume Creator
+// 7. Add / Remove Books (ZIM Downloader) & Custom Volume Creator
 // --------------------------------------------------------------------------
 async function loadCatalog() {
     try {
@@ -574,7 +926,7 @@ async function saveCustomBook() {
 }
 
 // --------------------------------------------------------------------------
-// 7. Docked Bottom AI Chat & Persistent Saved Conversations (SQLite)
+// 8. Dual-Mode AI Chat (Old Facebook Side Window / Bottom Bar) + SQLite History
 // --------------------------------------------------------------------------
 function toggleChatDrawer(forceState) {
     const dock = document.getElementById("ai-bottom-dock");
@@ -584,10 +936,10 @@ function toggleChatDrawer(forceState) {
     const shouldOpen = typeof forceState === "boolean" ? forceState : dock.classList.contains("dock-collapsed");
     if (shouldOpen) {
         dock.classList.remove("dock-collapsed");
-        if (chevron) chevron.textContent = "▼ Hide Chat";
+        if (chevron) chevron.textContent = "▼";
     } else {
         dock.classList.add("dock-collapsed");
-        if (chevron) chevron.textContent = "▲ Chat History";
+        if (chevron) chevron.textContent = "▲";
     }
 }
 
@@ -682,7 +1034,7 @@ function renderMessagesStream(messages) {
     if (!stream) return;
 
     if (!messages.length) {
-        stream.innerHTML = `<div style="color:#94a3b8;padding:12px;">Session saved in SQLite. Type a question below to consult Elena Vancea &amp; your local ZIM library.</div>`;
+        stream.innerHTML = `<div style="color:#64748b;padding:10px;">Session saved in SQLite. Type below to ask ${escapeHtml(appSettings.ai_name)}.</div>`;
         return;
     }
 
@@ -727,13 +1079,12 @@ async function handleChatSubmit(e) {
 
     input.value = "";
     sendBtn.disabled = true;
-    sendBtn.textContent = "Thinking...";
+    sendBtn.textContent = "...";
 
-    // Optimistic append user message
     const stream = document.getElementById("ai-messages-stream");
     stream.innerHTML += `
         <div class="chat-bubble user">${escapeHtml(text)}</div>
-        <div class="chat-bubble assistant" id="temp-thinking-bubble"><em>Consulting local ZIM archives &amp; Elena Vancea LLM...</em></div>
+        <div class="chat-bubble assistant" id="temp-thinking-bubble"><em>${escapeHtml(appSettings.ai_avatar)} ${escapeHtml(appSettings.ai_name)} is searching local archives...</em></div>
     `;
     stream.scrollTop = stream.scrollHeight;
 
@@ -748,10 +1099,10 @@ async function handleChatSubmit(e) {
         await loadChatsList(false);
     } catch (err) {
         const temp = document.getElementById("temp-thinking-bubble");
-        if (temp) temp.innerHTML = `<span style="color:#f87171;">Error: ${escapeHtml(String(err))}</span>`;
+        if (temp) temp.innerHTML = `<span style="color:#dc2626;">Error: ${escapeHtml(String(err))}</span>`;
     } finally {
         sendBtn.disabled = false;
-        sendBtn.textContent = "Send ↵";
+        sendBtn.textContent = "Send";
     }
 }
 
@@ -763,7 +1114,7 @@ function quickPrompt(promptText) {
 }
 
 // --------------------------------------------------------------------------
-// 8. Lightweight Markdown & HTML Escaping Utilities
+// 9. Markdown & HTML Escaping Utilities
 // --------------------------------------------------------------------------
 function escapeHtml(str) {
     return String(str ?? "")
@@ -780,20 +1131,16 @@ function escapeAttr(str) {
 function renderMarkdown(md) {
     let text = escapeHtml(md);
 
-    // Code blocks ```lang ... ```
     text = text.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (_, _lang, code) => {
         return `<pre><code>${code.trim()}</code></pre>`;
     });
 
-    // Markdown Tables
     text = text.replace(/((?:^\|.*\|\s*\n)+)/gm, (tableBlock) => {
         const rows = tableBlock.trim().split("\n");
         if (rows.length < 2) return tableBlock;
         let out = "<table>";
         rows.forEach((r, idx) => {
-            if (/^\|[\s:-]+\|$/.test(r.replace(/\|/g, "|"))) {
-                if (/^[\s|:-]+$/.test(r)) return;
-            }
+            if (/^[\s|:-]+$/.test(r)) return;
             const cells = r
                 .trim()
                 .replace(/^\|/, "")
@@ -807,7 +1154,6 @@ function renderMarkdown(md) {
         return out;
     });
 
-    // Headings, bold, inline code, lists
     text = text
         .replace(/^### (.*)$/gm, "<h3>$1</h3>")
         .replace(/^## (.*)$/gm, "<h2>$1</h2>")

@@ -102,6 +102,14 @@ def init_db() -> None:
         )
         """
     )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS app_settings (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        )
+        """
+    )
     conn.commit()
 
     # Create a welcome chat thread if database has no chats yet
@@ -326,8 +334,65 @@ def get_all_library_items() -> List[Dict[str, Any]]:
 
 
 # ==============================================================================
-# 4. API Endpoints: Library, Volumes, Catalog & Downloader
+# 4. API Endpoints: Settings, System Status, Library, Catalog & Downloader
 # ==============================================================================
+DEFAULT_SETTINGS: Dict[str, Any] = {
+    "xp_theme": "luna-blue",           # luna-blue | luna-olive | luna-silver | royale-noir | classic-98
+    "wallpaper": "wallpaper-bliss",    # wallpaper-bliss | wallpaper-autumn | wallpaper-azul | wallpaper-ascent | wallpaper-mahogany | wallpaper-teal | custom
+    "custom_wallpaper": "",            # Data URL or external URL if wallpaper == 'custom'
+    "ai_name": "Elena Vancea",
+    "ai_avatar": "👩‍💼",
+    "ai_role_title": "Executive Secretary & Chief Technical Librarian",
+    "ai_personality": (
+        "You are {ai_name}, {ai_role_title} inside BunkerOS XP (an autonomous offline knowledge desktop). "
+        "Answer clearly, concisely, and accurately in the language used by the user (Romanian or English). "
+        "Always prioritize verified facts from the local archive excerpts when provided and cite the archive volume title."
+    ),
+    "bookshelf_layout": "spines-3d",   # spines-3d | covers-grid | xp-tiles | xp-details
+    "shelf_density": "normal",         # compact | normal | large
+    "chat_layout": "fb-side",          # fb-side (Old Facebook bottom-right popup) | bottom-bar (Wide docked bar)
+    "font_size_px": 12,                # 11 to 18
+}
+
+
+def load_settings_dict() -> Dict[str, Any]:
+    merged = dict(DEFAULT_SETTINGS)
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute("SELECT key, value FROM app_settings")
+        for row in cur.fetchall():
+            try:
+                merged[row["key"]] = json.loads(row["value"])
+            except Exception:
+                merged[row["key"]] = row["value"]
+        conn.close()
+    except Exception:
+        pass
+    return merged
+
+
+@app.get("/api/settings")
+async def api_get_settings() -> Dict[str, Any]:
+    return load_settings_dict()
+
+
+@app.post("/api/settings")
+async def api_save_settings(payload: Dict[str, Any]) -> Dict[str, Any]:
+    conn = get_db()
+    cur = conn.cursor()
+    for k, v in payload.items():
+        if k in DEFAULT_SETTINGS:
+            cur.execute(
+                "INSERT INTO app_settings (key, value) VALUES (?, ?) "
+                "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+                (k, json.dumps(v)),
+            )
+    conn.commit()
+    conn.close()
+    return load_settings_dict()
+
+
 @app.get("/api/system/status")
 async def api_system_status() -> Dict[str, Any]:
     disk = shutil.disk_usage(str(ZIM_DIR))
@@ -787,15 +852,16 @@ async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, A
             + "\n=== END ARCHIVE EXCERPTS ===\n\n"
         )
 
+    current_settings = load_settings_dict()
+    ai_name = str(current_settings.get("ai_name") or "Elena Vancea")
+    ai_role = str(current_settings.get("ai_role_title") or "Executive Secretary & Chief Technical Librarian")
+    raw_persona = str(current_settings.get("ai_personality") or DEFAULT_SETTINGS["ai_personality"])
+    formatted_persona = raw_persona.replace("{ai_name}", ai_name).replace("{ai_role_title}", ai_role)
+
     ollama_messages = [
         {
             "role": "system",
-            "content": (
-                "You are Elena Vancea, Executive Secretary & Chief Technical Librarian inside BunkerOS XP "
-                "(an autonomous offline knowledge desktop). Answer clearly, concisely, and accurately in the language "
-                "used by the user (Romanian or English). Always prioritize verified facts from the local archive excerpts "
-                "when provided and cite the archive volume title."
-            ),
+            "content": formatted_persona,
         }
     ]
     for h in history_rows[:-1]:

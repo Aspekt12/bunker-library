@@ -1,5 +1,5 @@
 /* ==========================================================================
-   BunkerOS XP — Windows XP Luna Blue + Dynamic Library Bookshelf + AI Dock
+   BunkerOS XP — 1:1 Windows XP Themes, Wallpapers, Bookshelf & FB Side Chat
    ========================================================================== */
 
 * {
@@ -9,59 +9,159 @@
 }
 
 :root {
-    --xp-blue-dark: #0050d2;
-    --xp-blue-mid: #166aee;
-    --xp-blue-light: #3b92ff;
-    --xp-beige: #ece9d8;
-    --xp-border-blue: #003c9d;
-    --xp-green-start: #388e3c;
-    --xp-green-light: #5cb85c;
-    --xp-tray-blue: #0f87ea;
+    --ui-font-size: 12px;
+
+    /* Default Luna Blue Theme Variables */
+    --win-border: #0046d5;
+    --win-title-bg: linear-gradient(180deg, #0961ec 0%, #3a93ff 10%, #0058ee 46%, #0046c7 88%, #0855dd 100%);
+    --win-title-text: #ffffff;
+    --win-bg: #ece9d8;
+    --taskbar-bg: linear-gradient(180deg, #3168d5 0%, #4993e6 8%, #2258d5 18%, #245edb 88%, #1941a5 100%);
+    --taskbar-tab-bg: linear-gradient(180deg, #3c81f3 0%, #2764d8 100%);
+    --taskbar-tab-active: linear-gradient(180deg, #1b4ba8 0%, #153c8a 100%);
+    --start-btn-bg: linear-gradient(180deg, #42a842 0%, #73d273 10%, #379837 50%, #2b7b2b 92%, #1d591d 100%);
+    --systray-bg: linear-gradient(180deg, #158be9 0%, #0e6ec4 100%);
+    --sidebar-bg: linear-gradient(180deg, #7ba2e7 0%, #6375d6 100%);
+    --task-card-bg: #d6dff7;
+    --task-header-bg: linear-gradient(90deg, #ffffff 0%, #c6d3f7 100%);
+    --task-header-text: #215dc6;
+    --fb-header-bg: linear-gradient(180deg, #3b5998 0%, #2d4373 100%);
+}
+
+/* Theme 2: Windows XP Olive Green (Homestead) */
+body.theme-luna-olive {
+    --win-border: #5a6b44;
+    --win-title-bg: linear-gradient(180deg, #8da370 0%, #b0c494 10%, #748858 48%, #5e7046 88%, #6b7e53 100%);
+    --win-bg: #f2f0e4;
+    --taskbar-bg: linear-gradient(180deg, #7c9260 0%, #9cb280 9%, #6b7e53 20%, #63754c 88%, #4d5c3a 100%);
+    --taskbar-tab-bg: linear-gradient(180deg, #8da370 0%, #748858 100%);
+    --taskbar-tab-active: linear-gradient(180deg, #52613c 0%, #445231 100%);
+    --start-btn-bg: linear-gradient(180deg, #e07236 0%, #f39a68 10%, #cf6026 52%, #a84816 92%, #87370d 100%);
+    --systray-bg: linear-gradient(180deg, #5d6f46 0%, #495836 100%);
+    --sidebar-bg: linear-gradient(180deg, #b5c49e 0%, #93a677 100%);
+    --task-card-bg: #eef3e6;
+    --task-header-bg: linear-gradient(90deg, #ffffff 0%, #d8e2c5 100%);
+    --task-header-text: #455432;
+}
+
+/* Theme 3: Windows XP Silver (Metallic) */
+body.theme-luna-silver {
+    --win-border: #666975;
+    --win-title-bg: linear-gradient(180deg, #aeb2be 0%, #dcdfe7 12%, #9498a6 48%, #767a88 88%, #888c9a 100%);
+    --win-title-text: #111827;
+    --win-bg: #efeff2;
+    --taskbar-bg: linear-gradient(180deg, #9fa3b0 0%, #cfd2dc 9%, #838796 20%, #757988 88%, #5b5f6c 100%);
+    --taskbar-tab-bg: linear-gradient(180deg, #b8bcc8 0%, #9498a6 100%);
+    --taskbar-tab-active: linear-gradient(180deg, #646875 0%, #525663 100%);
+    --systray-bg: linear-gradient(180deg, #747887 0%, #5c606e 100%);
+    --sidebar-bg: linear-gradient(180deg, #c7cad4 0%, #a4a8b6 100%);
+    --task-card-bg: #f3f4f7;
+    --task-header-bg: linear-gradient(90deg, #ffffff 0%, #dadce4 100%);
+    --task-header-text: #374151;
+}
+
+/* Theme 4: Windows XP Royale Noir / Zune (Dark Glossy) */
+body.theme-royale-noir {
+    --win-border: #1e232d;
+    --win-title-bg: linear-gradient(180deg, #38404f 0%, #525c70 10%, #232832 48%, #151920 88%, #1e232d 100%);
+    --win-bg: #e5e7eb;
+    --taskbar-bg: linear-gradient(180deg, #2d333f 0%, #454d5e 9%, #1c2029 20%, #151820 88%, #0d0f14 100%);
+    --taskbar-tab-bg: linear-gradient(180deg, #374151 0%, #1f2937 100%);
+    --taskbar-tab-active: linear-gradient(180deg, #e35d1b 0%, #b8430b 100%);
+    --start-btn-bg: linear-gradient(180deg, #f27127 0%, #ff9b61 10%, #e35d1b 52%, #b5420a 92%, #8c3105 100%);
+    --systray-bg: linear-gradient(180deg, #1f242d 0%, #11141a 100%);
+    --sidebar-bg: linear-gradient(180deg, #374151 0%, #1f2937 100%);
+    --task-card-bg: #e5e7eb;
+    --task-header-bg: linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%);
+    --task-header-text: #111827;
+}
+
+/* Theme 5: Windows Classic (Windows 2000 / 98 Beveled Gray) */
+body.theme-classic-98 {
+    --win-border: #808080;
+    --win-title-bg: linear-gradient(90deg, #0a246a 0%, #a6caf0 100%);
+    --win-bg: #d4d0c8;
+    --taskbar-bg: #d4d0c8;
+    --taskbar-tab-bg: #d4d0c8;
+    --taskbar-tab-active: #ebe8e1;
+    --start-btn-bg: #d4d0c8;
+    --systray-bg: #d4d0c8;
+    --sidebar-bg: #d4d0c8;
+    --task-card-bg: #ffffff;
+    --task-header-bg: #0a246a;
+    --task-header-text: #ffffff;
 }
 
 body {
-    font-family: "Tahoma", "Verdana", "Segoe UI", sans-serif;
-    font-size: 12px;
+    font-family: "Tahoma", "MS Sans Serif", "Verdana", sans-serif;
+    font-size: var(--ui-font-size);
     color: #111;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
     user-select: none;
     position: relative;
+    background-size: cover !important;
+    background-position: center !important;
 }
 
 /* --------------------------------------------------------------------------
-   1. Wallpapers (Windows XP Bliss Hills, Library Study, Bunker Dark)
+   1. Wallpapers (1:1 Bliss Hills, Autumn, Azul, Ascent, Mahogany, Teal)
    -------------------------------------------------------------------------- */
 body.wallpaper-bliss {
     background:
-        radial-gradient(ellipse 140% 55% at 22% 105%, #3f9b0b 0%, #52b718 55%, transparent 56%),
-        radial-gradient(ellipse 130% 62% at 82% 108%, #348807 0%, #63c924 62%, transparent 63%),
-        radial-gradient(circle at 25% 24%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 12%, transparent 25%),
-        radial-gradient(circle at 68% 18%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.25) 14%, transparent 28%),
-        linear-gradient(180deg, #1b65d6 0%, #4da1ff 48%, #a6d5ff 72%, #52b718 73%);
+        radial-gradient(ellipse 135% 52% at 20% 102%, #3f9b0b 0%, #59bd1c 56%, transparent 57%),
+        radial-gradient(ellipse 125% 60% at 84% 106%, #2f7d06 0%, #66cc26 61%, transparent 62%),
+        radial-gradient(circle at 22% 24%, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.4) 11%, transparent 24%),
+        radial-gradient(circle at 66% 18%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.3) 14%, transparent 27%),
+        radial-gradient(circle at 46% 36%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.2) 10%, transparent 22%),
+        linear-gradient(180deg, #175cd3 0%, #4a9eff 48%, #b3dcff 70%, #52b718 71%);
+}
+
+body.wallpaper-autumn {
+    background:
+        radial-gradient(ellipse 130% 45% at 50% 105%, #7c2d12 0%, #b45309 55%, transparent 56%),
+        radial-gradient(circle at 25% 30%, rgba(251, 146, 60, 0.55) 0%, transparent 40%),
+        radial-gradient(circle at 75% 25%, rgba(220, 38, 38, 0.5) 0%, transparent 42%),
+        linear-gradient(180deg, #451a03 0%, #9a3412 45%, #ea580c 78%, #78350f 100%);
+}
+
+body.wallpaper-azul {
+    background:
+        radial-gradient(ellipse 140% 35% at 50% 102%, #0284c7 0%, #0369a1 70%, transparent 71%),
+        radial-gradient(circle at 75% 20%, rgba(254, 240, 138, 0.65) 0%, transparent 25%),
+        linear-gradient(180deg, #075985 0%, #0ea5e9 55%, #38bdf8 75%, #0369a1 76%);
+}
+
+body.wallpaper-ascent {
+    background:
+        polygon(0 100%, 35% 45%, 65% 100%),
+        radial-gradient(circle at 78% 22%, #f8fafc 0%, rgba(248,250,252,0.15) 8%, transparent 18%),
+        linear-gradient(180deg, #090d16 0%, #1e1b4b 45%, #312e81 78%, #0f172a 100%);
 }
 
 body.wallpaper-mahogany {
-    background:
-        radial-gradient(circle at 50% 30%, #451a03 0%, #270e02 65%, #120601 100%);
+    background: radial-gradient(circle at 50% 30%, #451a03 0%, #270e02 65%, #120601 100%);
 }
 
-body.wallpaper-bunker {
-    background:
-        radial-gradient(circle at 50% 35%, #0f172a 0%, #020617 85%);
+body.wallpaper-teal {
+    background: #008080;
 }
 
 /* --------------------------------------------------------------------------
-   2. Desktop Workspace & Desktop Icons Grid
+   2. Desktop Area & 1:1 XP Desktop Icons
    -------------------------------------------------------------------------- */
 #xp-desktop {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 84px; /* Space for Docked AI Command Bar (48px) + XP Taskbar (36px) */
+    bottom: 32px; /* Right above the 32px XP Taskbar */
     overflow: hidden;
+}
+
+body.chat-mode-bottom-bar #xp-desktop {
+    bottom: 76px;
 }
 
 #desktop-icons {
@@ -69,10 +169,10 @@ body.wallpaper-bunker {
     flex-direction: column;
     flex-wrap: wrap;
     align-content: flex-start;
-    gap: 12px;
-    padding: 14px;
+    gap: 10px;
+    padding: 12px;
     height: 100%;
-    max-width: 260px;
+    max-width: 280px;
     pointer-events: none;
 }
 
@@ -82,58 +182,70 @@ body.wallpaper-bunker {
 
 .desktop-icon {
     pointer-events: auto;
-    width: 96px;
-    padding: 6px 4px;
+    width: 88px;
+    padding: 5px 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border-radius: 4px;
+    border-radius: 3px;
     cursor: pointer;
     border: 1px solid transparent;
-    transition: background 0.1s;
 }
 
 .desktop-icon:hover {
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .desktop-icon.selected {
-    background: rgba(11, 97, 255, 0.48);
+    background: rgba(11, 97, 255, 0.45);
     border: 1px dotted #fff;
+}
+
+.desktop-icon.selected .icon-label {
+    background: #0b61ff;
+    color: #fff;
 }
 
 .icon-graphic {
     font-size: 32px;
-    line-height: 1.1;
+    line-height: 1;
     margin-bottom: 4px;
-    filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.55));
+    filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.6));
 }
 
 .icon-label {
     color: #ffffff;
     font-size: 11px;
     line-height: 1.25;
-    text-shadow: 1px 1px 2px #000, 0 0 4px rgba(0, 0, 0, 0.9);
+    text-shadow: 1px 1px 2px #000, 0 0 3px #000;
     word-break: break-word;
     padding: 1px 3px;
+    border-radius: 2px;
 }
 
 /* --------------------------------------------------------------------------
-   3. Windows XP Luna Blue Windows
+   3. 1:1 Windows XP Windows, Classic Menu Bar & Address Bar
    -------------------------------------------------------------------------- */
 .xp-window {
     position: absolute;
     display: flex;
     flex-direction: column;
-    background: var(--xp-beige);
-    border: 3px solid var(--xp-blue-dark);
+    background: var(--win-bg);
+    border: 3px solid var(--win-border);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    box-shadow: 3px 6px 22px rgba(0, 0, 0, 0.52), inset 0 0 0 1px #5ca2ff;
+    box-shadow: 2px 5px 20px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255,255,255,0.35);
     overflow: hidden;
     user-select: text;
+    font-size: var(--ui-font-size);
+}
+
+body.theme-classic-98 .xp-window {
+    border-radius: 0;
+    border: 2px outset #ffffff;
+    box-shadow: 2px 2px 0 #000;
 }
 
 .xp-window.maximized {
@@ -145,16 +257,16 @@ body.wallpaper-bunker {
 }
 
 .xp-titlebar {
-    height: 30px;
-    background: linear-gradient(180deg, #0961ec 0%, #3a93ff 12%, #0058ee 48%, #0046c7 88%, #0855dd 100%);
-    color: #ffffff;
+    height: 29px;
+    background: var(--win-title-bg);
+    color: var(--win-title-text);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 6px 0 8px;
     cursor: move;
     user-select: none;
-    border-bottom: 1px solid #003594;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
 }
 
 .xp-title-left {
@@ -163,10 +275,14 @@ body.wallpaper-bunker {
     gap: 6px;
     font-weight: bold;
     font-size: 12px;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.65);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+body.theme-luna-silver .xp-title-left {
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.7);
 }
 
 .xp-title-controls {
@@ -187,25 +303,66 @@ body.wallpaper-bunker {
     box-shadow: inset 0 1px 1px rgba(255,255,255,0.6);
 }
 
+body.theme-classic-98 .xp-title-controls button {
+    border-radius: 0;
+    background: #d4d0c8 !important;
+    color: #000 !important;
+    border: 2px outset #fff;
+}
+
 .xp-btn-min, .xp-btn-max {
     background: linear-gradient(180deg, #3c8cff 0%, #125ee0 100%);
-}
-.xp-btn-min:hover, .xp-btn-max:hover {
-    filter: brightness(1.15);
 }
 
 .xp-btn-close {
     background: linear-gradient(180deg, #f3745f 0%, #dc3116 55%, #b81d06 100%);
 }
-.xp-btn-close:hover {
-    filter: brightness(1.15);
+
+/* 1:1 Classic File Edit View Menu Strip */
+.xp-classic-menubar {
+    height: 23px;
+    background: var(--win-bg);
+    border-bottom: 1px solid #d4d0c8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 0 6px;
+    font-size: 11px;
+}
+
+.xp-menu-items {
+    display: flex;
+    gap: 2px;
+}
+
+.xp-menu-items span {
+    padding: 2px 7px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.xp-menu-items span:hover {
+    background: #316ac5;
+    color: #fff;
+}
+
+.xp-menubar-flag {
+    height: 100%;
+    width: 34px;
+    background: #ffffff;
+    border-left: 1px solid #d4d0c8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0058ee;
+    font-weight: bold;
 }
 
 /* Toolbars & Address Bars */
 .xp-menubar {
-    background: linear-gradient(180deg, #faf8f2 0%, #ece9d8 100%);
-    border-bottom: 1px solid #d4d0c8;
-    padding: 5px 8px;
+    background: linear-gradient(180deg, #faf8f2 0%, var(--win-bg) 100%);
+    border-bottom: 1px solid #aca899;
+    padding: 4px 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -214,15 +371,23 @@ body.wallpaper-bunker {
 
 .xp-toolbar-group {
     display: flex;
-    gap: 5px;
+    align-items: center;
+    gap: 4px;
     flex-wrap: wrap;
 }
 
+.xp-toolbar-sep {
+    width: 1px;
+    height: 20px;
+    background: #aca899;
+    margin: 0 3px;
+}
+
 .xp-toolbar-btn {
-    background: linear-gradient(180deg, #ffffff 0%, #ece9d8 100%);
+    background: linear-gradient(180deg, #ffffff 0%, var(--win-bg) 100%);
     border: 1px solid #aca899;
     border-radius: 3px;
-    padding: 4px 9px;
+    padding: 3px 8px;
     font-family: inherit;
     font-size: 11px;
     color: #111;
@@ -246,34 +411,52 @@ body.wallpaper-bunker {
 }
 
 .xp-addressbar {
-    background: #ece9d8;
+    background: var(--win-bg);
     border-bottom: 1px solid #aca899;
-    padding: 4px 8px;
+    padding: 3px 8px;
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
 .addr-label {
-    color: #555;
+    color: #444;
     font-size: 11px;
 }
 
-.addr-input {
+.addr-input-wrap {
     flex: 1;
     background: #ffffff;
     border: 1px solid #7f9db9;
-    padding: 3px 6px;
-    font-family: monospace;
+    display: flex;
+    align-items: center;
+    padding: 1px 6px;
+    gap: 5px;
+}
+
+.addr-input-wrap input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-family: "Tahoma", sans-serif;
     font-size: 11px;
-    color: #222;
+    color: #111;
 }
 
 .xp-search-box {
-    width: 190px;
+    width: 175px;
     border: 1px solid #7f9db9;
     padding: 3px 6px;
     font-size: 11px;
+}
+
+.xp-go-btn {
+    background: linear-gradient(180deg, #ffffff 0%, #ece9d8 100%);
+    border: 1px solid #aca899;
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-size: 11px;
+    cursor: pointer;
 }
 
 .xp-window-body {
@@ -283,7 +466,7 @@ body.wallpaper-bunker {
 
 .xp-statusbar {
     height: 22px;
-    background: #ece9d8;
+    background: var(--win-bg);
     border-top: 1px solid #aca899;
     padding: 0 8px;
     display: flex;
@@ -294,7 +477,7 @@ body.wallpaper-bunker {
 }
 
 /* --------------------------------------------------------------------------
-   4. XP Explorer Two-Column Layout (Left Blue Task Pane + Main Content)
+   4. XP Explorer Sidebar & Main Content Area
    -------------------------------------------------------------------------- */
 .xp-explorer-layout {
     display: flex;
@@ -302,8 +485,8 @@ body.wallpaper-bunker {
 }
 
 .xp-sidebar {
-    width: 205px;
-    background: linear-gradient(180deg, #7ba2e7 0%, #6375d6 100%);
+    width: 200px;
+    background: var(--sidebar-bg);
     padding: 10px;
     overflow-y: auto;
     border-right: 1px solid #aca899;
@@ -313,7 +496,7 @@ body.wallpaper-bunker {
 }
 
 .xp-task-card {
-    background: #d6dff7;
+    background: var(--task-card-bg);
     border-radius: 4px;
     overflow: hidden;
     border: 1px solid #ffffff;
@@ -321,8 +504,8 @@ body.wallpaper-bunker {
 }
 
 .xp-task-header {
-    background: linear-gradient(90deg, #ffffff 0%, #c6d3f7 100%);
-    color: #215dc6;
+    background: var(--task-header-bg);
+    color: var(--task-header-text);
     font-weight: bold;
     padding: 5px 8px;
     font-size: 11px;
@@ -345,7 +528,6 @@ body.wallpaper-bunker {
 
 .xp-task-body a:hover {
     text-decoration: underline;
-    color: #002277;
 }
 
 .xp-progress-outer {
@@ -372,7 +554,7 @@ body.wallpaper-bunker {
 }
 
 /* --------------------------------------------------------------------------
-   5. Visual Wooden Library Bookshelf (Fills with Books Dynamically!)
+   5. Bookshelf Layouts (3D Wooden Spines, Front Covers, XP Tiles, Details Table)
    -------------------------------------------------------------------------- */
 .bookshelf-banner {
     background: linear-gradient(90deg, #fef3c7 0%, #fde68a 100%);
@@ -384,7 +566,6 @@ body.wallpaper-bunker {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    font-size: 11.5px;
 }
 
 .xp-button-primary {
@@ -397,10 +578,6 @@ body.wallpaper-bunker {
     font-size: 11px;
     cursor: pointer;
     white-space: nowrap;
-}
-
-.xp-button-primary:hover {
-    filter: brightness(1.1);
 }
 
 .wooden-shelf-case {
@@ -424,7 +601,6 @@ body.wallpaper-bunker {
     border-radius: 3px;
     border: 1px solid #78350f;
     margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .shelf-books-row {
@@ -453,13 +629,22 @@ body.wallpaper-bunker {
     padding: 6px 3px;
     box-shadow: -2px 0 4px rgba(0,0,0,0.55), inset 3px 0 4px rgba(255,255,255,0.22), inset -2px 0 4px rgba(0,0,0,0.4);
     border-top: 2px solid #fde68a;
-    transition: transform 0.16s ease, box-shadow 0.16s ease;
+    transition: transform 0.16s ease;
+}
+
+.book-spine.density-compact {
+    width: 34px;
+    height: 114px;
+}
+
+.book-spine.density-large {
+    width: 58px;
+    height: 136px;
 }
 
 .book-spine:hover {
     transform: translateY(-10px) scale(1.04);
     z-index: 5;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 3px 0 5px rgba(255,255,255,0.35);
 }
 
 .book-spine::before, .book-spine::after {
@@ -474,45 +659,85 @@ body.wallpaper-bunker {
     text-orientation: mixed;
     font-size: 10.5px;
     font-weight: bold;
-    max-height: 86px;
+    max-height: 88px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
 }
 
-.spine-icon {
-    font-size: 13px;
-}
-
-/* Ghost slot showing empty room on the shelf waiting to be filled */
 .book-ghost-slot {
     width: 42px;
     height: 118px;
-    border: 1px dashed rgba(255, 255, 255, 0.22);
+    border: 1px dashed rgba(255, 255, 255, 0.24);
     border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.36);
     font-size: 10px;
     writing-mode: vertical-rl;
     cursor: pointer;
-    transition: all 0.15s;
 }
 
 .book-ghost-slot:hover {
     border-color: #fbbf24;
     color: #fbbf24;
-    background: rgba(251, 191, 36, 0.08);
 }
 
-/* --------------------------------------------------------------------------
-   6. XP Folders & Files Grid View
-   -------------------------------------------------------------------------- */
+/* Layout 2: Front-Cover Book Showcase Grid */
+.covers-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+}
+
+.book-cover-card {
+    border-radius: 5px 8px 8px 5px;
+    color: #fff;
+    padding: 12px 10px;
+    min-height: 185px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: -4px 4px 10px rgba(0,0,0,0.3), inset 6px 0 8px rgba(255,255,255,0.2);
+    border-left: 6px solid rgba(0,0,0,0.35);
+    transition: transform 0.15s ease;
+}
+
+.book-cover-card:hover {
+    transform: translateY(-5px);
+}
+
+.cover-card-top {
+    text-align: center;
+}
+
+.cover-card-icon {
+    font-size: 30px;
+    margin-bottom: 6px;
+}
+
+.cover-card-title {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 1.3;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+.cover-card-footer {
+    font-size: 10px;
+    background: rgba(0,0,0,0.32);
+    padding: 4px 6px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+/* Layout 3: Windows XP Tiles Grid */
 .xp-folders-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
     gap: 10px;
 }
 
@@ -533,12 +758,11 @@ body.wallpaper-bunker {
 }
 
 .xp-file-icon {
-    font-size: 26px;
+    font-size: 28px;
 }
 
 .xp-file-meta strong {
     display: block;
-    font-size: 11.5px;
     color: #003c9d;
 }
 
@@ -547,8 +771,236 @@ body.wallpaper-bunker {
     font-size: 10.5px;
 }
 
+/* Layout 4: Windows XP Details Table */
+.xp-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--ui-font-size);
+}
+
+.xp-details-table th {
+    background: linear-gradient(180deg, #ffffff 0%, #ece9d8 100%);
+    border: 1px solid #aca899;
+    padding: 4px 8px;
+    text-align: left;
+    font-weight: normal;
+    color: #222;
+}
+
+.xp-details-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+}
+
+.xp-details-table tr:hover td {
+    background: #316ac5;
+    color: #fff;
+}
+
 /* --------------------------------------------------------------------------
-   7. Add/Remove Books (ZIM Downloader) List
+   6. Control Panel / Display Properties Tabbed Sheet (win-settings)
+   -------------------------------------------------------------------------- */
+.xp-properties-dialog {
+    padding: 10px 12px;
+    background: var(--win-bg);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.xp-prop-tabs {
+    display: flex;
+    gap: 2px;
+    padding-left: 4px;
+    margin-bottom: -1px;
+    z-index: 2;
+}
+
+.xp-prop-tab {
+    background: linear-gradient(180deg, #faf9f4 0%, #e4e0ce 100%);
+    border: 1px solid #919b9c;
+    border-bottom: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 5px 11px;
+    font-family: inherit;
+    font-size: 11.5px;
+    cursor: pointer;
+    color: #222;
+}
+
+.xp-prop-tab.active {
+    background: #faf9f5;
+    border-top: 2px solid #f59e0b;
+    font-weight: bold;
+    padding-bottom: 6px;
+}
+
+.xp-prop-page {
+    flex: 1;
+    background: #faf9f5;
+    border: 1px solid #919b9c;
+    padding: 12px 14px;
+    overflow-y: auto;
+}
+
+/* Classic XP CRT Monitor Preview */
+.xp-crt-preview-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.xp-crt-monitor {
+    width: 190px;
+    height: 124px;
+    background: #d4d0c8;
+    border: 4px outset #ffffff;
+    border-radius: 6px;
+    padding: 9px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+.xp-crt-screen {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #1b65d6 0%, #4da1ff 55%, #52b718 56%);
+    border: 2px inset #808080;
+    position: relative;
+    padding: 10px;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.preview-mini-win {
+    width: 110px;
+    height: 64px;
+    background: #ece9d8;
+    border: 2px solid #0046d5;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+}
+
+.preview-mini-bar {
+    height: 15px;
+    background: var(--win-title-bg);
+    color: #fff;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 1px 4px;
+}
+
+.preview-mini-body {
+    padding: 6px;
+    font-size: 9px;
+    color: #222;
+}
+
+.xp-crt-stand {
+    width: 64px;
+    height: 10px;
+    background: #aca899;
+    border: 2px outset #fff;
+}
+
+.xp-fieldset {
+    border: 1px solid #d0d0bf;
+    border-radius: 4px;
+    padding: 10px 12px;
+    background: #ffffff;
+}
+
+.xp-fieldset-title {
+    font-weight: bold;
+    color: #003594;
+    margin-bottom: 8px;
+    font-size: 11.5px;
+}
+
+.xp-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.xp-fieldset label {
+    display: block;
+    font-size: 11px;
+    margin-bottom: 4px;
+    color: #222;
+}
+
+.xp-fieldset input[type="text"],
+.xp-fieldset select,
+.xp-fieldset textarea {
+    width: 100%;
+    border: 1px solid #7f9db9;
+    padding: 4px 6px;
+    font-family: inherit;
+    font-size: 11.5px;
+}
+
+.xp-radio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.xp-radio-card {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    cursor: pointer;
+    background: #f8fafc;
+}
+
+.xp-radio-card:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+}
+
+.xp-radio-card small {
+    display: block;
+    color: #555;
+    font-size: 10.5px;
+    margin-top: 2px;
+}
+
+.xp-prop-footer {
+    padding-top: 8px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.xp-dialog-btn {
+    min-width: 74px;
+    padding: 4px 12px;
+    background: linear-gradient(180deg, #ffffff 0%, #ece9d8 100%);
+    border: 1px solid #003c74;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.xp-dialog-btn.default {
+    border: 2px solid #003c74;
+    font-weight: bold;
+}
+
+.xp-dialog-btn:hover {
+    background: linear-gradient(180deg, #e3f0ff 0%, #c2dcff 100%);
+}
+
+/* --------------------------------------------------------------------------
+   7. Add/Remove Books & Reader Content
    -------------------------------------------------------------------------- */
 .xp-addremove-list {
     display: flex;
@@ -573,7 +1025,6 @@ body.wallpaper-bunker {
 
 .xp-pkg-title {
     font-weight: bold;
-    font-size: 12.5px;
     color: #003594;
     display: flex;
     align-items: center;
@@ -595,15 +1046,12 @@ body.wallpaper-bunker {
     font-weight: normal;
 }
 
-/* --------------------------------------------------------------------------
-   8. Reader Window Markdown Formatting & Forms
-   -------------------------------------------------------------------------- */
 .reader-article-body {
     padding: 18px 24px;
     overflow-y: auto;
     height: 100%;
     line-height: 1.55;
-    font-size: 13px;
+    font-size: calc(var(--ui-font-size) + 1px);
     color: #1e293b;
 }
 
@@ -612,13 +1060,13 @@ body.wallpaper-bunker {
     border-bottom: 2px solid #cbd5e1;
     padding-bottom: 6px;
     margin-bottom: 12px;
-    font-size: 19px;
+    font-size: calc(var(--ui-font-size) + 6px);
 }
 
 .reader-article-body h2 {
     color: #1e3a8a;
     margin: 14px 0 8px 0;
-    font-size: 15px;
+    font-size: calc(var(--ui-font-size) + 3px);
 }
 
 .reader-article-body pre {
@@ -629,14 +1077,12 @@ body.wallpaper-bunker {
     overflow-x: auto;
     margin: 8px 0;
     font-family: monospace;
-    font-size: 12px;
 }
 
 .reader-article-body table {
     width: 100%;
     border-collapse: collapse;
     margin: 10px 0;
-    font-size: 12px;
 }
 
 .reader-article-body th, .reader-article-body td {
@@ -665,99 +1111,276 @@ body.wallpaper-bunker {
     border: 1px solid #7f9db9;
     padding: 5px 7px;
     font-family: inherit;
-    font-size: 12px;
+    font-size: var(--ui-font-size);
 }
 
-/* --------------------------------------------------------------------------
-   9. DOCKED BOTTOM AI CHAT ("AI OF TOMORROW" + XP LUNA DOCK)
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   8. DUAL-MODE AI CHAT DOCK
+      MODE A: .chat-mode-fb-side (Old Facebook 2009 Bottom-Right Side Popup!)
+      MODE B: .chat-mode-bottom-bar (Centered Full Bottom Command Bar)
+   ========================================================================== */
+
 #ai-bottom-dock {
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 36px; /* Sits right above the 36px XP Taskbar */
-    z-index: 900;
+    bottom: 32px; /* Sits right above the 32px XP Taskbar */
+    z-index: 920;
     display: flex;
     flex-direction: column;
     pointer-events: none;
 }
 
-#ai-chat-drawer {
+/* --- MODE A: Old Facebook Bottom-Right Side Popup Window --- */
+body.chat-mode-fb-side #ai-bottom-dock {
+    right: 12px;
+    left: auto;
+    width: 320px;
+    align-items: flex-end;
+}
+
+body.chat-mode-fb-side #ai-bottom-dock.fb-history-open {
+    width: 495px;
+}
+
+body.chat-mode-fb-side #ai-chat-drawer {
     pointer-events: auto;
-    width: min(1020px, 96vw);
-    margin: 0 auto;
-    height: 360px;
-    background: rgba(15, 23, 42, 0.96);
-    backdrop-filter: blur(12px);
-    border: 2px solid #2b7de9;
+    width: 100%;
+    height: 365px;
+    background: #ffffff;
+    border: 1px solid #29447e;
     border-bottom: none;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.6);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: -2px -4px 16px rgba(0, 0, 0, 0.38);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transition: height 0.22s ease, opacity 0.18s ease;
-    color: #f8fafc;
+    color: #111;
+    transition: height 0.18s ease, opacity 0.15s ease;
 }
 
+body.chat-mode-fb-side .ai-drawer-header {
+    height: 29px;
+    background: linear-gradient(180deg, #4b67a8 0%, #3b5998 50%, #314b82 100%);
+    color: #ffffff;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border-bottom: 1px solid #1d2a4d;
+}
+
+body.chat-mode-fb-side .ai-chats-sidebar {
+    width: 165px;
+    background: #f2f4f8;
+    border-right: 1px solid #d8dfea;
+    display: none;
+    flex-direction: column;
+}
+
+body.chat-mode-fb-side #ai-bottom-dock.fb-history-open .ai-chats-sidebar {
+    display: flex;
+}
+
+body.chat-mode-fb-side .ai-messages-stream {
+    background: #ffffff;
+    padding: 10px;
+}
+
+body.chat-mode-fb-side .chat-bubble.assistant {
+    background: #edeff4;
+    border: 1px solid #d8dfea;
+    color: #111827;
+}
+
+body.chat-mode-fb-side .chat-bubble.user {
+    background: #3b5998;
+    color: #ffffff;
+}
+
+body.chat-mode-fb-side #ai-command-bar {
+    pointer-events: auto;
+    width: 100%;
+    background: #eceff5;
+    border: 1px solid #29447e;
+    padding: 5px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+}
+
+body.chat-mode-fb-side .ai-toggle-drawer-btn {
+    width: 100%;
+    height: 24px;
+    background: linear-gradient(180deg, #4b67a8 0%, #3b5998 100%);
+    color: #fff;
+    border: 1px solid #1d2a4d;
+    border-radius: 3px;
+    padding: 0 8px;
+    font-size: 11.5px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+body.chat-mode-fb-side #ai-chat-input {
+    height: 28px;
+    background: #ffffff;
+    border: 1px solid #bdc7d8;
+    border-radius: 3px;
+    color: #111;
+    padding: 0 8px;
+    font-size: var(--ui-font-size);
+}
+
+body.chat-mode-fb-side .ai-quick-chips {
+    display: none;
+}
+
+/* --- MODE B: Wide Bottom Command Bar + Split Drawer --- */
+body.chat-mode-bottom-bar #ai-bottom-dock {
+    left: 0;
+    right: 0;
+}
+
+body.chat-mode-bottom-bar #ai-chat-drawer {
+    pointer-events: auto;
+    width: min(1000px, 96vw);
+    margin: 0 auto;
+    height: 350px;
+    background: rgba(15, 23, 42, 0.96);
+    border: 2px solid #2b7de9;
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.55);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: #f8fafc;
+    transition: height 0.2s ease, opacity 0.16s ease;
+}
+
+body.chat-mode-bottom-bar .ai-drawer-header {
+    height: 32px;
+    background: var(--win-title-bg);
+    color: #fff;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+body.chat-mode-bottom-bar .ai-chats-sidebar {
+    width: 215px;
+    background: rgba(2, 6, 23, 0.8);
+    border-right: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+}
+
+body.chat-mode-bottom-bar .chat-bubble.assistant {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #f1f5f9;
+}
+
+body.chat-mode-bottom-bar .chat-bubble.user {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #ffffff;
+}
+
+body.chat-mode-bottom-bar #ai-command-bar {
+    pointer-events: auto;
+    height: 44px;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    border-top: 2px solid #3b82f6;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+body.chat-mode-bottom-bar .ai-toggle-drawer-btn {
+    background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+    color: #fff;
+    border: 1px solid #60a5fa;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 11.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+body.chat-mode-bottom-bar #ai-chat-input {
+    height: 30px;
+    background: #020617;
+    border: 1px solid #475569;
+    border-radius: 4px;
+    color: #f8fafc;
+    padding: 0 10px;
+    font-size: var(--ui-font-size);
+}
+
+/* Shared Chat Drawer Elements */
 #ai-bottom-dock.dock-collapsed #ai-chat-drawer {
-    height: 0;
+    height: 0 !important;
     opacity: 0;
     border-width: 0;
     pointer-events: none;
 }
 
-.ai-drawer-header {
-    height: 34px;
-    background: linear-gradient(90deg, #0046c7 0%, #1d4ed8 55%, #0f172a 100%);
-    padding: 0 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #3b82f6;
-}
-
 .ai-drawer-title {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 12px;
+    gap: 6px;
+    font-size: 11.5px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-.ai-pulse-dot {
+.ai-pulse-dot, .ai-online-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background: #22c55e;
-    box-shadow: 0 0 8px #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+    display: inline-block;
 }
 
 .ai-chat-pill {
-    background: rgba(255,255,255,0.16);
-    padding: 2px 8px;
+    background: rgba(255,255,255,0.2);
+    padding: 1px 6px;
     border-radius: 999px;
-    font-size: 11px;
-    color: #bfdbfe;
+    font-size: 10px;
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ai-drawer-actions {
     display: flex;
-    gap: 6px;
+    gap: 3px;
 }
 
 .xp-mini-btn {
-    background: rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.16);
     color: #fff;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 4px;
-    padding: 3px 8px;
-    font-size: 11px;
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 3px;
+    padding: 2px 5px;
+    font-size: 10px;
     cursor: pointer;
 }
 
 .xp-mini-btn:hover {
-    background: rgba(255,255,255,0.26);
+    background: rgba(255,255,255,0.3);
 }
 
 .ai-drawer-body {
@@ -766,24 +1389,14 @@ body.wallpaper-bunker {
     overflow: hidden;
 }
 
-.ai-chats-sidebar {
-    width: 220px;
-    background: rgba(2, 6, 23, 0.75);
-    border-right: 1px solid #1e293b;
-    display: flex;
-    flex-direction: column;
-}
-
 .ai-sidebar-header {
-    padding: 8px 10px;
-    border-bottom: 1px solid #1e293b;
+    padding: 6px 8px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 11px;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    font-size: 10.5px;
+    font-weight: bold;
 }
 
 .ai-sidebar-header button {
@@ -791,30 +1404,29 @@ body.wallpaper-bunker {
     color: #fff;
     border: none;
     border-radius: 3px;
-    padding: 2px 7px;
-    font-size: 11px;
+    padding: 2px 6px;
+    font-size: 10px;
     cursor: pointer;
 }
 
 .ai-chats-list {
     flex: 1;
     overflow-y: auto;
-    padding: 6px;
+    padding: 5px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
 }
 
 .ai-chat-history-item {
-    padding: 7px 8px;
-    border-radius: 5px;
+    padding: 5px 7px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 11.5px;
-    color: #cbd5e1;
+    font-size: 11px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 6px;
+    gap: 5px;
 }
 
 .ai-chat-history-item:hover {
@@ -822,9 +1434,9 @@ body.wallpaper-bunker {
 }
 
 .ai-chat-history-item.active {
-    background: rgba(37, 99, 235, 0.38);
-    color: #ffffff;
-    border-left: 3px solid #60a5fa;
+    background: rgba(37, 99, 235, 0.28);
+    font-weight: bold;
+    border-left: 3px solid #2563eb;
 }
 
 .ai-messages-panel {
@@ -837,129 +1449,81 @@ body.wallpaper-bunker {
 .ai-messages-stream {
     flex: 1;
     overflow-y: auto;
-    padding: 12px 16px;
+    padding: 10px 12px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     user-select: text;
+    font-size: var(--ui-font-size);
 }
 
 .chat-bubble {
-    max-width: 86%;
-    padding: 9px 13px;
-    border-radius: 8px;
-    line-height: 1.5;
-    font-size: 12.5px;
+    max-width: 88%;
+    padding: 7px 10px;
+    border-radius: 6px;
+    line-height: 1.45;
 }
 
 .chat-bubble.user {
     align-self: flex-end;
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    color: #ffffff;
-    border-bottom-right-radius: 2px;
 }
 
 .chat-bubble.assistant {
     align-self: flex-start;
-    background: #1e293b;
-    border: 1px solid #334155;
-    color: #f1f5f9;
-    border-bottom-left-radius: 2px;
 }
 
 .chat-bubble pre {
-    background: #020617;
+    background: #0f172a;
     color: #38bdf8;
-    padding: 8px;
+    padding: 6px 8px;
     border-radius: 4px;
     overflow-x: auto;
-    margin-top: 6px;
+    margin-top: 5px;
     font-family: monospace;
+    font-size: 11px;
 }
 
 .chat-sources-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 8px;
-    padding-top: 6px;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    gap: 4px;
+    margin-top: 6px;
+    padding-top: 5px;
+    border-top: 1px solid rgba(148,163,184,0.25);
 }
 
 .source-chip {
-    background: rgba(56, 189, 248, 0.15);
-    border: 1px solid rgba(56, 189, 248, 0.45);
+    background: rgba(37, 99, 235, 0.12);
+    border: 1px solid rgba(37, 99, 235, 0.4);
+    color: #1d4ed8;
+    font-size: 10.5px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+body.chat-mode-bottom-bar .source-chip {
     color: #7dd3fc;
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.source-chip:hover {
-    background: rgba(56, 189, 248, 0.3);
-    color: #fff;
-}
-
-/* Bottom Always-Visible AI Command Bar */
-#ai-command-bar {
-    pointer-events: auto;
-    height: 46px;
-    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-    border-top: 2px solid #3b82f6;
-    padding: 0 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.45);
-}
-
-.ai-toggle-drawer-btn {
-    background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
-    color: #fff;
-    border: 1px solid #60a5fa;
-    border-radius: 5px;
-    padding: 6px 10px;
-    font-size: 11.5px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
 }
 
 #ai-chat-form {
     flex: 1;
     display: flex;
-    gap: 6px;
+    gap: 5px;
 }
 
 #ai-chat-input {
     flex: 1;
-    height: 32px;
-    background: #020617;
-    border: 1px solid #475569;
-    border-radius: 5px;
-    color: #f8fafc;
-    padding: 0 12px;
-    font-size: 12.5px;
-}
-
-#ai-chat-input:focus {
-    outline: none;
-    border-color: #38bdf8;
-    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
 }
 
 #ai-send-btn {
-    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(180deg, #3b5998 0%, #2d4373 100%);
     color: #fff;
-    border: 1px solid #34d399;
-    border-radius: 5px;
-    padding: 0 14px;
+    border: 1px solid #1d2a4d;
+    border-radius: 3px;
+    padding: 0 10px;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
 }
 
@@ -976,59 +1540,53 @@ body.wallpaper-bunker {
     padding: 4px 8px;
     font-size: 11px;
     cursor: pointer;
-    white-space: nowrap;
-}
-
-.ai-quick-chips button:hover {
-    background: #475569;
-    color: #fff;
 }
 
 /* --------------------------------------------------------------------------
-   10. WINDOWS XP TASKBAR & START MENU
+   9. WINDOWS XP TASKBAR & START MENU
    -------------------------------------------------------------------------- */
 #xp-taskbar {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
-    height: 36px;
-    background: linear-gradient(180deg, #3168d5 0%, #4993e6 8%, #2258d5 18%, #245edb 88%, #1941a5 100%);
+    height: 32px;
+    background: var(--taskbar-bg);
     display: flex;
     align-items: center;
     justify-content: space-between;
     z-index: 1000;
-    border-top: 1px solid #67a9ff;
+    border-top: 1px solid rgba(255,255,255,0.35);
 }
 
 #xp-start-btn {
     height: 100%;
-    padding: 0 18px 0 12px;
-    background: linear-gradient(180deg, #42a842 0%, #73d273 10%, #379837 50%, #2b7b2b 92%, #1d591d 100%);
+    padding: 0 16px 0 10px;
+    background: var(--start-btn-bg);
     border: none;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
-    border-right: 2px solid #1b4f1b;
+    border-right: 2px solid rgba(0,0,0,0.35);
     color: #ffffff;
     font-style: italic;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
     display: flex;
     align-items: center;
     gap: 6px;
     cursor: pointer;
-    box-shadow: inset 0 1px 2px rgba(255,255,255,0.6), 2px 0 6px rgba(0,0,0,0.4);
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.6), 2px 0 6px rgba(0,0,0,0.35);
     text-shadow: 1px 1px 2px rgba(0,0,0,0.75);
 }
 
-#xp-start-btn:hover {
-    filter: brightness(1.08);
-}
-
-.xp-flag {
+body.theme-classic-98 #xp-start-btn {
+    border-radius: 0;
     font-style: normal;
-    color: #fde047;
-    font-size: 18px;
+    color: #000;
+    text-shadow: none;
+    border: 2px outset #fff;
+    height: 26px;
+    margin-left: 3px;
 }
 
 #xp-taskbar-windows {
@@ -1041,11 +1599,11 @@ body.wallpaper-bunker {
 }
 
 .xp-task-tab {
-    height: 26px;
-    min-width: 135px;
-    max-width: 195px;
-    background: linear-gradient(180deg, #3c81f3 0%, #2764d8 100%);
-    border: 1px solid #1644a4;
+    height: 24px;
+    min-width: 130px;
+    max-width: 185px;
+    background: var(--taskbar-tab-bg);
+    border: 1px solid rgba(0,0,0,0.35);
     border-radius: 3px;
     color: #ffffff;
     padding: 0 8px;
@@ -1059,28 +1617,41 @@ body.wallpaper-bunker {
     text-overflow: ellipsis;
 }
 
+body.theme-classic-98 .xp-task-tab {
+    border-radius: 0;
+    color: #000;
+    border: 2px outset #fff;
+}
+
 .xp-task-tab.active {
-    background: linear-gradient(180deg, #1b4ba8 0%, #153c8a 100%);
-    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.5);
+    background: var(--taskbar-tab-active);
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.55);
     font-weight: bold;
 }
 
 #xp-systray {
     height: 100%;
-    background: linear-gradient(180deg, #158be9 0%, #0e6ec4 100%);
-    border-left: 1px solid #10499c;
-    padding: 0 12px;
+    background: var(--systray-bg);
+    border-left: 1px solid rgba(0,0,0,0.35);
+    padding: 0 10px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     color: #ffffff;
     font-size: 11px;
 }
 
+body.theme-classic-98 #xp-systray {
+    color: #000;
+    border: 2px inset #fff;
+    height: 26px;
+    margin-right: 3px;
+}
+
 .systray-item {
     cursor: pointer;
-    background: rgba(0, 0, 0, 0.18);
-    padding: 2px 7px;
+    background: rgba(0, 0, 0, 0.16);
+    padding: 2px 6px;
     border-radius: 3px;
 }
 
@@ -1088,10 +1659,10 @@ body.wallpaper-bunker {
 #xp-start-menu {
     position: fixed;
     left: 2px;
-    bottom: 36px;
+    bottom: 32px;
     width: 390px;
     background: #ffffff;
-    border: 2px solid #0046c7;
+    border: 2px solid var(--win-border);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     box-shadow: 4px -4px 20px rgba(0,0,0,0.55);
@@ -1100,7 +1671,7 @@ body.wallpaper-bunker {
 }
 
 .xp-start-header {
-    background: linear-gradient(180deg, #166aee 0%, #004bc4 100%);
+    background: var(--win-title-bg);
     color: #ffffff;
     padding: 10px 12px;
     display: flex;
@@ -1128,12 +1699,12 @@ body.wallpaper-bunker {
 
 .xp-user-role {
     font-size: 11px;
-    color: #dbeafe;
+    opacity: 0.85;
 }
 
 .xp-start-columns {
     display: flex;
-    min-height: 250px;
+    min-height: 255px;
 }
 
 .xp-start-left {
@@ -1179,18 +1750,16 @@ body.wallpaper-bunker {
     gap: 6px;
 }
 
-.xp-start-section-title {
-    font-weight: bold;
-    color: #003594;
-    font-size: 11px;
-}
-
 .xp-start-link {
     font-size: 11px;
     color: #1e3a8a;
     cursor: pointer;
-    padding: 3px 4px;
+    padding: 4px 5px;
     border-radius: 3px;
+}
+
+.xp-start-link.bold {
+    font-weight: bold;
 }
 
 .xp-start-link:hover {
@@ -1199,10 +1768,22 @@ body.wallpaper-bunker {
 }
 
 .xp-start-footer {
-    background: linear-gradient(180deg, #3a84f7 0%, #1455c0 100%);
+    background: var(--win-title-bg);
     padding: 7px 12px;
     display: flex;
     justify-content: flex-end;
+    gap: 8px;
+}
+
+.xp-start-logoff {
+    background: #f59e0b;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    padding: 4px 10px;
+    font-weight: bold;
+    font-size: 11px;
+    cursor: pointer;
 }
 
 .xp-start-shutdown {
