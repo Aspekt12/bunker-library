@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BunkerOS XP Professional — Offline Knowledge Desktop</title>
-    <link rel="stylesheet" href="/static/xp.css?v=6">
+    <link rel="stylesheet" href="/static/xp.css?v=8">
 </head>
 <body class="theme-luna-blue wallpaper-bliss chat-mode-fb-side">
 
@@ -647,7 +647,11 @@
                     <span class="addr-folder-icon" data-xp-icon="book_open" data-icon-size="14"></span>
                     <input type="text" id="reader-location-bar" readonly value="C:\Bunker_Library\Books">
                 </div>
-                <input type="text" id="reader-chapter-search" class="xp-search-box" placeholder="Search inside this book..." oninput="filterBookChapters()">
+                <form onsubmit="handleQuickManJump(event)" style="display:inline-flex;align-items:center;gap:4px;">
+                    <input type="text" id="reader-man-quick-input" class="xp-search-box" style="width:155px;" placeholder="man page (e.g. mmap, grep)...">
+                    <button type="submit" class="xp-toolbar-btn" title="Open Linux Man Page">man</button>
+                </form>
+                <input type="text" id="reader-chapter-search" class="xp-search-box" placeholder="Filter sidebar..." oninput="filterBookChapters()">
             </div>
 
             <div class="xp-window-body reader-split-layout">
@@ -940,6 +944,6 @@
         </div>
     </footer>
 
-    <script src="/static/xp.js?v=6"></script>
+    <script src="/static/xp.js?v=8"></script>
 </body>
 </html>

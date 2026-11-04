@@ -769,7 +769,7 @@ async function selectAiModel(modelId) {
         await fetch("/api/ai/models/select", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ model_id: modelId }),
+            body: JSON.stringify({ model: modelId }),
         });
         await loadAiModels();
         await loadSystemStatus();
@@ -784,7 +784,7 @@ async function pullAiModel(modelId) {
         await fetch("/api/ai/models/pull", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ model_id: modelId }),
+            body: JSON.stringify({ model: modelId }),
         });
         await loadAiModels();
     } catch (err) {
@@ -1563,16 +1563,84 @@ function filterBookChapters() {
 
 function selectBookChapter(idx) {
     if (!currentBookChapters.length) return;
-    activeManPageName = null;
     currentChapterIndex = Math.max(0, Math.min(currentBookChapters.length - 1, idx));
+    const ch = currentBookChapters[currentChapterIndex];
+
+    // If this is a Linux Man Pages volume and the chapter is a specific man page (e.g. "man mmap(2)"),
+    // render it using the rich structured MSDN/XP Man Page Renderer!
+    const mManTitle = ch.title.match(/^man\s+([a-zA-Z0-9_.:+-]+)\(([1-8])\)/i);
+    if (mManTitle) {
+        openManPage(mManTitle[2], mManTitle[1], currentChapterIndex);
+        return;
+    }
+
+    activeManPageName = null;
     renderBookTocList();
 
-    const ch = currentBookChapters[currentChapterIndex];
     const volDiv = document.getElementById("reader-volume-content");
     if (!volDiv) return;
 
     const hasPrev = currentChapterIndex > 0;
     const hasNext = currentChapterIndex < currentBookChapters.length - 1;
+
+    // If this is the Section Index chapter of a Linux Man Pages volume, render an interactive clickable directory grid
+    if (currentReaderBook && currentReaderBook.man_section && Array.isArray(currentReaderBook.man_pages_list)) {
+        const sec = currentReaderBook.man_section;
+        const allPages = currentReaderBook.man_pages_list;
+        const featuredChapters = currentBookChapters
+            .slice(1)
+            .map((c, i) => {
+                const m = c.title.match(/^man\s+([a-zA-Z0-9_.:+-]+)\(([1-8])\)/i);
+                const pName = m ? m[1] : c.title;
+                return `<div class="man-index-card" onclick="selectBookChapter(${i + 1})">
+                    <span>${escapeHtml(pName)}(${escapeHtml(sec)})</span>
+                    <small style="color:#64748b;">Featured</small>
+                </div>`;
+            })
+            .join("");
+
+        const directoryCards = allPages
+            .slice(0, 180)
+            .map(
+                (pName) => `<div class="man-index-card" onclick="openManPage('${escapeAttr(sec)}', '${escapeAttr(pName)}')">
+                    <span>${escapeHtml(pName)}(${escapeHtml(sec)})</span>
+                    <small style="color:#64748b;">man${escapeHtml(sec)}</small>
+                </div>`
+            )
+            .join("");
+
+        volDiv.innerHTML = `
+            <div class="man-reader-wrapper">
+                <div class="man-hero-banner">
+                    <div class="man-hero-top">
+                        <div>
+                            <span class="man-cmd-badge">MAN(${escapeHtml(sec)})</span>
+                            <span class="man-cat-label">${escapeHtml(currentReaderBook.title)}</span>
+                        </div>
+                    </div>
+                    <div class="man-hero-summary">
+                        Interactive Offline Manual Directory — ${allPages.length.toLocaleString()} archived pages in Section ${escapeHtml(sec)}. Click any manual page below or use the sidebar / top search bar to open it.
+                    </div>
+                </div>
+
+                <div class="man-section-card" style="margin-bottom:14px;">
+                    <div class="man-section-header">ESSENTIAL / FEATURED SECTION ${escapeHtml(sec)} MANUALS</div>
+                    <div class="man-section-body">
+                        <div class="man-index-grid">${featuredChapters}</div>
+                    </div>
+                </div>
+
+                <div class="man-section-card">
+                    <div class="man-section-header">ALPHABETICAL ARCHIVE DIRECTORY (${allPages.length.toLocaleString()} PAGES IN MAN${escapeHtml(sec)})</div>
+                    <div class="man-section-body">
+                        <div class="man-index-grid">${directoryCards}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        volDiv.scrollTop = 0;
+        return;
+    }
 
     const headerBox = currentChapterIndex === 0 && currentReaderBook
         ? `<div class="reader-book-header-box">
@@ -1603,7 +1671,7 @@ function selectBookChapter(idx) {
     }
 }
 
-async function openManPage(sec, pageName) {
+async function openManPage(sec, pageName, chapterIdxOverride = null) {
     openWindow("win-reader");
     const volDiv = document.getElementById("reader-volume-content");
     const iframe = document.getElementById("reader-kiwix-iframe");
@@ -1612,39 +1680,92 @@ async function openManPage(sec, pageName) {
     if (volDiv) volDiv.style.display = "block";
     if (tocSidebar) tocSidebar.style.display = "flex";
 
-    activeManPageName = `${sec}:${pageName}`;
+    if (chapterIdxOverride !== null) {
+        currentChapterIndex = chapterIdxOverride;
+        activeManPageName = null;
+    } else {
+        activeManPageName = `${sec}:${pageName}`;
+    }
     renderBookTocList();
 
     document.getElementById("reader-win-icon").innerHTML = xpIcon("book_slate", 16);
-    document.getElementById("reader-win-title").textContent = `man ${pageName}(${sec}) — Linux Man Pages Archive`;
-    document.getElementById("reader-location-bar").value = `C:\\Bunker_Library\\ManPages\\man${sec}\\${pageName}.${sec}.gz`;
+    document.getElementById("reader-win-title").textContent = `man ${pageName}(${sec}) — Linux Manual Reader`;
+    document.getElementById("reader-location-bar").value = `man://${sec}/${pageName} (/data/app_data/manpages/man${sec}/${pageName}.${sec}.gz)`;
 
     if (volDiv) {
-        volDiv.innerHTML = `<p>Decompressing and formatting <code>man ${escapeHtml(pageName)}(${escapeHtml(sec)})</code>...</p>`;
+        volDiv.innerHTML = `<div class="man-reader-wrapper"><div class="man-hero-banner">Formatting <code>man ${escapeHtml(pageName)}(${escapeHtml(sec)})</code> via GNU groff...</div></div>`;
     }
 
     try {
         const res = await fetch(`/api/man/page/${encodeURIComponent(sec)}/${encodeURIComponent(pageName)}`);
+        if (!res.ok) {
+            throw new Error(`Manual page ${pageName}(${sec}) not found`);
+        }
         const data = await res.json();
         if (volDiv) {
-            volDiv.innerHTML = `
-                <div class="reader-book-header-box">
-                    <h1>${escapeHtml(data.title || `${pageName}(${sec})`)}</h1>
-                    <div class="meta-sub"><strong>Linux Manual Section:</strong> man(${escapeHtml(sec)}) &bull; <strong>Source Archive:</strong> <code>/data/app_data/manpages/man${escapeHtml(sec)}/${escapeHtml(pageName)}.${escapeHtml(sec)}.gz</code> &bull; <strong>Words:</strong> ${(data.word_count || 0).toLocaleString()}</div>
-                </div>
-                <div class="reader-chapter-prose">${renderMarkdown(data.content || "")}</div>
-            `;
+            volDiv.innerHTML = data.html || `<div class="reader-chapter-prose">${renderMarkdown(data.content || "")}</div>`;
             volDiv.scrollTop = 0;
         }
         const statusEl = document.getElementById("reader-status-text");
         if (statusEl) {
-            statusEl.textContent = `Viewing Linux Man Page: man ${pageName}(${sec}) (${(data.word_count || 0).toLocaleString()} words)`;
+            statusEl.textContent = `${data.title} — ${(data.word_count || 0).toLocaleString()} words`;
+        }
+        const metaBadge = document.getElementById("reader-meta-badge");
+        if (metaBadge) {
+            metaBadge.textContent = `man ${data.name}(${data.sec})`;
         }
     } catch (err) {
         if (volDiv) {
-            volDiv.innerHTML = `<p style="color:#dc2626;">Failed to load man ${escapeHtml(pageName)}(${escapeHtml(sec)}): ${escapeHtml(String(err))}</p>`;
+            volDiv.innerHTML = `<div class="man-reader-wrapper"><p style="color:#dc2626;">Could not open <code>man ${escapeHtml(pageName)}(${escapeHtml(sec)})</code>: ${escapeHtml(String(err))}</p></div>`;
         }
     }
+}
+
+function scrollToManSection(sectionId) {
+    const el = document.getElementById(sectionId);
+    if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
+
+async function handleQuickManJump(e) {
+    e.preventDefault();
+    const input = document.getElementById("reader-man-quick-input");
+    const raw = (input?.value || "").trim();
+    if (!raw) return;
+
+    // Support "mmap(2)", "2 mmap", "man mmap", or "mmap"
+    let sec = "2";
+    let name = raw.replace(/^man\s+/i, "").trim();
+
+    const mParen = name.match(/^([a-zA-Z0-9_.:+-]+)\(([1-8])\)$/);
+    const mSpace = name.match(/^([1-8])\s+([a-zA-Z0-9_.:+-]+)$/);
+    if (mParen) {
+        name = mParen[1];
+        sec = mParen[2];
+        await openManPage(sec, name);
+        return;
+    }
+    if (mSpace) {
+        sec = mSpace[1];
+        name = mSpace[2];
+        await openManPage(sec, name);
+        return;
+    }
+
+    // Search index to find best matching section & page name
+    try {
+        const res = await fetch(`/api/man/search?q=${encodeURIComponent(name)}`);
+        const data = await res.json();
+        if (data.results && data.results.length > 0) {
+            const best = data.results[0];
+            await openManPage(String(best.sec), best.name);
+            return;
+        }
+    } catch (err) {
+        console.error("Man search failed:", err);
+    }
+    await openManPage("2", name);
 }
 
 function stepBookChapter(delta) {
@@ -1976,24 +2097,79 @@ async function handleChatSubmit(e) {
     sendBtn.textContent = "...";
 
     const stream = document.getElementById("ai-messages-stream");
+    const streamBubbleId = `stream-bubble-${Date.now()}`;
+    const streamSourcesId = `stream-sources-${Date.now()}`;
     stream.innerHTML += `
         <div class="chat-bubble user">${escapeHtml(text)}</div>
-        <div class="chat-bubble assistant" id="temp-thinking-bubble"><em>${escapeHtml(appSettings.ai_name)} is searching local books...</em></div>
+        <div class="chat-bubble assistant">
+            <div id="${streamBubbleId}"><em>${escapeHtml(appSettings.ai_name)} is writing a solution...</em></div>
+            <div id="${streamSourcesId}"></div>
+        </div>
     `;
     stream.scrollTop = stream.scrollHeight;
 
+    const bubbleEl = document.getElementById(streamBubbleId);
+    const sourcesEl = document.getElementById(streamSourcesId);
+    let accumulatedMd = "";
+
     try {
-        const res = await fetch(`/api/chats/${encodeURIComponent(activeChatId)}/message`, {
+        const res = await fetch(`/api/chats/${encodeURIComponent(activeChatId)}/stream`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: text }),
         });
-        await res.json();
+
+        if (!res.ok || !res.body) {
+            throw new Error(`HTTP ${res.status}`);
+        }
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
+
+            for (const line of lines) {
+                if (!line.trim()) continue;
+                try {
+                    const evt = JSON.parse(line);
+                    if (evt.type === "meta" && evt.sources && evt.sources.length > 0 && sourcesEl) {
+                        const chips = evt.sources
+                            .map((s) => {
+                                if (s.type === "zim_article" && s.url) {
+                                    return `<span class="source-chip" onclick="openKiwixBrowser('${escapeAttr(s.url)}')">${xpIcon("zim_disc", 13)} <span>${escapeHtml(s.title)}</span></span>`;
+                                }
+                                if (s.type === "man_page" && s.man_sec && s.man_name) {
+                                    return `<span class="source-chip" onclick="openManPage('${escapeAttr(s.man_sec)}', '${escapeAttr(s.man_name)}')">${xpIcon("book_slate", 13)} <span>Read ${escapeHtml(s.title)}</span></span>`;
+                                }
+                                return `<span class="source-chip" onclick="openLibraryItem('${escapeAttr(s.id)}')">${xpIcon("book_blue", 13)} <span>${escapeHtml(s.title)}</span></span>`;
+                            })
+                            .join("");
+                        sourcesEl.innerHTML = `<div class="chat-sources-row">${chips}</div>`;
+                    } else if (evt.type === "token") {
+                        accumulatedMd += evt.token;
+                        if (bubbleEl) {
+                            bubbleEl.innerHTML = renderMarkdown(accumulatedMd, true);
+                        }
+                        stream.scrollTop = stream.scrollHeight;
+                    }
+                } catch (parseErr) {
+                    console.error("Stream parse error:", parseErr);
+                }
+            }
+        }
+
         await selectChatSession(activeChatId);
         await loadChatsList(false);
     } catch (err) {
-        const temp = document.getElementById("temp-thinking-bubble");
-        if (temp) temp.innerHTML = `<span style="color:#dc2626;">Error: ${escapeHtml(String(err))}</span>`;
+        if (bubbleEl) {
+            bubbleEl.innerHTML = `<span style="color:#dc2626;">Error: ${escapeHtml(String(err))}</span>`;
+        }
     } finally {
         sendBtn.disabled = false;
         sendBtn.textContent = "Send";
@@ -2022,40 +2198,195 @@ function escapeAttr(str) {
     return escapeHtml(str).replace(/'/g, "&#39;");
 }
 
-function renderMarkdown(md) {
-    let text = escapeHtml(md);
+function copyCodeBlock(btnEl) {
+    const wrap = btnEl.closest(".md-code-wrap");
+    const codeEl = wrap?.querySelector("code");
+    if (!codeEl) return;
+    navigator.clipboard?.writeText(codeEl.textContent || "");
+    const orig = btnEl.textContent;
+    btnEl.textContent = "Copied!";
+    setTimeout(() => {
+        btnEl.textContent = orig;
+    }, 1400);
+}
 
-    text = text.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (_, _lang, code) => {
-        return `<pre><code>${code.trim()}</code></pre>`;
+function renderInlineMarkdown(rawLine) {
+    // 1. Protect inline `code` spans first so *, _, etc. inside code are untouched
+    const inlineCodes = [];
+    let safe = rawLine.replace(/`([^`\n]+)`/g, (_, codeTxt) => {
+        const idx = inlineCodes.length;
+        inlineCodes.push(`<code class="md-inline-code">${escapeHtml(codeTxt)}</code>`);
+        return `@@INLINECODE_${idx}@@`;
     });
 
-    text = text.replace(/((?:^\|.*\|\s*\n)+)/gm, (tableBlock) => {
-        const rows = tableBlock.trim().split("\n");
-        if (rows.length < 2) return tableBlock;
-        let out = "<table>";
-        rows.forEach((r, idx) => {
-            if (/^[\s|:-]+$/.test(r)) return;
-            const cells = r
-                .trim()
-                .replace(/^\|/, "")
-                .replace(/\|$/, "")
-                .split("|")
-                .map((c) => c.trim());
-            const tag = idx === 0 ? "th" : "td";
-            out += `<tr>${cells.map((c) => `<${tag}>${c}</${tag}>`).join("")}</tr>`;
-        });
-        out += "</table>";
-        return out;
-    });
+    // 2. Escape remaining HTML
+    safe = escapeHtml(safe);
 
-    text = text
-        .replace(/^### (.*)$/gm, "<h3>$1</h3>")
-        .replace(/^## (.*)$/gm, "<h2>$1</h2>")
-        .replace(/^# (.*)$/gm, "<h1>$1</h1>")
+    // 3. Bold & Italic
+    safe = safe
         .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-        .replace(/`([^`\n]+)`/g, "<code>$1</code>")
-        .replace(/^- (.*)$/gm, "&bull; $1<br>")
-        .replace(/\n\n/g, "<br><br>");
+        .replace(/(^|[\s(])\*([^*\n]+)\*(?=[\s.,;:!?)]|$)/g, "$1<em>$2</em>");
 
-    return text;
+    // 4. Restore inline code spans
+    safe = safe.replace(/@@INLINECODE_(\d+)@@/g, (_, idx) => inlineCodes[Number(idx)] || "");
+    return safe;
+}
+
+function renderMarkdown(md, isStreaming = false) {
+    let source = String(md ?? "").replace(/\r\n/g, "\n");
+
+    // If streaming and there is an unclosed ``` fence, close it temporarily so it renders as a live code block
+    const fenceMatches = source.match(/```/g);
+    if (fenceMatches && fenceMatches.length % 2 === 1) {
+        source += "\n```";
+    }
+
+    // 1. Extract fenced code blocks into placeholders BEFORE any line/heading/list parsing
+    const codeBlocks = [];
+    source = source.replace(/```([a-zA-Z0-9_+-]*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+        const idx = codeBlocks.length;
+        const langLabel = (lang || "code").trim().toUpperCase();
+        const escapedCode = escapeHtml(code.replace(/\n$/, ""));
+        codeBlocks.push(
+            `<div class="md-code-wrap">` +
+                `<div class="md-code-header">` +
+                    `<span class="md-code-lang">${escapeHtml(langLabel)}</span>` +
+                    `<button type="button" class="md-copy-btn" onclick="copyCodeBlock(this)">Copy Code</button>` +
+                `</div>` +
+                `<pre class="md-code-pre"><code>${escapedCode}</code></pre>` +
+            `</div>`
+        );
+        return `\n@@CODEBLOCK_${idx}@@\n`;
+    });
+
+    // 2. Parse line by line into structured blocks (Headings, Lists, Tables, Blockquotes, Code Placeholders, Paragraphs)
+    const lines = source.split("\n");
+    const outBlocks = [];
+    let i = 0;
+
+    while (i < lines.length) {
+        const line = lines[i];
+        const trimmed = line.trim();
+
+        if (!trimmed) {
+            i++;
+            continue;
+        }
+
+        // Code block placeholder
+        const mCode = trimmed.match(/^@@CODEBLOCK_(\d+)@@$/);
+        if (mCode) {
+            outBlocks.push(codeBlocks[Number(mCode[1])] || "");
+            i++;
+            continue;
+        }
+
+        // Headings (# .. ####)
+        const mHeading = trimmed.match(/^(#{1,4})\s+(.*)$/);
+        if (mHeading) {
+            const level = Math.min(4, mHeading[1].length);
+            outBlocks.push(`<h${level}>${renderInlineMarkdown(mHeading[2])}</h${level}>`);
+            i++;
+            continue;
+        }
+
+        // Markdown Table
+        if (trimmed.startsWith("|") && trimmed.endsWith("|") && i + 1 < lines.length && /^[\s|:-]+$/.test(lines[i + 1].trim())) {
+            const tableRows = [];
+            while (i < lines.length && lines[i].trim().startsWith("|")) {
+                tableRows.push(lines[i].trim());
+                i++;
+            }
+            let tblHtml = "<table>";
+            tableRows.forEach((r, rIdx) => {
+                if (/^[\s|:-]+$/.test(r)) return;
+                const cells = r
+                    .replace(/^\|/, "")
+                    .replace(/\|$/, "")
+                    .split("|")
+                    .map((c) => renderInlineMarkdown(c.trim()));
+                const tag = rIdx === 0 ? "th" : "td";
+                tblHtml += `<tr>${cells.map((c) => `<${tag}>${c}</${tag}>`).join("")}</tr>`;
+            });
+            tblHtml += "</table>";
+            outBlocks.push(tblHtml);
+            continue;
+        }
+
+        // Ordered or Unordered Lists (including indented sub-bullets and continuation lines)
+        const isUl = /^[-*+]\s+/.test(trimmed);
+        const isOl = /^\d+\.\s+/.test(trimmed);
+        if (isUl || isOl) {
+            const listTag = isOl ? "ol" : "ul";
+            const items = [];
+            while (i < lines.length) {
+                const curLine = lines[i];
+                const curTrim = curLine.trim();
+                if (!curTrim) {
+                    // Check if the next non-empty line continues the list
+                    if (i + 1 < lines.length && (/^(\d+\.|[-*+])\s+/.test(lines[i + 1].trim()) || /^\s{2,}\S/.test(lines[i + 1]))) {
+                        i++;
+                        continue;
+                    }
+                    break;
+                }
+                if (/^@@CODEBLOCK_\d+@@$/.test(curTrim) || /^#{1,4}\s+/.test(curTrim)) {
+                    break;
+                }
+                const mItem = curTrim.match(/^(?:\d+\.|[-*+])\s+(.*)$/);
+                if (mItem && !/^\s{2,}[-*+]\s+/.test(curLine)) {
+                    items.push(renderInlineMarkdown(mItem[1]));
+                    i++;
+                } else if (/^\s{2,}[-*+]\s+/.test(curLine) && items.length > 0) {
+                    const subText = curTrim.replace(/^[-*+]\s+/, "");
+                    items[items.length - 1] += `<br><span style="display:inline-block;padding-left:14px;">&bull; ${renderInlineMarkdown(subText)}</span>`;
+                    i++;
+                } else if (/^\s{2,}\S/.test(curLine) && items.length > 0) {
+                    items[items.length - 1] += `<br>${renderInlineMarkdown(curTrim)}`;
+                    i++;
+                } else {
+                    break;
+                }
+            }
+            outBlocks.push(`<${listTag}>${items.map((it) => `<li>${it}</li>`).join("")}</${listTag}>`);
+            continue;
+        }
+
+        // Blockquote
+        if (trimmed.startsWith(">")) {
+            const qLines = [];
+            while (i < lines.length && lines[i].trim().startsWith(">")) {
+                qLines.push(renderInlineMarkdown(lines[i].trim().replace(/^>\s?/, "")));
+                i++;
+            }
+            outBlocks.push(`<blockquote class="md-quote">${qLines.join("<br>")}</blockquote>`);
+            continue;
+        }
+
+        // Standard Paragraph (collect consecutive non-special lines)
+        const pLines = [];
+        while (i < lines.length) {
+            const pl = lines[i].trim();
+            if (
+                !pl ||
+                /^@@CODEBLOCK_\d+@@$/.test(pl) ||
+                /^#{1,4}\s+/.test(pl) ||
+                /^(?:\d+\.|[-*+])\s+/.test(pl) ||
+                pl.startsWith(">") ||
+                (pl.startsWith("|") && pl.endsWith("|"))
+            ) {
+                break;
+            }
+            pLines.push(renderInlineMarkdown(pl));
+            i++;
+        }
+        if (pLines.length > 0) {
+            outBlocks.push(`<p>${pLines.join("<br>")}</p>`);
+        } else {
+            i++;
+        }
+    }
+
+    const cursorHtml = isStreaming ? `<span class="md-stream-cursor"></span>` : "";
+    return `<div class="md-prose">${outBlocks.join("")}${cursorHtml}</div>`;
 }

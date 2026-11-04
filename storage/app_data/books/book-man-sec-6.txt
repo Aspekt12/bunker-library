@@ -1,31 +1,4331 @@
-# Linux Man Pages Sec. 6: Games & Screen Demos (44 Pages)
-**Overview:** Classic UNIX terminal games and demonstrations.
-**Total Installed Man Pages in Section 6:** 44
+# Linux Man Pages Sec. 6: Games & Classic UNIX Demos
+**Archive Source:** Local Linux Manual Pages (`man6`, 44 total pages archived on disk)
 
----
+# CHAPTER: Complete Section 6 Index (44 Manual Pages)
+This volume contains `44` offline Linux manual pages in Section 6. Use the **Man Page Finder** in the left sidebar (or the search bar in the Reader toolbar) to open any of the 44 pages on demand:
 
-## Complete Section 6 Directory (44 Pages)
-Use the **Table of Contents** or **Search Box** in the Reader window to open any of the 44 man pages in Section 6 directly.
+`LS(6)`, `OpenStereogram(6)`, `bastet(6)`, `chkfont(6)`, `cowsay(6)`, `cowthink(6)`, `figlet(6)`, `figlet-figlet(6)`, `figlet-utf8(6)`, `figlist(6)`, `fortune(6)`, `greed(6)`, `intro(6)`, `kaces(6)`, `kcanfield(6)`, `kcribbage(6)`, `kdominos(6)`, `kklondike(6)`, `kmcarlo(6)`, `kmontana(6)`, `kslyfox(6)`, `kspider(6)`, `ktabby(6)`, `kthieves(6)`, `ktowers(6)`, `lolcat(6)`, `love(6)`, `love-11.5(6)`, `luanti(6)`, `moon-buggy(6)`, `neverball(6)`, `nudoku(6)`, `oneko(6)`, `opencity(6)`, `showfigfonts(6)`, `sl(6)`, `steam(6)`, `supertuxkart(6)`, `vitetris(6)`, `xmille(6)`, `xphoon(6)`, `xreversi(6)`, `xsnow(6)`, `xsol(6)`
 
-`LS(6)`, `OpenStereogram(6)`, `bastet(6)`, `chkfont(6)`, `cowsay(6)`, `cowthink(6)`, `figlet-figlet(6)`, `figlet-utf8(6)`, `figlet(6)`, `figlist(6)`, `fortune(6)`, `greed(6)`, `intro(6)`, `kaces(6)`, `kcanfield(6)`, `kcribbage(6)`, `kdominos(6)`, `kklondike(6)`, `kmcarlo(6)`, `kmontana(6)`, `kslyfox(6)`, `kspider(6)`, `ktabby(6)`, `kthieves(6)`, `ktowers(6)`, `lolcat(6)`, `love-11.5(6)`, `love(6)`, `luanti(6)`, `moon-buggy(6)`, `neverball(6)`, `nudoku(6)`, `oneko(6)`, `opencity(6)`, `showfigfonts(6)`, `sl(6)`, `steam(6)`, `supertuxkart(6)`, `vitetris(6)`, `xmille(6)`, `xphoon(6)`, `xreversi(6)`, `xsnow(6)`, `xsol(6)`
-
-
-
-# INTRO(6) — Linux Manual Page
+# CHAPTER: man LS(6)
 
 ### NAME
 
-intro - introduction to games
+     LS  -  display animations aimed to correct users who accidentally enter LS instead of
+     ls.
+
+### SYNOPSIS
+
+     LS [ -alFe ]
 
 ### DESCRIPTION
 
-Section 6 of the manual describes the games and funny little programs
-available on the system.
+     LS Displays animations aimed to correct users who accidentally enter  LS  instead  of
+     ls.
+
+### OPTIONS
+
+     -a     An accident seems to happen. You'll feel pity for people who cry for help.
+
+     -l     shows little one.
+
+     -F     It flies.
+
+     -e     Allow interrupt by Ctrl+C.
+
+### SEE ALSO
+
+     sl(6),ls(1)
+
+### BUGS
+
+     It rarely shows contents of current directory.
+
+### AUTHOR
+
+     LS was written by Toyoda Masashi <toyoda@is.titech.ac.jp>. This manual page was writ‐
+     ten by Brian Ristuccia <brianr@debian.org> and Kenshi Muto <kmuto@debian.org> for the
+     Debian GNU/Linux system but may be used by others under the same license as sl(6) it‐
+     self.
+
+# CHAPTER: man OpenStereogram(6)
+
+### NAME
+
+     OpenStereogram - autostereogram generator
+
+### SYNOPSIS
+
+     OpenStereogram
+
+### DESCRIPTION
+
+     OpenStereogram  is a java based application to generate autostereograms based on user
+     input. OpenStereograms were made popular through the book "Magic Eye," and appear  to
+     "pop out" in 3D when viewed cross-eyed or wall-eyed.
+
+### OPTIONS
+
+     The OpenStereogram command does not take any options.
+
+# CHAPTER: man bastet(6)
+
+### NAME
+
+     bastet - Tetris(r) clone with "bastard" block-choosing AI
+
+### SYNOPSIS
+
+     bastet
+
+### DESCRIPTION
+
+     bastet  (short for "bastard tetris") is a Tetris(r) clone which tries to give you the
+     worst possible block. Playing bastet can be a painful experience, especially  if  you
+     usually make "canyons" and wait for the long I-shaped block.
+
+### USAGE
+
+     bastet  tries  to  conform  as much as possible to the tetris guidelines. We refer to
+     those for the rules of the game. In the starting menu,  you  can  configure  the  key
+     bindings; the default ones are:
+
+     DOWN   moves the tetromino down (one single step)
+
+     LEFT   moves the tetromino left
+
+     RIGHT  moves the tetromino right
+
+     SPACE  rotates CW
+
+     UP     rotates CCW
+
+     ENTER  drops the tetromino as far down as possible (hard drop)
+
+     P      pauses the game
+
+     CTRL+C exits the game without any further prompt
+
+### PLAYING MODES
+
+     The  game  includes two playing modes. In the second one (harder), you do not get the
+     preview of the next tetromino, and the algorithm is modified  to  take  advantage  of
+     this.
+
+### FILES
+
+     $(HOME)/.bastetrc User options
+
+     $(HOME)/.bastetscores  User-specific  high  scores file (used only if the system high
+     scores file is unavailable)
+
+     /var/games/bastet.scores2 System-wide high scores for bastet.
+
+### OPTIONS
+
+     None.
+
+### BUGS
+
+     Many.
+
+### AUTHOR
+
+     Federico Poloni <f.poloni@gmx.com>
+
+# CHAPTER: man chkfont(6)
+
+### NAME
+
+     chkfont - checks figlet 2.0 and up font files for format errors
+
+### SYNOPSIS
+
+     chkfont [ fontfile ]
+
+### DESCRIPTION
+
+     This  program  checks  figlet 2.0 and up font files for format errors.  It also looks
+     for signs of common problems and gives warnings.  chkfont does not modify font files.
+
+### EXAMPLES
+
+     To use chkfont on the "big" font
+
+            example% chkfont /usr/share/figlet/big.flf
+
+### BUGS
+
+     Doesn't work on compressed font files.
+
+### AUTHORS
+
+     chkfont was written by Glenn Chappell <ggc@uiuc.edu>
+
+     This manual page was written by Jonathon Abbott for the Debian Project.
+
+### SEE ALSO
+
+     figlet(6), showfigfonts(6), figlist(6)
+
+# CHAPTER: man cowsay(6)
+
+### NAME
+
+     cowsay/cowthink - configurable speaking/thinking cow (and a bit more)
+
+### SYNOPSIS
+
+     cowsay  [-e  eye_string]  [-f  cowfile] [-h] [-l] [-n] [-T tongue_string] [-W column]
+     [-bdgpstwy]
+
+### DESCRIPTION
+
+     Cowsay generates an ASCII picture of a cow saying something provided by the user.  If
+     run with no arguments, it accepts standard input, word-wraps  the  message  given  at
+     about 40 columns, and prints the cow saying the given message on standard output.
+
+     To aid in the use of arbitrary messages with arbitrary whitespace, use the -n option.
+     If  it  is  specified,  the given message will not be word-wrapped.  This is possibly
+     useful if you want to make the cow think or speak in figlet(6).  If -n is  specified,
+     there  must  not  be any command-line arguments left after all the switches have been
+     processed.
+
+     The -W specifies roughly where the message should be wrapped.  The default is equiva‐
+     lent to -W 40 i.e. wrap words at or before the 40th column.
+
+     If any command-line arguments are left over after all switches have  been  processed,
+     they become the cow's message.  The program will not accept standard input for a mes‐
+     sage in this case.
+
+     There  are several provided modes which change the appearance of the cow depending on
+     its particular emotional/physical state.  The  -b  option  initiates  Borg  mode;  -d
+     causes  the cow to appear dead; -g invokes greedy mode; -p causes a state of paranoia
+     to come over the cow; -s makes the cow appear thoroughly stoned; -t  yields  a  tired
+     cow;  -w  is  somewhat the opposite of -t, and initiates wired mode; -y brings on the
+     cow's youthful appearance.
+
+     The user may specify the -e option to select the appearance of  the  cow's  eyes,  in
+     which  case  the first two characters of the argument string eye_string will be used.
+     The default eyes are 'oo'.  The tongue  is  similarly  configurable  through  -T  and
+     tongue_string; it must be two characters and does not appear by default.  However, it
+     does  appear  in  the 'dead' and 'stoned' modes.  Any configuration done by -e and -T
+     will be lost if one of the provided modes is used.
+
+     The -f option specifies a particular cow picture file (``cowfile'') to use.   If  the
+     cowfile  spec contains '/' then it will be interpreted as a path relative to the cur‐
+     rent directory.  Otherwise, cowsay will search the path specified in the COWPATH  en‐
+     vironment  variable.  To list all cowfiles on the current COWPATH, invoke cowsay with
+     the -l switch.
+
+     If the program is invoked as cowthink then the cow will think its message instead  of
+     saying it.
+
+### COWFILE FORMAT
+
+     A  cowfile is made up of a simple block of perl(1) code, which assigns a picture of a
+     cow to the variable $the_cow.  Should you wish to customize the eyes or the tongue of
+     the cow, then the variables $eyes and $tongue may be used.  The trail leading  up  to
+     the  cow's message balloon is composed of the character(s) in the $thoughts variable.
+     Any backslashes must be reduplicated to prevent interpolation.  The name of a cowfile
+     should end with .cow, otherwise it is assumed not to be a  cowfile.   Also,  at-signs
+     (``@'') must be backslashed because that is what Perl 5 expects.
+
+### COMPATIBILITY WITH OLDER VERSIONS
+
+     What older versions? :-)
+
+     Version  3.x is fully backward-compatible with 2.x versions.  If you're still using a
+     1.x version, consider upgrading.  And tell me where you got the older versions, since
+     I didn't exactly put them up for world-wide access.
+
+     Oh, just so you know, this manual page documents version 3.03 of cowsay.
+
+### ENVIRONMENT
+
+     The COWPATH environment variable, if present, will be used to  search  for  cowfiles.
+     It  contains  a  colon-separated  list of directories, much like PATH or MANPATH.  It
+     should always contain the /usr/share/cowsay/cows directory, or at least  a  directory
+     with a file called default.cow in it.
+
+### FILES
+
+     /usr/share/cowsay/cows  holds  a  sample set of cowfiles.  If your COWPATH is not ex‐
+     plicitly set, it automatically contains this directory.
+
+### BUGS
+
+     If there are any, please notify the author at the address below.
+
+### AUTHOR
+
+     Tony Monroe (tony@nog.net), with suggestions from  Shannon  Appel  (appel@CSUA.Berke‐
+     ley.EDU) and contributions from Anthony Polito (aspolito@CSUA.Berkeley.EDU).
+
+### SEE ALSO
+
+     perl(1), wall(1), nwrite(1), figlet(6)
+
+# CHAPTER: man cowthink(6)
+
+### NAME
+
+     cowsay/cowthink - configurable speaking/thinking cow (and a bit more)
+
+### SYNOPSIS
+
+     cowsay  [-e  eye_string]  [-f  cowfile] [-h] [-l] [-n] [-T tongue_string] [-W column]
+     [-bdgpstwy]
+
+### DESCRIPTION
+
+     Cowsay generates an ASCII picture of a cow saying something provided by the user.  If
+     run with no arguments, it accepts standard input, word-wraps  the  message  given  at
+     about 40 columns, and prints the cow saying the given message on standard output.
+
+     To aid in the use of arbitrary messages with arbitrary whitespace, use the -n option.
+     If  it  is  specified,  the given message will not be word-wrapped.  This is possibly
+     useful if you want to make the cow think or speak in figlet(6).  If -n is  specified,
+     there  must  not  be any command-line arguments left after all the switches have been
+     processed.
+
+     The -W specifies roughly where the message should be wrapped.  The default is equiva‐
+     lent to -W 40 i.e. wrap words at or before the 40th column.
+
+     If any command-line arguments are left over after all switches have  been  processed,
+     they become the cow's message.  The program will not accept standard input for a mes‐
+     sage in this case.
+
+     There  are several provided modes which change the appearance of the cow depending on
+     its particular emotional/physical state.  The  -b  option  initiates  Borg  mode;  -d
+     causes  the cow to appear dead; -g invokes greedy mode; -p causes a state of paranoia
+     to come over the cow; -s makes the cow appear thoroughly stoned; -t  yields  a  tired
+     cow;  -w  is  somewhat the opposite of -t, and initiates wired mode; -y brings on the
+     cow's youthful appearance.
+
+     The user may specify the -e option to select the appearance of  the  cow's  eyes,  in
+     which  case  the first two characters of the argument string eye_string will be used.
+     The default eyes are 'oo'.  The tongue  is  similarly  configurable  through  -T  and
+     tongue_string; it must be two characters and does not appear by default.  However, it
+     does  appear  in  the 'dead' and 'stoned' modes.  Any configuration done by -e and -T
+     will be lost if one of the provided modes is used.
+
+     The -f option specifies a particular cow picture file (``cowfile'') to use.   If  the
+     cowfile  spec contains '/' then it will be interpreted as a path relative to the cur‐
+     rent directory.  Otherwise, cowsay will search the path specified in the COWPATH  en‐
+     vironment  variable.  To list all cowfiles on the current COWPATH, invoke cowsay with
+     the -l switch.
+
+     If the program is invoked as cowthink then the cow will think its message instead  of
+     saying it.
+
+### COWFILE FORMAT
+
+     A  cowfile is made up of a simple block of perl(1) code, which assigns a picture of a
+     cow to the variable $the_cow.  Should you wish to customize the eyes or the tongue of
+     the cow, then the variables $eyes and $tongue may be used.  The trail leading  up  to
+     the  cow's message balloon is composed of the character(s) in the $thoughts variable.
+     Any backslashes must be reduplicated to prevent interpolation.  The name of a cowfile
+     should end with .cow, otherwise it is assumed not to be a  cowfile.   Also,  at-signs
+     (``@'') must be backslashed because that is what Perl 5 expects.
+
+### COMPATIBILITY WITH OLDER VERSIONS
+
+     What older versions? :-)
+
+     Version  3.x is fully backward-compatible with 2.x versions.  If you're still using a
+     1.x version, consider upgrading.  And tell me where you got the older versions, since
+     I didn't exactly put them up for world-wide access.
+
+     Oh, just so you know, this manual page documents version 3.03 of cowsay.
+
+### ENVIRONMENT
+
+     The COWPATH environment variable, if present, will be used to  search  for  cowfiles.
+     It  contains  a  colon-separated  list of directories, much like PATH or MANPATH.  It
+     should always contain the /usr/share/cowsay/cows directory, or at least  a  directory
+     with a file called default.cow in it.
+
+### FILES
+
+     /usr/share/cowsay/cows  holds  a  sample set of cowfiles.  If your COWPATH is not ex‐
+     plicitly set, it automatically contains this directory.
+
+### BUGS
+
+     If there are any, please notify the author at the address below.
+
+### AUTHOR
+
+     Tony Monroe (tony@nog.net), with suggestions from  Shannon  Appel  (appel@CSUA.Berke‐
+     ley.EDU) and contributions from Anthony Polito (aspolito@CSUA.Berkeley.EDU).
+
+### SEE ALSO
+
+     perl(1), wall(1), nwrite(1), figlet(6)
+
+# CHAPTER: man figlet-figlet(6)
+
+### NAME
+
+     FIGlet - display large characters made up of ordinary screen characters
+
+### SYNOPSIS
+
+     figlet [ -cklnoprstvxDELNRSWX ] [ -d fontdirectory ]
+            [ -f fontfile ] [ -m layoutmode ]
+            [ -w outputwidth ] [ -C controlfile ]
+            [ -I infocode ] [ message ]
+
+### DESCRIPTION
+
+     FIGlet  prints its input using large characters (called ``FIGcharacters'') made up of
+     ordinary screen characters (called ``sub-characters'').  FIGlet output  is  generally
+     reminiscent  of  the  sort of ``signatures'' many people like to put at the end of e-
+     mail and UseNet messages.  It is also reminiscent of the output of some  banner  pro‐
+     grams, although it is oriented normally, not sideways.
+
+     FIGlet  can  print  in a variety of fonts, both left-to-right and right-to-left, with
+     adjacent FIGcharacters kerned and ``smushed'' together in various ways.  FIGlet fonts
+     are stored in separate files, which can be identified by  the  suffix  ``.flf''.   In
+     systems  with  UTF-8  support  FIGlet  may  also support TOIlet ``.tlf'' fonts.  Most
+     FIGlet font files will be stored in FIGlet's default font directory.
+
+     FIGlet can also use ``control files'', which tell it to map certain input  characters
+     to  certain  other  characters, similar to the Unix tr command.  Control files can be
+     identified by the suffix ``.flc''.  Most FIGlet  control  files  will  be  stored  in
+     FIGlet's default font directory.
+
+     You  can  store  FIGlet  fonts  and control files in compressed form.  See COMPRESSED
+     FONTS.
+
+### USAGE
+
+     Just start up FIGlet (type ``figlet'') and then type  whatever  you  want.   Alterna‐
+     tively,  pipe a file or the output of another command through FIGlet, or put input on
+     the command line after the options.  See EXAMPLES for other things to do.
+
+### OPTIONS
+
+     FIGlet reads command line options from left to right, and only the last  option  that
+     affects a parameter has any effect.  Almost every option has an inverse, so that, for
+     example,  if  FIGlet  is  customized  with a shell alias, all the options are usually
+     still available.
+
+     Commonly-used options are -f, -c, -k, -t, -p and -v.
+
+     -f fontfile
+            Select the font.  The .flf suffix may be left off of fontfile, in  which  case
+            FIGlet  automatically  appends it.  FIGlet looks for the file first in the de‐
+            fault font directory and then in the current directory, or,  if  fontfile  was
+            given  as  a  full  pathname, in the given directory.  If the -f option is not
+            specified, FIGlet uses the font that was specified when it was  compiled.   To
+            find out which font this is, use the -I3 option.
+
+     -d fontdirectory
+            Change  the  default  font directory.  FIGlet looks for fonts first in the de‐
+            fault directory and then in the current directory.  If the -d  option  is  not
+            specified,  FIGlet uses the directory that was specified when it was compiled.
+            To find out which directory this is, use the -I2 option.
+
+     -c
+     -l
+     -r
+     -x     These options handle the justification of FIGlet output.  -c centers the  out‐
+            put  horizontally.   -l makes the output flush-left.  -r makes it flush-right.
+            -x (default) sets the justification  according  to  whether  left-to-right  or
+            right-to-left  text is selected.  Left-to-right text will be flush-left, while
+            right-to-left text will be flush-right.  (Left-to-right  versus  right-to-left
+            text is controlled by -L, -R and -X.)
+
+     -t
+     -w outputwidth
+            These options control the outputwidth, or the screen width FIGlet assumes when
+            formatting its output.  FIGlet uses the outputwidth to determine when to break
+            lines  and  how  to center the output.  Normally, FIGlet assumes 80 columns so
+            that people with wide terminals won't annoy the people they e-mail FIGlet out‐
+            put to.  -t sets the outputwidth to the terminal width.  If the terminal width
+            cannot be determined, the previous outputwidth is retained.  -w sets the  out‐
+            putwidth  to  the  given integer.  An outputwidth of 1 is a special value that
+            tells FIGlet to print each non-space FIGcharacter, in its entirety, on a sepa‐
+            rate line, no matter how wide it is.
+
+     -p
+     -n     These options control how  FIGlet  handles  newlines.   -p  puts  FIGlet  into
+            ``paragraph  mode'', which eliminates some unnecessary line breaks when piping
+            a multi-line file through FIGlet.   In  paragraph  mode,  FIGlet  treats  line
+            breaks  within  a  paragraph  as  if  they  were  merely blanks between words.
+            (Specifically, -p causes FIGlet to convert any newline which is  not  preceded
+            by  a  newline  and  not followed by a space character into a blank.)  -n (de‐
+            fault) puts FIGlet back to normal, in which every newline FIGlet reads  causes
+            it to produce a line break.
+
+     -D
+     -E     -D  switches to the German (ISO 646-DE) character set.  Turns `[', `\' and `]'
+            into umlauted A, O and U, respectively.  `{', `|' and `}' turn  into  the  re‐
+            spective  lower  case versions of these.  `~' turns into s-z.  -E turns off -D
+            processing.  These options are deprecated, which means they probably will  not
+            appear in the next version of FIGlet.
+
+     -C controlfile
+     -N     These options deal with FIGlet controlfiles.  A controlfile is a file contain‐
+            ing  a  list  of commands that FIGlet executes each time it reads a character.
+            These commands can map certain input characters to other  characters,  similar
+            to  the  Unix  tr command or the FIGlet -D option.  FIGlet maintains a list of
+            controlfiles, which is empty when FIGlet starts up.  -C adds  the  given  con‐
+            trolfile  to  the list.  -N clears the controlfile list, cancelling the effect
+            of any previous -C.  FIGlet executes the commands in all controlfiles  in  the
+            list.   See  the file figfont.txt, provided with FIGlet, for details on how to
+            write a controlfile.
+
+     -s
+     -S
+     -k
+     -W
+
+     -o     These options control how FIGlet spaces the FIGcharacters that it outputs.  -s
+            (default) and -S cause ``smushing''.  The FIGcharacters are displayed as close
+            together as possible, and overlapping  sub-characters  are  removed.   Exactly
+            which  sub-characters  count  as ``overlapping'' depends on the font's layout‐
+            mode, which is defined by the font's author.  -k causes ``kerning''.  As  many
+            blanks  as possible are removed between FIGcharacters, so that they touch, but
+            the FIGcharacters are not smushed.  -W makes FIGlet display all  FIGcharacters
+            at their full width, which may be fixed or variable, depending on the font.
+
+            The difference between -s and -S is that -s will not smush a font whose author
+            specified kerning or full width as the default layoutmode, whereas -S will at‐
+            tempt to do so.
+
+            If there is no information in the font about how to smush, or if the -o option
+            is  specified, then the FIGcharacters are ``overlapped''.  This means that af‐
+            ter kerning, the first subcharacter of each FIGcharacter is removed.  (This is
+            not done if a FIGcharacter contains only one subcharacter.)
+
+     -m layoutmode
+            Specifies an explicit layoutmode between 1 and 63.  Smushmodes  are  explained
+            in  figfont.txt,  which  also provides complete information on the format of a
+            FIGlet font.  For the sake of backward compatibility with versions  of  FIGlet
+            before  2.2,  -m0  is  equivalent to -k, -m-1 is equivalent to -W, and -m-2 is
+            equivalent to -s.  The -m switch is normally used only by font designers test‐
+            ing the various layoutmodes with a new font.
+
+     -v
+     -I infocode
+            These options print various information about FIGlet, then exit.   If  several
+            of these options are given on the command line, only the last is executed, and
+            only after all other command-line options have been dealt with.
+
+            -v  prints  version  and  copyright  information,  as well as a ``Usage: ...''
+            line.  -I prints the information corresponding to the given infocode in a con‐
+            sistent, reliable (i.e., guaranteed to be the same in future releases) format.
+            -I is primarily intended to be used by programs that use FIGlet.  infocode can
+            be any of the following.
+
+            -1 Normal operation (default).
+                   This infocode indicates that FIGlet should operate normally, not giving
+                   any informational printout, printing its input in the selected font.
+
+            0 Version and copyright.
+                   This is identical to -v.
+
+            1 Version (integer).
+                   This will print the version of your copy of FIGlet as a  decimal  inte‐
+                   ger.   The  main version number is multiplied by 10000, the sub-version
+                   number is multiplied by 100, and the sub-sub-version number  is  multi‐
+                   plied  by  1.  These are added together, and the result is printed out.
+                   For example, FIGlet 2.2 will print ``20200'' , version 2.2.1 will print
+                   ``20201''.  Similarly, version 3.7.2 would print ``30702''.  These num‐
+                   bers are guaranteed to be ascending, with later versions having  higher
+                   numbers.  Note that the first major release of FIGlet, version 2.0, did
+                   not have the -I option.
+
+            2 Default font directory.
+                   This  will  print the default font directory.  It is affected by the -d
+                   option.
+
+            3 Font.
+                   This will print the name of the font FIGlet would use.  It is  affected
+                   by  the  -f option.  This is not a filename; the ``.flf'' suffix is not
+                   printed.
+
+            4 Output width.
+                   This will print the value FIGlet would use for outputwidth, the  number
+                   of columns wide FIGlet assumes the screen is.  It is affected by the -w
+                   and -t options.
+
+            5 Supported font formats.
+                   This will list font formats supported by FIGlet .  Possible formats are
+                   ``flf2''  for FIGfont Version 2 .flf files and ``tlf2'' for TOIlet .tlf
+                   files.
+
+            If infocode is any other positive  value,  FIGlet  will  simply  exit  without
+            printing anything.
+
+     -L
+     -R
+     -X     These  options  control  whether FIGlet prints left-to-right or right-to-left.
+            -L selects left-to-right printing.  -R  selects  right-to-left  printing.   -X
+            (default) makes FIGlet use whichever is specified in the font file.
+
+            Once  the  options  are  read, if there are any remaining words on the command
+            line, they are used instead of standard input as the  source  of  text.   This
+            feature allows shell scripts to generate large letters without having to dummy
+            up standard input files.
+
+            An empty argument, obtained by two sequential quotes, results in a line break.
+
+### EXAMPLES
+
+     To use FIGlet with its default settings, simply type
+
+            example% figlet
+
+     and then type whatever you like.
+
+     To change the font, use the -f option, for example,
+
+            example% figlet -f script
+
+     Use the -c option if you would prefer centered output:
+
+            example% figlet -c
+
+     We have found that the most common use of FIGlet is making up large text to be placed
+     in  e-mail  messages.   For this reason, FIGlet defaults to 80 column output.  If you
+     are using a wider terminal, and would like FIGlet to use the full width of your  ter‐
+     minal, use the -t option:
+
+            example% figlet -t
+
+     If you don't want FIGlet to smush FIGcharacters into each other, use the -k option:
+
+            example% figlet -k
+
+     If figlet gets its input from a file, it is often a good idea to use -p:
+
+            example% figlet -p < myfile
+
+     Of course, the above can be combined:
+
+            example% figlet -ptk -f shadow < anotherfile
+            example% figlet -cf slant
+
+     Finally, if you want to have FIGlet take the input from the command line instead of a
+     file:
+
+            example% figlet Hello world
+
+   Other Things to Try
+     On  many systems nice effects can be obtained from the lean font by piping it through
+     tr.  Some you might want to try are the following:
+
+            example% figlet -f lean | tr ' _/' ' ()'
+            example% figlet -f lean | tr ' _/' './\\'
+            example% figlet -f lean | tr ' _/' ' //'
+            example% figlet -f lean | tr ' _/' '/  '
+
+     Similar things can be done with the block font and many of the other FIGlet fonts.
+
+### COMPRESSED FONTS
+
+     You can compress the fonts and controlfiles using the zip archiving  program.   Place
+     only one font or controlfile in each archive, and rename the archive file (which will
+     have  a  name  ending in .zip) back to .flf or .flc as the case may be.  If you don't
+     rename the file appropriately, FIGlet won't be able to find it.
+
+     FIGlet does not care what the filename within the .zip archive is, and  will  process
+     only the first file.
+
+     The  .zip  format  was  chosen  because  tools to create and manipulate it are widely
+     available for free on many platforms.
+
+### THE STANDARD FONTS
+
+     Here are a few notes about some of the fonts provided with FIGlet.  You can get  many
+     other font from the Web site
+     http://www.figlet.org/    This  location  should  also  contain the latest version of
+     FIGlet and other related utilities.
+
+     The font standard is the basic FIGlet font, used when no  other  font  is  specified.
+     (This  default  can  be  changed  when  FIGlet is compiled on your system.)  The con‐
+     trolfiles 8859-2, 8859-3, 8859-4, and 8859-9  are  provided  for  interpreting  those
+     character  sets, also known as ISO Latin-2 through Latin-5 respectively.  The charac‐
+     ter set 8859-1 (ISO Latin-1) is FIGlet's default and requires no special controlfile.
+
+     Closely related are the fonts slant, shadow, small, smslant (both small and slanted),
+     smshadow, (both small and shadowed), and big.  These fonts support only Latin-1,  ex‐
+     cept  that  big  supports  Greek  FIGcharacters as well; the controlfiles frango (for
+     Greek text written in Latin characters,  so-called  ``frangovlakhika''),  and  8859-7
+     (for mixed Latin/Greek text) are provided.
+
+     The ivrit font is a right-to-left font including both Latin and Hebrew FIGcharacters;
+     the  Latin characters are those of the standard font.  The available controlfiles are
+     ilhebrew, which maps the letters you get by typing on a U.S. keyboard as if it were a
+     Hebrew keyboard; ushebrew, which makes a reasonable mapping from Latin letters to He‐
+     brew ones; and 8859-8, which  supports  mixed  Latin/Hebrew  text.   Warning:  FIGlet
+     doesn't  support  bidirectional text, so everything will come out right-to-left, even
+     Latin letters.
+
+     The fonts terminal, digital, and bubble output the input character with some  decora‐
+     tion around it (or no decoration, in the case of terminal).  The characters coded 128
+     to 159, which have varying interpretations, are output as-is.  You can use the appro‐
+     priate  controlfiles  to process Latin-2, Latin-3, or Latin-4 (but not Latin-5) text,
+     provided your output device has screen or printer  fonts  that  are  appropriate  for
+     these character sets.
+
+     Two  script fonts are available: script, which is larger than standard, and smscript,
+     which is smaller.
+
+     The font lean is made up solely of `/' and `_' sub-characters; block  is  a  straight
+     (non-leaning) version of it.
+
+     The font mini is very small, and especially suitable for e-mail signatures.
+
+     The  font  banner  looks  like the output of the banner program; it is a capitals and
+     small capitals font that doesn't support the ISO Latin-1 extensions to  plain  ASCII.
+     It  does,  however,  support  the Japanese katakana syllabary; the controlfile uskata
+     maps the upper-case and lower-case Latin letters into the 48 basic  katakana  charac‐
+     ters,  and  the  controlfile  jis0201  handles  JIS 0201X (JIS-Roman) mixed Latin and
+     katakana text.   Furthermore,  the  banner  font  also  supports  Cyrillic  (Russian)
+     FIGcharacters;  the  controlfile  8859-5  supports mixed Latin and Cyrillic text, the
+     controlfile koi8r supports the popular KOI8-R mapping of mixed  text,  and  the  con‐
+     trolfile  moscow  supports a sensible mapping from Latin to Cyrillic, compatible with
+     the moscow font (not supplied).
+
+     The fonts mnemonic and safemnem support the mnemonic character set documented in  RFC
+     1345.   They implement a large subset of Unicode (over 1800 characters) very crudely,
+     using ASCII-based mnemonic sequences, and are good for getting a quick look at  UTF-8
+     unicode files, using the controlfile utf8.
+
+### ENVIRONMENT
+
+     FIGLET_FONTDIR
+            If  $FIGLET_FONTDIR  is  set,  its  value is used as a path to search for font
+            files.
+
+### FILES
+
+     file.flf            FIGlet font file
+     file.flc            FIGlet control file
+
+### DIAGNOSTICS
+
+     FIGlet's diagnostics are intended to be self-explanatory.  Possible messages are
+
+            Usage: ...
+            Out of memory
+            Unable to open font file
+            Not a FIGlet 2 font file
+            Unable to open control file
+            Not a FIGlet 2 control file
+            "-t" is disabled, since ioctl is not fully implemented.
+
+     This last message is printed when the -t option is given, but the operating system in
+     use does not include the system call FIGlet uses to determine the terminal width.
+
+     FIGlet also prints an explanatory message if the -F option is given  on  the  command
+     line.   The  earlier  version of FIGlet, version 2.0, listed the available fonts when
+     the -F option was given.  This option has been removed from FIGlet 2.1.  It has  been
+     replaced by the figlist script, which is part of the standard FIGlet package.
+
+### ORIGIN
+
+     ``FIGlet''  stands for ``Frank, Ian and Glenn's LETters''.  Inspired by Frank's .sig,
+     Glenn wrote (most of) it, and Ian helped.
+
+     Most of the standard FIGlet fonts were inspired by signatures on various UseNet arti‐
+     cles.  Since typically hundreds of people use the same style of letters in their sig‐
+     natures, it was often not deemed necessary to give credit to any one font designer.
+
+### BUGS
+
+     Very little error checking is done on font and control files.  While FIGlet tries  to
+     be forgiving of errors, and should (hopefully) never actually crash, using an improp‐
+     erly-formatted file with FIGlet will produce unpredictable output.
+
+     FIGlet  does not handle format characters in a very intelligent way.  A tab character
+     is converted to a blank, and vertical-tab, form-feed  and  carriage-return  are  each
+     converted  to a newline.  On many systems, tabs can be handled better by piping files
+     through expand before piping through FIGlet.
+
+     FIGlet output is quite ugly if it is displayed in a  proportionally-spaced  font.   I
+     suppose this is to be expected.
+
+     Please   report   any   errors   you  find  in  this  man  page  or  the  program  to
+     <info@figlet.org>
+
+### WEBSITE AND MAILING LIST
+
+     You can get many fonts which are not in the basic FIGlet package from  the  Web  site
+     http://www.figlet.org/    It  should  also  contain  the latest version of FIGlet and
+     other utilities related to FIGlet.
+
+     There is a mailing list for FIGlet for general discussions about FIGlet and  a  place
+     where  you  can  ask questions or share ideas with other FIGlet users. It is also the
+     place where we will publish news about new fonts, new software updates etc.
+
+     To subscribe or unsubscribe from the  FIGlet  mailing  list,  please  send  email  to
+     figlet-subscribe@figlet.org  or  figlet-unsubscribe@figlet.org or visit the following
+     web page: http://www.figlet.org/mailman/listinfo/figlet
+
+### AUTHORS
+
+     Glenn Chappell did most of the work.  You can e-mail him but he is not an e-mail  fa‐
+     natic;  people who e-mail Glenn will probably get answers, but if you e-mail his best
+     friend:
+
+     Ian Chai, who is an e-mail fanatic, you'll get answers,  endless  conversation  about
+     the mysteries of life, invitations to join some 473 mailing lists and a free toaster.
+     (Well, ok, maybe not the free toaster.)
+
+     Frank inspired this whole project with his .sig, but don't e-mail him; he's decidedly
+     an un-e-mail-fanatic.
+
+     Gilbert "The Mad Programmer" Healton added the -A option for version 2.1.1.  This op‐
+     tion specified input from the command line; it is still allowed, but has no effect.
+
+     John Cowan added the -o, -s, -k, -S, and -W options, and the support for Unicode map‐
+     ping  tables,  ISO  2022/HZ/Shift-JIS/UTF-8  input,  and compressed fonts and control
+     files.  He also revised this documentation, with a lot of input from Paul Burton.
+
+     Claudio Matsuoka added the support for .tlf files for version 2.2.4 and performs ran‐
+     dom hack
+
+# CHAPTER: man figlet-utf8(6)
+
+### NAME
+
+     FIGlet - display large characters made up of ordinary screen characters
+
+### SYNOPSIS
+
+     figlet [ -cklnoprstvxDELNRSWX ] [ -d fontdirectory ]
+            [ -f fontfile ] [ -m layoutmode ]
+            [ -w outputwidth ] [ -C controlfile ]
+            [ -I infocode ] [ message ]
+
+### DESCRIPTION
+
+     FIGlet  prints its input using large characters (called ``FIGcharacters'') made up of
+     ordinary screen characters (called ``sub-characters'').  FIGlet output  is  generally
+     reminiscent  of  the  sort of ``signatures'' many people like to put at the end of e-
+     mail and UseNet messages.  It is also reminiscent of the output of some  banner  pro‐
+     grams, although it is oriented normally, not sideways.
+
+     FIGlet  can  print  in a variety of fonts, both left-to-right and right-to-left, with
+     adjacent FIGcharacters kerned and ``smushed'' together in various ways.  FIGlet fonts
+     are stored in separate files, which can be identified by  the  suffix  ``.flf''.   In
+     systems  with  UTF-8  support  FIGlet  may  also support TOIlet ``.tlf'' fonts.  Most
+     FIGlet font files will be stored in FIGlet's default font directory.
+
+     FIGlet can also use ``control files'', which tell it to map certain input  characters
+     to  certain  other  characters, similar to the Unix tr command.  Control files can be
+     identified by the suffix ``.flc''.  Most FIGlet  control  files  will  be  stored  in
+     FIGlet's default font directory.
+
+     You  can  store  FIGlet  fonts  and control files in compressed form.  See COMPRESSED
+     FONTS.
+
+### USAGE
+
+     Just start up FIGlet (type ``figlet'') and then type  whatever  you  want.   Alterna‐
+     tively,  pipe a file or the output of another command through FIGlet, or put input on
+     the command line after the options.  See EXAMPLES for other things to do.
+
+### OPTIONS
+
+     FIGlet reads command line options from left to right, and only the last  option  that
+     affects a parameter has any effect.  Almost every option has an inverse, so that, for
+     example,  if  FIGlet  is  customized  with a shell alias, all the options are usually
+     still available.
+
+     Commonly-used options are -f, -c, -k, -t, -p and -v.
+
+     -f fontfile
+            Select the font.  The .flf suffix may be left off of fontfile, in  which  case
+            FIGlet  automatically  appends it.  FIGlet looks for the file first in the de‐
+            fault font directory and then in the current directory, or,  if  fontfile  was
+            given  as  a  full  pathname, in the given directory.  If the -f option is not
+            specified, FIGlet uses the font that was specified when it was  compiled.   To
+            find out which font this is, use the -I3 option.
+
+     -d fontdirectory
+            Change  the  default  font directory.  FIGlet looks for fonts first in the de‐
+            fault directory and then in the current directory.  If the -d  option  is  not
+            specified,  FIGlet uses the directory that was specified when it was compiled.
+            To find out which directory this is, use the -I2 option.
+
+     -c
+     -l
+     -r
+     -x     These options handle the justification of FIGlet output.  -c centers the  out‐
+            put  horizontally.   -l makes the output flush-left.  -r makes it flush-right.
+            -x (default) sets the justification  according  to  whether  left-to-right  or
+            right-to-left  text is selected.  Left-to-right text will be flush-left, while
+            right-to-left text will be flush-right.  (Left-to-right  versus  right-to-left
+            text is controlled by -L, -R and -X.)
+
+     -t
+     -w outputwidth
+            These options control the outputwidth, or the screen width FIGlet assumes when
+            formatting its output.  FIGlet uses the outputwidth to determine when to break
+            lines  and  how  to center the output.  Normally, FIGlet assumes 80 columns so
+            that people with wide terminals won't annoy the people they e-mail FIGlet out‐
+            put to.  -t sets the outputwidth to the terminal width.  If the terminal width
+            cannot be determined, the previous outputwidth is retained.  -w sets the  out‐
+            putwidth  to  the  given integer.  An outputwidth of 1 is a special value that
+            tells FIGlet to print each non-space FIGcharacter, in its entirety, on a sepa‐
+            rate line, no matter how wide it is.
+
+     -p
+     -n     These options control how  FIGlet  handles  newlines.   -p  puts  FIGlet  into
+            ``paragraph  mode'', which eliminates some unnecessary line breaks when piping
+            a multi-line file through FIGlet.   In  paragraph  mode,  FIGlet  treats  line
+            breaks  within  a  paragraph  as  if  they  were  merely blanks between words.
+            (Specifically, -p causes FIGlet to convert any newline which is  not  preceded
+            by  a  newline  and  not followed by a space character into a blank.)  -n (de‐
+            fault) puts FIGlet back to normal, in which every newline FIGlet reads  causes
+            it to produce a line break.
+
+     -D
+     -E     -D  switches to the German (ISO 646-DE) character set.  Turns `[', `\' and `]'
+            into umlauted A, O and U, respectively.  `{', `|' and `}' turn  into  the  re‐
+            spective  lower  case versions of these.  `~' turns into s-z.  -E turns off -D
+            processing.  These options are deprecated, which means they probably will  not
+            appear in the next version of FIGlet.
+
+     -C controlfile
+     -N     These options deal with FIGlet controlfiles.  A controlfile is a file contain‐
+            ing  a  list  of commands that FIGlet executes each time it reads a character.
+            These commands can map certain input characters to other  characters,  similar
+            to  the  Unix  tr command or the FIGlet -D option.  FIGlet maintains a list of
+            controlfiles, which is empty when FIGlet starts up.  -C adds  the  given  con‐
+            trolfile  to  the list.  -N clears the controlfile list, cancelling the effect
+            of any previous -C.  FIGlet executes the commands in all controlfiles  in  the
+            list.   See  the file figfont.txt, provided with FIGlet, for details on how to
+            write a controlfile.
+
+     -s
+     -S
+     -k
+     -W
+
+     -o     These options control how FIGlet spaces the FIGcharacters that it outputs.  -s
+            (default) and -S cause ``smushing''.  The FIGcharacters are displayed as close
+            together as possible, and overlapping  sub-characters  are  removed.   Exactly
+            which  sub-characters  count  as ``overlapping'' depends on the font's layout‐
+            mode, which is defined by the font's author.  -k causes ``kerning''.  As  many
+            blanks  as possible are removed between FIGcharacters, so that they touch, but
+            the FIGcharacters are not smushed.  -W makes FIGlet display all  FIGcharacters
+            at their full width, which may be fixed or variable, depending on the font.
+
+            The difference between -s and -S is that -s will not smush a font whose author
+            specified kerning or full width as the default layoutmode, whereas -S will at‐
+            tempt to do so.
+
+            If there is no information in the font about how to smush, or if the -o option
+            is  specified, then the FIGcharacters are ``overlapped''.  This means that af‐
+            ter kerning, the first subcharacter of each FIGcharacter is removed.  (This is
+            not done if a FIGcharacter contains only one subcharacter.)
+
+     -m layoutmode
+            Specifies an explicit layoutmode between 1 and 63.  Smushmodes  are  explained
+            in  figfont.txt,  which  also provides complete information on the format of a
+            FIGlet font.  For the sake of backward compatibility with versions  of  FIGlet
+            before  2.2,  -m0  is  equivalent to -k, -m-1 is equivalent to -W, and -m-2 is
+            equivalent to -s.  The -m switch is normally used only by font designers test‐
+            ing the various layoutmodes with a new font.
+
+     -v
+     -I infocode
+            These options print various information about FIGlet, then exit.   If  several
+            of these options are given on the command line, only the last is executed, and
+            only after all other command-line options have been dealt with.
+
+            -v  prints  version  and  copyright  information,  as well as a ``Usage: ...''
+            line.  -I prints the information corresponding to the given infocode in a con‐
+            sistent, reliable (i.e., guaranteed to be the same in future releases) format.
+            -I is primarily intended to be used by programs that use FIGlet.  infocode can
+            be any of the following.
+
+            -1 Normal operation (default).
+                   This infocode indicates that FIGlet should operate normally, not giving
+                   any informational printout, printing its input in the selected font.
+
+            0 Version and copyright.
+                   This is identical to -v.
+
+            1 Version (integer).
+                   This will print the version of your copy of FIGlet as a  decimal  inte‐
+                   ger.   The  main version number is multiplied by 10000, the sub-version
+                   number is multiplied by 100, and the sub-sub-version number  is  multi‐
+                   plied  by  1.  These are added together, and the result is printed out.
+                   For example, FIGlet 2.2 will print ``20200'' , version 2.2.1 will print
+                   ``20201''.  Similarly, version 3.7.2 would print ``30702''.  These num‐
+                   bers are guaranteed to be ascending, with later versions having  higher
+                   numbers.  Note that the first major release of FIGlet, version 2.0, did
+                   not have the -I option.
+
+            2 Default font directory.
+                   This  will  print the default font directory.  It is affected by the -d
+                   option.
+
+            3 Font.
+                   This will print the name of the font FIGlet would use.  It is  affected
+                   by  the  -f option.  This is not a filename; the ``.flf'' suffix is not
+                   printed.
+
+            4 Output width.
+                   This will print the value FIGlet would use for outputwidth, the  number
+                   of columns wide FIGlet assumes the screen is.  It is affected by the -w
+                   and -t options.
+
+            5 Supported font formats.
+                   This will list font formats supported by FIGlet .  Possible formats are
+                   ``flf2''  for FIGfont Version 2 .flf files and ``tlf2'' for TOIlet .tlf
+                   files.
+
+            If infocode is any other positive  value,  FIGlet  will  simply  exit  without
+            printing anything.
+
+     -L
+     -R
+     -X     These  options  control  whether FIGlet prints left-to-right or right-to-left.
+            -L selects left-to-right printing.  -R  selects  right-to-left  printing.   -X
+            (default) makes FIGlet use whichever is specified in the font file.
+
+            Once  the  options  are  read, if there are any remaining words on the command
+            line, they are used instead of standard input as the  source  of  text.   This
+            feature allows shell scripts to generate large letters without having to dummy
+            up standard input files.
+
+            An empty argument, obtained by two sequential quotes, results in a line break.
+
+### EXAMPLES
+
+     To use FIGlet with its default settings, simply type
+
+            example% figlet
+
+     and then type whatever you like.
+
+     To change the font, use the -f option, for example,
+
+            example% figlet -f script
+
+     Use the -c option if you would prefer centered output:
+
+            example% figlet -c
+
+     We have found that the most common use of FIGlet is making up large text to be placed
+     in  e-mail  messages.   For this reason, FIGlet defaults to 80 column output.  If you
+     are using a wider terminal, and would like FIGlet to use the full width of your  ter‐
+     minal, use the -t option:
+
+            example% figlet -t
+
+     If you don't want FIGlet to smush FIGcharacters into each other, use the -k option:
+
+            example% figlet -k
+
+     If figlet gets its input from a file, it is often a good idea to use -p:
+
+            example% figlet -p < myfile
+
+     Of course, the above can be combined:
+
+            example% figlet -ptk -f shadow < anotherfile
+            example% figlet -cf slant
+
+     Finally, if you want to have FIGlet take the input from the command line instead of a
+     file:
+
+            example% figlet Hello world
+
+   Other Things to Try
+     On  many systems nice effects can be obtained from the lean font by piping it through
+     tr.  Some you might want to try are the following:
+
+            example% figlet -f lean | tr ' _/' ' ()'
+            example% figlet -f lean | tr ' _/' './\\'
+            example% figlet -f lean | tr ' _/' ' //'
+            example% figlet -f lean | tr ' _/' '/  '
+
+     Similar things can be done with the block font and many of the other FIGlet fonts.
+
+### COMPRESSED FONTS
+
+     You can compress the fonts and controlfiles using the zip archiving  program.   Place
+     only one font or controlfile in each archive, and rename the archive file (which will
+     have  a  name  ending in .zip) back to .flf or .flc as the case may be.  If you don't
+     rename the file appropriately, FIGlet won't be able to find it.
+
+     FIGlet does not care what the filename within the .zip archive is, and  will  process
+     only the first file.
+
+     The  .zip  format  was  chosen  because  tools to create and manipulate it are widely
+     available for free on many platforms.
+
+### THE STANDARD FONTS
+
+     Here are a few notes about some of the fonts provided with FIGlet.  You can get  many
+     other font from the Web site
+     http://www.figlet.org/    This  location  should  also  contain the latest version of
+     FIGlet and other related utilities.
+
+     The font standard is the basic FIGlet font, used when no  other  font  is  specified.
+     (This  default  can  be  changed  when  FIGlet is compiled on your system.)  The con‐
+     trolfiles 8859-2, 8859-3, 8859-4, and 8859-9  are  provided  for  interpreting  those
+     character  sets, also known as ISO Latin-2 through Latin-5 respectively.  The charac‐
+     ter set 8859-1 (ISO Latin-1) is FIGlet's default and requires no special controlfile.
+
+     Closely related are the fonts slant, shadow, small, smslant (both small and slanted),
+     smshadow, (both small and shadowed), and big.  These fonts support only Latin-1,  ex‐
+     cept  that  big  supports  Greek  FIGcharacters as well; the controlfiles frango (for
+     Greek text written in Latin characters,  so-called  ``frangovlakhika''),  and  8859-7
+     (for mixed Latin/Greek text) are provided.
+
+     The ivrit font is a right-to-left font including both Latin and Hebrew FIGcharacters;
+     the  Latin characters are those of the standard font.  The available controlfiles are
+     ilhebrew, which maps the letters you get by typing on a U.S. keyboard as if it were a
+     Hebrew keyboard; ushebrew, which makes a reasonable mapping from Latin letters to He‐
+     brew ones; and 8859-8, which  supports  mixed  Latin/Hebrew  text.   Warning:  FIGlet
+     doesn't  support  bidirectional text, so everything will come out right-to-left, even
+     Latin letters.
+
+     The fonts terminal, digital, and bubble output the input character with some  decora‐
+     tion around it (or no decoration, in the case of terminal).  The characters coded 128
+     to 159, which have varying interpretations, are output as-is.  You can use the appro‐
+     priate  controlfiles  to process Latin-2, Latin-3, or Latin-4 (but not Latin-5) text,
+     provided your output device has screen or printer  fonts  that  are  appropriate  for
+     these character sets.
+
+     Two  script fonts are available: script, which is larger than standard, and smscript,
+     which is smaller.
+
+     The font lean is made up solely of `/' and `_' sub-characters; block  is  a  straight
+     (non-leaning) version of it.
+
+     The font mini is very small, and especially suitable for e-mail signatures.
+
+     The  font  banner  looks  like the output of the banner program; it is a capitals and
+     small capitals font that doesn't support the ISO Latin-1 extensions to  plain  ASCII.
+     It  does,  however,  support  the Japanese katakana syllabary; the controlfile uskata
+     maps the upper-case and lower-case Latin letters into the 48 basic  katakana  charac‐
+     ters,  and  the  controlfile  jis0201  handles  JIS 0201X (JIS-Roman) mixed Latin and
+     katakana text.   Furthermore,  the  banner  font  also  supports  Cyrillic  (Russian)
+     FIGcharacters;  the  controlfile  8859-5  supports mixed Latin and Cyrillic text, the
+     controlfile koi8r supports the popular KOI8-R mapping of mixed  text,  and  the  con‐
+     trolfile  moscow  supports a sensible mapping from Latin to Cyrillic, compatible with
+     the moscow font (not supplied).
+
+     The fonts mnemonic and safemnem support the mnemonic character set documented in  RFC
+     1345.   They implement a large subset of Unicode (over 1800 characters) very crudely,
+     using ASCII-based mnemonic sequences, and are good for getting a quick look at  UTF-8
+     unicode files, using the controlfile utf8.
+
+### ENVIRONMENT
+
+     FIGLET_FONTDIR
+            If  $FIGLET_FONTDIR  is  set,  its  value is used as a path to search for font
+            files.
+
+### FILES
+
+     file.flf            FIGlet font file
+     file.flc            FIGlet control file
+
+### DIAGNOSTICS
+
+     FIGlet's diagnostics are intended to be self-explanatory.  Possible messages are
+
+            Usage: ...
+            Out of memory
+            Unable to open font file
+            Not a FIGlet 2 font file
+            Unable to open control file
+            Not a FIGlet 2 control file
+            "-t" is disabled, since ioctl is not fully implemented.
+
+     This last message is printed when the -t option is given, but the operating system in
+     use does not include the system call FIGlet uses to determine the terminal width.
+
+     FIGlet also prints an explanatory message if the -F option is given  on  the  command
+     line.   The  earlier  version of FIGlet, version 2.0, listed the available fonts when
+     the -F option was given.  This option has been removed from FIGlet 2.1.  It has  been
+     replaced by the figlist script, which is part of the standard FIGlet package.
+
+### ORIGIN
+
+     ``FIGlet''  stands for ``Frank, Ian and Glenn's LETters''.  Inspired by Frank's .sig,
+     Glenn wrote (most of) it, and Ian helped.
+
+     Most of the standard FIGlet fonts were inspired by signatures on various UseNet arti‐
+     cles.  Since typically hundreds of people use the same style of letters in their sig‐
+     natures, it was often not deemed necessary to give credit to any one font designer.
+
+### BUGS
+
+     Very little error checking is done on font and control files.  While FIGlet tries  to
+     be forgiving of errors, and should (hopefully) never actually crash, using an improp‐
+     erly-formatted file with FIGlet will produce unpredictable output.
+
+     FIGlet  does not handle format characters in a very intelligent way.  A tab character
+     is converted to a blank, and vertical-tab, form-feed  and  carriage-return  are  each
+     converted  to a newline.  On many systems, tabs can be handled better by piping files
+     through expand before piping through FIGlet.
+
+     FIGlet output is quite ugly if it is displayed in a  proportionally-spaced  font.   I
+     suppose this is to be expected.
+
+     Please   report   any   errors   you  find  in  this  man  page  or  the  program  to
+     <info@figlet.org>
+
+### WEBSITE AND MAILING LIST
+
+     You can get many fonts which are not in the basic FIGlet package from  the  Web  site
+     http://www.figlet.org/    It  should  also  contain  the latest version of FIGlet and
+     other utilities related to FIGlet.
+
+     There is a mailing list for FIGlet for general discussions about FIGlet and  a  place
+     where  you  can  ask questions or share ideas with other FIGlet users. It is also the
+     place where we will publish news about new fonts, new software updates etc.
+
+     To subscribe or unsubscribe from the  FIGlet  mailing  list,  please  send  email  to
+     figlet-subscribe@figlet.org  or  figlet-unsubscribe@figlet.org or visit the following
+     web page: http://www.figlet.org/mailman/listinfo/figlet
+
+### AUTHORS
+
+     Glenn Chappell did most of the work.  You can e-mail him but he is not an e-mail  fa‐
+     natic;  people who e-mail Glenn will probably get answers, but if you e-mail his best
+     friend:
+
+     Ian Chai, who is an e-mail fanatic, you'll get answers,  endless  conversation  about
+     the mysteries of life, invitations to join some 473 mailing lists and a free toaster.
+     (Well, ok, maybe not the free toaster.)
+
+     Frank inspired this whole project with his .sig, but don't e-mail him; he's decidedly
+     an un-e-mail-fanatic.
+
+     Gilbert "The Mad Programmer" Healton added the -A option for version 2.1.1.  This op‐
+     tion specified input from the command line; it is still allowed, but has no effect.
+
+     John Cowan added the -o, -s, -k, -S, and -W options, and the support for Unicode map‐
+     ping  tables,  ISO  2022/HZ/Shift-JIS/UTF-8  input,  and compressed fonts and control
+     files.  He also revised this documentation, with a lot of input from Paul Burton.
+
+     Claudio Matsuoka added the support for .tlf files for version 2.2.4 and performs ran‐
+     dom hacks 
+
+# CHAPTER: man figlet(6)
+
+### NAME
+
+     FIGlet - display large characters made up of ordinary screen characters
+
+### SYNOPSIS
+
+     figlet [ -cklnoprstvxDELNRSWX ] [ -d fontdirectory ]
+            [ -f fontfile ] [ -m layoutmode ]
+            [ -w outputwidth ] [ -C controlfile ]
+            [ -I infocode ] [ message ]
+
+### DESCRIPTION
+
+     FIGlet  prints its input using large characters (called ``FIGcharacters'') made up of
+     ordinary screen characters (called ``sub-characters'').  FIGlet output  is  generally
+     reminiscent  of  the  sort of ``signatures'' many people like to put at the end of e-
+     mail and UseNet messages.  It is also reminiscent of the output of some  banner  pro‐
+     grams, although it is oriented normally, not sideways.
+
+     FIGlet  can  print  in a variety of fonts, both left-to-right and right-to-left, with
+     adjacent FIGcharacters kerned and ``smushed'' together in various ways.  FIGlet fonts
+     are stored in separate files, which can be identified by  the  suffix  ``.flf''.   In
+     systems  with  UTF-8  support  FIGlet  may  also support TOIlet ``.tlf'' fonts.  Most
+     FIGlet font files will be stored in FIGlet's default font directory.
+
+     FIGlet can also use ``control files'', which tell it to map certain input  characters
+     to  certain  other  characters, similar to the Unix tr command.  Control files can be
+     identified by the suffix ``.flc''.  Most FIGlet  control  files  will  be  stored  in
+     FIGlet's default font directory.
+
+     You  can  store  FIGlet  fonts  and control files in compressed form.  See COMPRESSED
+     FONTS.
+
+### USAGE
+
+     Just start up FIGlet (type ``figlet'') and then type  whatever  you  want.   Alterna‐
+     tively,  pipe a file or the output of another command through FIGlet, or put input on
+     the command line after the options.  See EXAMPLES for other things to do.
+
+### OPTIONS
+
+     FIGlet reads command line options from left to right, and only the last  option  that
+     affects a parameter has any effect.  Almost every option has an inverse, so that, for
+     example,  if  FIGlet  is  customized  with a shell alias, all the options are usually
+     still available.
+
+     Commonly-used options are -f, -c, -k, -t, -p and -v.
+
+     -f fontfile
+            Select the font.  The .flf suffix may be left off of fontfile, in  which  case
+            FIGlet  automatically  appends it.  FIGlet looks for the file first in the de‐
+            fault font directory and then in the current directory, or,  if  fontfile  was
+            given  as  a  full  pathname, in the given directory.  If the -f option is not
+            specified, FIGlet uses the font that was specified when it was  compiled.   To
+            find out which font this is, use the -I3 option.
+
+     -d fontdirectory
+            Change  the  default  font directory.  FIGlet looks for fonts first in the de‐
+            fault directory and then in the current directory.  If the -d  option  is  not
+            specified,  FIGlet uses the directory that was specified when it was compiled.
+            To find out which directory this is, use the -I2 option.
+
+     -c
+     -l
+     -r
+     -x     These options handle the justification of FIGlet output.  -c centers the  out‐
+            put  horizontally.   -l makes the output flush-left.  -r makes it flush-right.
+            -x (default) sets the justification  according  to  whether  left-to-right  or
+            right-to-left  text is selected.  Left-to-right text will be flush-left, while
+            right-to-left text will be flush-right.  (Left-to-right  versus  right-to-left
+            text is controlled by -L, -R and -X.)
+
+     -t
+     -w outputwidth
+            These options control the outputwidth, or the screen width FIGlet assumes when
+            formatting its output.  FIGlet uses the outputwidth to determine when to break
+            lines  and  how  to center the output.  Normally, FIGlet assumes 80 columns so
+            that people with wide terminals won't annoy the people they e-mail FIGlet out‐
+            put to.  -t sets the outputwidth to the terminal width.  If the terminal width
+            cannot be determined, the previous outputwidth is retained.  -w sets the  out‐
+            putwidth  to  the  given integer.  An outputwidth of 1 is a special value that
+            tells FIGlet to print each non-space FIGcharacter, in its entirety, on a sepa‐
+            rate line, no matter how wide it is.
+
+     -p
+     -n     These options control how  FIGlet  handles  newlines.   -p  puts  FIGlet  into
+            ``paragraph  mode'', which eliminates some unnecessary line breaks when piping
+            a multi-line file through FIGlet.   In  paragraph  mode,  FIGlet  treats  line
+            breaks  within  a  paragraph  as  if  they  were  merely blanks between words.
+            (Specifically, -p causes FIGlet to convert any newline which is  not  preceded
+            by  a  newline  and  not followed by a space character into a blank.)  -n (de‐
+            fault) puts FIGlet back to normal, in which every newline FIGlet reads  causes
+            it to produce a line break.
+
+     -D
+     -E     -D  switches to the German (ISO 646-DE) character set.  Turns `[', `\' and `]'
+            into umlauted A, O and U, respectively.  `{', `|' and `}' turn  into  the  re‐
+            spective  lower  case versions of these.  `~' turns into s-z.  -E turns off -D
+            processing.  These options are deprecated, which means they probably will  not
+            appear in the next version of FIGlet.
+
+     -C controlfile
+     -N     These options deal with FIGlet controlfiles.  A controlfile is a file contain‐
+            ing  a  list  of commands that FIGlet executes each time it reads a character.
+            These commands can map certain input characters to other  characters,  similar
+            to  the  Unix  tr command or the FIGlet -D option.  FIGlet maintains a list of
+            controlfiles, which is empty when FIGlet starts up.  -C adds  the  given  con‐
+            trolfile  to  the list.  -N clears the controlfile list, cancelling the effect
+            of any previous -C.  FIGlet executes the commands in all controlfiles  in  the
+            list.   See  the file figfont.txt, provided with FIGlet, for details on how to
+            write a controlfile.
+
+     -s
+     -S
+     -k
+     -W
+
+     -o     These options control how FIGlet spaces the FIGcharacters that it outputs.  -s
+            (default) and -S cause ``smushing''.  The FIGcharacters are displayed as close
+            together as possible, and overlapping  sub-characters  are  removed.   Exactly
+            which  sub-characters  count  as ``overlapping'' depends on the font's layout‐
+            mode, which is defined by the font's author.  -k causes ``kerning''.  As  many
+            blanks  as possible are removed between FIGcharacters, so that they touch, but
+            the FIGcharacters are not smushed.  -W makes FIGlet display all  FIGcharacters
+            at their full width, which may be fixed or variable, depending on the font.
+
+            The difference between -s and -S is that -s will not smush a font whose author
+            specified kerning or full width as the default layoutmode, whereas -S will at‐
+            tempt to do so.
+
+            If there is no information in the font about how to smush, or if the -o option
+            is  specified, then the FIGcharacters are ``overlapped''.  This means that af‐
+            ter kerning, the first subcharacter of each FIGcharacter is removed.  (This is
+            not done if a FIGcharacter contains only one subcharacter.)
+
+     -m layoutmode
+            Specifies an explicit layoutmode between 1 and 63.  Smushmodes  are  explained
+            in  figfont.txt,  which  also provides complete information on the format of a
+            FIGlet font.  For the sake of backward compatibility with versions  of  FIGlet
+            before  2.2,  -m0  is  equivalent to -k, -m-1 is equivalent to -W, and -m-2 is
+            equivalent to -s.  The -m switch is normally used only by font designers test‐
+            ing the various layoutmodes with a new font.
+
+     -v
+     -I infocode
+            These options print various information about FIGlet, then exit.   If  several
+            of these options are given on the command line, only the last is executed, and
+            only after all other command-line options have been dealt with.
+
+            -v  prints  version  and  copyright  information,  as well as a ``Usage: ...''
+            line.  -I prints the information corresponding to the given infocode in a con‐
+            sistent, reliable (i.e., guaranteed to be the same in future releases) format.
+            -I is primarily intended to be used by programs that use FIGlet.  infocode can
+            be any of the following.
+
+            -1 Normal operation (default).
+                   This infocode indicates that FIGlet should operate normally, not giving
+                   any informational printout, printing its input in the selected font.
+
+            0 Version and copyright.
+                   This is identical to -v.
+
+            1 Version (integer).
+                   This will print the version of your copy of FIGlet as a  decimal  inte‐
+                   ger.   The  main version number is multiplied by 10000, the sub-version
+                   number is multiplied by 100, and the sub-sub-version number  is  multi‐
+                   plied  by  1.  These are added together, and the result is printed out.
+                   For example, FIGlet 2.2 will print ``20200'' , version 2.2.1 will print
+                   ``20201''.  Similarly, version 3.7.2 would print ``30702''.  These num‐
+                   bers are guaranteed to be ascending, with later versions having  higher
+                   numbers.  Note that the first major release of FIGlet, version 2.0, did
+                   not have the -I option.
+
+            2 Default font directory.
+                   This  will  print the default font directory.  It is affected by the -d
+                   option.
+
+            3 Font.
+                   This will print the name of the font FIGlet would use.  It is  affected
+                   by  the  -f option.  This is not a filename; the ``.flf'' suffix is not
+                   printed.
+
+            4 Output width.
+                   This will print the value FIGlet would use for outputwidth, the  number
+                   of columns wide FIGlet assumes the screen is.  It is affected by the -w
+                   and -t options.
+
+            5 Supported font formats.
+                   This will list font formats supported by FIGlet .  Possible formats are
+                   ``flf2''  for FIGfont Version 2 .flf files and ``tlf2'' for TOIlet .tlf
+                   files.
+
+            If infocode is any other positive  value,  FIGlet  will  simply  exit  without
+            printing anything.
+
+     -L
+     -R
+     -X     These  options  control  whether FIGlet prints left-to-right or right-to-left.
+            -L selects left-to-right printing.  -R  selects  right-to-left  printing.   -X
+            (default) makes FIGlet use whichever is specified in the font file.
+
+            Once  the  options  are  read, if there are any remaining words on the command
+            line, they are used instead of standard input as the  source  of  text.   This
+            feature allows shell scripts to generate large letters without having to dummy
+            up standard input files.
+
+            An empty argument, obtained by two sequential quotes, results in a line break.
+
+### EXAMPLES
+
+     To use FIGlet with its default settings, simply type
+
+            example% figlet
+
+     and then type whatever you like.
+
+     To change the font, use the -f option, for example,
+
+            example% figlet -f script
+
+     Use the -c option if you would prefer centered output:
+
+            example% figlet -c
+
+     We have found that the most common use of FIGlet is making up large text to be placed
+     in  e-mail  messages.   For this reason, FIGlet defaults to 80 column output.  If you
+     are using a wider terminal, and would like FIGlet to use the full width of your  ter‐
+     minal, use the -t option:
+
+            example% figlet -t
+
+     If you don't want FIGlet to smush FIGcharacters into each other, use the -k option:
+
+            example% figlet -k
+
+     If figlet gets its input from a file, it is often a good idea to use -p:
+
+            example% figlet -p < myfile
+
+     Of course, the above can be combined:
+
+            example% figlet -ptk -f shadow < anotherfile
+            example% figlet -cf slant
+
+     Finally, if you want to have FIGlet take the input from the command line instead of a
+     file:
+
+            example% figlet Hello world
+
+   Other Things to Try
+     On  many systems nice effects can be obtained from the lean font by piping it through
+     tr.  Some you might want to try are the following:
+
+            example% figlet -f lean | tr ' _/' ' ()'
+            example% figlet -f lean | tr ' _/' './\\'
+            example% figlet -f lean | tr ' _/' ' //'
+            example% figlet -f lean | tr ' _/' '/  '
+
+     Similar things can be done with the block font and many of the other FIGlet fonts.
+
+### COMPRESSED FONTS
+
+     You can compress the fonts and controlfiles using the zip archiving  program.   Place
+     only one font or controlfile in each archive, and rename the archive file (which will
+     have  a  name  ending in .zip) back to .flf or .flc as the case may be.  If you don't
+     rename the file appropriately, FIGlet won't be able to find it.
+
+     FIGlet does not care what the filename within the .zip archive is, and  will  process
+     only the first file.
+
+     The  .zip  format  was  chosen  because  tools to create and manipulate it are widely
+     available for free on many platforms.
+
+### THE STANDARD FONTS
+
+     Here are a few notes about some of the fonts provided with FIGlet.  You can get  many
+     other font from the Web site
+     http://www.figlet.org/    This  location  should  also  contain the latest version of
+     FIGlet and other related utilities.
+
+     The font standard is the basic FIGlet font, used when no  other  font  is  specified.
+     (This  default  can  be  changed  when  FIGlet is compiled on your system.)  The con‐
+     trolfiles 8859-2, 8859-3, 8859-4, and 8859-9  are  provided  for  interpreting  those
+     character  sets, also known as ISO Latin-2 through Latin-5 respectively.  The charac‐
+     ter set 8859-1 (ISO Latin-1) is FIGlet's default and requires no special controlfile.
+
+     Closely related are the fonts slant, shadow, small, smslant (both small and slanted),
+     smshadow, (both small and shadowed), and big.  These fonts support only Latin-1,  ex‐
+     cept  that  big  supports  Greek  FIGcharacters as well; the controlfiles frango (for
+     Greek text written in Latin characters,  so-called  ``frangovlakhika''),  and  8859-7
+     (for mixed Latin/Greek text) are provided.
+
+     The ivrit font is a right-to-left font including both Latin and Hebrew FIGcharacters;
+     the  Latin characters are those of the standard font.  The available controlfiles are
+     ilhebrew, which maps the letters you get by typing on a U.S. keyboard as if it were a
+     Hebrew keyboard; ushebrew, which makes a reasonable mapping from Latin letters to He‐
+     brew ones; and 8859-8, which  supports  mixed  Latin/Hebrew  text.   Warning:  FIGlet
+     doesn't  support  bidirectional text, so everything will come out right-to-left, even
+     Latin letters.
+
+     The fonts terminal, digital, and bubble output the input character with some  decora‐
+     tion around it (or no decoration, in the case of terminal).  The characters coded 128
+     to 159, which have varying interpretations, are output as-is.  You can use the appro‐
+     priate  controlfiles  to process Latin-2, Latin-3, or Latin-4 (but not Latin-5) text,
+     provided your output device has screen or printer  fonts  that  are  appropriate  for
+     these character sets.
+
+     Two  script fonts are available: script, which is larger than standard, and smscript,
+     which is smaller.
+
+     The font lean is made up solely of `/' and `_' sub-characters; block  is  a  straight
+     (non-leaning) version of it.
+
+     The font mini is very small, and especially suitable for e-mail signatures.
+
+     The  font  banner  looks  like the output of the banner program; it is a capitals and
+     small capitals font that doesn't support the ISO Latin-1 extensions to  plain  ASCII.
+     It  does,  however,  support  the Japanese katakana syllabary; the controlfile uskata
+     maps the upper-case and lower-case Latin letters into the 48 basic  katakana  charac‐
+     ters,  and  the  controlfile  jis0201  handles  JIS 0201X (JIS-Roman) mixed Latin and
+     katakana text.   Furthermore,  the  banner  font  also  supports  Cyrillic  (Russian)
+     FIGcharacters;  the  controlfile  8859-5  supports mixed Latin and Cyrillic text, the
+     controlfile koi8r supports the popular KOI8-R mapping of mixed  text,  and  the  con‐
+     trolfile  moscow  supports a sensible mapping from Latin to Cyrillic, compatible with
+     the moscow font (not supplied).
+
+     The fonts mnemonic and safemnem support the mnemonic character set documented in  RFC
+     1345.   They implement a large subset of Unicode (over 1800 characters) very crudely,
+     using ASCII-based mnemonic sequences, and are good for getting a quick look at  UTF-8
+     unicode files, using the controlfile utf8.
+
+### ENVIRONMENT
+
+     FIGLET_FONTDIR
+            If  $FIGLET_FONTDIR  is  set,  its  value is used as a path to search for font
+            files.
+
+### FILES
+
+     file.flf            FIGlet font file
+     file.flc            FIGlet control file
+
+### DIAGNOSTICS
+
+     FIGlet's diagnostics are intended to be self-explanatory.  Possible messages are
+
+            Usage: ...
+            Out of memory
+            Unable to open font file
+            Not a FIGlet 2 font file
+            Unable to open control file
+            Not a FIGlet 2 control file
+            "-t" is disabled, since ioctl is not fully implemented.
+
+     This last message is printed when the -t option is given, but the operating system in
+     use does not include the system call FIGlet uses to determine the terminal width.
+
+     FIGlet also prints an explanatory message if the -F option is given  on  the  command
+     line.   The  earlier  version of FIGlet, version 2.0, listed the available fonts when
+     the -F option was given.  This option has been removed from FIGlet 2.1.  It has  been
+     replaced by the figlist script, which is part of the standard FIGlet package.
+
+### ORIGIN
+
+     ``FIGlet''  stands for ``Frank, Ian and Glenn's LETters''.  Inspired by Frank's .sig,
+     Glenn wrote (most of) it, and Ian helped.
+
+     Most of the standard FIGlet fonts were inspired by signatures on various UseNet arti‐
+     cles.  Since typically hundreds of people use the same style of letters in their sig‐
+     natures, it was often not deemed necessary to give credit to any one font designer.
+
+### BUGS
+
+     Very little error checking is done on font and control files.  While FIGlet tries  to
+     be forgiving of errors, and should (hopefully) never actually crash, using an improp‐
+     erly-formatted file with FIGlet will produce unpredictable output.
+
+     FIGlet  does not handle format characters in a very intelligent way.  A tab character
+     is converted to a blank, and vertical-tab, form-feed  and  carriage-return  are  each
+     converted  to a newline.  On many systems, tabs can be handled better by piping files
+     through expand before piping through FIGlet.
+
+     FIGlet output is quite ugly if it is displayed in a  proportionally-spaced  font.   I
+     suppose this is to be expected.
+
+     Please   report   any   errors   you  find  in  this  man  page  or  the  program  to
+     <info@figlet.org>
+
+### WEBSITE AND MAILING LIST
+
+     You can get many fonts which are not in the basic FIGlet package from  the  Web  site
+     http://www.figlet.org/    It  should  also  contain  the latest version of FIGlet and
+     other utilities related to FIGlet.
+
+     There is a mailing list for FIGlet for general discussions about FIGlet and  a  place
+     where  you  can  ask questions or share ideas with other FIGlet users. It is also the
+     place where we will publish news about new fonts, new software updates etc.
+
+     To subscribe or unsubscribe from the  FIGlet  mailing  list,  please  send  email  to
+     figlet-subscribe@figlet.org  or  figlet-unsubscribe@figlet.org or visit the following
+     web page: http://www.figlet.org/mailman/listinfo/figlet
+
+### AUTHORS
+
+     Glenn Chappell did most of the work.  You can e-mail him but he is not an e-mail  fa‐
+     natic;  people who e-mail Glenn will probably get answers, but if you e-mail his best
+     friend:
+
+     Ian Chai, who is an e-mail fanatic, you'll get answers,  endless  conversation  about
+     the mysteries of life, invitations to join some 473 mailing lists and a free toaster.
+     (Well, ok, maybe not the free toaster.)
+
+     Frank inspired this whole project with his .sig, but don't e-mail him; he's decidedly
+     an un-e-mail-fanatic.
+
+     Gilbert "The Mad Programmer" Healton added the -A option for version 2.1.1.  This op‐
+     tion specified input from the command line; it is still allowed, but has no effect.
+
+     John Cowan added the -o, -s, -k, -S, and -W options, and the support for Unicode map‐
+     ping  tables,  ISO  2022/HZ/Shift-JIS/UTF-8  input,  and compressed fonts and control
+     files.  He also revised this documentation, with a lot of input from Paul Burton.
+
+     Claudio Matsuoka added the support for .tlf files for version 2.2.4 and performs ran‐
+     dom hacks and b
+
+# CHAPTER: man figlist(6)
+
+### NAME
+
+     figlist - lists figlet fonts and control files
+
+### SYNOPSIS
+
+     figlist [ -d directory ]
+
+### DESCRIPTION
+
+     Lists  all  fonts  and  control  files  in figlet's default font directory.  Replaces
+     "figlet -F", which was removed from figlet version 2.1.
+
+### EXAMPLES
+
+     To use figlist with its default settings, simply type
+
+            example% figlist
+
+     To list all the font and control files in /usr/share/fonts/figlet
+
+            example% figlist -d /usr/share/fonts/figlet
+
+### AUTHORS
+
+     figlist was written by Glenn Chappell <ggc@uiuc.edu>
+
+     This manual page was written by Jonathon Abbott for the Debian Project.
+
+### SEE ALSO
+
+     figlet(6), chkfont(6), showfigfonts(6)
+
+# CHAPTER: man fortune(6)
+
+### NAME
+
+     fortune - print a random, hopefully interesting, adage
+
+### SYNOPSIS
+
+     fortune [-acefilosuw] [-n length] [ -m pattern] [[n%] file/dir/all]
+
+### DESCRIPTION
+
+     When  fortune  is  run with no arguments it prints out a random epigram. Epigrams are
+     divided into several categories, where each category is sub-divided into those  which
+     are potentially offensive and those which are not.
+
+   Options
+     The options are as follows:
+
+     -a     Choose  from  all lists of maxims, both offensive and not.  (See the -o option
+            for more information on offensive fortunes.)
+
+     -c     Show the cookie file from which the fortune came.
+
+     -e     Consider all fortune files to be of equal size (see discussion below on multi‐
+            ple files).
+
+     -f     Print out the list of files which would be searched, but don't  print  a  for‐
+            tune.
+
+     -l     Long dictums only.  See -n on how ``long'' is defined in this sense.
+
+     -m pattern
+            Print  out all fortunes which match the basic regular expression pattern.  The
+            syntax of these expressions depends on how your system defines  re_comp(3)  or
+            regcomp(3),  but  it  should  nevertheless  be  similar  to the syntax used in
+            grep(1).
+
+            The fortunes are output to standard output, while the names of the  file  from
+            which each fortune comes are printed to standard error.  Either or both can be
+            redirected;  if standard output is redirected to a file, the result is a valid
+            fortunes database file.  If standard error is also redirected  to  this  file,
+            the  result  is  still  valid,  but there will be ``bogus'' fortunes, i.e. the
+            filenames themselves, in parentheses.  This can be useful if you wish  to  re‐
+            move  the  gathered  matches  from  their  original  files,  since  each file‐
+            name-record will precede the records from the file it names.
+
+     -n length
+            Set the longest fortune length (in characters) considered to be ``short'' (the
+            default is 160).  All fortunes longer than this are considered  ``long''.   Be
+            careful!   If  you set the length too short and ask for short fortunes, or too
+            long and ask for long ones, fortune goes into a never-ending thrash loop.
+
+     -o     Choose only from potentially offensive aphorisms.  The -o option is ignored if
+            a fortune directory is specified.
+
+            Please, please, please request a potentially offensive fortune if and only  if
+            you  believe,  deep  in  your heart, that you are willing to be offended. (And
+            that you'll just quit using -o rather than give us grief about it, okay?)
+
+            ... let us keep in mind the basic governing philosophy of The Brotherhood,  as
+            handsomely  summarized  in these words: we believe in healthy, hearty laughter
+            -- at the expense of the whole human race, if needs be.  Needs be.
+                   --H. Allen Smith, "Rude Jokes"
+
+     -s     Short apothegms only.  See -n on which fortunes are considered ``short''.
+
+     -i     Ignore case for -m patterns.
+
+     -w     Wait before termination for an amount of time calculated from  the  number  of
+            characters  in  the  message.  This is useful if it is executed as part of the
+            logout procedure to guarantee that the message can be read before  the  screen
+            is cleared.
+
+     -u     Don't translate UTF-8 fortunes to the locale when searching or translating.
+
+     The user may specify alternate sayings.  You can specify a specific file, a directory
+     which  contains  one or more files, or the special word all which says to use all the
+     standard databases.  Any of these may be preceded by a percentage, which is a  number
+     n  between 0 and 100 inclusive, followed by a %.  If it is, there will be a n percent
+     probability that an adage will be picked from that file or directory. If the percent‐
+     ages do not sum to 100, and there are specifications without percentages, the remain‐
+     ing percent will apply to those files and/or directories, in which case the probabil‐
+     ity of selecting from one of them will be based on their relative sizes.
+
+     As an example, given two databases funny and not-funny, with funny twice as  big  (in
+     number of fortunes, not raw file size), saying
+
+            fortune funny not-funny
+
+     will get you fortunes out of funny two-thirds of the time.  The command
+
+            fortune 90% funny 10% not-funny
+
+     will  pick  out 90% of its fortunes from funny (the ``10% not-funny'' is unnecessary,
+     since 10% is all that's left).
+
+     The -e option says to consider all files equal; thus
+
+            fortune -e funny not-funny
+
+     is equivalent to
+
+            fortune 50% funny 50% not-funny
+
+### FILES
+
+     Note: these are the defaults as defined at compile time.
+
+     /usr/share/games/fortunes
+            Directory for innoffensive fortunes.
+     /usr/share/games/fortunes/off
+            Directory for offensive fortunes.
+
+     If a particular set of fortunes is particularly unwanted, there is an easy  solution:
+     delete  the associated .dat file.  This leaves the data intact, should the file later
+     be wanted, but since fortune no longer finds the pointers file, it ignores  the  text
+     file.
+
+### BUGS
+
+     The supplied fortune databases have been attacked, in order to correct orthographical
+     and  grammatical errors, and particularly to reduce redundancy and repetition and re‐
+     dundancy.  But especially to avoid repetitiousness.  This has  not  been  a  complete
+     success.  In the process, some fortunes may also have been lost.
+
+     The fortune databases are now divided into a larger number of smaller files, some or‐
+     ganized  by  format  (poetry, definitions), and some by content (religion, politics).
+     There are parallel files in the main directory and in the offensive  files  directory
+     (e.g.,  fortunes/definitions  and fortunes/off/definitions).  Not all the potentially
+     offensive fortunes are in the offensive fortunes files, nor are all the  fortunes  in
+     the offensive files potentially offensive, probably, though a strong attempt has been
+     made to achieve greater consistency.  Also, a better division might be made.
+
+     When  passing  files to fortune, directories must be specified by absolute pathnames,
+     and filenames starting with  a  dot  are  ignored.  See:  http://bugs.debian.org/cgi-
+     bin/bugreport.cgi?bug=241888
+
+### HISTORY
+
+     This  version of fortune is based on the NetBSD fortune 1.4, but with a number of bug
+     fixes and enhancements.
+
+     The original fortune/strfile format used a single file; strfile read  the  text  file
+     and  converted  it  to  null-delimited  strings, which were stored after the table of
+     pointers in the .dat file.  By NetBSD fortune 1.4, this had changed to  two  separate
+     files: the .dat file was only the header (the table of pointers, plus flags; see str‐
+     file.h),  and  the  text  strings were left in their own file.  The potential problem
+     with this is that text file and header file may get out of synch, but  the  advantage
+     is  that the text files can be easily edited without resorting to unstr, and there is
+     a potential savings in disk space (on the assumption that the sysadmin kept both .dat
+     file with strings and the text file).
+
+     Many of the enhancements made over the NetBSD version assumed  a  Linux  system,  and
+     thus  caused  it  to  fail under other platforms, including BSD.  The source code has
+     since been made more generic, and currently works on SunOS 4.x as well as Linux, with
+     support for more platforms expected in the future.  Note that some bugs were inadver‐
+     tently discovered and fixed during this process.
+
+     At a guess, a great many people have worked on this program, many without leaving at‐
+     tributions.
+
+### SEE ALSO
+
+     re_comp(3), regcomp(3), strfile(1), unstr(1)
+
+# CHAPTER: man greed(6)
+
+### NAME
+
+     greed - eat a game field until you run out of moves
+
+### SYNOPSIS
+
+     greed [-s] [-w width] [-h height] [-f] [-p] [-r seed]
+
+### DESCRIPTION
+
+     The object of Greed is to erase as much of the screen as possible by moving around in
+     a  grid  of numbers. To move your cursor, simply use your arrow keys or the the 'hjk‐
+     lyubn' keys or your numeric keypad (with Num Lock on). Your location is signified  by
+     the @ symbol. The following diagram shows how the basic movement keys work.
+
+         y k u  7 8 9
+          \|/    \|/
+         h-+-l  4-+-6
+          /|\    /|\
+         b j n  1 2 3
+
+     When you move in a direction, you erase N number of grid squares in that direction, N
+     being  the  first  number  in that direction. Your score reflects the total number of
+     squares eaten.
+
+     Greed will not let you make a move that would have placed you off the grid or over  a
+     previously eaten square. If no valid moves exist, your game ends.
+
+     Other  Greed commands are 'Ctrl-L' to redraw the screen, 'p' to toggle the highlight‐
+     ing of the possible moves, and 'q' to quit.
+
+     The -w and -h options set the width and height of the board. The -f option  size  the
+     board to fit your terminal window
+
+     With  option -p, display all your next possible moves with a reverse-video highlight.
+     During the game, 'p' toggles this feature on and off.
+
+     The -r option sets the random seed (useful for reproducible games).
+
+     With the -s option, output the hight score file
+
+### ENVIRONMENT
+
+     The environment variable GREEDOPTS can override the default color set, which will  be
+     parsed as a string of the form:
+
+                 <c1><c2><c3><c4><c5><c6><c7><c8><c9>[:[p]]
+
+     where  <cn>  is  a  character describing the color for digit n. The color letters are
+     read as follows:
+
+                 b = blue,
+                 g = green,
+                 c = cyan,
+                 r = red,
+                 m = magenta,
+                 y = yellow,
+                 w = white.
+
+     In addition, capitalizing a letter turns on the A_BOLD attribute for that letter.
+
+     If the string ends with a trailing :, letters following are taken as game options. At
+     present, only 'p' (equivalent to an initial 'p' command) is defined.
+
+### FILES
+
+     /usr/lib/games/greed.hs
+         Default location of Greed high scores.
+
+     ~/.greedscores
+         Where they’re put if the default location cannot be written to..
+
+AUTHORS == ORIGINALLY WRITTEN
+     Written by Matt Day. Maintained by esr@snark.thyrsus.com. See ESR’s home page at
+     http://www.catb.org/~esr/ for updates and other resources.
+
+### BUGS
+
+     This really ought to be an X game, but that would have been too much like work.
+
+# CHAPTER: man intro(6)
+
+### NAME
+
+     intro - introduction to games
+
+### DESCRIPTION
+
+     Section  6  of  the manual describes the games and funny little programs available on
+     the system.
 
 ### NOTES
 
-### Authors and copyright conditions
+   Authors and copyright conditions
+     Look at the header of the manual page source for the author(s) and  copyright  condi‐
+     tions.  Note that these can be different from page to page!
 
-Look at the header of the manual page source for the author(s) and copyright
-conditions.
-Note that these can be different from page to page!
+# CHAPTER: man kaces(6)
+
+### NAME
+
+     kaces - X window aces high solitaire
+
+### SYNOPSIS
+
+     kaces
+
+### DESCRIPTION
+
+     Kaces  brings up a window for a aces solatiaire game.  Clicking on a card moves it to
+     the "best" legal play. Dragging a card places it (if legal) in the target stack.
+
+### RULES
+
+     Top cards of tableaus are available, and may be discarded if they have the same  suit
+     and  lower  rank  than another available card.  Empty tableaus may be filled with any
+     available card. Aces rank high, above Kings.
+
+     Deal four more cards by clickping the  deck.  Dealing  is  not  allowed  until  empty
+     tableaus have been filled (if possible).
+
+     Goal: discard all cards except for the four Aces.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man kcanfield(6)
+
+### NAME
+
+     kcanfield - X window canfield solitaire
+
+### SYNOPSIS
+
+     kcanfield
+
+### DESCRIPTION
+
+     Kcanfield  brings  up  a  window  for a canfield solatiaire game.  Clicking on a card
+     moves it to the "best" legal play. Dragging a card places it (if legal) in the target
+     stack.
+
+### RULES
+
+     Tableaus build down circularly in alternating colors. Full builds  may  be  moved  to
+     other  tableaus. Top cards may be moved to foundations. Empty tableaus must be filled
+     immediately from the stock until it is empty; then at will  from  the  discard  pile.
+     Foundations  build up circularly in suit. Empty foundations must be filled with cards
+     of the same rank as the starter card placed during the layout.
+
+     Deal three cards onto the discard pile by tapping the deck.  Top cards of  stock  and
+     discard may be moved to tableaus or foundations.
+
+     Goal: move all cards to the foundations.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man kcribbage(6)
+
+### NAME
+
+     kcribbage - X window cribbage game
+
+### SYNOPSIS
+
+     kcribbage
+
+### DESCRIPTION
+
+     Kcribbage brings up a window for a cribbage game played against the computer.  Click‐
+     ing on a card moves it to the "best" legal play. Dragging a card places it (if legal)
+     in  the  target  stack. Use the keyboard to provide answers for questions in the text
+     window.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man kdominos(6)
+
+### NAME
+
+     kdominos - X window dominos game against the computer
+
+### SYNOPSIS
+
+     kdominos
+
+### DESCRIPTION
+
+     Kdominos  brings  up  a window for a dominos game against the computer.  Drag dominos
+     into position on the board or click one of the controls.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man kklondike(6)
+
+### NAME
+
+     kklondike - X window klondike solitaire
+
+### SYNOPSIS
+
+     kklondike
+
+### DESCRIPTION
+
+     Kklondike  brings  up  a  window  for a klondike solatiaire game.  Clicking on a card
+     moves it to the "best" legal play. Dragging a card places it (if legal) in the target
+     stack.
+
+### RULES
+
+     Tableaus build down in alternating colors. Full or partial builds may be moved  among
+     the  tableaus.  Empty tableaus may be filled with Kings or with builds beginning with
+     Kings.  The top card in the discard pile may be played on  tableaus  or  foundations.
+     Foundations build up in suit from the Ace.
+
+     Deal  three  cards  onto  the discard pile by clickingn the hand.  Click on the empty
+     hand to move the discards back.
+
+     Goal: move all cards to the foundations.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man kmcarlo(6)
+
+### NAME
+
+     kmcarlo - X window monte carlo solitaire
+
+### SYNOPSIS
+
+     kmcarlo
+
+### DESCRIPTION
+
+     Kmcarlo  brings  up  a  window for a monte carlo solatiaire game.  Clicking on a card
+     moves it to the "best" legal play. Dragging a card places it (if legal) in the target
+     stack.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man kmontana(6)
+
+### NAME
+
+     kmontana - X window montana high solitaire
+
+### SYNOPSIS
+
+     kmontana
+
+### DESCRIPTION
+
+     Kmontana  brings up a window for a montana solatiaire game.  Clicking on a card moves
+     it to the "best" legal play. Dragging a card place it (if legal) in the target stack.
+
+### RULES
+
+     Top cards of tableaus are available, and may be discarded if they have the same  suit
+     and  lower  rank  than another available card.  Empty tableaus may be filled with any
+     available card. Aces rank high, above Kings.
+
+     Deal four more cards by clickping the  deck.  Dealing  is  not  allowed  until  empty
+     tableaus have been filled (if possible).  Goal: discard all cards except for the four
+     Aces.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man kslyfox(6)
+
+### NAME
+
+     kslyfox - X window sly fox solitaire
+
+### SYNOPSIS
+
+     kslyfox
+
+### DESCRIPTION
+
+     Kslyfox brings up a window for a sly fox solataire game.  Clicking on a card moves it
+     to the "best" legal play. Dragging a card places it (if legal) in the target stack.
+
+### RULES
+
+     Sly Fox is a double-deck solitaire game.
+
+     4  Aces and 4 Kings (1 of each suit) is pulled out and used for the foundations, with
+     the Ace piles building up in suit and the King piels building down.
+
+     20 cards are dealt face up in 4 rows of 5 to form the reserve.
+
+     Any of the reserve cards can be played on the foundations, and the  space  formed  by
+     this is immediately filled in from the deck.
+
+     Once  no  more  plays can be made, cards are dealt one at a time from the deck.  Each
+     card can either be played to a foundation, or placed on one of the 20 reserve stacks.
+     During this play, none of the reserve cards can be moved to the foundations.  Once 20
+     cards have been added to the reserve, the reserve cards can again be  played  as  be‐
+     fore,  except  that  spaces are not filled immediately, but instead left for the next
+     deal.
+
+     Playing the X version
+
+     In general, clicking on a card will make it do the "right thing".  Cards can also  be
+     dragged between piles.
+
+     To  change  between  Deal  play  (when the reserve cards are in play) to Reserve play
+     (when the deck cards are being added to the reserve), select 'Deal', hit the 'd'  key
+     or  click  on the deck.  Once 20 cards are added to the reserve stacks, the game will
+     revert to Deal mode.
+
+     During Reserve play, simply clicking on the destination of  the  card  in  play  will
+     place it there.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man kspider(6)
+
+### NAME
+
+     kspider - X window spider solitaire
+
+### SYNOPSIS
+
+     kspider
+
+### DESCRIPTION
+
+     Kspider brings up a window for a spider solatiaire game.  Clicking on a card moves it
+     to the "best" legal play. Dragging a card places it (if legal) in the target stack.
+
+### RULES
+
+     Tableaus  build  down regardless of suit or color. Full or partial builds in suit may
+     be moved among the tableaus. Empty tableaus may be filled with any  available  build.
+     Builds  of  thirteen  cards,  in suit from King down to Ace, may be moved to an empty
+     discard pile.
+
+     Deal one card onto each tableau by tapping the deck. You may not deal until all empty
+     tableaus have been filled.
+
+     Goal: discard all cards.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man ktabby(6)
+
+### NAME
+
+     ktabby - X window tabby cat solitaire
+
+### SYNOPSIS
+
+     ktabby
+
+### DESCRIPTION
+
+     Ktabby  brings up a window for a tabby cat solatiaire game.  Clicking on a card moves
+     it to the "best" legal play. Dragging a card places  it  (if  legal)  in  the  target
+     stack.
+
+### RULES
+
+     Tableaus  build  down,  regardless  of  suit or color.  Full or partial builds may be
+     moved among the tableaus.  Empty tableaus may be filled  with  any  available  build.
+     Any  available  build  may be moved to the tail, if it is empty.  Available builds of
+     thirteen cards, from King down to Ace, may be moved to an empty foundation.
+
+     Deal one card onto each tableau by tapping on the hand.
+
+     Goal: move all cards to the foundations.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man kthieves(6)
+
+### NAME
+
+     kthieves - X window forty thieves solitaire
+
+### SYNOPSIS
+
+     kthieves
+
+### DESCRIPTION
+
+     Kthieves  brings up a window for a forty thieves solatiaire game.  Clicking on a card
+     moves it to the "best" legal play. Dragging a card places it (if legal) in the target
+     stack.
+
+### RULES
+
+     Tableaus build down in suit. Foundations build up in suit. You may move one card at a
+     time from the discard to a tableau, from the  tableau  to  a  foundation  or  between
+     tableaus.
+
+     Deal one card onto the discard pile by clicking the deck.
+
+     Goal: move all cards to the foundations.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man ktowers(6)
+
+### NAME
+
+     ktowers - X window towers solitaire
+
+### SYNOPSIS
+
+     ktowers
+
+### DESCRIPTION
+
+     Ktowers brings up a window for a towers solatiaire game.  Clicking on a card moves it
+     to the "best" legal play. Dragging a card places it (if legal) in the target stack.
+
+### RULES
+
+     Tableaus  build  down  in  suit  order. Single cards may be moved among the tableaus.
+     Empty tableaus may be filled with Kings.  Stocks hold any single card each.   Founda‐
+     tions build up in suit from the Ace.
+
+     Goal: move all cards to the foundations.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man lolcat(6)
+
+### NAME
+
+     lolcat - rainbow coloring effect for text console display
+
+### SYNOPSIS
+
+     lolcat [options] [files] ...
+
+### DESCRIPTION
+
+     This manual page documents briefly the lolcat command.
+
+     lolcat  is  a  program that concatenates files, or standard input, to standard output
+     (like the generic cat), and adds rainbow coloring to it.
+
+### OPTIONS
+
+     -p X, --spread=X
+            Inclination of the rainbow stripes
+            (character widths per line hight; high values (>1000)  give  almost  horizonal
+            stripes, low values (0.1) almost vertical ones; default: 3.0).
+
+     -F X, --freq=X
+            Frequency of the rainbow effect.
+            (low values around 0.0001 give almost monochromous screens; default: 0.1).
+
+     -S X, --seed=X
+            Initial value for the random number generator; 0 means automatic.
+            (default: 0).
+
+     -a, --animate
+            Fade every line through an animation before printing the next one.
+
+     -d X, --duration=X
+            Duration of the animation.
+            (number of steps before showing next line; default: 12)
+
+     -s X, --speed=X
+            Speed of the animation.
+            (frame rate, ie. number of steps per second; default: 20)
+
+     -i, --invert
+            Inverts the background and foreground colors.
+
+     -t, --truecolor
+            Enables 24-bit truecolor mode.
+
+     -f, --force
+            Force color even when stdout is not a tty.
+
+     -v, --version
+            Shows lolcat version.
+
+     -h, --help
+            Shows options summary.
+
+### EXAMPLES
+
+     Typical combinations of lolcat include other programs that generate text:
+     Large colorful words can be written like this:
+
+            echo "KTHXBAI" | toilet | lolcat
+
+     Cows are popular, come in all colors, and tell random epigrams:
+
+            fortune | cowsay | lolcat -a
+
+### SEE ALSO
+
+     cat(1), toilet(1), fortune(6), cowsay(6)
+
+### AUTHOR
+
+     lolcat was written by Moe <moe@busyloop.net>.
+
+     This  manual  page was originally written by chrysn <chrysn@fsfe.org>, for the Debian
+     project.
+     Very quickly revamped by Mathieu Aubin <mathieu@zeroserieux.com> to include  as  part
+     of official code repository.
+
+# CHAPTER: man love-11.5(6)
+
+### NAME
+
+     love —— 2D game development framework
+
+### SYNOPSIS
+
+     love [--fused] game.love
+
+     love --version
+
+### DESCRIPTION
+
+     LÃVE  was created to be a user-friendly engine in which simple (or complicated) games
+     could be made without having extensive knowledge of system or graphics functions  and
+     without  having to dedicate time towards developing the same engine features time and
+     time again.
+
+     Developed with cross-platform implementation in mind, it  utilizes  the  latest  open
+     source  libraries to deliver a similar game experience, independent of operating sys‐
+     tem.  By relying on the Lua scripting language for game-specific programming, it  al‐
+     lows  even  the novice game creator to quickly and efficiently develop an idea into a
+     fully working game.
+
+### SEE ALSO
+
+     You can find more information at http://love2d.org/
+
+# CHAPTER: man love(6)
+
+### NAME
+
+     love —— 2D game development framework
+
+### SYNOPSIS
+
+     love [--fused] game.love
+
+     love --version
+
+### DESCRIPTION
+
+     LÃVE  was created to be a user-friendly engine in which simple (or complicated) games
+     could be made without having extensive knowledge of system or graphics functions  and
+     without  having to dedicate time towards developing the same engine features time and
+     time again.
+
+     Developed with cross-platform implementation in mind, it  utilizes  the  latest  open
+     source  libraries to deliver a similar game experience, independent of operating sys‐
+     tem.  By relying on the Lua scripting language for game-specific programming, it  al‐
+     lows  even  the novice game creator to quickly and efficiently develop an idea into a
+     fully working game.
+
+### SEE ALSO
+
+     You can find more information at http://love2d.org/
+
+# CHAPTER: man luanti(6)
+
+### NAME
+
+     luanti, luantiserver - voxel game engine
+
+### SYNOPSIS
+
+     luanti [--server SERVER OPTIONS | CLIENT OPTIONS] [COMMON OPTIONS]
+
+     luantiserver [SERVER OPTIONS] [COMMON OPTIONS]
+
+### DESCRIPTION
+
+     Luanti  (formerly  Minetest)  is  a voxel game engine with easy modding and game cre‐
+     ation.
+
+### COMMON OPTIONS
+
+     --help
+            Print allowed options and exit
+
+     --version
+            Print version information and exit
+
+     --config <value>
+            Load configuration from specified file
+
+     --logfile <value>
+            Set logfile path ('' for no logging)
+
+     --info
+            Print more information to console
+
+     --verbose
+            Print even more information to console
+
+     --trace
+            Print enormous amounts of information to console
+
+     --quiet
+            Print only errors to console
+
+     --color always | never | auto
+            Coloured logs, default: 'auto'
+
+     --log-timestamp wall | relative | none
+            Timestamped logs, default: 'wall'
+
+     --gameid <value> | list
+            Set gameid or list available ones
+
+     --worldname <value>
+            Set world path by name
+
+     --world <value>
+            Set world path
+
+     --worldlist path | name | both
+            Get list of worlds ('path' lists paths, 'name' lists names, 'both' lists both)
+
+     --map-dir <value>
+            Same as --world (deprecated)
+
+     --port <value>
+            Set network port (UDP) to use
+
+     --run-unittests
+            Run unit tests and exit
+
+     --run-benchmarks
+            Run benchmarks and exit
+
+### CLIENT OPTIONS
+
+     --address <value>
+            Address to connect to ('' = local game)
+
+     --go   Skip main menu, go directly in-game
+
+     --name <value>
+            Set player name
+
+     --password <value>
+            Set password
+
+     --password-file <value>
+            Set password from contents of file
+
+     --random-input
+            Enable random user input (for testing)
+
+### SERVER OPTIONS
+
+     --migrate <value>
+            Migrate from current map backend  to  another.  See  supported  backends  with
+            --help.
+
+     --migrate-auth <value>
+            Migrate  from  current  auth  backend  to another. See supported backends with
+            --help.
+
+     --migrate-players <value>
+            Migrate from current players backend to another. See supported  backends  with
+            --help.
+
+     --migrate-mod-storage <value>
+            Migrate  from  current  mod storage backend to another. See supported backends
+            with --help.
+
+     --terminal
+            Display an interactive terminal over ncurses during execution.
+
+### ENVIRONMENT VARIABLES
+
+     MINETEST_GAME_PATH
+            Colon delimited list of directories to search for games
+
+     MINETEST_MOD_PATH
+            Colon delimited list of directories to search for mods
+
+     MINETEST_USER_PATH
+            Path to Luanti user data directory (only on RUN_IN_PLACE=0 build)
+
+     LOG_TIMESTAMP
+            Equivalent to --log-timestamp
+
+### BUGS
+
+     Please report all bugs at https://github.com/luanti-org/luanti/issues.
+
+### AUTHORS
+
+     Perttu Ahola <celeron55@gmail.com> and contributors.
+
+     This man page was originally written by Juhani Numminen <juhaninumminen0@gmail.com>.
+
+### WWW
+
+     http://www.luanti.org/
+
+# CHAPTER: man moon-buggy(6)
+
+### NAME
+
+     moon-buggy - drive some car across the moon
+
+### SYNOPSIS
+
+     moon-buggy [-hnsV] [--help] [--no-title] [--show-scores] [--version]
+
+### DESCRIPTION
+
+     Moon-buggy  is  a  simple  character  graphics game, where you drive some kind of car
+     across the moon´s surface.  Unfortunately there are dangerous craters there.   Fortu‐
+     nately your car can jump over them!
+
+### OPTIONS
+
+     The program understands the following command line options.
+
+     -h, --help
+            shows a short usage message.
+
+     -m, --mesg
+            disable  write access to your terminal by other users, so your boss can´t dis‐
+            turb your game play with the help of "write" or "finger".
+
+     -n, --no-title
+            skips the title screen.
+
+     -s, --show-scores
+            shows the current highscore list and exits.
+
+     -V, --version
+            prints the program´s version to standard output and exits.
+
+### KEYS
+
+     The moon-buggy is controlled by a couple of keys, which are described near the bottom
+     of the screen.  Most important are the following keys.
+
+     SPC, j makes your car jump.  The length of a jump is fixed and you can only  start  a
+            new jump, while the wheels have contact to the ground.
+
+     a, l   fires  the  mining laser.  The laser is used to remove stones, which may block
+            your way.
+
+     q      quits the game prematurely.  But you still keep your score and may  enter  the
+            highscore list.
+
+### FILES
+
+     The following files on your system are related to moon-buggy.
+
+     /usr/games/moon-buggy
+            the moon-buggy executable.
+
+     /var/games/moon-buggy/mbscore
+            the global score file
+
+     $HOME/.mbscore
+            the  local score file.  This is used, if moon-buggy has no write access to the
+            global score file.
+
+### SEE ALSO
+
+     Moon-buggy Usage and Maintenance by Jochen Voss.
+
+### COPYING
+
+     Copyright © 2004  Jochen Voss
+
+     Moon-buggy is free software.  Read the file COPYING of the source  code  distribution
+     for details or press ´c´ at moon-buggy´s title screen.
+
+### AUTHOR
+
+     The program moon-buggy was implemented by Jochen Voss (voss@seehuhn.de).
+
+# CHAPTER: man neverball(6)
+
+### NAME
+
+     neverball - 3D floor-tilting game
+
+### SYNOPSIS
+
+     neverball [options]
+
+### DESCRIPTION
+
+     In  the  grand  tradition  of Marble Madness and Super Monkey Ball, Neverball has you
+     guide a rolling ball through dangerous territory. Balance on narrow bridges, navigate
+     mazes, ride moving platforms, and dodge pushers and shovers to get to the goal.  Race
+     against the clock to collect coins to earn extra balls.
+
+### OPTIONS
+
+     The following command-line options are available:
+
+     -d, --data DIR
+            Run the game with a different data directory
+
+     -r, --replay FILE
+            Play the specified replay.
+
+     -v, --version
+            Show version number.
+
+     -h, --help
+            Show a summary of command-line options.
+
+### CONTROLS
+
+     Escape
+            Pause and resume / Exit
+
+     F1     Chase view
+
+     F2     Lazy view
+
+     F2     Manual view
+
+     F6     Hide HUD
+
+     F9     Toggle frame counter
+
+     F10    Take screenshot
+
+     Arrow Keys | Mouse | Joystick
+            Floor tilting
+
+     S | Left mouse click
+            Rotate the view left
+
+     D | Right mouse click
+            Rotate the view right
+
+     R      Restart current level
+
+     Shift  Faster view rotation
+
+### ENVIRONMENT
+
+     HOME   Specify  the  path  to  the  directory  containing the configuration directory
+            (~/.neverball).
+
+     NEVERBALL_DATA
+            Used to determine the path to Neverball data files.
+
+### SEE ALSO
+
+     Homepage: <http://icculus.org/neverball/>.
+
+### AUTHOR
+
+     This manual  page  was  written  by  Tamas  SZERB  <toma@rulez.org>  and  Jorda  Polo
+     <jorda@ettin.org>.
+
+     Permission is granted to copy, distribute and/or modify this document under the terms
+     of  the  GNU  General Public License, Version 2 or any later version published by the
+     Free Software Foundation. On Debian systems, the complete text  of  the  GNU  General
+     Public License can be found in /usr/share/common-licenses/GPL.
+
+# CHAPTER: man nudoku(6)
+
+### NAME
+
+     nudoku - ncurses based sudoku game
+
+### SYNOPSIS
+
+     nudoku [OPTIONS]
+
+### DESCRIPTION
+
+     nudoku  is  a ncurses based sudoku game. Perfect to relax a little or just waste some
+     time when you are on the console.
+
+Keybindings
+     For navigation use vi-keybindings (hjkl) or arrow keys.  Pressing a number  will  put
+     it in a field. Pressing delete, backspace or x will delete it.
+
+     Some keys need to be typed uppercase to prevent pressing them accidentally.
+
+     c  Gives  feedback whether your solution is right. If you think you finished your su‐
+     doku press this key to make sure it is. You can also use  this  during  the  game  to
+     check if you have made any mistakes.
+
+     H  The computer will fill in one number for you. If you are pretty close to finishing
+     he might not want to help you.  And if you did something wrong so far,  he  will  not
+     say anything.
+
+     m  Toggle  marks. If enabled, the number in the currently selected cell will be high‐
+     lighted in all other cells they occur in.  Only works when colors are enabled.
+
+     N Create a new puzzle.
+
+     Q Quit nudoku.
+
+     r Redraw screen. In case you resized your terminal this will come handy.
+
+     S Let the computer solve the puzzle.
+
+### OPTIONS
+
+     -h Print help.
+
+     -v Display version information.
+
+     -c Do not use colors. Black and white mode. Some terminals don't support colors,  use
+     this option in this case.
+
+     -d Choose difficulty.  Available options are: easy, normal, hard
+
+     -s  User provided stream.  The user can provide a sudoku himself. Nudoku won't gener‐
+     ate it in this case. Notation is in stream format, meaning everthing in one line. Use
+     dots      (.)      for       empy       fields.        Example:       nudoku       -s
+     4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......
+
+     -p Output PDF.  Prints a sudoku into a PDF file. File name needs to follow.  This can
+     be  combined  with -n to define how many sudokus the PDF should contain.  Example: -p
+     riddle.pdf
+
+     -n Number of sudokuks to put in PDF.  This can only be used with -p Example: -p  rid‐
+     dle.pdf -n 8
+
+     -i Output PNG image.  Puts a single sudoku into an PNG image file. File name needs to
+     follow.  Example: -i sudoku.png
+
+### BUGS
+
+     No known bugs.
+
+### AUTHOR
+
+     Michael Vetter (jubalh@iodoru.org)
+
+# CHAPTER: man oneko(6)
+
+NAME oneko - Creates a cute cat chasing around your mouse cursor.
+
+### SYNOPSIS
+
+     oneko  [-help]  [-tora]  [-dog]  [-sakura]  [-tomoyo]  [-time n] [-speed n] [-idle n]
+     [-name  name]  [-towindow]  [-toname  name]  [-tofocus]  [-position  geometry]  [-rv]
+     [-noshape] [-fg] [-bg]
+
+### DESCRIPTION
+
+     oneko  changes your mouse cursor into mouse and creates a little cute cat and the cat
+     start chasing around your mouse cursor.  If the  cat  catchup  the  ``mouse'',  start
+     sleeping.
+
+   Options
+     -help  Prints help message on usage.
+
+     -tora  Make cat into "tora-neko", a cat wite tiger-like stripe.
+
+     -dog   Runs a dog instead of a cat.
+
+     -sakura
+            Runs Sakura Kinomoto instead of a cat.
+
+     -tomoyo
+            Runs Tomoyo Daidouji instead of a cat.
+
+     -time interval
+            Sets  interval  timer  which  determine  intervals for cat animation.  Default
+            value is 125000 and unit is micro-second.  Smaller value makes cat run faster.
+
+     -speed distance
+            Specify the distance where cat jumps at one move in dot  resolution.   Default
+            is 16.
+
+     -idle speed
+            Specify  the  threshold  of the speed which ``mouse'' running away to wake cat
+            up.
+
+     -name name
+            Specify the window name of cat.
+
+     -towindow
+            When oneko starts with this option, you must select a window by cursor.   Then
+            cat  appears  and  starts chasing the window instead of mouse.  You can select
+            another running oneko as the target window.  If root window is  selected,  cat
+            chases  mouse  as  usually.   When  the  target window is not in sight and not
+            closed, cat chases mouse as usually.  If the target  window  is  closed,  this
+            program exit.
+
+     -toname name
+            Specify  the window name of target to make cat chase it instead of mouse.  You
+            can specify another running oneko as the target window.  When the target  win‐
+            dow  is not in sight and not closed, cat chases mouse as usually.  If the tar‐
+            get window is closed, this program exit.
+
+     -tofocus
+            Makes cat run to and on top of focus window.  When  focus  window  is  not  in
+            sight, cat chases mouse as usually.
+
+     -position geometry
+            Specify  X and Y offsets in pixels to adjust position of cat relative to mouse
+            pointer.
+
+     -rv    Reverse background color and foreground color.
+
+     -noshape
+            Don't use SHAPE extension.
+
+     -fg color
+            Foreground color.
+
+     -bg color
+            Background color.
+
+     -cursor cursornumber
+            Specify a cursos number to set when quitting. For example, 132 is the  default
+            root cursor.
+
+   Resources
+     Application name is "neko"(or "tora") and class name is "Oneko".
+
+     tora   Set ``True'' if you want "tora-neko".
+
+     time   Sets interval timer in micro-second.
+
+     speed  Sets distance to jump in pixel.
+
+     idle   Sets speed threshold to wake cat up when ``mouse'' running away.
+
+     noshape
+            Set ``True'' if you don't want to use SHAPE extension.
+
+     reverse
+            Set ``True'' if you want to switch foreground and background color.
+
+     foreground
+            Foreground color.
+
+     background
+            Background color.
+
+Notes
+     While  this program uses XGetDefault, be sure to use "neko.resouce" form.  If you run
+     this program as "tora", by hard of soft link, the -tora option is enabled by default.
+
+     BSD Daemon Copyright 1988 by Marshall Kirk McKusick. All Rights Reserved.
+
+     Sakura Kinomoto and Tomoyo Daidouji are  characters  in  a  comic  strip  "CARDCAPTOR
+     SAKURA"  (CLAMP,  Kodansha),  with  the sanction indicated in CLAMP SCHOOL WEB CAMPUS
+     (http://www.clamp.f-2.co.jp/).
+
+### AUTHOR
+
+     Original xneko is written by Masayuki Koba and modified to oneko by Tatsuya Kato, and
+     modified furthermore by John Lerchey, Eric Anderson, Toshihiro  Kanda  and  Kiichiroh
+     Mukose.
+
+### MAINTAINER
+
+     Send questions or problems to mukose@hbar.mp.es.osaka-u.ac.jp
+
+# CHAPTER: man opencity(6)
+
+### NAME
+
+     opencity —— a 3D city simulator game
+
+### SYNOPSIS
+
+     opencity  [-fs  | --full-screen] [-glv | --gl-version] [-dd | --data-dir newDataPath]
+     [-cd  |  --conf-dir  newConfigPath]  [-na   |   --no-audio]   [--generator-height-map
+     heightMapPicture | (--generator-seed seed [--generator-map MAP-TYPE] [--generator-wa‐
+     ter   WATER-TYPE]  [--generator-map-shape  MAP-SHAPE-TYPE]  [--generator-tree-density
+     TREE-DENSITY-TYPE])]
+
+### DESCRIPTION
+
+     This manual page documents opencity command.
+
+### OPTIONS
+
+               -fs | --fullscreen
+               Enable fullscreen mode
+
+               -glv | --gl-version
+               Show the information of the current available OpenGL implementation on your
+               machine then quit
+
+               -dd | --data-dir newDataPath
+               Specify  to  new  path  to  OpenCity's  data.   For   example:   --data-dir
+               /home/foo/bar/share/opencity/
+
+               -cd | --conf-dir newConfigPath
+               Specify  to  new  path to OpenCity's configuration. For example: --conf-dir
+               /home/foo/bar/etc/opencity/
+
+               -na | --no-audio
+               Disable the audio system
+
+               --generator-height-map heightMapPicture
+               Load a gray-level picture as height map (PNG).  The  water  level  is  gray
+               level  128,  each map level is one gray level. That's why the whole picture
+               seems to be in a medium gray, because there's only a minor  difference  be‐
+               tween the pixels. You can draw yourself the height-map or generate from any
+               map sources. The interesting data for this work are the DEM satellite data.
+               The map generator in OpenCity will crop the picture if it's too big.
+
+               --generator-seed seed
+               The seed is the random integer seed used by the map generator
+
+               --generator-map MAP-TYPE
+               MAP-TYPE: 0=plain (default), 1=hill, 2=mountain
+
+               --generator-water WATER-TYPE
+               WATER-TYPE: 0=dry, 1=lake (default), 2=coast
+
+               --generator-map-shape MAP-SHAPE-TYPE
+               MAP-SHAPE-TYPE: 0=none (default), 1=island, 2=volcano, 3=crater
+
+               --generator-tree-density TREE-DENSITY-TYPE
+               TREE-DENSITY-TYPE: 0=sparse (default), 1=normal, 2=dense
+
+### KEYBOARD CONTROL
+
+     Hotkey:
+             n: "Blank" tool
+             r: Zone Residential tool
+             c: Zone Commercial tool
+             i: Zone Industrial tool
+             p: Lay Paths tool
+             l: Lay electric Lines tool
+             x: Destroy tool
+             q: Query tool
+             e: Build a coal power plant
+             ctrl: cancel the zoning tool action
+
+             u / d: raise / lower cells tool
+
+     Navigation:
+             up / down / left / right: move the map
+             pageup / pagedown: rotate the map
+             insert / delete: zoom in/out
+             alt: multiply the effects of the buttons above by 10
+
+             h: as Home
+             escape: toggle the main menu
+
+     Option:
+             b: Toggle building display on/off
+             g: Toggle grid display on/off
+             k: Toggle the main status bar display on/off
+             f: Toggle wire frame mode display on/off
+             o: Toggle perspective/orthogonal projection
+             t: Toggle terrain display on/off
+             w: Toggle water display on/off
+
+     Sound & music:
+             z / b: play previous / next music
+             m: music on / off
+             s: sound on / off
+
+     Experimental:
+             F2: Save
+             F6: Load
+
+### AUTHORS
+
+     This  manual  page was written by OpenCity team. It is distributed under same license
+     as OpenCity application. See the AUTHORS file for the full list  of  other  contribu‐
+     tors.
+
+# CHAPTER: man showfigfonts(6)
+
+### NAME
+
+     showfigfonts - prints a list of available figlet fonts
+
+### SYNOPSIS
+
+     showfigfonts [ -d directory ] [ word ]
+
+### DESCRIPTION
+
+     Prints a list of available figlet fonts, along with a sample of each font.  If direc‐
+     tory  is given, lists fonts in that directory; otherwise uses the default font direc‐
+     tory.  If word is given, prints that word in each font;  otherwise  prints  the  font
+     name.
+
+### EXAMPLES
+
+     To use showfigfonts with its default settings, simply type
+
+            example% showfigfonts
+
+     To print all the fonts in /usr/share/fonts/figlet
+
+            example% showfigfonts -d /usr/share/fonts/figlet
+
+     To print the word foo using all available fonts
+
+            example% showfigfonts foo
+
+### AUTHORS
+
+     showfigfonts was written by Glenn Chappell <ggc@uiuc.edu>
+
+     This manual page was written by Jonathon Abbott for the Debian Project.
+
+### SEE ALSO
+
+     figlet(6), chkfont(6), figlist(6)
+
+# CHAPTER: man sl(6)
+
+### NAME
+
+     sl  -  display animations aimed to correct users who accidentally enter sl instead of
+     ls.
+
+### SYNOPSIS
+
+     sl [ -alFe ]
+
+### DESCRIPTION
+
+     sl Displays animations aimed to correct users who accidentally enter  sl  instead  of
+     ls.  SL stands for Steam Locomotive.
+
+### OPTIONS
+
+     -a     An accident seems to happen. You'll feel pity for people who cry for help.
+
+     -l     shows little one.
+
+     -F     It flies.
+
+     -e     Allow interrupt by Ctrl+C.
+
+### SEE ALSO
+
+     ls(1)
+
+### BUGS
+
+     It rarely shows contents of current directory.
+
+### AUTHOR
+
+     sl was written by Toyoda Masashi <toyoda@is.titech.ac.jp>. This manual page was writ‐
+     ten by Brian Ristuccia <brianr@debian.org> and Kenshi Muto <kmuto@debian.org> for the
+     Debian  GNU/Linux  system  but may be used by others under the same license as sl it‐
+     self.
+
+# CHAPTER: man steam(6)
+
+### NAME
+
+     steam - Valve's Steam digital software delivery system
+
+### SYNOPSIS
+
+     steam [OPTIONS] [URL]
+
+### DESCRIPTION
+
+     Steam  is  a  software content delivery system developed by Valve Software.  There is
+     some free software available, but for the most part the  content  delivered  is  non-
+     free.
+
+     Debian provides a wrapper script /usr/games/steam which will download and install the
+     proprietary Steam interface on-demand.
+
+### OPTIONS
+
+     All  options  provided  to  the  steam  script are forwarded to the proprietary Steam
+     client.
+
+     The options that are available change frequently, and unrecognised options  are  usu‐
+     ally      ignored.      An      incomplete      list      is      available      from
+     https://developer.valvesoftware.com/wiki/Command_Line_Options#Steam.
+
+     Steam also accepts URLs with the steam: or steamlink: URL schemes. Some of the avail‐
+     able              actions               are               documented               in
+     https://developer.valvesoftware.com/wiki/Steam_browser_protocol.
+
+### AUTHOR
+
+     Steam is maintained by Valve, and is proprietary software.
+
+     This  manual  page  was  written by Simon McVittie for the Debian project (and may be
+     used by others) as a replacement for the non-free man page provided by Valve.
+
+# CHAPTER: man supertuxkart(6)
+
+### NAME
+
+     supertuxkart —— a fun racing game with go-karts
+
+### SYNOPSIS
+
+     supertuxkart [options] [<args>]
+
+### OPTIONS
+
+     This program accepts some optional parameters.
+
+     -N, --no-start-screen
+         Immediately start race without showing a menu.
+
+     -R, --race-now
+         Same as -N but also skip the ready-set-go phase and the music.
+
+     -t, --track=NAME
+         Start track NAME.
+
+     --gp=NAME
+         Start the specified Grand Prix.
+
+     --add-gp-dir=DIR
+         Load  Grand  Prix  files  in DIR. Setting will be saved in config.xml under addi‐
+         tional_gp_directory. Use "--add-gp-dir=" to unset.
+
+     --stk-config=FILE
+         use ./data/FILE instead of ./data/stk_config.xml
+
+     -k, --numkarts=NUM
+         Set number of karts on the race track.
+
+     --kart=NAME
+         Use kart NAME.
+
+     --ai=a,b,...
+         Use the karts a, b, ... for the AI, and additional player kart.
+
+     --aiNP=a,b,...
+         Use the karts a,b, ... for the AI, no additional player kart.
+
+     --laps=N
+         Define number of laps to N.
+
+     --mode=N
+         N=0 Normal, N=1 Time trial, N=2 Battle, N=3 Soccer, N=4  Follow  The  Leader.  In
+         configure  server  use "--battle-mode=N" for battle server and "--soccer-timed" /
+         goals for soccer server to control verbosely, see below.
+
+     --difficulty=N
+         N=0 Beginner, N=1 Intermediate, N=2 Expert, N=3 SuperTux.
+
+     --battle-mode=N
+         Specify battle mode in network, 0 is Free-For-All and 1 is Capture The Flag.
+
+     --soccer-timed
+         Use time limit mode in network soccer game.
+
+     --soccer-goals
+         Use goals limit mode in network soccer game.
+
+     --reverse
+         Play track in reverse (if allowed)
+
+     -f, --fullscreen
+         Use fullscreen display.
+
+     -w, --windowed
+         Use windowed display (default).
+
+     -s, --screensize=WxH
+         Set the display size (e.g. 320x200).
+
+     -v, --version
+         Print version of SuperTuxKart.
+
+     --trackdir=DIR
+         A directory from which additional tracks are loaded.
+
+     --seed=N
+         Seed for random number generation to provide reproducible behavior.
+
+     --profile-laps=N
+         Enable automatic driven profile mode for N laps.
+
+     --profile-time=N
+         Enable automatic driven profile mode for N seconds.
+
+     --unlock-all
+         Permanently unlock all karts and tracks for testing.
+
+     --no-unlock-all
+         Disable unlock-all (i.e. base unlocking on player achievement).
+
+     --no-graphics
+         Do not display the actual race.
+
+     --sp-shader-debug
+         Enables debug in sp shader, it will print all unavailable uniforms.
+
+     --demo-mode=t
+         Enables demo mode after t seconds of idle time in main menu.
+
+     --demo-tracks=t1,t2
+         List of tracks to be used in demo mode. No spaces are allowed in the track names.
+
+     --demo-laps=N
+         Number of laps to use in a demo.
+
+     --demo-karts=N
+         Number of karts to use in a demo.
+
+     --server-config=file
+         Specify the server_config.xml for server hosting,  it  will  create  one  if  not
+         found.
+
+     --network-console
+         Enable network console.
+
+     --wan-server=NAME
+         Start a Wan server (not a playing client).
+
+     --public-server
+         Allow direct connection to the server (without STK server)
+
+     --lan-server=NAME
+         Start a LAN server (not a playing client).
+
+     --server-password=PASS
+         Sets a password for a server (both client and server).
+
+     --connect-now=IP
+         Connect  to  a  server  with IP known now (in format x.x.x.x:xxx(port)), the port
+         should be its public port.
+
+     --connect-now6=IP
+         Connect to a server with IPv6 known now (in format  [x:x:x:x:x:x:x:x]:xxx(port)),
+         the port should be its public port.
+
+     --server-id=N
+         Server id in STK addons for "--connect-now".
+
+     --network-ai=N
+         Numbers  of  AI  for connecting to linear race server, used together with "--con‐
+         nect-now".
+
+     --login=S
+         Automatically log in (set the login).
+
+     --password=S
+         Automatically log in (set the password).
+
+     --init-user
+         Save the above login and password (if set) in config.
+
+     --disable-polling
+         Don't poll for logged in user.
+
+     --port=N
+         Port number to use.
+
+     --auto-connect
+         Automatically connect to first server and start race.
+
+     --max-players=N
+         Maximum number of clients (server only).
+
+     --min-players=N
+         Minimum number of clients for ownerless server (server only).
+
+     --motd
+         Message showing in all lobby of clients, can specify a .txt file.
+
+     --auto-end
+         Automatically end network game after 1st player finished for some time (currently
+         his finished time * 0.25 + 15.0).
+
+     --no-auto-end
+         Don't automatically end network game after 1st player finished.
+
+     --team-choosing
+         Enable choosing team in lobby for team game.
+
+     --no-team-choosing
+         Disable choosing team in lobby for team game.
+
+     --network-gp=N
+         Specify number of tracks used in network grand prix.
+
+     --graphical-server
+         Enable graphical view in server.
+
+     --no-validation
+         Allow non validated and unencrypted connection in wan.
+
+     --ranked
+         Server will submit ranking to STK addons server.
+
+     --no-ranked
+         Server will not submit ranking to STK addons server. You require  permission  for
+         that.
+
+     --owner-less
+         Race will autostart and no one can kick players in server.
+
+     --no-owner-less
+         Race will not autostart and server owner can kick players in server.
+
+     --firewalled-server
+         Turn on all stun related code in server.
+
+     --no-firewalled-server
+         Turn off all stun related code in server.
+
+     --connection-debug
+         Print verbose info for sending or receiving packets.
+
+     --no-console-log
+         Does not write messages in the console but to stdout.log.
+
+     -h, --help
+         Show this help.
+
+     --log=N
+         Set the verbosity to a value between 0 (Debug) and 5 (Only Fatal messages).
+
+     --logbuffer=N
+         Buffers up to N lines log lines before writing.
+
+     --root=DIR
+         Path to add to the list of STK root directories. You can specify more than one by
+         separating them with colons (:).
+
+     --cutscene=NAME
+         Launch  the  specified  track  as  a cutscene. This is for internal debugging use
+         only.
+
+     --enable-glow
+         Enable glow effect.
+
+     --disable-glow
+         Disable glow effect.
+
+     --enable-bloom
+         Enable bloom effect.
+
+     --disable-bloom
+         Disable bloom effect.
+
+     --enable-light-shaft
+         Enable light shafts (God rays).
+
+     --disable-light-shaft
+         Disable light shafts (God rays).
+
+     --enable-dof
+         Enable depth of field.
+
+     --disable-dof
+         Disable depth of field.
+
+     --enable-particles
+         Enable particles.
+
+     --disable-particles
+         Disable particles.
+
+     --enable-animated-characters
+         Enable animated characters.
+
+     --disable-animated-characters
+         Disable animated characters.
+
+     --enable-motion-blur
+         Enable motion blur.
+
+     --disable-motion-blur
+         Disable motion blur.
+
+     --enable-mlaa
+         Enable anti-aliasing.
+
+     --disable-mlaa
+         Disable anti-aliasing.
+
+     --enable-texture-compression
+         Enable texture compression.
+
+     --disable-texture-compression
+         Disable texture compression.
+
+     --enable-ssao
+         Enable screen space ambient occlusion.
+
+     --disable-ssao
+         Disable screen space ambient occlusion.
+
+     --enable-ibl
+         Enable image based lighting.
+
+     --disable-ibl
+         Disable image based lighting.
+
+     --enable-hd-textures
+         Enable high definition textures.
+
+     --disable-hd-textures
+         Disable high definition textures.
+
+     --enable-dynamic-lights
+         Enable advanced pipeline.
+
+     --disable-dynamic-lights
+         Disable advanced pipeline.
+
+     --anisotropic=N
+         Anisotropic filtering quality (0 to disable). Takes precedence over trilinear  or
+         bilinear texture filtering.
+
+     --shadows=N
+         Set resolution of shadows (0 to disable).
+
+     --apitrace
+         This  will  disable buffer storage and writing gpu query strings to opengl, which
+         can be seen later in apitrace.
+
+### AUTHOR
+
+     This manual page was based an earlier one written by GonÃ©ri Le Bouder  <goneri@rule‐
+     zlan.org> (2006, GPLv2) for the GNU/Linux Debian Operating System, in addition to the
+     official   SuperTuxKart  command-line  options,  Steve  Baker  <sjbaker1@airmail.net>
+     (2004-2015, GPL v3), Joerg Henrichs, Marianne Gagnon (2011-2015, GPLv3). Edited by J.
+     T-Katiska (2019, GPLv3).
+
+     This program is free software; you can redistribute it and/or  modify  it  under  the
+     terms of the GNU General Public License as published by the Free Software Foundation;
+     either version 3 of the License, or (at your option) any later version.
+
+     On  Debian  systems, the complete text of the GNU General Public License can be found
+     in /usr/share/common-licenses/GPL.
+
+### NOTES
+
+     1.  STK homepage: https://supertuxkart.net/Main_Page
+
+     2.  The SuperTuxKart official FAQ: https://supertuxkart.net/FAQ
+
+     3.  Previous    manual    page:     https://web.archive.org/save/https://manpages.de‐
+         bian.org/buster/supertuxkart/supertuxkart.6.en.html
+
+# CHAPTER: man vitetris(6)
+
+### NAME
+
+     vitetris - The game of tetris
+
+### DESCRIPTION
+
+     vitetris 0.59.1 (20201226)
+
+     -nomenu
+            Skip menus.
+
+     -hiscores
+            Print highscore list and exit.
+
+     -hiscores FILE
+            Read and add highscore entries from FILE.
+
+     -js0 DEVNAME
+            Joystick device name (e.g. /dev/js0).
+
+     -js1 DEVNAME
+            Second joystick device name.
+
+     -listen PORT
+            Listen for connections on port PORT.
+
+     -connect HOSTNAME:PORT
+
+     Connect to HOSTNAME on PORT.
+            HOSTNAME may be an IP address.
+
+     -connect PORT
+            Connect to localhost on PORT.
+
+     -name NAME
+            Identify yourself as NAME when connecting to other players.
+
+     -help  Print this help and exit.
+
+     -help game
+            List game options and exit.
+
+     -help term
+            List terminal options and exit.
+
+     -?, -h [ARG]
+            Same as -help ARG (if ARG isn't a number).
+
+     Options may also be given as option=ARG, --option=ARG etc.
+
+     Highscores are saved in ~/.vitetris, and in /var/games/vitetris-hiscores if it exists
+     and is writable.
+
+# CHAPTER: man xmille(6)
+
+### NAME
+
+     xmille - X window mille bourne game
+
+### SYNOPSIS
+
+     xmille [restore-file]
+
+### DESCRIPTION
+
+     Xmille brings up a window for a mille bourne game.  When selecting one of your cards,
+     the  left  button  plays  the card, the right button discards the card and the middle
+     button chooses whichever is appropriate, first trying to play the card, and then dis‐
+     carding it.
+
+     Xmille also has a keyboard interface.  The cards in the hand are numbered from  1  to
+     7; type a number and if the card is playable it is played, otherwise it is discarded.
+     To  force  a  discard, type 'd' before the card number.  Type any other key to draw a
+     card from the pile.  There are more commands.
+
+### AUTHOR
+
+     Keith Packard
+     Dave Lemke
+     Dana Chee
+
+### SEE ALSO
+
+# CHAPTER: man xphoon(6)
+
+### NAME
+
+     xphoon - displays the PHase of the mOON on the root window
+
+### SYNOPSIS
+
+     xphoon [-b] [-t interval [-i]] [-s] [-display name]
+
+### DESCRIPTION
+
+     Xphoon  sets the X root window to a picture of the moon in its current phase, includ‐
+     ing the partial lighting of the dark side by reflected earthlight.
+
+### OPTIONS
+
+     -b     Defeats the earthlight feature, forcing the dark side to be black.
+
+     -t     Have xphoon keep running and update the picture every interval minutes.  (Nor‐
+            mally, xphoon just sets the root picture and exits.)
+
+     -i     Forks a background process and prints the process-id to stdout.  Useful if you
+            want to make menu commands to refresh or kill xphoon.
+
+     -s     Rotate the whole picture 180 degrees, resulting in a moon  picture  as  viewed
+            fom the Southern hemisphere.
+
+     -demo  Demonstrate xphoon by rapidly stepping through moon phases.
+
+### NOTES
+
+     The  original  motivation for this program was that xsetroot was too slow.  Loading a
+     full-screen bitmap took about 15 seconds.  We made a trivial program that  had  full‐
+     moon.bitmap  compiled  in,  and it ran in less than a second.  (And incidentally, the
+     executable was smaller than fullmoon.xbm.)  Then later we  came  up  with  the  phase
+     hacking, the earthlight, and the auto-scaling.
+
+### SEE ALSO
+
+     phoon(1), xsetroot(1)
+
+### AUTHORS
+
+     Copyright (C) 1988, 1991 by Jef Poskanzer and Craig Leres.
+
+     The moon-phase computation is from "moontool.c" by John Walker.
+
+# CHAPTER: man xreversi(6)
+
+### NAME
+
+     kreversi - X window reversi game
+
+### SYNOPSIS
+
+     kreversi
+
+### DESCRIPTION
+
+     Kreversi brings up a window for a game of reversi against the computer.
+
+### AUTHOR
+
+     Keith Packard
+
+# CHAPTER: man xsnow(6)
+
+### NAME
+
+     xsnow - Snow and Santa on your desktop
+
+### SYNOPSIS
+
+     xsnow [OPTION]...
+
+### DESCRIPTION
+
+     Xsnow  shows  an  animation of Santa and snow on your desktop.  Xsnow can also run in
+     one or more windows, see options -xwininfo, -id .  (These options only work satisfac‐
+     torily in an X11 environment.)  Xsnow depends on an X11 environment. This  is  forced
+     by  setting  the  environment  variable  GDK_BACKEND=x11 before initializing the GTK.
+     Hopefully, this will ensure that xsnow also runs in a Wayland  environment  for  some
+     time.
+
+     If xsnow is misbehaving, try to remove the file $HOME/.xsnowrc.
+
+   General options:
+     Below:
+     <n>  denotes  an unsigned decimal (e.g 123) or octal (e.g. 017) or hex (e.g. 0x50009)
+     number.
+     <c> denotes a string like "red" or "#123456".
+     <f> denotes a file name, like "/home/rick/Pictures/background.jpg".
+
+     -h, -help
+            print this text.
+
+     -H, -manpage
+            print man page.
+
+     -v, -version
+            prints version of xsnow.
+
+     -changelog
+            prints ChangeLog.
+
+     -config <f>
+            use <f> as config file, default is '.xsnowrc'.
+            If <f> does not start with '/', <f> is taken relative to your HOME directory.
+            <f> MUST contain the string 'xsnow'. Examples:
+              .myxsnowrc          # will expand to '$HOME/.myxsnowrc'.
+              .config/xsnow       # will expand to '$HOME/.config/xsnow'.
+              /etc/default/xsnow  # will be used as is.
+
+     -selfrep
+            put tar ball on stdout, so you can do:
+            xsnow -selfrep > xsnow.tar.gz
+
+     -display <c>
+            Drop the snowflakes on the given display.  Make sure the display is nearby, so
+            you can hear them enjoy...
+
+     -screen <n>
+            If you have multiple monitors: snow in monitor n.
+            -1: use all monitors (default: -1)
+            Note: for this to work, Xinerama has to be functional.
+
+     -outline <n>
+            1: draw outline around snow window. 0: no outline.
+            Default: 0.
+
+     -vintage
+            Run xsnow in vintage settings.
+
+     -defaults
+            Do not read config file (see FILES).
+
+     -noconfig
+            Do not read or write config file (see FILES).
+
+     -hidemenu
+            Start with hidden interactive menu.
+
+     -nomenu
+            Do not show interactive menu.
+
+     -lang <c>
+            Set language, example: -lang it, see LANGUAGES below. Default: sys.
+
+     -scale <n>
+            Apply scalefactor (default: 100).
+
+     -doublebuffer <n>
+            1: use double buffering; 0: do not use double buffering  (default:  1).   Only
+            effective with '-root' or '-id' or '-xwininfo'.
+
+     -transparency <n>
+            Transparency in % (default: 0)
+
+     -theme <n>
+            1: use xsnow theme for menu; 0: use system theme (default: 1)
+
+     -checkgtk <n>
+            0:  Do not check gtk version before starting the user interface.  1: Check gtk
+            version before starting the user interface.  (default: 1).
+
+     -id <n>, -window-id <n>
+            Snow in window with id (for example from xwininfo).
+
+     --window-id <n>
+            see -id.
+
+     -desktop
+            Act as if window is a desktop.
+
+     -allworkspaces <n>
+            0: use one desktop for snow, 1: use all desktops (default: 1).
+
+     -above
+            Snow above your windows. Default is to snow below your windows.  NOTE: in some
+            environments this results in an un-clickable desktop.
+
+     -xwininfo
+            Use a cursor to point at the window you want the snow to be fallen in.
+
+     -stopafter <n>
+            Stop xsnow after so many seconds.
+
+     -root, --root
+            Force to paint on (virtual) root window.
+            Use this for xscreensaver:
+            Make sure xscreensaver is running, either as a start-up application
+            or from the command line, e.g:
+               nohup xscreensaver &
+            or
+                nohup xscreensaver -no-capture-stderr &
+            Run the program xscreensaver-demo to create the file ~/.xscreensaver
+            In the file ~.xscreensaver add after the line 'programs:' this line:
+                xsnow -root
+            Use the program xscreensaver-demo to select xsnow as screensaver.
+            You probably want to select: Mode: Only One Screen Saver.
+
+     -bg <f>
+            file to be used as background when running under xscreensaver.
+
+     -noisy
+            Write extra info about some mouse clicks, X errors etc, to stdout.
+
+     -cpuload <n>
+            How busy is your system with xsnow: the higher, the more load  on  the  system
+            (default: 100).
+
+   Snow options:
+     -snowflakes <n>
+            The higher, the more snowflakes are generated per second. Default: 100.
+
+     -blowsnow
+            (Default) Animate blow-off snow.
+
+     -noblowsnow
+            Do not animate blowing snow from trees or windows
+
+     -sc <c>
+            Use the given string as color for the flakes (default: #fffafa).
+
+     -sc2 <c>
+            Use the given string as second color for the flakes (default: #87ceff).
+
+     -enablesc2 <n>
+            1: enable usage of second color for the flakes (default: 0).
+
+     -snowspeedfactor <n>
+            Multiply the speed of snow with this number/100 (default: 100).
+
+     -snowsize <n>
+            Set size of (non-vintage) snow flakes (default: 8).
+
+     -snow  (Default) Show snow.
+
+     -nosnow -nosnowflakes
+            Do not show snow.
+
+     -flakecountmax <n>
+            Maximum number of active flakes (default: 300).
+
+     -blowofffactor <n>
+            The higher, the more snow is generated in blow-off scenarios (default: 40).
+
+   Tree options:
+     -treetype <n>[,<n> ...]
+            Choose  tree types: minimum 0, maximum 8 (default: 1,2,3,4,5,6,7,).  Thanks to
+            Carla Vermin for numbers >=3!  Credits: Image by b0red on Pixabay.
+
+     -treetype all
+            (Default) Use all non-vintage available tree types.
+
+     -tc <c>
+            Use the given string as the color for the  vintage  tree  (default:  #7fff00).
+            Works only for treetype 0.
+
+     -notrees
+            Do not display the trees.
+
+     -showtrees
+            (Default) Display the trees.
+
+     -trees <n>
+            Desired number of trees. Default 10.
+
+     -treefill <n>
+            Region in percents of the height of the window where trees grow (default: 30).
+
+     -treescale <n>
+            Scale scenery (default: 100).
+
+     -treeoverlap
+            Allow scenery items to overlap each other (default).
+
+     -notreeoverlap
+            Do not allow scenery items to overlap each other.
+
+     -xmastrees <n>
+            Around Xmas: Show replace n scenery items with a nice Xmas-tree. Default 1.
+            Thanks to Mujhaid Wakeel.
+
+   Santa options:
+     -showsanta
+            (Default) Display Santa running all over the screen.
+
+     -nosanta
+            Do not display Santa running all over the screen.
+
+     -showrudolph
+            (Default) With Rudolph.
+
+     -norudolph
+            No Rudolph.
+
+     -santa <n>
+            The  minimum  size of Santa is 0, the maximum size is 4. Default is 3.  Thanks
+            to Thomas Linder for the (big) Santa 2!  Santa 3 is derived from Santa 2,  and
+            shows  the  required  eight reindeer.  The appearance of Santa 4 may be a sur‐
+            prise, thanks to Carla Vermin for this one.
+
+     -santaspeedfactor <n>
+            The speed Santa should not be excessive if he doesn't want to get  fined.  The
+            appropriate  speed  for  the Santa chosen will be multiplied by santaspeedfac‐
+            tor/100 (default: 100).
+
+     -santascale <n>
+            The scale to be used when drawing Santa (default: 100).
+
+   Celestial options:
+     -wind  (Default) It will get windy now and then.
+
+     -nowind
+            By default it gets windy now and then. If you  prefer  quiet  weather  specify
+            -nowind.
+
+     -whirlfactor <n>
+            This  sets  the  whirl  factor,  i.e. the maximum adjustment of the horizontal
+            speed. The default value is 100.
+
+     -windtimer <n>
+            With -windtimer you can specify how often it gets  windy. It's sort of  a  pe‐
+            riod in seconds, default value is 30.
+
+     -stars <n>
+            The number of stars (default: 40).
+
+     -starsize <n>
+            Relative size of stars, default value is 50.
+
+     -meteors
+            (Default) Show meteors.
+
+     -nometeors
+            Do not show meteors.
+
+     -meteorfrequency
+            Frequency of falling of meteors, 0..100 (default: 40).
+
+     -moon <n>
+            1: show moon, 0: do not show moon (default: 1).
+            Picture of moon thanks to  Pedro Lasta on Unsplash.
+            https://unsplash.com/photos/wCujVcf0JDw
+
+     -moonspeed <n>
+            Speed of moon in pixels/minute (default: 120).
+
+     -moonx <n>
+            Horizontal position of moon (only if speed = 0) (default: 50).
+
+     -moony <n>
+            Vertical position of moon (only if speed = 0) (default: 20).
+
+     -moonsize <n>
+            Relative size of moon (default: 100).
+
+     -mooncolor <n>
+            Color of moon 0: yellow-ish; 1: white-ish (default: 0).
+
+     -halo <n>
+            1: show halo around moon, 0: do not show halo (default: 1).
+
+     -halobrightness <n>
+            Brightness of halo (default: 25).
+
+     -aurora <n>
+            To show (1) or not to show(0) aurora (default: 1).
+              On most desktops aurora works, but not on all. Try!
+
+     -aurorax <n>
+            Place aurora horizontally in percents of screen-width (default: 50).
+
+     -aurorawidth <n>
+            Width of aurora in percentage of screen width (default: 60).
+
+     -aurorabase <n>
+            Height of aurora's base line in percentage of screen height (default: 50).
+
+     -auroraheight <n>
+            Height of aurora (default: 30).
+
+     -auroraspeed <n>
+            Animation speed of aurora (default: 50).
+               10: about real value, 100: timelapse.
+
+     -aurorabrightness <n>
+            Brightness of aurora (default: 15).
+
+   Fallen snow options:
+     -wsnowdepth <n>
+            Maximum thickness of snow on top of windows (default: 30).
+
+     -ssnowdepth <n>
+            Maximum thickness of snow at the bottom of the screen (default: 50).
+
+     -maxontrees <n>
+            Maximum number of flakes on trees. Default 200.
+
+     -keepsnowonwindows
+            (Default) Keep snow on top of the windows.
+
+     -nokeepsnowonwindows
+            Do not keep snow on top of the windows.
+
+     -keepsnowonscreen
+            (Default) Keep snow at the bottom of the screen.
+
+     -nokeepsnowonscreen
+            Do not keep snow at the bottom of the screen.
+
+     -keepsnowontrees
+            (Default) Keep snow on trees.
+
+     -nokeepsnowontrees
+            Do not keep snow on trees.
+
+     -keepsnow
+            (Default) Have snow sticking anywhere.
+
+     -nokeepsnow
+            Do not have snow sticking anywhere.
+
+     -fluffy
+            (Default) Create fluff on fallen snow.
+
+     -nofluffy
+            Do not create fluff on fallen snow.
+
+     -offsetx <n>
+            Correction for window-manager provided x-coordinate of window. Default 4.
+
+     -offsety <n>
+            Correction for window-manager provided  y-coordinate of window. Default 0.
+
+     -offsetw <n>
+            Correction for window-manager provided width of window. Default -8.
+
+     -offsets <n>
+            Correction  for  bottom  coordinate of your screen. A negative value lifts the
+            xsnow screen up. Default 0.
+
+     -ignoretop <n>
+            Do not collect snow on windows closer than <n> pixels from the top.  Sometimes
+            an hidden window is sitting there, but treated as a normal  window  by  xsnow.
+            Default 0.
+
+     -ignorebottom <n>
+            Analog to -ignoretop, but now for the bottom. Default 0.
+
+   Birds options:
+     -anarchy <n>
+            Anarchy factor ( 0..100 default: 50).
+
+     -birdscolor <c>
+            Use the given string as color for the birds (default: #361A07).
+
+     -birdsonly <n>
+            Show only birds ( 0/1 default: 0).
+
+     -birdsspeed <n>
+            Speed of birds ( 0..300 default: 100).
+
+     -disweight <n>
+            Eagerness to keep desired distance ( 0..100 default: 20).
+
+     -focuscentre <n>
+            Eagerness to fly to the focus ( 0..300 default: 100).
+
+     -followneighbours <n>
+            Eagerness to follow neighbours ( 0..100 default: 30).
+
+     -nbirds <n>
+            Number of birds ( 0..400 default: 20).
+
+     -neighbours <n>
+            Number of neighbours to watch ( 0..20 default: 7).
+
+     -prefdistance <n>
+            Preferred distance to neighbours ( 0..100 default: 40).
+
+     -showbirds <n>
+            Show birds ( 0/1 default: 1).
+
+     -showattr <n>
+            Show attraction point ( 0/1 default: 0).
+
+     -attrspace <n>
+            Vertical space to be used by the attraction point (default: 40).
+
+     -followsanta <n>
+            Birds like Santa ( 0/1 default: 0).
+
+     -viewingdistance <n>
+            Viewing distance ( 0..95 default: 40).
+
+     -birdsscale <n>
+            Scalefactor used painting the birds (default: 100).
+
+   LANGUAGES
+     Xsnow comes with some translations to non-english languages.
+     The  translations are done with the aid of translate.google.com (implemented in pack‐
+     age 'trans'), so there will be room for improvement.  Any  suggestions  are  welcome:
+     contact@ratrabbit.nl .
+
+   FILES
+     $HOME/.xsnowrc
+            Settings are read from and written to this file.  See flags -noconfig and -de‐
+            faults how to influence this behaviour.
+                NOTE: the following settings are not read or written:
+                      -above  -defaults  -desktop  -fullscreen -noconfig -id
+                      -nomenu -stopafter -xwininfo -display    -noisy    -checkgtk
+                NOTE: the file also contains the screen locations of a number of buttons,
+                      which can be used for testing purposes.
+
+     $HOME/.xsnowstop
+            Xsnow checks regularly the existence of this file.  If present, xsnow will re‐
+            move the file and stop.
+
+     $HOME/xsnow/pixmaps/tree.xpm
+            If present, xsnow will try this file for displaying the trees. The format must
+            be xpm (X PixMap) format, see https://en.wikipedia.org/wiki/X_PixMap .
+
+     $HOME/xsnow/pixmaps/santa<n>.xpm
+            where  <n>  =  1,2,3,4.  If present, xsnow will try this files (4 of them) for
+            displaying  Santa.  The  format  must  be   xpm   (X   PixMap)   format,   see
+            https://en.wikipedia.org/wiki/X_PixMap .
+                NOTE: To show: activate the first Santa in the menu.
+
+   SIGNALS
+     On receiving the SIGUSR1 signal, xsnow writes the file ~/.xsnowrc.
+
+   EXAMPLES
+         $ xsnow -defaults        # run with defaults.
+         $ xsnow                  # run using values from the config file.
+         $ xsnow -treetype 1,2    # use tree types 1 and 2.
+
+   WINDOW MANAGER ISSUES
+     In general, xsnow works better when using a compositing window manager like xcompmgr,
+     compton  or  picom.   However,  with some window managers (FVWM for example), the xs‐
+     now-window is transparent, but not click-through.  Flags to be tried in this case in‐
+     clude: -root, -doublebuffer, -xwininfo, -id.
+     Here follow some window managers with their issues:
+
+     Tiling window managers
+            Here you need to float windows with class=Xsnow.
+
+     AWESOME
+            Without compositor: no issues.
+            With compositor: no click-through xsnow window, and issues with  multi-monitor
+            setup.
+
+     BSPWM  No issues if you add to your bspwmrc (the bspwm configuration file):
+                bspc rule -a Xsnow state=floating border=off
+
+     CINNAMON
+            No issues.
+
+     DWM    No issues, except the "Below Windows" setting in the "settings" panel.
+
+     ENLIGHTENMENT
+            With one monitor: no issuses.
+            With more montors: probems with showing in 'all monitors'
+
+     FLUXBOX
+            Without compositor: no issues.
+            With compositor: no click-through xsnow window
+
+     FVWM   Without compositor: no issues.
+            With compositor: no click-through xsnow window
+
+     GNOME on Xorg
+            No issues.
+
+     GNOME on Wayland
+            Most windows don't catch snow.
+
+     HERBSTLUFTWM
+            No issues.
+
+     I3     Without compositor: windows don't catch snow, use the next line in "config":
+                for_window [class="Xsnow"] floating enable;border none
+            With compositor: unworkable.
+
+     JVM    No issues.
+
+     LXDE   With compositor: no issues.
+            Without compositor: icons in snow window disappear.
+
+     LXQT   Without compositor: unworkable.  With compositor: no issues.
+
+     MATE   No issues.
+
+     OPENBOX
+            No issues.
+
+     PLASMA (KDE)
+            No issues.
+
+     SPECTRWM
+            Various issues. In any case you need in spectrwm.conf:
+                quirk[Xsnow] = FLOAT
+
+     TWM    Without compositor: no issues.
+            With compositor: no click-through xsnow window and
+            you need to tweak settings->lift snow on windows.
+
+     WINDOW MAKER
+            Without compositor: no issues.  With compositor: no click-through xsnow window
+
+     XFCE   No issues when compositing is on, unworkable when compositing is off.
+            See settings -> Window Manager Tweaks -> Compositor
+
+     XMONAD
+            No issues if you add to your xmonad.hs:
+             import XMonad.Hooks.EwmhDesktops
+             xmonad $ ewmh $ defaultConfig
+             in the ManageHook section:
+                className = ? "Xsnow" --> doFloat
+
+   BUGS
+     - Xsnow needs a complete rewrite: the code is a mess.
+     - The flags are not consistent, caused by trying to be
+         compatible with older versions.
+     - Xsnow stresses the Xserver too much.
+     - Xsnow does run in Wayland, but will not snow on all windows.
+     - Xsnow tries to create a click-through window. This is not successful
+       in for example FVWM/xcompmgr. In that case, xsnow tries to keep
+       the snow window below all others, resulting in a transient effect
+       when you click on the desktop. Sadly, no FVWM menu will appear...
+     - Xsnow tries to adapt its snowing window if the display
+         settings are changed while xsnow is running.
+         This does not function always well.
+     - Xsnow does not play well with 'xcompmgr -a'. In some environments
+         (Raspberry 64 bit) xcompmgr is started with the flag '-a',
+         resulting in a black snow window. Remedy:
+         In a terminal window type:
+           killall xcompmgr
+           nohup xcompmgr -n &
+         and try again.
+     - In XFCE, compositing must be enabled for xsnow.
+         Settings -> Window Manager Tweaks -> Compositor -> Enable display compositing
+     - Depending on the window manager, snowing in 'all monitors' results in snowing
+         in one of the monitors. This happens for example in KDE.
+     - In multi-screen environments, it depends on the display settings
+         if it is snowing on all screens. Experiment!
+     - No snow on windows with 'desktop' or 'Desktop' in the name.
+     - In multi-screen environments, it depends on the window manager
+         if panels remain visible when running on 'all monitors'.
+
+     Please report your comments via:
+        https://ratrabbit.nl/ratrabbit/contact .
+
+### HOMEPAGE
+
+     https://ratrabbit.nl/ratrabbit/xsnow
+
+### COPYRIGHT
+
+     This  is free software; see the source for copying conditions.  There is NO warranty;
+     not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+# CHAPTER: man xsol(6)
+
+### NAME
+
+     xsol - X Solitaire
+
+### SYNOPSIS
+
+     xsol
+
+### DESCRIPTION
+
+     This  manual  page  briefly  documents  xsol , a simple Motif/ Lesstif version of the
+     classic solitaire game.  It was written for the Debian GNU/Linux distribution because
+     the original program does not have a manual page.
+
+### HOW TO PLAY
+
+     Solitaire is a card game. At the start you are presented with seven columns of cards.
+     First has only one card, second one has two, third three and so on (28 in total), but
+     only the first card in every column is shown ('opened'). Also there is the  deck  (24
+     cards at the start), and four empty places for suit stacks.
+
+     Cards  in the deck and in the columns are unsorted, and the object of Solitaire is to
+     use all the cards in the deck to build up the four suit stacks  in  ascending  order,
+     beginning  with  the  aces.  You can accomplish that by dragging and dropping the red
+     onto the black (and black onto the red) cards between the columns,  and  between  the
+     deck  and  the  columns  (but  not the other way around). When you see a whole turned
+     card, click on it to see it ('open' it) and to be able to move it somewhere. Deck  is
+     opened  by  clicking  on it; once you reach the end of the deck, just click once more
+     and you'll reopen it.
+
+     If you reach a point when you can't move any more cards to the stacks, and  rearrang‐
+     ing cards in columns and the deck gets you nowhere, the game is over. Start it again.
+
+### OPTIONS
+
+     You  can  access  all  options within the program, through the 'Game' menu. There you
+     have four options:
+     New game - start a new game,
+     Undo - undo last move,
+     Options - configure these options:
+        Timed game - should we count the seconds?
+        Keep score - should we count the score?
+        Show number of cards in deck - should we show it?
+        Draw one - card from the deck,
+        Draw three - cards from the deck.
+     About - shows information about the author.
+     Exit - quits the game.
+
+### AUTHOR
+
+     xsol was written by Brian Masney <masneyb@newwave.net>,  and  this  manual  page  was
+     written by Josip Rodin <jrodin@jagor.srce.hr>.

@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     wget \
     ca-certificates \
+    groff-base \
+    bsdextrautils \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

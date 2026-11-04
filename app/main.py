@@ -25,10 +25,11 @@ from typing import Any, Dict, List, Optional
 
 import httpx
 from fastapi import FastAPI, HTTPException, Request, Response
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
+from man_renderer import render_man_file_structured
 from seed_books import AI_MODEL_ALTERNATIVES, DEFAULT_REAL_BOOKS, DOWNLOAD_CATALOG
 
 ZIM_DIR = Path(os.environ.get("ZIM_DIR", "/data/zim_files"))
@@ -543,11 +544,13 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "active_ai_model": DEFAULT_MODEL,  # Currently active Ollama model
     "ai_name": "Elena Vancea",
     "ai_avatar": "xp_agent_f",         # xp_agent_f | xp_agent_m | xp_clippy | xp_rover | xp_msn | xp_computer
-    "ai_role_title": "Executive Secretary & Chief Technical Librarian",
+    "ai_role_title": "Chief Systems Engineer & Problem-Solving AI",
     "ai_personality": (
-        "You are {ai_name}, {ai_role_title} inside BunkerOS XP (an autonomous offline knowledge desktop). "
-        "Answer clearly, concisely, and accurately in the language used by the user (Romanian or English). "
-        "Always prioritize verified facts from the local archive excerpts when provided and cite the archive volume title."
+        "You are {ai_name}, {ai_role_title} inside BunkerOS XP. "
+        "Your job is to directly SOLVE the user's programming, Linux, systems engineering, and analytical problems. "
+        "The manual and library are for reading; YOU are for solving problems: write clear, complete, working code examples, "
+        "explain step-by-step how and why the solution works, and never simply paste or repeat raw manual pages. "
+        "Always respond in the same language the user writes in (English or Romanian)."
     ),
     "bookshelf_layout": "spines-3d",   # spines-3d | covers-grid | xp-tiles | xp-details
     "shelf_density": "normal",         # compact | normal | large
@@ -581,6 +584,10 @@ def load_settings_dict() -> Dict[str, Any]:
         "xp_computer",
     ):
         merged["ai_avatar"] = "xp_agent_f"
+    # Migrate old archivist-only default prompt to problem-solver prompt
+    if "Always prioritize verified facts from the local archive excerpts" in str(merged.get("ai_personality", "")):
+        merged["ai_personality"] = DEFAULT_SETTINGS["ai_personality"]
+        merged["ai_role_title"] = DEFAULT_SETTINGS["ai_role_title"]
     return merged
 
 
@@ -888,14 +895,26 @@ async def api_get_man_page(sec: str, page_name: str) -> Dict[str, Any]:
     entries = idx.get("sections", {}).get(str(sec), [])
     target = next((e for e in entries if e["name"].lower() == page_name.lower()), None)
     if not target:
+        # Also search across other sections if not found in `sec`
+        for alt_sec in ("2", "3", "1", "7", "8", "5", "4", "6"):
+            alt_entries = idx.get("sections", {}).get(alt_sec, [])
+            target = next((e for e in alt_entries if e["name"].lower() == page_name.lower()), None)
+            if target:
+                sec = alt_sec
+                break
+    if not target:
         raise HTTPException(status_code=404, detail=f"Man page {page_name}({sec}) not found")
-    content = render_man_file_to_markdown(str(sec), target["file"], target["name"])
+
+    structured = render_man_file_structured(MAN_DIR, str(sec), target["file"], target["name"])
     return {
         "name": target["name"],
-        "sec": sec,
-        "title": f"{target['name']}({sec}) — Linux Manual Page",
-        "content": content,
-        "word_count": len(content.split()),
+        "sec": str(sec),
+        "title": structured["title"],
+        "summary": structured["summary"],
+        "sections": structured["sections"],
+        "html": structured["html"],
+        "content": structured["plain_text"],
+        "word_count": structured["word_count"],
     }
 
 
@@ -1280,7 +1299,10 @@ async def api_delete_zim(filename: str) -> Dict[str, Any]:
 STOPWORDS = {
     "the", "and", "for", "that", "this", "with", "from", "what", "how", "who",
     "where", "when", "why", "are", "was", "were", "have", "has", "had", "about",
-    "into", "care", "este", "sunt", "din", "pentru", "cum", "despre", "unui",
+    "into", "use", "using", "used", "instead", "can", "you", "write", "make",
+    "show", "give", "explain", "difference", "between", "does", "work",
+    "do", "to", "in", "on", "of", "is", "it", "or", "as", "at", "by", "an", "be", "if", "my", "me", "we", "so", "no",
+    "care", "este", "sunt", "din", "pentru", "cum", "despre", "unui",
 }
 
 
@@ -1290,130 +1312,86 @@ async def search_all_archives(query: str) -> List[Dict[str, str]]:
 
     tokens = [
         t.lower()
-        for t in re.findall(r"[a-zA-Z0-9_]{3,}", query)
+        for t in re.findall(r"[a-zA-Z0-9_.-]{2,}", query)
         if t.lower() not in STOPWORDS
     ]
     if not tokens:
-        tokens = [query.strip().lower()]
+        return []
 
     matches: List[Dict[str, str]] = []
 
-    # 1. Search installed full-text books in /data/app_data/books
+    # 1. Fast in-memory check across all 13,820 Linux Man Pages (Sections 1-8)
+    man_idx = get_man_index()
+    seen_man = set()
+    for sec in ("2", "3", "1", "7", "8", "5", "4"):
+        for entry in man_idx.get("sections", {}).get(sec, []):
+            ename = entry["name"].lower()
+            if ename in tokens and ename not in seen_man:
+                seen_man.add(ename)
+                matches.append(
+                    {
+                        "id": f"man::{sec}::{entry['name']}",
+                        "man_sec": sec,
+                        "man_name": entry["name"],
+                        "title": f"man {entry['name']}({sec})",
+                        "type": "man_page",
+                        "snippet": f"Linux Manual Page {entry['name']}({sec})",
+                        "score": "12",
+                    }
+                )
+                break
+
+    # 2. Search installed classic/reference books (skipping the 8 compiled man volumes since step 1 covers them)
     for bdef in get_all_book_definitions():
-        fpath = BOOKS_DIR / bdef["filename"]
-        if not fpath.exists() or not fpath.is_file():
+        if bdef["id"].startswith("book-man-sec-"):
             continue
-        try:
-            text = fpath.read_text(encoding="utf-8", errors="replace")
-        except Exception:
-            continue
-
-        title_lower = f"{bdef['title']} {bdef['author']} {bdef['summary']}".lower()
-        title_hits = sum(4 for tok in tokens if tok in title_lower)
-
-        # Find best matching paragraph across the book
-        best_para = ""
-        best_para_score = 0
-        for para in text.split("\n\n"):
-            p_clean = para.strip()
-            if len(p_clean) < 40:
-                continue
-            p_lower = p_clean.lower()
-            p_score = sum(2 for tok in tokens if tok in p_lower)
-            if p_score > best_para_score:
-                best_para_score = p_score
-                best_para = p_clean[:550]
-
-        total_score = title_hits + best_para_score
-        if total_score > 0:
+        title_lower = f"{bdef['title']} {bdef['author']}".lower()
+        title_hits = sum(5 for tok in tokens if len(tok) >= 4 and tok in title_lower)
+        if title_hits >= 5:
+            fpath = BOOKS_DIR / bdef["filename"]
+            best_para = bdef["summary"]
+            if fpath.exists() and fpath.is_file():
+                try:
+                    text = fpath.read_text(encoding="utf-8", errors="replace")
+                    for para in text.split("\n\n"):
+                        p_clean = para.strip()
+                        if len(p_clean) > 60 and any(tok in p_clean.lower() for tok in tokens if len(tok) >= 4):
+                            best_para = p_clean[:280]
+                            break
+                except Exception:
+                    pass
             matches.append(
                 {
                     "id": bdef["id"],
                     "title": f"{bdef['title']} ({bdef['author']})",
                     "type": "volume",
-                    "snippet": best_para or bdef["summary"],
-                    "score": str(total_score),
+                    "snippet": best_para,
+                    "score": str(title_hits),
                 }
             )
 
-    # 2. Search custom SQLite volumes
+    # 3. Search custom SQLite volumes
     conn = get_db()
     cur = conn.cursor()
     cur.execute("SELECT * FROM custom_volumes")
     for r in cur.fetchall():
         vol = dict(r)
         haystack = f"{vol['title']} {vol.get('summary', '')} {vol['content']}".lower()
-        score = sum(3 if tok in vol["title"].lower() else (1 if tok in haystack else 0) for tok in tokens)
-        if score > 0:
-            best_para = vol.get("summary", "")
-            for para in vol["content"].split("\n\n"):
-                if any(tok in para.lower() for tok in tokens):
-                    best_para = para.strip()[:500]
-                    break
+        score = sum(4 if tok in vol["title"].lower() else (1 if tok in haystack else 0) for tok in tokens if len(tok) >= 3)
+        if score >= 3:
             matches.append(
                 {
                     "id": vol["id"],
                     "title": vol["title"],
                     "type": "volume",
-                    "snippet": best_para,
+                    "snippet": (vol.get("summary") or vol["content"][:240]),
                     "score": str(score),
                 }
             )
     conn.close()
 
-    # 3. Search across all 13,820 Linux Man Pages (Sections 1-8)
-    man_idx = get_man_index()
-    for sec in ("2", "3", "1", "7", "8", "5", "4"):
-        for entry in man_idx.get("sections", {}).get(sec, []):
-            ename = entry["name"].lower()
-            if ename in tokens:
-                man_md = render_man_file_to_markdown(sec, entry["file"], entry["name"])
-                if man_md:
-                    matches.append(
-                        {
-                            "id": f"man::{sec}::{entry['name']}",
-                            "man_sec": sec,
-                            "man_name": entry["name"],
-                            "title": f"man {entry['name']}({sec})",
-                            "type": "man_page",
-                            "snippet": man_md[:850],
-                            "score": "10",
-                        }
-                    )
-                    break
-
-    # 4. Search live Kiwix ZIM server if running
-    if kiwix_proc and kiwix_proc.poll() is None:
-        try:
-            async with httpx.AsyncClient(timeout=4.0) as client:
-                resp = await client.get(
-                    f"{KIWIX_BASE_URL}/kiwix/search",
-                    params={"pattern": query.strip(), "pageLength": 4},
-                )
-                if resp.status_code == 200 and "no results were found" not in resp.text.lower():
-                    link_pattern = re.compile(
-                        r'<a[^>]+href=["\'](?P<href>/kiwix/content/[^"\'>\s]+)["\'][^>]*>(?P<title>.*?)</a>',
-                        re.IGNORECASE | re.DOTALL,
-                    )
-                    for m in list(link_pattern.finditer(resp.text))[:3]:
-                        href = m.group("href")
-                        title_clean = html.unescape(re.sub(r"<[^>]+>", "", m.group("title")).strip())
-                        if title_clean:
-                            matches.append(
-                                {
-                                    "id": href,
-                                    "title": f"ZIM: {title_clean}",
-                                    "type": "zim_article",
-                                    "url": href,
-                                    "snippet": f"Verified Kiwix ZIM article at {href}",
-                                    "score": "6",
-                                }
-                            )
-        except Exception:
-            pass
-
     matches.sort(key=lambda x: int(x.get("score", "1")), reverse=True)
-    return matches[:4]
+    return matches[:3]
 
 
 # ==============================================================================
@@ -1496,8 +1474,7 @@ class ChatMessageRequest(BaseModel):
     model: Optional[str] = None
 
 
-@app.post("/api/chats/{chat_id}/message")
-async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, Any]:
+async def prepare_chat_turn(chat_id: str, req: ChatMessageRequest) -> Dict[str, Any]:
     user_text = req.message.strip()
     if not user_text:
         raise HTTPException(status_code=400, detail="Empty message")
@@ -1524,50 +1501,51 @@ async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, A
     else:
         cur.execute("UPDATE chats SET updated_at = ? WHERE id = ?", (now, chat_id))
 
-    cur.execute("SELECT role, content FROM messages WHERE chat_id = ? ORDER BY created_at ASC LIMIT 14", (chat_id,))
-    history_rows = [dict(r) for r in cur.fetchall()]
+    cur.execute(
+        "SELECT role, content FROM messages WHERE chat_id = ? ORDER BY created_at DESC LIMIT 6",
+        (chat_id,),
+    )
+    recent_rows = list(reversed([dict(r) for r in cur.fetchall()]))
     conn.commit()
     conn.close()
 
     sources = await search_all_archives(user_text)
-    archive_context = ""
-    if sources:
-        ctx_blocks = []
-        for s in sources:
-            ctx_blocks.append(f"[{s['title']}]:\n{s['snippet']}")
-        archive_context = (
-            "=== VERIFIED LOCAL ARCHIVE EXCERPTS ===\n"
-            + "\n\n".join(ctx_blocks)
-            + "\n=== END ARCHIVE EXCERPTS ===\n\n"
-        )
+    book_excerpts = [
+        f"[{s['title']}]: {s['snippet']}"
+        for s in sources
+        if s.get("type") == "volume" and s.get("snippet")
+    ]
+    context_note = ""
+    if book_excerpts:
+        context_note = "Relevant Book Excerpt:\n" + "\n".join(book_excerpts[:1]) + "\n\n"
 
     current_settings = load_settings_dict()
     ai_name = str(current_settings.get("ai_name") or "Elena Vancea")
-    ai_role = str(current_settings.get("ai_role_title") or "Executive Secretary & Chief Technical Librarian")
+    ai_role = str(current_settings.get("ai_role_title") or "Chief Systems Engineer & Problem-Solving AI")
     raw_persona = str(current_settings.get("ai_personality") or DEFAULT_SETTINGS["ai_personality"])
-    formatted_persona = raw_persona.replace("{ai_name}", ai_name).replace("{ai_role_title}", ai_role)
+    formatted_persona = (
+        raw_persona.replace("{ai_name}", ai_name).replace("{ai_role_title}", ai_role)
+        + " IMPORTANT: Never just dump or repeat manual pages. Solve the user's problem directly with clear explanations and practical, working code examples."
+    )
 
-    ollama_messages = [
-        {
-            "role": "system",
-            "content": formatted_persona,
-        }
-    ]
-    for h in history_rows[:-1]:
-        ollama_messages.append({"role": h["role"], "content": h["content"]})
+    ollama_messages = [{"role": "system", "content": formatted_persona}]
+    for h in recent_rows[:-1]:
+        content_str = h["content"] or ""
+        # Skip old broken fallback dumps or huge welcome messages so prompt eval stays < 2s
+        if content_str.startswith("**[Local Archive Direct Match") or len(content_str) > 1400:
+            continue
+        ollama_messages.append({"role": h["role"], "content": content_str})
 
     ollama_messages.append(
         {
             "role": "user",
-            "content": f"{archive_context}User Question: {user_text}",
+            "content": f"{context_note}{user_text}",
         }
     )
 
-    reply_text = ""
     target_model = req.model or current_settings.get("active_ai_model") or chat_row["model"] or DEFAULT_MODEL
-
     try:
-        async with httpx.AsyncClient(timeout=90.0) as client:
+        async with httpx.AsyncClient(timeout=4.0) as client:
             tags_resp = await client.get(f"{OLLAMA_BASE_URL}/api/tags")
             available = [m.get("name", "") for m in tags_resp.json().get("models", [])] if tags_resp.status_code == 200 else []
             if target_model not in available:
@@ -1577,24 +1555,118 @@ async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, A
                     target_model = FALLBACK_MODEL
                 elif available:
                     target_model = available[0]
+    except Exception:
+        pass
 
+    return {
+        "chat_id": chat_id,
+        "chat_title": chat_title,
+        "user_msg_id": user_msg_id,
+        "user_text": user_text,
+        "now": now,
+        "sources": sources,
+        "ollama_messages": ollama_messages,
+        "target_model": target_model,
+    }
+
+
+@app.post("/api/chats/{chat_id}/stream")
+async def api_stream_message(chat_id: str, req: ChatMessageRequest) -> StreamingResponse:
+    turn = await prepare_chat_turn(chat_id, req)
+
+    async def event_generator():
+        yield json.dumps(
+            {
+                "type": "meta",
+                "chat_id": turn["chat_id"],
+                "chat_title": turn["chat_title"],
+                "sources": turn["sources"],
+                "model": turn["target_model"],
+            }
+        ) + "\n"
+
+        accumulated = []
+        try:
+            async with httpx.AsyncClient(timeout=300.0) as client:
+                async with client.stream(
+                    "POST",
+                    f"{OLLAMA_BASE_URL}/api/chat",
+                    json={
+                        "model": turn["target_model"],
+                        "messages": turn["ollama_messages"],
+                        "stream": True,
+                        "options": {"num_ctx": 2048, "num_predict": 950, "temperature": 0.3},
+                    },
+                ) as resp:
+                    async for line in resp.aiter_lines():
+                        if not line.strip():
+                            continue
+                        try:
+                            chunk = json.loads(line)
+                        except Exception:
+                            continue
+                        token = chunk.get("message", {}).get("content", "")
+                        if token:
+                            accumulated.append(token)
+                            yield json.dumps({"type": "token", "token": token}) + "\n"
+        except Exception as exc:
+            err_msg = f"\n\n*(Error communicating with local Ollama model `{turn['target_model']}`: {type(exc).__name__} {exc})*"
+            accumulated.append(err_msg)
+            yield json.dumps({"type": "token", "token": err_msg}) + "\n"
+
+        reply_text = "".join(accumulated).strip() or "No response generated from local AI model."
+        assistant_msg_id = str(uuid.uuid4())
+        now_done = int(time.time())
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO messages (id, chat_id, role, content, sources_json, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+            (assistant_msg_id, chat_id, "assistant", reply_text, json.dumps(turn["sources"]), now_done),
+        )
+        cur.execute("UPDATE chats SET updated_at = ? WHERE id = ?", (now_done, chat_id))
+        conn.commit()
+        conn.close()
+
+        yield json.dumps(
+            {
+                "type": "done",
+                "assistant_message": {
+                    "id": assistant_msg_id,
+                    "role": "assistant",
+                    "content": reply_text,
+                    "sources": turn["sources"],
+                    "created_at": now_done,
+                },
+            }
+        ) + "\n"
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="application/x-ndjson",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
+@app.post("/api/chats/{chat_id}/message")
+async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, Any]:
+    turn = await prepare_chat_turn(chat_id, req)
+    reply_text = ""
+
+    try:
+        async with httpx.AsyncClient(timeout=300.0) as client:
             resp = await client.post(
                 f"{OLLAMA_BASE_URL}/api/chat",
-                json={"model": target_model, "messages": ollama_messages, "stream": False},
+                json={
+                    "model": turn["target_model"],
+                    "messages": turn["ollama_messages"],
+                    "stream": False,
+                    "options": {"num_ctx": 2048, "num_predict": 650, "temperature": 0.3},
+                },
             )
             if resp.status_code == 200:
                 reply_text = resp.json().get("message", {}).get("content", "").strip()
     except Exception as exc:
-        if sources:
-            reply_text = (
-                f"**[Local Archive Direct Match — Ollama Offline ({exc})]**\n\n"
-                + "\n\n".join(f"### {s['title']}\n{s['snippet']}" for s in sources)
-            )
-        else:
-            reply_text = (
-                f"Local Ollama model (`{target_model}`) is still loading or unreachable (`{exc}`). "
-                "No direct offline excerpt matched that query yet."
-            )
+        reply_text = f"Error communicating with local Ollama model (`{turn['target_model']}`): `{type(exc).__name__}: {exc}`."
 
     if not reply_text:
         reply_text = "No response generated. Check the AI Control Panel on the desktop."
@@ -1605,7 +1677,7 @@ async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, A
     cur = conn.cursor()
     cur.execute(
         "INSERT INTO messages (id, chat_id, role, content, sources_json, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        (assistant_msg_id, chat_id, "assistant", reply_text, json.dumps(sources), now_done),
+        (assistant_msg_id, chat_id, "assistant", reply_text, json.dumps(turn["sources"]), now_done),
     )
     cur.execute("UPDATE chats SET updated_at = ? WHERE id = ?", (now_done, chat_id))
     conn.commit()
@@ -1613,13 +1685,13 @@ async def api_send_message(chat_id: str, req: ChatMessageRequest) -> Dict[str, A
 
     return {
         "chat_id": chat_id,
-        "chat_title": chat_title,
-        "user_message": {"id": user_msg_id, "role": "user", "content": user_text, "created_at": now},
+        "chat_title": turn["chat_title"],
+        "user_message": {"id": turn["user_msg_id"], "role": "user", "content": turn["user_text"], "created_at": turn["now"]},
         "assistant_message": {
             "id": assistant_msg_id,
             "role": "assistant",
             "content": reply_text,
-            "sources": sources,
+            "sources": turn["sources"],
             "created_at": now_done,
         },
     }
