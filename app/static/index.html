@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BunkerOS XP Professional — Offline Knowledge Desktop</title>
-    <link rel="stylesheet" href="/static/xp.css?v=8">
+    <link rel="stylesheet" href="/static/xp.css?v=9">
 </head>
 <body class="theme-luna-blue wallpaper-bliss chat-mode-fb-side">
 
@@ -609,16 +609,25 @@
 
             <div class="xp-menubar">
                 <div class="xp-toolbar-group">
-                    <button class="xp-toolbar-btn" onclick="openWindow('win-library')">
-                        <span class="btn-svg" data-xp-icon="nav_back" data-icon-size="14"></span>
+                    <button class="xp-toolbar-btn" onclick="openWindow('win-library')" title="Return to Library Bookshelf">
+                        <span class="btn-svg" data-xp-icon="my_library" data-icon-size="14"></span>
                         <span>Bookshelf</span>
+                    </button>
+                    <button class="xp-toolbar-btn" id="btn-reader-back" disabled onclick="readerNavBack()" title="Back to Previous Page / Manual">
+                        <span>&#9664; Back</span>
+                    </button>
+                    <button class="xp-toolbar-btn" id="btn-reader-forward" disabled onclick="readerNavForward()" title="Forward">
+                        <span>Fwd &#9654;</span>
+                    </button>
+                    <button class="xp-toolbar-btn" id="btn-toggle-toc" onclick="toggleReaderTocSidebar()" title="Show / Hide Left Table of Contents">
+                        <span>Sidebar</span>
                     </button>
                     <span class="xp-toolbar-sep"></span>
                     <button class="xp-toolbar-btn" id="btn-prev-chapter" onclick="stepBookChapter(-1)">
-                        <span>&laquo; Prev Chapter</span>
+                        <span>&laquo; Prev</span>
                     </button>
                     <button class="xp-toolbar-btn" id="btn-next-chapter" onclick="stepBookChapter(1)">
-                        <span>Next Chapter &raquo;</span>
+                        <span>Next &raquo;</span>
                     </button>
                     <span class="xp-toolbar-sep"></span>
                     <button class="xp-toolbar-btn" title="Decrease Reader Font Size" onclick="stepReaderFontSize(-1)">
@@ -631,7 +640,7 @@
                     <span class="xp-toolbar-sep"></span>
                     <button class="xp-toolbar-btn" onclick="askAiAboutCurrentBook()">
                         <span class="btn-svg" data-xp-icon="xp_agent_f" data-icon-size="14"></span>
-                        <span>Ask AI About Book</span>
+                        <span>Ask AI</span>
                     </button>
                     <button class="xp-toolbar-btn" id="btn-reader-home" style="display:none;" onclick="openKiwixBrowser('/kiwix/')">
                         <span class="btn-svg" data-xp-icon="ie_globe" data-icon-size="14"></span>
@@ -660,6 +669,9 @@
                     <div class="reader-toc-header">Table of Contents</div>
                     <div id="reader-toc-list" class="reader-toc-list"></div>
                 </aside>
+
+                <!-- Draggable Vertical Splitter for TOC Sidebar -->
+                <div id="reader-toc-splitter" class="xp-v-splitter" onmousedown="startTocSplitterDrag(event)" title="Drag to resize Table of Contents"></div>
 
                 <!-- Right Book Page / Kiwix Iframe -->
                 <div class="reader-main-pane">
@@ -768,15 +780,38 @@
             </div>
         </div>
 
+        <!-- Desktop Selection Marquee & Right-Click Context Menu -->
+        <div id="xp-selection-marquee" style="display:none;"></div>
+        <div id="xp-context-menu" class="xp-context-menu" style="display:none;">
+            <div class="xp-ctx-item" onclick="refreshAll(); hideContextMenu();">Refresh Desktop &amp; Vault</div>
+            <div class="xp-ctx-item" onclick="openWindow('win-library'); hideContextMenu();">Open My Library (Bookshelf)</div>
+            <div class="xp-ctx-item" onclick="toggleChatDrawer(true); hideContextMenu();">Open AI Problem Solver</div>
+            <div class="xp-ctx-sep"></div>
+            <div class="xp-ctx-item" onclick="quickSelectTheme('luna-blue'); hideContextMenu();">Theme: Luna Blue (Default)</div>
+            <div class="xp-ctx-item" onclick="quickSelectTheme('luna-olive'); hideContextMenu();">Theme: Luna Olive Green</div>
+            <div class="xp-ctx-item" onclick="quickSelectTheme('luna-silver'); hideContextMenu();">Theme: Luna Metallic Silver</div>
+            <div class="xp-ctx-item" onclick="quickSelectTheme('royale-noir'); hideContextMenu();">Theme: Zune Royale Noir</div>
+            <div class="xp-ctx-item" onclick="quickSelectTheme('classic-98'); hideContextMenu();">Theme: Windows Classic 98</div>
+            <div class="xp-ctx-sep"></div>
+            <div class="xp-ctx-item bold" onclick="openWindow('win-settings'); switchSettingsTab('themes'); hideContextMenu();">Properties (Control Panel)</div>
+        </div>
+
     </div>
 
     <!-- =================================================================== -->
-    <!-- 2. DUAL-MODE AI CHAT DOCK (OLD FACEBOOK SIDE POPUP OR BOTTOM BAR)   -->
+    <!-- 2. DUAL-MODE AI CHAT DOCK (RESIZABLE, MAXIMIZABLE, UNDOCKABLE)      -->
     <!-- =================================================================== -->
     <div id="ai-bottom-dock">
-        <!-- Expandable Chat Window / Drawer -->
+        <!-- Expandable & Resizable Chat Window / Drawer -->
         <div id="ai-chat-drawer">
-            <div class="ai-drawer-header" onclick="handleDrawerHeaderClick(event)">
+            <!-- 5-Way Resize Handles for AI Chat Window -->
+            <div class="chat-resize-handle chat-resize-n" onmousedown="startChatResize(event, 'n')" title="Drag top edge to resize height"></div>
+            <div class="chat-resize-handle chat-resize-w" onmousedown="startChatResize(event, 'w')" title="Drag left edge to resize width"></div>
+            <div class="chat-resize-handle chat-resize-e" onmousedown="startChatResize(event, 'e')" title="Drag right edge to resize width"></div>
+            <div class="chat-resize-handle chat-resize-nw" onmousedown="startChatResize(event, 'nw')" title="Drag corner to resize chat window"></div>
+            <div class="chat-resize-handle chat-resize-ne" onmousedown="startChatResize(event, 'ne')" title="Drag corner to resize chat window"></div>
+
+            <div class="ai-drawer-header" onmousedown="startChatHeaderDrag(event)" ondblclick="toggleChatMaximize(event)">
                 <div class="ai-drawer-title">
                     <span class="ai-pulse-dot"></span>
                     <span id="chat-header-avatar" class="avatar-svg-wrap"></span>
@@ -791,7 +826,8 @@
                     <button class="xp-mini-btn" onclick="createNewChatSession(true)" title="Start a new saved chat">+ New</button>
                     <button class="xp-mini-btn" onclick="toggleFbSessionsList()" title="Toggle Saved Sessions List">History</button>
                     <button class="xp-mini-btn" onclick="toggleChatLayoutQuick()" title="Switch between Old Facebook Side Chat and Full Bottom Bar">Layout</button>
-                    <button class="xp-mini-btn" onclick="openWindow('win-settings'); switchSettingsTab('ai');" title="Customize AI Name & Personality">Config</button>
+                    <button class="xp-mini-btn" id="btn-chat-redock" style="display:none;" onclick="resetChatDockPosition()" title="Snap Chat Back to Bottom Dock">Dock</button>
+                    <button class="xp-mini-btn" id="btn-chat-maximize" onclick="toggleChatMaximize(event)" title="Maximize / Restore AI Chat Window">&#9633;</button>
                     <button class="xp-mini-btn" onclick="toggleChatDrawer(false)" title="Minimize Chat">_</button>
                 </div>
             </div>
@@ -827,9 +863,10 @@
                     type="text"
                     id="ai-chat-input"
                     autocomplete="off"
-                    placeholder="Write a message to your offline AI librarian..."
+                    placeholder="Ask a problem or coding question..."
                     onfocus="toggleChatDrawer(true)"
                 >
+                <button type="button" id="ai-stop-btn" class="xp-stop-btn" style="display:none;" onclick="stopAiGeneration()" title="Stop Generating">Stop</button>
                 <button type="submit" id="ai-send-btn">Send</button>
             </form>
 
@@ -944,6 +981,6 @@
         </div>
     </footer>
 
-    <script src="/static/xp.js?v=8"></script>
+    <script src="/static/xp.js?v=9"></script>
 </body>
 </html>

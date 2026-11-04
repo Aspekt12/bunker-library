@@ -26,17 +26,28 @@ let appSettings = {
 let libraryData = { total: 0, items: [], categories: {} };
 let selectedCategory = "ALL";
 
-// Unabridged Book Reader State
+// Unabridged Book Reader State & History Stack
 let currentReaderBook = null;
 let currentBookChapters = [];
 let currentChapterIndex = 0;
 let activeManPageName = null;
+let readerHistory = [];
+let readerHistoryIdx = -1;
+let isNavigatingHistory = false;
 
 let savedChats = [];
 let activeChatId = null;
 let downloadPollTimer = null;
 let aiModelsData = { active_model: "elena-vancea:latest", models: [] };
 let modelPullPollTimer = null;
+let activeChatAbortController = null;
+
+// Window Resize, Chat Resize/Drag, TOC Splitter & Desktop Marquee States
+let winResizeState = null;
+let chatResizeState = null;
+let chatDragState = null;
+let tocSplitterState = null;
+let marqueeState = null;
 
 // ==========================================================================
 // 0. AUTHENTIC WINDOWS XP 3D VECTOR ICON ENGINE (ZERO EMOJI SLOP)
@@ -385,9 +396,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     updateClock();
     setInterval(updateClock, 15000);
 
-    document.querySelectorAll(".xp-window").forEach((win) => {
-        win.addEventListener("mousedown", () => focusWindow(win.id));
-    });
+    initDesktopWindowManager();
 
     await loadSettings();
     renderTaskbarTabs();
@@ -987,8 +996,112 @@ function handleDrawerHeaderClick(e) {
 }
 
 // --------------------------------------------------------------------------
-// 3. Windows XP Window Manager
+// 3. Fluent Windows XP Window Manager (8-Way Resize, Tear-Off Unmaximize,
+//    Double-Click Maximize, Resizable AI Chat, Marquee & Context Menu)
 // --------------------------------------------------------------------------
+const MAXIMIZE_SVG = `<svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>`;
+const RESTORE_SVG = `<svg viewBox="0 0 12 12" width="10" height="10"><rect x="3.5" y="1.5" width="7" height="6" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="4" width="7" height="6.5" fill="var(--win-bg)" stroke="currentColor" stroke-width="1.4"/></svg>`;
+
+function initDesktopWindowManager() {
+    const dirs = ["n", "s", "e", "w", "nw", "ne", "sw", "se"];
+    document.querySelectorAll(".xp-window").forEach((win) => {
+        win.addEventListener("mousedown", () => focusWindow(win.id));
+
+        // Double-click titlebar to toggle Maximize / Restore
+        const titlebar = win.querySelector(".xp-titlebar");
+        if (titlebar) {
+            titlebar.addEventListener("dblclick", (e) => {
+                if (e.target.closest("button")) return;
+                toggleMaximize(win.id);
+            });
+        }
+
+        // Inject 8-way resize handles
+        dirs.forEach((dir) => {
+            const handle = document.createElement("div");
+            handle.className = `xp-win-resizer resizer-${dir}`;
+            handle.addEventListener("mousedown", (e) => startWindowResize(e, win.id, dir));
+            win.appendChild(handle);
+        });
+    });
+
+    // Restore saved AI Chat Window dimensions
+    try {
+        const savedChatSize = JSON.parse(localStorage.getItem("bunker_chat_size") || "null");
+        if (savedChatSize) {
+            if (savedChatSize.width) {
+                document.documentElement.style.setProperty("--chat-win-width", `${savedChatSize.width}px`);
+                document.documentElement.style.setProperty("--chat-bar-width", `${savedChatSize.width}px`);
+            }
+            if (savedChatSize.height) {
+                document.documentElement.style.setProperty("--chat-win-height", `${savedChatSize.height}px`);
+            }
+        }
+    } catch (_) {}
+
+    // Desktop rubber-band selection marquee & right-click context menu
+    const desktop = document.getElementById("xp-desktop");
+    if (desktop) {
+        desktop.addEventListener("mousedown", (e) => {
+            hideContextMenu();
+            if (e.button !== 0 || e.target !== desktop) return;
+            closeStartMenu();
+            document.querySelectorAll(".desktop-icon").forEach((i) => i.classList.remove("selected"));
+            const marquee = document.getElementById("xp-selection-marquee");
+            if (!marquee) return;
+            marqueeState = { startX: e.clientX, startY: e.clientY, el: marquee };
+            marquee.style.left = `${e.clientX}px`;
+            marquee.style.top = `${e.clientY}px`;
+            marquee.style.width = "0px";
+            marquee.style.height = "0px";
+            marquee.style.display = "block";
+        });
+
+        desktop.addEventListener("contextmenu", (e) => {
+            if (e.target.closest(".xp-window")) return;
+            e.preventDefault();
+            showContextMenu(e.clientX, e.clientY);
+        });
+    }
+
+    window.addEventListener("click", (e) => {
+        if (!e.target.closest("#xp-context-menu")) {
+            hideContextMenu();
+        }
+    });
+}
+
+function showContextMenu(x, y) {
+    const menu = document.getElementById("xp-context-menu");
+    if (!menu) return;
+    menu.style.display = "block";
+    const maxX = window.innerWidth - 225;
+    const maxY = window.innerHeight - 280;
+    menu.style.left = `${Math.max(4, Math.min(maxX, x))}px`;
+    menu.style.top = `${Math.max(4, Math.min(maxY, y))}px`;
+}
+
+function hideContextMenu() {
+    const menu = document.getElementById("xp-context-menu");
+    if (menu) menu.style.display = "none";
+}
+
+function updateMaximizeButtonIcon(win) {
+    const btn = win.querySelector(".xp-btn-max");
+    if (!btn) return;
+    const isMax = win.classList.contains("maximized");
+    btn.innerHTML = isMax ? RESTORE_SVG : MAXIMIZE_SVG;
+    btn.title = isMax ? "Restore Down" : "Maximize";
+}
+
+function saveWindowGeometry(win) {
+    const rect = win.getBoundingClientRect();
+    win.dataset.prevLeft = win.style.left || `${rect.left}px`;
+    win.dataset.prevTop = win.style.top || `${rect.top}px`;
+    win.dataset.prevWidth = win.style.width || `${rect.width}px`;
+    win.dataset.prevHeight = win.style.height || `${rect.height}px`;
+}
+
 function focusWindow(winId) {
     const win = document.getElementById(winId);
     if (!win) return;
@@ -1031,14 +1144,21 @@ function minimizeWindow(winId) {
 function toggleMaximize(winId) {
     const win = document.getElementById(winId);
     if (!win) return;
-    win.classList.toggle("maximized");
+    if (!win.classList.contains("maximized")) {
+        saveWindowGeometry(win);
+        win.classList.add("maximized");
+    } else {
+        win.classList.remove("maximized");
+        if (win.dataset.prevLeft) win.style.left = win.dataset.prevLeft;
+        if (win.dataset.prevTop) win.style.top = win.dataset.prevTop;
+        if (win.dataset.prevWidth) win.style.width = win.dataset.prevWidth;
+        if (win.dataset.prevHeight) win.style.height = win.dataset.prevHeight;
+    }
+    updateMaximizeButtonIcon(win);
     focusWindow(winId);
 }
 
-function renderTaskbarTabs() {
-    const container = document.getElementById("xp-taskbar-windows");
-    if (!container) return;
-
+function getTopVisibleWindowId() {
     let topWinId = null;
     let maxZ = -1;
     document.querySelectorAll(".xp-window").forEach((w) => {
@@ -1049,6 +1169,18 @@ function renderTaskbarTabs() {
                 topWinId = w.id;
             }
         }
+    });
+    return topWinId;
+}
+
+function renderTaskbarTabs() {
+    const container = document.getElementById("xp-taskbar-windows");
+    if (!container) return;
+
+    const topWinId = getTopVisibleWindowId();
+
+    document.querySelectorAll(".xp-window").forEach((w) => {
+        w.classList.toggle("inactive-win", w.id !== topWinId);
     });
 
     let html = "";
@@ -1074,36 +1206,343 @@ function renderTaskbarTabs() {
 function handleTaskbarTabClick(winId) {
     const win = document.getElementById(winId);
     if (!win) return;
+    const topWinId = getTopVisibleWindowId();
     if (win.style.display === "none") {
         openWindow(winId);
+    } else if (winId !== topWinId) {
+        // Bring background window to the front instead of minimizing it
+        focusWindow(winId);
     } else {
         minimizeWindow(winId);
     }
 }
 
 function startDrag(e, winId) {
-    if (e.target.closest("button")) return;
+    if (e.button !== 0 || e.target.closest("button")) return;
     const win = document.getElementById(winId);
-    if (!win || win.classList.contains("maximized")) return;
+    if (!win) return;
     focusWindow(winId);
     const rect = win.getBoundingClientRect();
     dragState = {
         win,
+        startX: e.clientX,
+        startY: e.clientY,
+        isMaximizedOnStart: win.classList.contains("maximized"),
         offsetX: e.clientX - rect.left,
         offsetY: e.clientY - rect.top,
     };
 }
 
+function startWindowResize(e, winId, dir) {
+    e.stopPropagation();
+    e.preventDefault();
+    const win = document.getElementById(winId);
+    if (!win || win.classList.contains("maximized")) return;
+    focusWindow(winId);
+    const rect = win.getBoundingClientRect();
+    document.body.classList.add("is-resizing");
+    winResizeState = {
+        win,
+        dir,
+        startX: e.clientX,
+        startY: e.clientY,
+        startLeft: rect.left,
+        startTop: rect.top,
+        startWidth: rect.width,
+        startHeight: rect.height,
+    };
+}
+
+// --------------------------------------------------------------------------
+// 3B. Resizable, Maximizable & Undockable AI Chat Window
+// --------------------------------------------------------------------------
+function startChatResize(e, dir) {
+    e.stopPropagation();
+    e.preventDefault();
+    const dock = document.getElementById("ai-bottom-dock");
+    const drawer = document.getElementById("ai-chat-drawer");
+    if (!dock || !drawer) return;
+
+    if (dock.classList.contains("chat-maximized")) {
+        dock.classList.remove("chat-maximized");
+        const maxBtn = document.getElementById("btn-chat-maximize");
+        if (maxBtn) maxBtn.innerHTML = "&#9633;";
+    }
+
+    const rect = drawer.getBoundingClientRect();
+    const dockRect = dock.getBoundingClientRect();
+    document.body.classList.add("is-resizing");
+
+    chatResizeState = {
+        dock,
+        drawer,
+        dir,
+        startX: e.clientX,
+        startY: e.clientY,
+        startWidth: rect.width,
+        startHeight: rect.height,
+        startDockLeft: dockRect.left,
+        startDockTop: dockRect.top,
+        isFbHistoryOpen: dock.classList.contains("fb-history-open") && document.body.classList.contains("chat-mode-fb-side"),
+    };
+}
+
+function toggleChatMaximize(e) {
+    if (e) e.stopPropagation();
+    const dock = document.getElementById("ai-bottom-dock");
+    if (!dock) return;
+    toggleChatDrawer(true);
+    const isMax = dock.classList.toggle("chat-maximized");
+    if (isMax) {
+        dock.classList.remove("chat-undocked");
+        dock.style.left = "";
+        dock.style.top = "";
+    }
+    const maxBtn = document.getElementById("btn-chat-maximize");
+    if (maxBtn) {
+        maxBtn.innerHTML = isMax ? "&#10697;" : "&#9633;";
+        maxBtn.title = isMax ? "Restore Chat Window Size" : "Maximize Chat Window";
+    }
+}
+
+function startChatHeaderDrag(e) {
+    if (e.button !== 0) return;
+    if (e.target.closest("button") || e.target.closest("select") || e.target.closest("option")) return;
+    const dock = document.getElementById("ai-bottom-dock");
+    if (!dock) return;
+    const rect = dock.getBoundingClientRect();
+    chatDragState = {
+        dock,
+        startX: e.clientX,
+        startY: e.clientY,
+        offsetX: e.clientX - rect.left,
+        offsetY: e.clientY - rect.top,
+        hasMoved: false,
+        wasMaximized: dock.classList.contains("chat-maximized"),
+    };
+}
+
+function resetChatDockPosition() {
+    const dock = document.getElementById("ai-bottom-dock");
+    if (!dock) return;
+    dock.classList.remove("chat-undocked", "chat-maximized");
+    dock.style.left = "";
+    dock.style.top = "";
+    const redockBtn = document.getElementById("btn-chat-redock");
+    if (redockBtn) redockBtn.style.display = "none";
+    const maxBtn = document.getElementById("btn-chat-maximize");
+    if (maxBtn) maxBtn.innerHTML = "&#9633;";
+}
+
+function startTocSplitterDrag(e) {
+    e.preventDefault();
+    const sidebar = document.getElementById("reader-toc-sidebar");
+    const splitter = document.getElementById("reader-toc-splitter");
+    if (!sidebar) return;
+    document.body.classList.add("is-resizing");
+    if (splitter) splitter.classList.add("dragging");
+    tocSplitterState = {
+        sidebar,
+        splitter,
+        startX: e.clientX,
+        startWidth: sidebar.getBoundingClientRect().width,
+    };
+}
+
+// Unified Global MouseMove Handler for Smooth 60fps Dragging & Resizing
 window.addEventListener("mousemove", (e) => {
-    if (!dragState) return;
-    const x = Math.max(0, Math.min(window.innerWidth - 120, e.clientX - dragState.offsetX));
-    const y = Math.max(0, Math.min(window.innerHeight - 100, e.clientY - dragState.offsetY));
-    dragState.win.style.left = `${x}px`;
-    dragState.win.style.top = `${y}px`;
+    // 1. Desktop Window Dragging (with Tear-Off Unmaximize when dragging a fullscreen window!)
+    if (dragState) {
+        const dx = e.clientX - dragState.startX;
+        const dy = e.clientY - dragState.startY;
+
+        if (dragState.isMaximizedOnStart) {
+            if (Math.hypot(dx, dy) < 5) return;
+            // Tear off fullscreen window back to windowed mode!
+            const win = dragState.win;
+            win.classList.remove("maximized");
+            const restoredW = parseFloat(win.dataset.prevWidth || "780") || 780;
+            const restoredH = parseFloat(win.dataset.prevHeight || "500") || 500;
+            win.style.width = `${restoredW}px`;
+            win.style.height = `${restoredH}px`;
+            updateMaximizeButtonIcon(win);
+
+            // Keep cursor anchored proportionally along the restored titlebar
+            const ratio = Math.min(0.82, Math.max(0.15, e.clientX / window.innerWidth));
+            dragState.offsetX = Math.round(restoredW * ratio);
+            dragState.offsetY = Math.min(22, Math.max(8, e.clientY));
+            dragState.isMaximizedOnStart = false;
+        }
+
+        const x = Math.max(0, Math.min(window.innerWidth - 100, e.clientX - dragState.offsetX));
+        const y = Math.max(0, Math.min(window.innerHeight - 65, e.clientY - dragState.offsetY));
+        dragState.win.style.left = `${x}px`;
+        dragState.win.style.top = `${y}px`;
+        return;
+    }
+
+    // 2. 8-Way Desktop Window Resizing
+    if (winResizeState) {
+        const { win, dir, startX, startY, startLeft, startTop, startWidth, startHeight } = winResizeState;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        const minW = 360;
+        const minH = 240;
+
+        if (dir.includes("e")) {
+            const newW = Math.max(minW, Math.min(window.innerWidth - startLeft, startWidth + dx));
+            win.style.width = `${newW}px`;
+        }
+        if (dir.includes("s")) {
+            const newH = Math.max(minH, Math.min(window.innerHeight - 32 - startTop, startHeight + dy));
+            win.style.height = `${newH}px`;
+        }
+        if (dir.includes("w")) {
+            const maxDelta = startWidth - minW;
+            const clampedDx = Math.max(-startLeft, Math.min(maxDelta, dx));
+            win.style.left = `${startLeft + clampedDx}px`;
+            win.style.width = `${startWidth - clampedDx}px`;
+        }
+        if (dir.includes("n")) {
+            const maxDelta = startHeight - minH;
+            const clampedDy = Math.max(-startTop, Math.min(maxDelta, dy));
+            win.style.top = `${startTop + clampedDy}px`;
+            win.style.height = `${startHeight - clampedDy}px`;
+        }
+        return;
+    }
+
+    // 3. AI Chat Window 5-Way Resizing
+    if (chatResizeState) {
+        const { dock, dir, startX, startY, startWidth, startHeight, isFbHistoryOpen } = chatResizeState;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        const minW = 300;
+        const maxW = window.innerWidth - 20;
+        const minH = 220;
+        const maxH = window.innerHeight - 80;
+
+        let nextW = startWidth;
+        let nextH = startHeight;
+
+        if (dir.includes("n")) {
+            nextH = Math.max(minH, Math.min(maxH, startHeight - dy));
+            document.documentElement.style.setProperty("--chat-win-height", `${nextH}px`);
+        }
+        if (dir.includes("w")) {
+            const rawW = Math.max(minW, Math.min(maxW, startWidth - dx));
+            nextW = isFbHistoryOpen ? Math.max(minW, rawW - 170) : rawW;
+            document.documentElement.style.setProperty("--chat-win-width", `${nextW}px`);
+            document.documentElement.style.setProperty("--chat-bar-width", `${rawW}px`);
+        }
+        if (dir.includes("e")) {
+            const rawW = Math.max(minW, Math.min(maxW, startWidth + dx));
+            nextW = isFbHistoryOpen ? Math.max(minW, rawW - 170) : rawW;
+            document.documentElement.style.setProperty("--chat-win-width", `${nextW}px`);
+            document.documentElement.style.setProperty("--chat-bar-width", `${rawW}px`);
+        }
+        chatResizeState.lastWidth = nextW;
+        chatResizeState.lastHeight = nextH;
+        return;
+    }
+
+    // 4. AI Chat Window Dragging / Tear-Off Unmaximize / Undocking
+    if (chatDragState) {
+        const dx = e.clientX - chatDragState.startX;
+        const dy = e.clientY - chatDragState.startY;
+        if (!chatDragState.hasMoved && Math.hypot(dx, dy) < 5) return;
+
+        chatDragState.hasMoved = true;
+        const dock = chatDragState.dock;
+        toggleChatDrawer(true);
+
+        if (chatDragState.wasMaximized) {
+            dock.classList.remove("chat-maximized");
+            const maxBtn = document.getElementById("btn-chat-maximize");
+            if (maxBtn) maxBtn.innerHTML = "&#9633;";
+            const rectAfter = dock.getBoundingClientRect();
+            const ratio = Math.min(0.8, Math.max(0.2, e.clientX / window.innerWidth));
+            chatDragState.offsetX = Math.round(rectAfter.width * ratio);
+            chatDragState.offsetY = 16;
+            chatDragState.wasMaximized = false;
+        }
+
+        dock.classList.add("chat-undocked");
+        const redockBtn = document.getElementById("btn-chat-redock");
+        if (redockBtn) redockBtn.style.display = "inline-block";
+
+        const x = Math.max(0, Math.min(window.innerWidth - 180, e.clientX - chatDragState.offsetX));
+        const y = Math.max(0, Math.min(window.innerHeight - 85, e.clientY - chatDragState.offsetY));
+        dock.style.left = `${x}px`;
+        dock.style.top = `${y}px`;
+        return;
+    }
+
+    // 5. Reader TOC Sidebar Vertical Splitter
+    if (tocSplitterState) {
+        const dx = e.clientX - tocSplitterState.startX;
+        const newW = Math.max(150, Math.min(520, tocSplitterState.startWidth + dx));
+        tocSplitterState.sidebar.style.width = `${newW}px`;
+        return;
+    }
+
+    // 6. Desktop Rubber-Band Selection Marquee
+    if (marqueeState) {
+        const x1 = Math.min(marqueeState.startX, e.clientX);
+        const y1 = Math.min(marqueeState.startY, e.clientY);
+        const w = Math.abs(e.clientX - marqueeState.startX);
+        const h = Math.abs(e.clientY - marqueeState.startY);
+        marqueeState.el.style.left = `${x1}px`;
+        marqueeState.el.style.top = `${y1}px`;
+        marqueeState.el.style.width = `${w}px`;
+        marqueeState.el.style.height = `${h}px`;
+
+        const mRect = { left: x1, right: x1 + w, top: y1, bottom: y1 + h };
+        document.querySelectorAll(".desktop-icon").forEach((icon) => {
+            const r = icon.getBoundingClientRect();
+            const overlaps = !(r.right < mRect.left || r.left > mRect.right || r.bottom < mRect.top || r.top > mRect.bottom);
+            icon.classList.toggle("selected", overlaps);
+        });
+    }
 });
 
-window.addEventListener("mouseup", () => {
-    dragState = null;
+window.addEventListener("mouseup", (e) => {
+    if (dragState) {
+        // Snap-to-maximize if dragged right to the top edge of the screen!
+        if (e.clientY <= 2 && !dragState.win.classList.contains("maximized")) {
+            toggleMaximize(dragState.win.id);
+        }
+        dragState = null;
+    }
+    if (winResizeState) {
+        winResizeState = null;
+        document.body.classList.remove("is-resizing");
+    }
+    if (chatResizeState) {
+        try {
+            const curW = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--chat-win-width"), 10) || 440;
+            const curH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--chat-win-height"), 10) || 450;
+            localStorage.setItem("bunker_chat_size", JSON.stringify({ width: curW, height: curH }));
+        } catch (_) {}
+        chatResizeState = null;
+        document.body.classList.remove("is-resizing");
+    }
+    if (chatDragState) {
+        if (!chatDragState.hasMoved) {
+            // Simple click on header toggles drawer
+            toggleChatDrawer();
+        }
+        chatDragState = null;
+    }
+    if (tocSplitterState) {
+        if (tocSplitterState.splitter) tocSplitterState.splitter.classList.remove("dragging");
+        tocSplitterState = null;
+        document.body.classList.remove("is-resizing");
+    }
+    if (marqueeState) {
+        marqueeState.el.style.display = "none";
+        marqueeState = null;
+    }
 });
 
 function selectDesktopIcon(el) {
@@ -1444,6 +1883,7 @@ async function openLibraryItem(itemId) {
     document.getElementById("reader-meta-badge").textContent = item.size_label || "Unabridged";
 
     const tocSidebar = document.getElementById("reader-toc-sidebar");
+    const tocSplitter = document.getElementById("reader-toc-splitter");
     const volDiv = document.getElementById("reader-volume-content");
     const iframe = document.getElementById("reader-kiwix-iframe");
     const homeBtn = document.getElementById("btn-reader-home");
@@ -1453,6 +1893,7 @@ async function openLibraryItem(itemId) {
 
     if (item.type === "zim") {
         if (tocSidebar) tocSidebar.style.display = "none";
+        if (tocSplitter) tocSplitter.style.display = "none";
         if (prevBtn) prevBtn.style.display = "none";
         if (nextBtn) nextBtn.style.display = "none";
         if (searchBox) searchBox.style.display = "none";
@@ -1467,6 +1908,7 @@ async function openLibraryItem(itemId) {
         iframe.style.display = "none";
         homeBtn.style.display = "none";
         if (tocSidebar) tocSidebar.style.display = "flex";
+        if (tocSplitter) tocSplitter.style.display = "block";
         if (prevBtn) prevBtn.style.display = "inline-flex";
         if (nextBtn) nextBtn.style.display = "inline-flex";
         if (searchBox) {
@@ -1561,6 +2003,73 @@ function filterBookChapters() {
     renderBookTocList();
 }
 
+function pushReaderHistory(entry) {
+    if (isNavigatingHistory) return;
+    const current = readerHistory[readerHistoryIdx];
+    if (
+        current &&
+        current.type === entry.type &&
+        current.bookId === entry.bookId &&
+        current.idx === entry.idx &&
+        current.sec === entry.sec &&
+        current.name === entry.name
+    ) {
+        return;
+    }
+    readerHistory = readerHistory.slice(0, readerHistoryIdx + 1);
+    readerHistory.push(entry);
+    readerHistoryIdx = readerHistory.length - 1;
+    updateReaderNavButtons();
+}
+
+function updateReaderNavButtons() {
+    const backBtn = document.getElementById("btn-reader-back");
+    const fwdBtn = document.getElementById("btn-reader-forward");
+    if (backBtn) backBtn.disabled = readerHistoryIdx <= 0;
+    if (fwdBtn) fwdBtn.disabled = readerHistoryIdx < 0 || readerHistoryIdx >= readerHistory.length - 1;
+}
+
+async function readerNavBack() {
+    if (readerHistoryIdx <= 0) return;
+    readerHistoryIdx--;
+    updateReaderNavButtons();
+    await restoreReaderHistoryEntry(readerHistory[readerHistoryIdx]);
+}
+
+async function readerNavForward() {
+    if (readerHistoryIdx >= readerHistory.length - 1) return;
+    readerHistoryIdx++;
+    updateReaderNavButtons();
+    await restoreReaderHistoryEntry(readerHistory[readerHistoryIdx]);
+}
+
+async function restoreReaderHistoryEntry(entry) {
+    if (!entry) return;
+    isNavigatingHistory = true;
+    try {
+        if (entry.type === "man") {
+            await openManPage(entry.sec, entry.name);
+        } else if (entry.type === "chapter") {
+            if (!currentReaderBook || currentReaderBook.id !== entry.bookId) {
+                await openLibraryItem(entry.bookId);
+            }
+            selectBookChapter(entry.idx || 0);
+        }
+    } finally {
+        isNavigatingHistory = false;
+        updateReaderNavButtons();
+    }
+}
+
+function toggleReaderTocSidebar() {
+    const sidebar = document.getElementById("reader-toc-sidebar");
+    const splitter = document.getElementById("reader-toc-splitter");
+    if (!sidebar) return;
+    const isHidden = sidebar.style.display === "none";
+    sidebar.style.display = isHidden ? "flex" : "none";
+    if (splitter) splitter.style.display = isHidden ? "block" : "none";
+}
+
 function selectBookChapter(idx) {
     if (!currentBookChapters.length) return;
     currentChapterIndex = Math.max(0, Math.min(currentBookChapters.length - 1, idx));
@@ -1572,6 +2081,10 @@ function selectBookChapter(idx) {
     if (mManTitle) {
         openManPage(mManTitle[2], mManTitle[1], currentChapterIndex);
         return;
+    }
+
+    if (currentReaderBook && currentReaderBook.id) {
+        pushReaderHistory({ type: "chapter", bookId: currentReaderBook.id, idx: currentChapterIndex });
     }
 
     activeManPageName = null;
@@ -1673,12 +2186,15 @@ function selectBookChapter(idx) {
 
 async function openManPage(sec, pageName, chapterIdxOverride = null) {
     openWindow("win-reader");
+    pushReaderHistory({ type: "man", sec: String(sec), name: String(pageName) });
     const volDiv = document.getElementById("reader-volume-content");
     const iframe = document.getElementById("reader-kiwix-iframe");
     const tocSidebar = document.getElementById("reader-toc-sidebar");
+    const tocSplitter = document.getElementById("reader-toc-splitter");
     if (iframe) iframe.style.display = "none";
     if (volDiv) volDiv.style.display = "block";
-    if (tocSidebar) tocSidebar.style.display = "flex";
+    if (tocSidebar && tocSidebar.style.display !== "none") tocSidebar.style.display = "flex";
+    if (tocSplitter && tocSidebar && tocSidebar.style.display !== "none") tocSplitter.style.display = "block";
 
     if (chapterIdxOverride !== null) {
         currentChapterIndex = chapterIdxOverride;
@@ -2080,10 +2596,18 @@ function renderMessagesStream(messages) {
     stream.scrollTop = stream.scrollHeight;
 }
 
+function stopAiGeneration() {
+    if (activeChatAbortController) {
+        activeChatAbortController.abort();
+        activeChatAbortController = null;
+    }
+}
+
 async function handleChatSubmit(e) {
     e.preventDefault();
     const input = document.getElementById("ai-chat-input");
     const sendBtn = document.getElementById("ai-send-btn");
+    const stopBtn = document.getElementById("ai-stop-btn");
     const text = input.value.trim();
     if (!text) return;
 
@@ -2095,6 +2619,9 @@ async function handleChatSubmit(e) {
     input.value = "";
     sendBtn.disabled = true;
     sendBtn.textContent = "...";
+    if (stopBtn) stopBtn.style.display = "inline-flex";
+
+    activeChatAbortController = new AbortController();
 
     const stream = document.getElementById("ai-messages-stream");
     const streamBubbleId = `stream-bubble-${Date.now()}`;
@@ -2117,6 +2644,7 @@ async function handleChatSubmit(e) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: text }),
+            signal: activeChatAbortController.signal,
         });
 
         if (!res.ok || !res.body) {
@@ -2167,10 +2695,17 @@ async function handleChatSubmit(e) {
         await selectChatSession(activeChatId);
         await loadChatsList(false);
     } catch (err) {
-        if (bubbleEl) {
+        if (err && err.name === "AbortError") {
+            if (bubbleEl && !accumulatedMd) {
+                bubbleEl.innerHTML = `<em style="color:#64748b;">Generation stopped by user.</em>`;
+            }
+            await loadChatsList(false);
+        } else if (bubbleEl) {
             bubbleEl.innerHTML = `<span style="color:#dc2626;">Error: ${escapeHtml(String(err))}</span>`;
         }
     } finally {
+        activeChatAbortController = null;
+        if (stopBtn) stopBtn.style.display = "none";
         sendBtn.disabled = false;
         sendBtn.textContent = "Send";
     }
