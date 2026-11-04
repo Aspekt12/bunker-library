@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BunkerOS XP Professional — Offline Knowledge Desktop</title>
-    <link rel="stylesheet" href="/static/xp.css?v=10">
+    <title>BunkerOS XP &amp; Microsoft Bob — Offline Knowledge &amp; Debian Workspace</title>
+    <link rel="stylesheet" href="/static/xp.css?v=11">
 </head>
 <body class="theme-luna-blue wallpaper-bliss chat-mode-fb-side">
 
@@ -61,6 +61,16 @@
 
         <!-- Desktop Shortcut Grid (1:1 XP Vector Icons + Dynamic Folders/Books) -->
         <div id="desktop-icons">
+            <div class="desktop-icon" ondblclick="openVscodeWorkspace()" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="vscode_ide" data-icon-size="38"></div>
+                <span class="icon-label">VS Code (Debian Linux)</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="switchEnvironmentShell('bob')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="ms_bob_home" data-icon-size="38"></div>
+                <span class="icon-label">Microsoft Bob (1995 Home)</span>
+            </div>
+
             <div class="desktop-icon" ondblclick="openXpExplorer('My Computer')" onclick="selectDesktopIcon(this)">
                 <div class="icon-graphic" data-xp-icon="my_computer" data-icon-size="38"></div>
                 <span class="icon-label">My Computer</span>
@@ -1337,6 +1347,365 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
         </div>
 
         <!-- =============================================================== -->
+        <!-- WINDOW 16: VISUAL STUDIO CODE — DEBIAN LINUX WORKSPACE          -->
+        <!-- =============================================================== -->
+        <div id="win-vscode" class="xp-window" style="top: 18px; left: 108px; width: 960px; height: 590px; z-index: 38; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-vscode')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" data-xp-icon="vscode_ide" data-icon-size="16"></span>
+                    <span class="xp-title-text" id="vscode-win-title">Visual Studio Code — Debian GNU/Linux 12 Workspace (/workspace)</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-vscode')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-vscode')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeVscodeWorkspace()">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- VS Code Dark Toolbar & AI Agent Mode Bar -->
+            <div class="vscode-top-toolbar">
+                <div class="vscode-toolbar-left">
+                    <button class="vscode-btn" onclick="vscodeNewFile()" title="Create a new file in /workspace">+ New File</button>
+                    <button class="vscode-btn" onclick="vscodeNewFolder()" title="Create a new folder in /workspace">+ Folder</button>
+                    <button class="vscode-btn primary" onclick="vscodeSaveActiveFile()" title="Save active file (Ctrl+S)">&#128190; Save (Ctrl+S)</button>
+                    <button class="vscode-btn run" onclick="vscodeRunActiveFile()" title="Compile & Execute active file in Debian Container">&#9654; Run / Build File</button>
+                    <button class="vscode-btn" onclick="refreshVscodeTree()" title="Refresh /workspace file tree">&#8635; Refresh</button>
+                </div>
+                <div class="vscode-toolbar-right">
+                    <button class="vscode-agent-toggle active" id="btn-vscode-agent-mode" onclick="toggleWorkspaceAgentMode()" title="When active, AI Assistant can directly create/edit files and run Linux commands in /workspace">
+                        &#9889; AI Workspace Agent: ON (Can Write Files &amp; Run Cmds)
+                    </button>
+                    <button class="vscode-btn" onclick="vscodeAskAiToBuild()" title="Ask AI to build or modify a project in /workspace">&#129302; Ask AI to Code</button>
+                </div>
+            </div>
+
+            <div class="xp-window-body vscode-ide-body">
+                <!-- Far-Left VS Code Activity Bar -->
+                <div class="vscode-activity-bar">
+                    <button class="vscode-act-icon active" onclick="refreshVscodeTree()" title="Explorer (/workspace)">&#128193;</button>
+                    <button class="vscode-act-icon" onclick="vscodeRunActiveFile()" title="Run & Compile">&#9654;</button>
+                    <button class="vscode-act-icon" onclick="vscodeAskAiToBuild()" title="AI Coding Agent">&#9889;</button>
+                    <button class="vscode-act-icon" onclick="document.getElementById('vscode-term-input')?.focus()" title="Debian Terminal">&gt;_</button>
+                </div>
+
+                <!-- Left Sidebar: /workspace Explorer -->
+                <aside class="vscode-sidebar">
+                    <div class="vscode-sidebar-header">
+                        <span>DEBIAN /WORKSPACE</span>
+                        <div style="display:flex;gap:4px;">
+                            <button onclick="vscodeNewFile()" title="New File">+F</button>
+                            <button onclick="vscodeNewFolder()" title="New Folder">+D</button>
+                            <button onclick="vscodeDeleteActiveFile()" title="Delete Selected">Del</button>
+                        </div>
+                    </div>
+                    <div id="vscode-file-tree" class="vscode-file-tree"></div>
+                </aside>
+
+                <!-- Main Split: Multi-Tab Code Editor (Top) + Integrated Debian Linux Terminal (Bottom) -->
+                <div class="vscode-main-column">
+                    <!-- Open File Tabs -->
+                    <div id="vscode-tabs-bar" class="vscode-tabs-bar"></div>
+
+                    <!-- Code Editor Area with Line Numbers -->
+                    <div class="vscode-editor-wrap">
+                        <div id="vscode-line-numbers" class="vscode-line-numbers">1</div>
+                        <textarea
+                            id="vscode-editor-textarea"
+                            class="vscode-editor-textarea"
+                            spellcheck="false"
+                            oninput="onVscodeEditorInput()"
+                            onscroll="syncVscodeLineNumbersScroll()"
+                            onclick="updateVscodeCursorPos()"
+                            onkeyup="updateVscodeCursorPos()"
+                            onkeydown="handleVscodeEditorKeydown(event)"
+                            placeholder="Select a file from /workspace on the left or ask the AI Agent to generate a project..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Integrated Debian GNU/Linux 12 Terminal -->
+                    <div class="vscode-terminal-pane">
+                        <div class="vscode-terminal-header">
+                            <div class="vscode-term-tabs">
+                                <span class="active">TERMINAL (bash — Debian GNU/Linux 12 Container)</span>
+                                <span id="vscode-toolchain-badge" style="color:#38bdf8;">python3 &bull; bash &bull; gcc</span>
+                            </div>
+                            <div style="display:flex;gap:6px;">
+                                <button class="vscode-term-btn" onclick="vscodeInstallToolchain()" title="Ensure gcc, g++, make, git are installed in Debian container">Install GCC/Git</button>
+                                <button class="vscode-term-btn" onclick="clearVscodeTerminal()">Clear</button>
+                            </div>
+                        </div>
+                        <div id="vscode-terminal-output" class="vscode-terminal-output" onclick="document.getElementById('vscode-term-input')?.focus()">root@debian-bunker:/workspace# uname -a &amp;&amp; ls -la
+Linux debian-bunker 6.x x86_64 GNU/Linux (Debian 12 Bookworm Workspace)
+Type any Linux command below (e.g. gcc, make, python3, git, ls, cat) or ask the AI with Workspace Mode ON!
+</div>
+                        <form onsubmit="handleVscodeTerminalSubmit(event)" class="vscode-terminal-input-row">
+                            <span id="vscode-term-prompt">root@debian-bunker:/workspace#</span>
+                            <input type="text" id="vscode-term-input" autocomplete="off" spellcheck="false" placeholder="Run Linux command in Debian container (e.g. cd c-mmap-allocator && make run)...">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VS Code Status Bar -->
+            <div class="vscode-statusbar">
+                <div class="vscode-status-left">
+                    <span>&#9000; Remote: Debian 12 Container (/workspace)</span>
+                    <span id="vscode-status-file">c-mmap-allocator/main.c</span>
+                </div>
+                <div class="vscode-status-right">
+                    <span id="vscode-status-agent">AI Agent: Write &amp; Exec ENABLED</span>
+                    <span id="vscode-status-cursor">Ln 1, Col 1</span>
+                    <span>UTF-8</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- MICROSOFT BOB (1995) POINT-AND-CLICK INTERACTIVE HOME           -->
+        <!-- =============================================================== -->
+        <div id="bob-room-layer" class="bob-room-layer" style="display: none;">
+            <!-- Top Retro 1995 Microsoft Bob Banner -->
+            <header class="bob-top-banner">
+                <div class="bob-brand">
+                    <span class="bob-logo-badge">Microsoft Bob (1995)</span>
+                    <span id="bob-room-title">The Cozy Study &amp; Knowledge Library</span>
+                </div>
+                <div class="bob-room-tabs">
+                    <button class="bob-tab-btn active" id="bob-tab-study" onclick="switchBobRoom('study')">&#127968; Cozy Study &amp; Library</button>
+                    <button class="bob-tab-btn" id="bob-tab-lab" onclick="switchBobRoom('lab')">&#128039; Linux &amp; VS Code Lab</button>
+                    <button class="bob-tab-btn" id="bob-tab-parlor" onclick="switchBobRoom('parlor')">&#127922; Game &amp; Arcade Parlor</button>
+                </div>
+                <div class="bob-top-actions">
+                    <button class="bob-action-btn agent" id="bob-agent-pill" onclick="openVscodeWorkspace()">&#9889; Open VS Code Debian Linux</button>
+                    <button class="bob-action-btn xp-switch" onclick="switchEnvironmentShell('xp')">&#128187; Switch to Windows XP Desktop</button>
+                </div>
+            </header>
+
+            <!-- Interactive Point-and-Click Illustrated Room SVG Scene -->
+            <div class="bob-scene-container" id="bob-scene-container">
+                <svg id="bob-room-svg" viewBox="0 0 1200 660" preserveAspectRatio="xMidYMid slice" class="bob-room-svg">
+                    <!-- Wall & Warm Wainscoting -->
+                    <rect id="bob-wall-bg" x="0" y="0" width="1200" height="470" fill="#f5e6c8"/>
+                    <!-- Decorative Wallpaper Stripes -->
+                    <g opacity="0.22" stroke="#d4b483" stroke-width="2">
+                        <line x1="80" y1="0" x2="80" y2="470"/><line x1="160" y1="0" x2="160" y2="470"/><line x1="240" y1="0" x2="240" y2="470"/>
+                        <line x1="320" y1="0" x2="320" y2="470"/><line x1="400" y1="0" x2="400" y2="470"/><line x1="480" y1="0" x2="480" y2="470"/>
+                        <line x1="560" y1="0" x2="560" y2="470"/><line x1="640" y1="0" x2="640" y2="470"/><line x1="720" y1="0" x2="720" y2="470"/>
+                        <line x1="800" y1="0" x2="800" y2="470"/><line x1="880" y1="0" x2="880" y2="470"/><line x1="960" y1="0" x2="960" y2="470"/>
+                        <line x1="1040" y1="0" x2="1040" y2="470"/><line x1="1120" y1="0" x2="1120" y2="470"/>
+                    </g>
+                    <!-- Wood Wainscoting & Trim -->
+                    <rect x="0" y="380" width="1200" height="90" fill="#8b5a2b" stroke="#3e2723" stroke-width="4"/>
+                    <!-- Hardwood Floor -->
+                    <polygon points="0,470 1200,470 1200,660 0,660" fill="#a0522d" stroke="#3e2723" stroke-width="4"/>
+                    <!-- Cozy Crimson & Gold Persian Rug -->
+                    <ellipse cx="600" cy="575" rx="430" ry="68" fill="#8b1e1e" stroke="#f59e0b" stroke-width="6"/>
+                    <ellipse cx="600" cy="575" rx="370" ry="48" fill="#a82424" stroke="#fde047" stroke-width="2" stroke-dasharray="8 6"/>
+
+                    <!-- 1. INTERACTIVE WINDOW (Click to cycle Day / Sunset / Night) -->
+                    <g class="bob-hotspot" onclick="cycleBobWindowSky()"transform="translate(465, 38)">
+                        <title>Click Window to change Day / Sunset / Starry Night Sky</title>
+                        <rect x="0" y="0" width="165" height="195" rx="6" fill="#38bdf8" id="bob-sky-rect" stroke="#5c3a21" stroke-width="8"/>
+                        <circle id="bob-sky-orb" cx="120" cy="48" r="22" fill="#fde047"/>
+                        <path d="M0 145 Q50 115 95 140 T165 135 L165 195 L0 195 Z" fill="#22c55e"/>
+                        <line x1="82.5" y1="0" x2="82.5" y2="195" stroke="#5c3a21" stroke-width="6"/>
+                        <line x1="0" y1="97.5" x2="165" y2="97.5" stroke="#5c3a21" stroke-width="6"/>
+                        <rect x="-10" y="190" width="185" height="12" rx="3" fill="#5c3a21"/>
+                        <rect x="18" y="-22" width="130" height="20" rx="4" fill="#ffffe1" stroke="#000" stroke-width="2"/>
+                        <text x="83" y="-8" text-anchor="middle" font-size="11" font-weight="bold" fill="#000">Window (Day/Night)</text>
+                    </g>
+
+                    <!-- 2. GRAND WOODEN BOOKSHELF (Click to open My Library Bookshelf) -->
+                    <g class="bob-hotspot" onclick="openWindow('win-library')" transform="translate(55, 42)">
+                        <title>Click the Bookshelf to open My Library (Books &amp; Linux Manuals)</title>
+                        <rect x="0" y="0" width="250" height="425" rx="4" fill="#5c3a21" stroke="#2b1708" stroke-width="5"/>
+                        <rect x="14" y="18" width="222" height="85" fill="#3b2210"/>
+                        <rect x="14" y="118" width="222" height="85" fill="#3b2210"/>
+                        <rect x="14" y="218" width="222" height="85" fill="#3b2210"/>
+                        <rect x="14" y="318" width="222" height="85" fill="#3b2210"/>
+                        <!-- Colorful Book Spines on Shelves -->
+                        <g>
+                            <rect x="22" y="28" width="22" height="74" fill="#dc2626" stroke="#000" stroke-width="1.5"/>
+                            <rect x="46" y="24" width="26" height="78" fill="#2563eb" stroke="#000" stroke-width="1.5"/>
+                            <rect x="74" y="30" width="20" height="72" fill="#059669" stroke="#000" stroke-width="1.5"/>
+                            <rect x="96" y="22" width="28" height="80" fill="#d97706" stroke="#000" stroke-width="1.5"/>
+                            <rect x="126" y="26" width="24" height="76" fill="#7c3aed" stroke="#000" stroke-width="1.5"/>
+                            <rect x="152" y="29" width="22" height="73" fill="#0d9488" stroke="#000" stroke-width="1.5"/>
+                            <rect x="176" y="24" width="26" height="78" fill="#991b1b" stroke="#000" stroke-width="1.5"/>
+                            <rect x="204" y="28" width="24" height="74" fill="#1e40af" stroke="#000" stroke-width="1.5"/>
+
+                            <rect x="22" y="126" width="25" height="76" fill="#1e3a8a" stroke="#000" stroke-width="1.5"/>
+                            <rect x="49" y="128" width="25" height="74" fill="#1e3a8a" stroke="#000" stroke-width="1.5"/>
+                            <rect x="76" y="125" width="25" height="77" fill="#1e3a8a" stroke="#000" stroke-width="1.5"/>
+                            <rect x="103" y="128" width="25" height="74" fill="#1e3a8a" stroke="#000" stroke-width="1.5"/>
+                            <rect x="130" y="126" width="25" height="76" fill="#1e3a8a" stroke="#000" stroke-width="1.5"/>
+                            <rect x="157" y="128" width="25" height="74" fill="#1e3a8a" stroke="#000" stroke-width="1.5"/>
+                            <rect x="184" y="125" width="25" height="77" fill="#1e3a8a" stroke="#000" stroke-width="1.5"/>
+
+                            <rect x="24" y="228" width="28" height="74" fill="#b45309" stroke="#000" stroke-width="1.5"/>
+                            <rect x="55" y="224" width="24" height="78" fill="#047857" stroke="#000" stroke-width="1.5"/>
+                            <rect x="82" y="230" width="30" height="72" fill="#be123c" stroke="#000" stroke-width="1.5"/>
+                            <rect x="115" y="225" width="26" height="77" fill="#4338ca" stroke="#000" stroke-width="1.5"/>
+                            <circle cx="195" cy="265" r="28" fill="#38bdf8" stroke="#1e3a8a" stroke-width="3"/>
+                        </g>
+                        <rect x="35" y="-22" width="180" height="22" rx="4" fill="#ffffe1" stroke="#000" stroke-width="2"/>
+                        <text x="125" y="-7" text-anchor="middle" font-size="12" font-weight="bold" fill="#000">&#128218; My Library (Bookshelf)</text>
+                    </g>
+
+                    <!-- 3. FILING CABINET (Click to open My Computer C:\ Filesystem) -->
+                    <g class="bob-hotspot" onclick="openXpExplorer('My Computer')" transform="translate(325, 215)">
+                        <title>Click Filing Cabinet to open My Computer (C:\ Filesystem)</title>
+                        <rect x="0" y="0" width="110" height="250" rx="4" fill="#94a3b8" stroke="#1e293b" stroke-width="4"/>
+                        <rect x="12" y="16" width="86" height="65" fill="#cbd5e1" stroke="#334155" stroke-width="2.5"/>
+                        <rect x="40" y="38" width="30" height="10" rx="2" fill="#facc15" stroke="#000" stroke-width="1.5"/>
+                        <rect x="12" y="92" width="86" height="65" fill="#cbd5e1" stroke="#334155" stroke-width="2.5"/>
+                        <rect x="40" y="114" width="30" height="10" rx="2" fill="#facc15" stroke="#000" stroke-width="1.5"/>
+                        <rect x="12" y="168" width="86" height="65" fill="#cbd5e1" stroke="#334155" stroke-width="2.5"/>
+                        <rect x="40" y="190" width="30" height="10" rx="2" fill="#facc15" stroke="#000" stroke-width="1.5"/>
+                        <rect x="-5" y="-24" width="120" height="20" rx="4" fill="#ffffe1" stroke="#000" stroke-width="2"/>
+                        <text x="55" y="-10" text-anchor="middle" font-size="11" font-weight="bold" fill="#000">&#128193; C:\ Filing Cabinet</text>
+                    </g>
+
+                    <!-- 4. CENTER COMPUTER DESK: DEBIAN LINUX + VS CODE + NOTEPAD -->
+                    <g transform="translate(455, 260)">
+                        <!-- Wooden Desk -->
+                        <rect x="0" y="110" width="330" height="22" rx="3" fill="#6d4c41" stroke="#2b1708" stroke-width="4"/>
+                        <rect x="18" y="132" width="28" height="125" fill="#5d4037" stroke="#2b1708" stroke-width="3"/>
+                        <rect x="284" y="132" width="28" height="125" fill="#5d4037" stroke="#2b1708" stroke-width="3"/>
+                        <rect x="60" y="132" width="210" height="36" fill="#4e342e" stroke="#2b1708" stroke-width="3"/>
+
+                        <!-- VS Code Debian Linux Dual-Monitor Workstation (Click to open VS Code!) -->
+                        <g class="bob-hotspot" onclick="openVscodeWorkspace()">
+                            <title>Click Computer to open Visual Studio Code — Debian Linux Container Workspace</title>
+                            <rect x="55" y="0" width="155" height="96" rx="5" fill="#1e293b" stroke="#000" stroke-width="4"/>
+                            <rect x="63" y="8" width="139" height="80" fill="#0f172a"/>
+                            <!-- Code lines on screen -->
+                            <rect x="63" y="8" width="28" height="80" fill="#1e293b"/>
+                            <line x1="98" y1="22" x2="175" y2="22" stroke="#38bdf8" stroke-width="4"/>
+                            <line x1="98" y1="34" x2="190" y2="34" stroke="#4ade80" stroke-width="4"/>
+                            <line x1="108" y1="46" x2="165" y2="46" stroke="#facc15" stroke-width="4"/>
+                            <line x1="98" y1="58" x2="182" y2="58" stroke="#f472b6" stroke-width="4"/>
+                            <text x="132" y="79" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#38bdf8">VS CODE : DEBIAN</text>
+                            <rect x="115" y="96" width="35" height="14" fill="#94a3b8" stroke="#000" stroke-width="2"/>
+                            <rect x="35" y="-26" width="195" height="22" rx="4" fill="#fef08a" stroke="#000" stroke-width="2"/>
+                            <text x="132" y="-11" text-anchor="middle" font-size="12" font-weight="bold" fill="#000">&#128187; VS Code (Debian Linux)</text>
+                        </g>
+
+                        <!-- Yellow Notepad & Pen on Desk (Click to open Notepad!) -->
+                        <g class="bob-hotspot" onclick="openNotepadFile('C:\\Documents and Settings\\Administrator\\My Documents\\Welcome_to_BunkerOS_XP.txt')" transform="translate(232, 48)">
+                            <title>Click Legal Pad to open Windows XP Notepad</title>
+                            <rect x="0" y="0" width="76" height="58" rx="3" fill="#fef08a" stroke="#000" stroke-width="3"/>
+                            <rect x="0" y="0" width="76" height="10" fill="#b91c1c"/>
+                            <line x1="10" y1="22" x2="64" y2="22" stroke="#3b82f6" stroke-width="2"/>
+                            <line x1="10" y1="32" x2="64" y2="32" stroke="#3b82f6" stroke-width="2"/>
+                            <line x1="10" y1="42" x2="48" y2="42" stroke="#3b82f6" stroke-width="2"/>
+                            <rect x="-8" y="-24" width="92" height="19" rx="4" fill="#ffffe1" stroke="#000" stroke-width="2"/>
+                            <text x="38" y="-10" text-anchor="middle" font-size="11" font-weight="bold" fill="#000">&#128221; Notepad</text>
+                        </g>
+                    </g>
+
+                    <!-- 5. GRANDFATHER CLOCK (Click to open Calculator / Task Manager) -->
+                    <g class="bob-hotspot" onclick="openWindow('win-calc')" transform="translate(658, 72)">
+                        <title>Click Grandfather Clock to open Calculator</title>
+                        <rect x="10" y="0" width="70" height="395" rx="4" fill="#5c3a21" stroke="#2b1708" stroke-width="4"/>
+                        <circle cx="45" cy="48" r="26" fill="#fef9c3" stroke="#b45309" stroke-width="4"/>
+                        <line x1="45" y1="48" x2="45" y2="30" stroke="#000" stroke-width="3"/>
+                        <line x1="45" y1="48" x2="60" y2="48" stroke="#000" stroke-width="2.5"/>
+                        <rect x="24" y="95" width="42" height="190" fill="#3b2210" stroke="#b45309" stroke-width="2"/>
+                        <line x1="45" y1="95" x2="45" y2="225" stroke="#facc15" stroke-width="3"/>
+                        <circle cx="45" cy="235" r="14" fill="#facc15" stroke="#b45309" stroke-width="2"/>
+                        <rect x="-8" y="-24" width="105" height="20" rx="4" fill="#ffffe1" stroke="#000" stroke-width="2"/>
+                        <text x="45" y="-10" text-anchor="middle" font-size="11" font-weight="bold" fill="#000">&#9200; Clock &amp; Calc</text>
+                    </g>
+
+                    <!-- 6. BRICK FIREPLACE WITH ANIMATED FLAMES -->
+                    <g class="bob-hotspot" onclick="toggleBobFireplace()" transform="translate(805, 195)">
+                        <title>Click Fireplace to toggle cozy firelight</title>
+                        <rect x="0" y="0" width="210" height="275" fill="#991b1b" stroke="#450a0a" stroke-width="4"/>
+                        <rect x="-14" y="-12" width="238" height="22" rx="4" fill="#5c3a21" stroke="#2b1708" stroke-width="4"/>
+                        <path d="M35 275 L35 115 A70 65 0 0 1 175 115 L175 275 Z" fill="#18181b" stroke="#27272a" stroke-width="4"/>
+                        <g id="bob-fire-flames">
+                            <path d="M60 270 Q80 180 105 225 Q125 160 145 270 Z" fill="#f97316"/>
+                            <path d="M75 270 Q95 205 108 235 Q122 190 135 270 Z" fill="#facc15"/>
+                        </g>
+                        <rect x="35" y="-34" width="140" height="20" rx="4" fill="#ffffe1" stroke="#000" stroke-width="2"/>
+                        <text x="105" y="-20" text-anchor="middle" font-size="11" font-weight="bold" fill="#000">&#128293; Cozy Fireplace</text>
+                    </g>
+
+                    <!-- 7. GAME PARLOR TABLE (Solitaire, Minesweeper & Arcade) -->
+                    <g transform="translate(155, 500)">
+                        <!-- Solitaire Card Table -->
+                        <g class="bob-hotspot" onclick="openWindow('win-solitaire')">
+                            <title>Click Card Table to play Klondike Solitaire</title>
+                            <ellipse cx="95" cy="52" rx="85" ry="38" fill="#0e7c3a" stroke="#5c3a21" stroke-width="6"/>
+                            <rect x="65" y="34" width="26" height="36" rx="3" fill="#fff" stroke="#000" stroke-width="2"/>
+                            <rect x="98" y="34" width="26" height="36" rx="3" fill="#fff" stroke="#000" stroke-width="2"/>
+                            <rect x="20" y="-12" width="150" height="20" rx="4" fill="#ffffe1" stroke="#000" stroke-width="2"/>
+                            <text x="95" y="2" text-anchor="middle" font-size="11" font-weight="bold" fill="#000">&#127183; Play Solitaire</text>
+                        </g>
+
+                        <!-- Minesweeper Bomb Trophy -->
+                        <g class="bob-hotspot" onclick="openWindow('win-minesweeper')" transform="translate(235, 10)">
+                            <title>Click Naval Mine to play Windows XP Minesweeper</title>
+                            <circle cx="45" cy="45" r="28" fill="#334155" stroke="#000" stroke-width="3"/>
+                            <circle cx="36" cy="36" r="7" fill="#fff"/>
+                            <rect x="-15" y="-20" width="120" height="20" rx="4" fill="#ffffe1" stroke="#000" stroke-width="2"/>
+                            <text x="45" y="-6" text-anchor="middle" font-size="11" font-weight="bold" fill="#000">&#128163; Minesweeper</text>
+                        </g>
+
+                        <!-- Arcade Joystick Box -->
+                        <g class="bob-hotspot" onclick="openWindow('win-arcade')" transform="translate(390, 10)">
+                            <title>Click Arcade Joystick to play Cyber-Snake &amp; Breakout</title>
+                            <rect x="10" y="35" width="75" height="28" rx="4" fill="#1e293b" stroke="#000" stroke-width="3"/>
+                            <line x1="47" y1="35" x2="47" y2="12" stroke="#cbd5e1" stroke-width="5"/>
+                            <circle cx="47" cy="10" r="10" fill="#ef4444" stroke="#000" stroke-width="2.5"/>
+                            <rect x="-12" y="-20" width="120" height="20" rx="4" fill="#ffffe1" stroke="#000" stroke-width="2"/>
+                            <text x="47" y="-6" text-anchor="middle" font-size="11" font-weight="bold" fill="#000">&#127918; Retro Arcade</text>
+                        </g>
+                    </g>
+
+                    <!-- 8. OAK DOORWAY TO WINDOWS XP (Far Right Wall) -->
+                    <g class="bob-hotspot" onclick="switchEnvironmentShell('xp')" transform="translate(1045, 125)">
+                        <title>Click Doorway to exit Microsoft Bob and return to Windows XP Desktop</title>
+                        <rect x="0" y="0" width="125" height="345" rx="4" fill="#6d4c41" stroke="#2b1708" stroke-width="5"/>
+                        <rect x="16" y="18" width="93" height="135" fill="#5d4037" stroke="#3e2723" stroke-width="3"/>
+                        <rect x="16" y="175" width="93" height="145" fill="#5d4037" stroke="#3e2723" stroke-width="3"/>
+                        <circle cx="100" cy="165" r="7" fill="#facc15" stroke="#000" stroke-width="2"/>
+                        <rect x="-5" y="-26" width="135" height="22" rx="4" fill="#bae6fd" stroke="#000" stroke-width="2"/>
+                        <text x="62" y="-11" text-anchor="middle" font-size="11" font-weight="bold" fill="#000">&#128682; Door to Windows XP</text>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Bottom Rover the Yellow Dog Guide & Room Controls (1995 Microsoft Bob Bar) -->
+            <div class="bob-rover-dock">
+                <div class="bob-rover-avatar" onclick="bobRoverNextTip()" title="Click Rover for advice!">
+                    <span data-xp-icon="xp_rover" data-icon-size="52"></span>
+                </div>
+                <div class="bob-speech-bubble">
+                    <div id="bob-rover-speech">
+                        <strong>Woof! Welcome to Microsoft Bob (1995) Home!</strong> Click the <b>Bookshelf</b> to read books &amp; Linux manuals, click the <b>Computer Desk</b> to open <b>VS Code (Debian Linux Workspace)</b> where the AI can write files and run commands, or click the <b>Card Table</b> to play Solitaire &amp; Minesweeper!
+                    </div>
+                    <div class="bob-speech-buttons">
+                        <button onclick="openVscodeWorkspace()">&#128187; Open VS Code (Debian Workspace)</button>
+                        <button onclick="openWindow('win-library')">&#128218; Bookshelf</button>
+                        <button onclick="openNotepadFile('C:\\Documents and Settings\\Administrator\\My Documents\\Welcome_to_BunkerOS_XP.txt')">&#128221; Notepad</button>
+                        <button onclick="openWindow('win-minesweeper')">&#128163; Minesweeper</button>
+                        <button onclick="openWindow('win-solitaire')">&#127183; Solitaire</button>
+                        <button onclick="toggleChatDrawer(true)">&#129302; Ask AI Helper</button>
+                        <button onclick="switchEnvironmentShell('xp')">&#128682; Return to Windows XP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
         <!-- CLIPPY / ROVER INTERACTIVE XP DESKTOP ASSISTANT WIDGET          -->
         <!-- =============================================================== -->
         <div id="xp-clippy-widget" class="xp-clippy-widget" style="display:none;">
@@ -1357,6 +1726,9 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
         <!-- Desktop Selection Marquee & Right-Click Context Menu -->
         <div id="xp-selection-marquee" style="display:none;"></div>
         <div id="xp-context-menu" class="xp-context-menu" style="display:none;">
+            <div class="xp-ctx-item bold" onclick="openVscodeWorkspace(); hideContextMenu();">&#9889; Open VS Code (Debian Linux Workspace)</div>
+            <div class="xp-ctx-item bold" onclick="toggleEnvironmentShell(); hideContextMenu();">&#127968; Switch Windows XP &harr; Microsoft Bob (1995)</div>
+            <div class="xp-ctx-sep"></div>
             <div class="xp-ctx-item" onclick="refreshAll(); hideContextMenu();">Refresh Desktop &amp; Vault</div>
             <div class="xp-ctx-item" onclick="openXpExplorer('My Computer'); hideContextMenu();">Explore My Computer (C:\)</div>
             <div class="xp-ctx-item" onclick="notepadNew(); hideContextMenu();">New &rarr; Text Document (Notepad)</div>
@@ -1400,6 +1772,7 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
                     <span id="active-chat-badge" class="ai-chat-pill">Welcome</span>
                 </div>
                 <div class="ai-drawer-actions">
+                    <button class="xp-mini-btn agent-pill" id="btn-chat-workspace-mode" onclick="toggleWorkspaceAgentMode()" title="Toggle Debian Workspace Agent Mode (AI can write files &amp; run Linux commands)">&#9889; Agent: OFF</button>
                     <select id="chat-header-model-select" class="xp-mini-select" title="Switch Active AI Model" onchange="selectAiModel(this.value)"></select>
                     <button class="xp-mini-btn" onclick="openWindow('win-settings'); switchSettingsTab('models');" title="Compare AI Models (Pros & Cons) & Download Alternatives">Models</button>
                     <button class="xp-mini-btn" onclick="stepReaderFontSize(-1)" title="Decrease Chat & Reader Text Size">A-</button>
@@ -1452,8 +1825,7 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
             </form>
 
             <div class="ai-quick-chips">
-                <button type="button" onclick="quickPrompt('What does Sun Tzu say about supreme excellence and deception in The Art of War?')">Art of War</button>
-                <button type="button" onclick="quickPrompt('Summarize Marcus Aurelius key Stoic principles from Meditations')">Meditations</button>
+                <button type="button" onclick="openVscodeWorkspace(); quickPrompt('Create a C program in /workspace/hello_debian.c that prints system info and compile &amp; run it')">Build C Project</button>
                 <button type="button" onclick="quickPrompt('Explain Linux x86_64 syscall registers and numbers for read, write, execve')">x64 Syscalls</button>
             </div>
         </div>
@@ -1467,11 +1839,19 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
             <div class="xp-user-avatar" data-xp-icon="xp_user_chess" data-icon-size="34"></div>
             <div class="xp-user-info">
                 <div class="xp-user-name">Bunker Administrator</div>
-                <div class="xp-user-role">Windows XP Professional SP3</div>
+                <div class="xp-user-role">Windows XP &amp; Microsoft Bob</div>
             </div>
         </div>
         <div class="xp-start-columns">
             <div class="xp-start-left">
+                <div class="xp-start-item" onclick="openVscodeWorkspace(); closeStartMenu();">
+                    <span class="s-icon" data-xp-icon="vscode_ide" data-icon-size="26"></span>
+                    <div><strong>VS Code (Debian Linux)</strong><small>Linux Workspace + AI Code Agent</small></div>
+                </div>
+                <div class="xp-start-item" onclick="switchEnvironmentShell('bob'); closeStartMenu();">
+                    <span class="s-icon" data-xp-icon="ms_bob_home" data-icon-size="26"></span>
+                    <div><strong>Microsoft Bob (1995)</strong><small>Point-and-click illustrated room</small></div>
+                </div>
                 <div class="xp-start-item" onclick="openWindow('win-library'); closeStartMenu();">
                     <span class="s-icon" data-xp-icon="my_library" data-icon-size="26"></span>
                     <div><strong>My Library (Bookshelf)</strong><small>Browse full books &amp; ZIM archives</small></div>
@@ -1491,14 +1871,6 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
                 <div class="xp-start-item" onclick="openWindow('win-solitaire'); closeStartMenu();">
                     <span class="s-icon" data-xp-icon="game_cards" data-icon-size="26"></span>
                     <div><strong>Solitaire</strong><small>Classic Klondike card game</small></div>
-                </div>
-                <div class="xp-start-item" onclick="openWindow('win-arcade'); closeStartMenu();">
-                    <span class="s-icon" data-xp-icon="game_arcade" data-icon-size="26"></span>
-                    <div><strong>Bunker Retro Arcade</strong><small>Cyber-Snake &amp; DX-Breakout</small></div>
-                </div>
-                <div class="xp-start-item" onclick="toggleChatDrawer(true); closeStartMenu();">
-                    <span class="s-icon" id="start-menu-ai-icon" data-xp-icon="xp_agent_f" data-icon-size="26"></span>
-                    <div><strong id="start-menu-ai-name">Elena Vancea AI</strong><small>Local problem-solving assistant</small></div>
                 </div>
             </div>
             <div class="xp-start-right">
@@ -1531,9 +1903,9 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
                     <span class="start-r-icon" data-xp-icon="calculator" data-icon-size="16"></span>
                     <span>Calculator</span>
                 </div>
-                <div class="xp-start-link" onclick="toggleClippyWidget(true); closeStartMenu();">
-                    <span class="start-r-icon" data-xp-icon="xp_clippy" data-icon-size="16"></span>
-                    <span>Clippy Desktop Helper</span>
+                <div class="xp-start-link" onclick="openWindow('win-arcade'); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="game_arcade" data-icon-size="16"></span>
+                    <span>Bunker Retro Arcade</span>
                 </div>
                 <hr>
                 <div class="xp-start-link bold" onclick="openWindow('win-run'); closeStartMenu();">
@@ -1543,9 +1915,9 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
             </div>
         </div>
         <div class="xp-start-footer">
-            <button class="xp-start-logoff" onclick="playXpSound('startup'); toggleClippyWidget(true); closeStartMenu();">
+            <button class="xp-start-logoff" onclick="switchEnvironmentShell('bob'); closeStartMenu();">
                 <span class="footer-btn-svg" data-xp-icon="xp_key" data-icon-size="14"></span>
-                <span>XP Chime</span>
+                <span>MS Bob (1995)</span>
             </button>
             <button class="xp-start-shutdown" onclick="refreshAll(); closeStartMenu();">
                 <span class="footer-btn-svg" data-xp-icon="xp_power" data-icon-size="14"></span>
@@ -1561,7 +1933,7 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
             <button onclick="dismissTrayBalloon()">&times;</button>
         </div>
         <div id="xp-balloon-body" class="xp-balloon-body">
-            Local filesystem <code>C:\</code>, Notepad, Minesweeper, Solitaire, Command Prompt, and 13,820 Linux Manuals are ready.
+            Local filesystem <code>C:\</code>, VS Code Debian Linux Workspace, Microsoft Bob (1995), and 13,820 Linux Manuals are ready.
         </div>
     </div>
 
@@ -1582,6 +1954,8 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
         <div id="xp-taskbar-windows"></div>
 
         <div id="xp-systray">
+            <button class="systray-mode-btn" id="tray-bob-btn" onclick="toggleEnvironmentShell()" title="Switch between Windows XP Desktop and Microsoft Bob (1995) Point-and-Click Room">MS Bob</button>
+            <button class="systray-mode-btn vscode" id="tray-vscode-btn" onclick="openVscodeWorkspace()" title="Open VS Code Debian Linux Container Workspace">VS Code</button>
             <div class="systray-font-controls" title="Instant UI Font Size Scaling">
                 <button class="systray-font-btn" onclick="stepUiFontSize(-1)">A-</button>
                 <span id="tray-font-label">12px</span>
@@ -1592,10 +1966,10 @@ Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad,
             <span class="systray-item" id="tray-settings-btn" title="Open Control Panel" onclick="openWindow('win-settings')" data-xp-icon="control_panel" data-icon-size="15"></span>
             <span class="systray-item" id="tray-books-count" title="Total Installed Books & Man Pages" onclick="openWindow('win-library')">15 Books</span>
             <span class="systray-item" id="tray-ai-pill" title="Active AI Model — Click to Switch" onclick="openWindow('win-settings'); switchSettingsTab('models');">AI Ready</span>
-            <span class="systray-clock" id="xp-clock" onclick="showTrayBalloon('BunkerOS XP System Clock & Status', 'All local services (FastAPI, SQLite, C:\\ Drive, Ollama LLM) are healthy.')">12:00 PM</span>
+            <span class="systray-clock" id="xp-clock" onclick="showTrayBalloon('BunkerOS XP &amp; Debian Workspace', 'VS Code Debian 12 Workspace, Microsoft Bob (1995), C:\\ Drive, and Ollama LLM are healthy.')">12:00 PM</span>
         </div>
     </footer>
 
-    <script src="/static/xp.js?v=10"></script>
+    <script src="/static/xp.js?v=11"></script>
 </body>
 </html>

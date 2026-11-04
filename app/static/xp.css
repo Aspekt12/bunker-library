@@ -3303,6 +3303,543 @@ body.is-resizing #ai-chat-drawer {
     font-weight: bold;
 }
 
+/* ==========================================================================
+   14. Visual Studio Code — Debian Linux Container Workspace (win-vscode)
+   ========================================================================== */
+.vscode-top-toolbar {
+    background: #252526;
+    border-bottom: 1px solid #1e1e1e;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.vscode-toolbar-left, .vscode-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.vscode-btn {
+    background: #3c3c3c;
+    color: #e2e8f0;
+    border: 1px solid #52525b;
+    border-radius: 3px;
+    padding: 3px 9px;
+    font-size: 11.5px;
+    cursor: pointer;
+}
+
+.vscode-btn:hover {
+    background: #505050;
+}
+
+.vscode-btn.primary {
+    background: #0e639c;
+    border-color: #1177bb;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.vscode-btn.run {
+    background: #16a34a;
+    border-color: #22c55e;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.vscode-agent-toggle {
+    background: #374151;
+    color: #cbd5e1;
+    border: 1px solid #64748b;
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 11.5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.vscode-agent-toggle.active {
+    background: linear-gradient(90deg, #7c3aed 0%, #2563eb 100%);
+    color: #ffffff;
+    border-color: #a78bfa;
+    box-shadow: 0 0 8px rgba(124, 58, 237, 0.55);
+}
+
+.vscode-ide-body {
+    display: flex;
+    flex: 1;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    overflow: hidden;
+}
+
+.vscode-activity-bar {
+    width: 42px;
+    background: #333333;
+    border-right: 1px solid #252526;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 8px;
+    gap: 10px;
+}
+
+.vscode-act-icon {
+    width: 34px;
+    height: 34px;
+    background: transparent;
+    border: none;
+    border-left: 2px solid transparent;
+    color: #9ca3af;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.vscode-act-icon.active, .vscode-act-icon:hover {
+    color: #ffffff;
+    border-left-color: #007acc;
+}
+
+.vscode-sidebar {
+    width: 225px;
+    background: #252526;
+    border-right: 1px solid #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.vscode-sidebar-header {
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #cccccc;
+    background: #2d2d2d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vscode-sidebar-header button {
+    background: #3c3c3c;
+    color: #e2e8f0;
+    border: 1px solid #52525b;
+    border-radius: 2px;
+    padding: 1px 5px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.vscode-file-tree {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 0;
+}
+
+.vscode-tree-item {
+    padding: 4px 10px;
+    font-size: 12px;
+    color: #cccccc;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.vscode-tree-item:hover {
+    background: #2a2d2e;
+}
+
+.vscode-tree-item.active {
+    background: #37373d;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.vscode-tree-item.folder {
+    color: #93c5fd;
+    font-weight: bold;
+}
+
+.vscode-main-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: #1e1e1e;
+}
+
+.vscode-tabs-bar {
+    height: 32px;
+    background: #252526;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    border-bottom: 1px solid #1e1e1e;
+}
+
+.vscode-tab {
+    height: 100%;
+    padding: 0 12px;
+    background: #2d2d2d;
+    color: #9ca3af;
+    border-right: 1px solid #1e1e1e;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.vscode-tab.active {
+    background: #1e1e1e;
+    color: #ffffff;
+    border-top: 2px solid #007acc;
+}
+
+.vscode-tab-close {
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.vscode-tab-close:hover {
+    opacity: 1;
+    color: #f87171;
+}
+
+.vscode-editor-wrap {
+    flex: 1;
+    display: flex;
+    min-height: 180px;
+    position: relative;
+    overflow: hidden;
+    background: #1e1e1e;
+}
+
+.vscode-line-numbers {
+    width: 44px;
+    padding: 10px 6px 10px 0;
+    text-align: right;
+    background: #1e1e1e;
+    color: #6e7681;
+    border-right: 1px solid #2d2d2d;
+    font-family: "Consolas", "Lucida Console", "Courier New", monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    user-select: none;
+    overflow: hidden;
+    white-space: pre;
+}
+
+.vscode-editor-textarea {
+    flex: 1;
+    background: #1e1e1e;
+    color: #e2e8f0;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 10px 12px;
+    font-family: "Consolas", "Lucida Console", "Courier New", monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    white-space: pre;
+    overflow: auto;
+    tab-size: 4;
+}
+
+.vscode-terminal-pane {
+    height: 175px;
+    background: #181818;
+    border-top: 1px solid #333333;
+    display: flex;
+    flex-direction: column;
+}
+
+.vscode-terminal-header {
+    padding: 4px 10px;
+    background: #252526;
+    border-bottom: 1px solid #2d2d2d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+}
+
+.vscode-term-tabs {
+    display: flex;
+    gap: 14px;
+    font-weight: bold;
+    color: #e2e8f0;
+}
+
+.vscode-term-btn {
+    background: #3c3c3c;
+    color: #e2e8f0;
+    border: 1px solid #52525b;
+    border-radius: 2px;
+    padding: 1px 7px;
+    font-size: 10.5px;
+    cursor: pointer;
+}
+
+.vscode-terminal-output {
+    flex: 1;
+    padding: 6px 10px;
+    overflow-y: auto;
+    font-family: "Consolas", "Lucida Console", monospace;
+    font-size: 12.5px;
+    line-height: 1.42;
+    color: #d4d4d4;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.vscode-terminal-input-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: #111111;
+    border-top: 1px solid #2d2d2d;
+    font-family: "Consolas", "Lucida Console", monospace;
+    font-size: 12.5px;
+}
+
+#vscode-term-prompt {
+    color: #4ade80;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+#vscode-term-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #f8fafc;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.vscode-statusbar {
+    height: 23px;
+    background: #007acc;
+    color: #ffffff;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+}
+
+.vscode-status-left, .vscode-status-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* AI Chat Header Agent Toggle & Taskbar Mode Buttons */
+.xp-mini-btn.agent-pill {
+    background: rgba(15, 23, 42, 0.45);
+    border-color: rgba(255, 255, 255, 0.4);
+    font-weight: bold;
+}
+
+.xp-mini-btn.agent-pill.active {
+    background: #16a34a;
+    border-color: #86efac;
+    color: #ffffff;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+}
+
+.systray-mode-btn {
+    background: #fef08a;
+    color: #1e293b;
+    border: 1px solid #ca8a04;
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-size: 10.5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.systray-mode-btn.vscode {
+    background: #0ea5e9;
+    color: #ffffff;
+    border-color: #0284c7;
+}
+
+/* ==========================================================================
+   15. Microsoft Bob (1995) Point-and-Click Interactive Room (#bob-room-layer)
+   ========================================================================== */
+.bob-room-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    display: flex;
+    flex-direction: column;
+    background: #f5e6c8;
+    font-family: "Comic Sans MS", "Trebuchet MS", Georgia, sans-serif;
+    user-select: none;
+}
+
+body.env-bob-mode #desktop-icons {
+    display: none;
+}
+
+.bob-top-banner {
+    height: 44px;
+    background: #fef08a;
+    border-bottom: 3px solid #000000;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.bob-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: #111827;
+}
+
+.bob-logo-badge {
+    background: #dc2626;
+    color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 12px;
+    box-shadow: 2px 2px 0 #000000;
+}
+
+.bob-room-tabs {
+    display: flex;
+    gap: 6px;
+}
+
+.bob-tab-btn, .bob-action-btn {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-weight: bold;
+    font-size: 11.5px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #000000;
+    transition: transform 0.08s ease;
+}
+
+.bob-tab-btn:hover, .bob-action-btn:hover {
+    transform: translate(-1px, -1px);
+    background: #fef9c3;
+}
+
+.bob-tab-btn.active {
+    background: #38bdf8;
+    color: #000000;
+}
+
+.bob-action-btn.agent {
+    background: #4ade80;
+}
+
+.bob-action-btn.xp-switch {
+    background: #60a5fa;
+    color: #000000;
+}
+
+.bob-scene-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+}
+
+.bob-room-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.bob-hotspot {
+    cursor: pointer;
+    transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.bob-hotspot:hover {
+    filter: drop-shadow(0 0 10px #fde047) brightness(1.06);
+}
+
+.bob-rover-dock {
+    min-height: 82px;
+    background: rgba(62, 39, 35, 0.92);
+    border-top: 3px solid #000000;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.bob-rover-avatar {
+    background: #fef08a;
+    border: 3px solid #000000;
+    border-radius: 50%;
+    padding: 4px;
+    box-shadow: 3px 3px 0 #000000;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.bob-speech-bubble {
+    flex: 1;
+    background: #ffffe1;
+    border: 3px solid #000000;
+    border-radius: 12px;
+    padding: 8px 14px;
+    color: #000000;
+    font-size: 12px;
+    line-height: 1.4;
+    box-shadow: 3px 3px 0 #000000;
+    max-width: calc(100% - 410px);
+}
+
+.bob-speech-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.bob-speech-buttons button {
+    background: #fde047;
+    color: #000000;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    padding: 2px 8px;
+    font-weight: bold;
+    font-size: 11px;
+    cursor: pointer;
+    box-shadow: 1.5px 1.5px 0 #000000;
+}
+
+.bob-speech-buttons button:hover {
+    background: #bef264;
+}
+
+
 
 
 

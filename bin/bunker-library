@@ -40,40 +40,50 @@ wait_until_ready() {
 }
 
 open_browser() {
-    log_ok "Opening ${URL}..."
+    local target_url="${1:-${URL}}"
+    log_ok "Opening BunkerOS App Window (${target_url})..."
     if [[ -z "${DISPLAY:-}" && -z "${WAYLAND_DISPLAY:-}" ]]; then
-        log_info "No GUI display detected in current shell. Access the interface at: ${URL}"
+        log_info "No GUI display detected in current shell. Access the interface at: ${target_url}"
         return 0
     fi
 
-    if command -v xdg-open >/dev/null 2>&1; then
-        nohup xdg-open "${URL}" >/dev/null 2>&1 &
-    elif command -v sensible-browser >/dev/null 2>&1; then
-        nohup sensible-browser "${URL}" >/dev/null 2>&1 &
-    elif command -v x-www-browser >/dev/null 2>&1; then
-        nohup x-www-browser "${URL}" >/dev/null 2>&1 &
-    elif command -v firefox >/dev/null 2>&1; then
-        nohup firefox "${URL}" >/dev/null 2>&1 &
-    elif command -v google-chrome >/dev/null 2>&1; then
-        nohup google-chrome "${URL}" >/dev/null 2>&1 &
+    # Prefer dedicated chromeless App Window mode (--app=...) for an authentic OS feel
+    if command -v google-chrome >/dev/null 2>&1; then
+        nohup google-chrome --app="${target_url}" >/dev/null 2>&1 &
     elif command -v chromium >/dev/null 2>&1; then
-        nohup chromium "${URL}" >/dev/null 2>&1 &
+        nohup chromium --app="${target_url}" >/dev/null 2>&1 &
+    elif command -v chromium-browser >/dev/null 2>&1; then
+        nohup chromium-browser --app="${target_url}" >/dev/null 2>&1 &
+    elif command -v brave-browser >/dev/null 2>&1; then
+        nohup brave-browser --app="${target_url}" >/dev/null 2>&1 &
+    elif command -v microsoft-edge >/dev/null 2>&1; then
+        nohup microsoft-edge --app="${target_url}" >/dev/null 2>&1 &
+    elif command -v xdg-open >/dev/null 2>&1; then
+        nohup xdg-open "${target_url}" >/dev/null 2>&1 &
+    elif command -v sensible-browser >/dev/null 2>&1; then
+        nohup sensible-browser "${target_url}" >/dev/null 2>&1 &
+    elif command -v x-www-browser >/dev/null 2>&1; then
+        nohup x-www-browser "${target_url}" >/dev/null 2>&1 &
+    elif command -v firefox >/dev/null 2>&1; then
+        nohup firefox "${target_url}" >/dev/null 2>&1 &
     else
-        log_info "Navigate to ${URL} in your browser."
+        log_info "Navigate to ${target_url} in your browser."
     fi
 }
 
 cmd_start_or_open() {
+    local mode_suffix="${1:-}"
+    local target_url="${URL}${mode_suffix}"
     if is_running; then
-        log_ok "BunkerOS XP is already running."
-        open_browser
+        log_ok "BunkerOS XP / Microsoft Bob is already running."
+        open_browser "${target_url}"
     else
-        log_info "BunkerOS XP is not running. Starting containers..."
+        log_info "BunkerOS is not running. Starting containers..."
         cd "${PROJECT_ROOT}"
         docker compose up -d
         wait_until_ready
-        log_ok "BunkerOS XP started!"
-        open_browser
+        log_ok "BunkerOS started!"
+        open_browser "${target_url}"
     fi
 }
 
@@ -132,8 +142,14 @@ cmd_uninstall() {
 }
 
 case "${1:-}" in
-    ""|start|open)
-        cmd_start_or_open
+    ""|start|open|xp)
+        cmd_start_or_open ""
+        ;;
+    bob)
+        cmd_start_or_open "/?env=bob"
+        ;;
+    code|vscode|workspace)
+        cmd_start_or_open "/?workspace=1"
         ;;
     stop|down)
         cmd_stop

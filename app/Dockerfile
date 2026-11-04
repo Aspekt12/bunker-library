@@ -12,6 +12,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     groff-base \
     bsdextrautils \
+    gcc \
+    g++ \
+    make \
+    git \
+    procps \
+    sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

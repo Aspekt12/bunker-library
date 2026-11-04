@@ -448,6 +448,28 @@ function xpIcon(name, size = 18) {
                 </svg>
             </span>`;
 
+        case "vscode_ide":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="4" y="4" width="40" height="40" rx="7" fill="#1e293b" stroke="#0284c7" stroke-width="2"/>
+                    <path d="M33 9 L17 24 L33 39 L38 36 V12 Z" fill="#0ea5e9"/>
+                    <path d="M12 17 L33 36 L33 30 L16 14 Z" fill="#38bdf8"/>
+                    <path d="M12 31 L33 12 L33 18 L16 34 Z" fill="#0284c7"/>
+                </svg>
+            </span>`;
+
+        case "ms_bob_home":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="4" y="4" width="40" height="40" rx="6" fill="#fef08a" stroke="#000000" stroke-width="2.4"/>
+                    <polygon points="8,23 24,9 40,23" fill="#dc2626" stroke="#000000" stroke-width="2.2" stroke-linejoin="round"/>
+                    <rect x="12" y="23" width="24" height="17" fill="#ffffff" stroke="#000000" stroke-width="2.2"/>
+                    <rect x="21" y="29" width="6" height="11" fill="#8b5a2b" stroke="#000000" stroke-width="1.6"/>
+                    <rect x="14" y="26" width="5" height="5" fill="#38bdf8" stroke="#000000" stroke-width="1.4"/>
+                    <rect x="29" y="26" width="5" height="5" fill="#38bdf8" stroke="#000000" stroke-width="1.4"/>
+                </svg>
+            </span>`;
+
         default:
             return renderBookSvg("#2563eb", "#1e40af", "#1e3a8a", size);
     }
@@ -462,6 +484,7 @@ function hydrateStaticIcons() {
 }
 
 const WINDOW_META = {
+    "win-vscode":      { title: "VS Code (Debian)",       icon: "vscode_ide" },
     "win-library":     { title: "My Library (Bookshelf)", icon: "my_library" },
     "win-explorer":    { title: "My Computer (C:\\)",     icon: "my_computer" },
     "win-notepad":     { title: "Notepad",                icon: "notepad" },
@@ -2784,7 +2807,11 @@ async function handleChatSubmit(e) {
         const res = await fetch(`/api/chats/${encodeURIComponent(activeChatId)}/stream`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: text }),
+            body: JSON.stringify({
+                message: text,
+                workspace_mode: typeof workspaceAgentMode !== "undefined" ? workspaceAgentMode : false,
+                active_file: typeof vscodeState !== "undefined" ? vscodeState.activeFilePath : null,
+            }),
             signal: activeChatAbortController.signal,
         });
 
@@ -2826,6 +2853,10 @@ async function handleChatSubmit(e) {
                             bubbleEl.innerHTML = renderMarkdown(accumulatedMd, true);
                         }
                         stream.scrollTop = stream.scrollHeight;
+                    } else if (evt.type === "workspace_actions" && Array.isArray(evt.actions)) {
+                        if (typeof handleAgentWorkspaceActions === "function") {
+                            handleAgentWorkspaceActions(evt.actions);
+                        }
                     }
                 } catch (parseErr) {
                     console.error("Stream parse error:", parseErr);
@@ -2919,15 +2950,18 @@ function renderMarkdown(md, isStreaming = false) {
 
     // 1. Extract fenced code blocks into placeholders BEFORE any line/heading/list parsing
     const codeBlocks = [];
-    source = source.replace(/```([a-zA-Z0-9_+-]*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+    source = source.replace(/```([a-zA-Z0-9_+.:/-]*)\n?([\s\S]*?)```/g, (_, lang, code) => {
         const idx = codeBlocks.length;
         const langLabel = (lang || "code").trim().toUpperCase();
         const escapedCode = escapeHtml(code.replace(/\n$/, ""));
         codeBlocks.push(
-            `<div class="md-code-wrap">` +
+            `<div class="md-code-wrap" data-code-lang="${escapeAttr(lang || "")}">` +
                 `<div class="md-code-header">` +
                     `<span class="md-code-lang">${escapeHtml(langLabel)}</span>` +
-                    `<button type="button" class="md-copy-btn" onclick="copyCodeBlock(this)">Copy Code</button>` +
+                    `<div style="display:flex;gap:5px;">` +
+                        `<button type="button" class="md-copy-btn" onclick="sendCodeBlockToVscode(this)">Send to VS Code</button>` +
+                        `<button type="button" class="md-copy-btn" onclick="copyCodeBlock(this)">Copy Code</button>` +
+                    `</div>` +
                 `</div>` +
                 `<pre class="md-code-pre"><code>${escapedCode}</code></pre>` +
             `</div>`
@@ -4892,10 +4926,558 @@ function handleRunDialogSubmit(e) {
         openWindow("win-settings");
     } else if (lower === "explorer" || lower === "explorer.exe" || lower.includes(":\\")) {
         openXpExplorer(cmd.includes(":\\") ? cmd : "My Computer");
+    } else if (lower === "code" || lower === "vscode") {
+        openVscodeWorkspace();
+    } else if (lower === "bob" || lower === "msbob") {
+        switchEnvironmentShell("bob");
     } else if (lower.startsWith("man ")) {
         openManPage("2", cmd.slice(4).trim());
     } else {
         openXpExplorer(cmd);
     }
 }
+
+// ==========================================================================
+// 11. MICROSOFT BOB (1995) POINT-AND-CLICK ROOM & VS CODE DEBIAN WORKSPACE
+// ==========================================================================
+let currentEnvShell = "xp"; // "xp" | "bob"
+let bobRoomState = {
+    room: "study",
+    skyIndex: 0,
+    fireplaceOn: true,
+    tipIdx: 0,
+};
+
+const BOB_ROVER_TIPS = [
+    "<strong>Woof! Welcome to Microsoft Bob (1995) Home!</strong> Click the <b>Bookshelf</b> to read books &amp; Linux manuals, click the <b>Computer Desk</b> to open <b>VS Code (Debian Linux Workspace)</b>, or click the <b>Card Table</b> to play Solitaire!",
+    "<strong>Tip from Rover:</strong> When you open <b>VS Code (Debian Linux)</b>, <b>Workspace AI Agent Mode</b> turns ON automatically so the AI can create files and run Linux commands for you!",
+    "<strong>Did you know?</strong> You can click the <b>Window</b> on the wall to cycle between Sunny Day, Golden Sunset, and Starry Night, or click the <b>Doorway</b> on the right to walk back to Windows XP!",
+    "<strong>Coding Tip:</strong> Inside VS Code, click <b>&#9654; Run / Build File</b> to compile C programs with <code>gcc</code> or run Python &amp; Bash scripts inside the Debian 12 container!",
+];
+
+function switchEnvironmentShell(mode) {
+    currentEnvShell = mode === "bob" ? "bob" : "xp";
+    const bobLayer = document.getElementById("bob-room-layer");
+    const trayBobBtn = document.getElementById("tray-bob-btn");
+
+    if (currentEnvShell === "bob") {
+        document.body.classList.add("env-bob-mode");
+        if (bobLayer) bobLayer.style.display = "flex";
+        if (trayBobBtn) trayBobBtn.textContent = "Win XP";
+        playXpSound("startup");
+    } else {
+        document.body.classList.remove("env-bob-mode");
+        if (bobLayer) bobLayer.style.display = "none";
+        if (trayBobBtn) trayBobBtn.textContent = "MS Bob";
+        playXpSound("ding");
+    }
+    localStorage.setItem("bunker_env_shell", currentEnvShell);
+}
+
+function toggleEnvironmentShell() {
+    switchEnvironmentShell(currentEnvShell === "bob" ? "xp" : "bob");
+}
+
+function switchBobRoom(roomKey) {
+    bobRoomState.room = roomKey;
+    ["study", "lab", "parlor"].forEach((k) => {
+        document.getElementById(`bob-tab-${k}`)?.classList.toggle("active", k === roomKey);
+    });
+    const wall = document.getElementById("bob-wall-bg");
+    const titleEl = document.getElementById("bob-room-title");
+    const speechEl = document.getElementById("bob-rover-speech");
+    if (roomKey === "study") {
+        if (wall) wall.setAttribute("fill", "#f5e6c8");
+        if (titleEl) titleEl.textContent = "The Cozy Study & Knowledge Library";
+        if (speechEl) speechEl.innerHTML = BOB_ROVER_TIPS[0];
+    } else if (roomKey === "lab") {
+        if (wall) wall.setAttribute("fill", "#dbeafe");
+        if (titleEl) titleEl.textContent = "The Debian Linux & VS Code Engineering Lab";
+        if (speechEl) {
+            speechEl.innerHTML =
+                "<strong>Welcome to the Debian Linux &amp; VS Code Lab!</strong> Click the <b>VS Code Workstation Desk</b> to open your Debian 12 IDE with AI Agent file-writing &amp; command execution enabled!";
+        }
+    } else {
+        if (wall) wall.setAttribute("fill", "#dcfce7");
+        if (titleEl) titleEl.textContent = "The Classic Game & Recreation Parlor";
+        if (speechEl) {
+            speechEl.innerHTML =
+                "<strong>Welcome to the Game Parlor!</strong> Click the <b>Green Card Table</b> for Klondike Solitaire, the <b>Naval Mine</b> for Minesweeper, or the <b>Joystick</b> for Cyber-Snake &amp; Breakout!";
+        }
+    }
+    playXpSound("click");
+}
+
+function cycleBobWindowSky() {
+    bobRoomState.skyIndex = (bobRoomState.skyIndex + 1) % 3;
+    const skyRect = document.getElementById("bob-sky-rect");
+    const skyOrb = document.getElementById("bob-sky-orb");
+    if (!skyRect || !skyOrb) return;
+    if (bobRoomState.skyIndex === 0) {
+        skyRect.setAttribute("fill", "#38bdf8");
+        skyOrb.setAttribute("fill", "#fde047");
+    } else if (bobRoomState.skyIndex === 1) {
+        skyRect.setAttribute("fill", "#fb923c");
+        skyOrb.setAttribute("fill", "#ef4444");
+    } else {
+        skyRect.setAttribute("fill", "#0f172a");
+        skyOrb.setAttribute("fill", "#f8fafc");
+    }
+    playXpSound("click");
+}
+
+function toggleBobFireplace() {
+    bobRoomState.fireplaceOn = !bobRoomState.fireplaceOn;
+    const flames = document.getElementById("bob-fire-flames");
+    if (flames) flames.style.display = bobRoomState.fireplaceOn ? "block" : "none";
+    playXpSound("ding");
+}
+
+function bobRoverNextTip() {
+    bobRoomState.tipIdx = (bobRoomState.tipIdx + 1) % BOB_ROVER_TIPS.length;
+    const speechEl = document.getElementById("bob-rover-speech");
+    if (speechEl) speechEl.innerHTML = BOB_ROVER_TIPS[bobRoomState.tipIdx];
+    playXpSound("click");
+}
+
+// --------------------------------------------------------------------------
+// 11.2 Visual Studio Code — Debian Linux Container Workspace (win-vscode)
+// --------------------------------------------------------------------------
+let workspaceAgentMode = false;
+let vscodeState = {
+    treeItems: [],
+    openTabs: [], // [{ path, name, content, dirty }]
+    activeFilePath: null,
+    termCwd: "",
+    osName: "Debian GNU/Linux 12 (bookworm)",
+};
+
+function setWorkspaceAgentMode(enabled) {
+    workspaceAgentMode = Boolean(enabled);
+    const vscodeBtn = document.getElementById("btn-vscode-agent-mode");
+    const chatBtn = document.getElementById("btn-chat-workspace-mode");
+    const statusAgent = document.getElementById("vscode-status-agent");
+    const chatInput = document.getElementById("ai-chat-input");
+
+    if (vscodeBtn) {
+        vscodeBtn.classList.toggle("active", workspaceAgentMode);
+        vscodeBtn.innerHTML = workspaceAgentMode
+            ? "&#9889; AI Workspace Agent: ON (Can Write Files &amp; Run Cmds)"
+            : "&#9889; AI Workspace Agent: OFF (Read-Only Chat)";
+    }
+    if (chatBtn) {
+        chatBtn.classList.toggle("active", workspaceAgentMode);
+        chatBtn.innerHTML = workspaceAgentMode ? "&#9889; Agent: ON" : "&#9889; Agent: OFF";
+    }
+    if (statusAgent) {
+        statusAgent.textContent = workspaceAgentMode
+            ? "AI Agent: Write & Exec ENABLED"
+            : "AI Agent: Read-Only";
+    }
+    if (chatInput) {
+        chatInput.placeholder = workspaceAgentMode
+            ? "Workspace Agent ON: Ask AI to create files, write code, or run Linux commands in /workspace..."
+            : "Ask a problem or coding question...";
+    }
+}
+
+function toggleWorkspaceAgentMode() {
+    setWorkspaceAgentMode(!workspaceAgentMode);
+    playXpSound("ding");
+}
+
+async function openVscodeWorkspace(fileToOpen = null) {
+    openWindow("win-vscode");
+    // Automatically enable Workspace AI Agent Mode when VS Code Workspace is active!
+    setWorkspaceAgentMode(true);
+    await refreshVscodeTree();
+    if (fileToOpen) {
+        await vscodeOpenFile(fileToOpen);
+    } else if (!vscodeState.activeFilePath) {
+        await vscodeOpenFile("c-mmap-allocator/main.c");
+    }
+}
+
+function closeVscodeWorkspace() {
+    closeWindow("win-vscode");
+}
+
+async function refreshVscodeTree() {
+    try {
+        const res = await fetch("/api/workspace/tree");
+        const data = await res.json();
+        vscodeState.treeItems = data.items || [];
+        vscodeState.osName = data.os_name || "Debian GNU/Linux 12";
+
+        const badge = document.getElementById("vscode-toolchain-badge");
+        if (badge && data.tools) {
+            const parts = ["bash", "python3"];
+            if (data.tools.gcc) parts.push("gcc/make");
+            if (data.tools.git) parts.push("git");
+            badge.textContent = parts.join(" • ");
+        }
+
+        renderVscodeFileTree();
+    } catch (err) {
+        console.error("Failed to load workspace tree:", err);
+    }
+}
+
+function renderVscodeFileTree() {
+    const treeEl = document.getElementById("vscode-file-tree");
+    if (!treeEl) return;
+
+    if (!vscodeState.treeItems.length) {
+        treeEl.innerHTML = `<div style="padding:10px;color:#9ca3af;font-size:11.5px;">Workspace is empty. Click <b>+ New File</b> or ask the AI Agent to create a project.</div>`;
+        return;
+    }
+
+    treeEl.innerHTML = vscodeState.treeItems
+        .map((it) => {
+            const padLeft = 10 + (it.depth || 0) * 14;
+            const isAct = it.kind === "file" && it.path === vscodeState.activeFilePath;
+            const icon = it.kind === "folder" ? "&#128193;" : "&#128196;";
+            const clickAction =
+                it.kind === "file"
+                    ? `vscodeOpenFile('${escapeAttr(it.path)}')`
+                    : "";
+            return `
+                <div class="vscode-tree-item ${it.kind} ${isAct ? "active" : ""}" style="padding-left:${padLeft}px;" onclick="${clickAction}">
+                    <span style="overflow:hidden;text-overflow:ellipsis;">${icon} ${escapeHtml(it.name)}</span>
+                    ${it.size_label ? `<small style="opacity:0.55;font-size:10px;">${escapeHtml(it.size_label)}</small>` : ""}
+                </div>
+            `;
+        })
+        .join("");
+}
+
+async function vscodeOpenFile(relPath) {
+    try {
+        const res = await fetch(`/api/workspace/file?path=${encodeURIComponent(relPath)}`);
+        if (!res.ok) throw new Error(`File not found: ${relPath}`);
+        const data = await res.json();
+
+        let tab = vscodeState.openTabs.find((t) => t.path === data.path);
+        if (!tab) {
+            tab = { path: data.path, name: data.name, content: data.content || "", dirty: false };
+            vscodeState.openTabs.push(tab);
+        } else {
+            tab.content = data.content || "";
+            tab.dirty = false;
+        }
+        vscodeState.activeFilePath = data.path;
+        renderVscodeTabsAndEditor();
+        renderVscodeFileTree();
+    } catch (err) {
+        console.error("Failed to open workspace file:", err);
+    }
+}
+
+function renderVscodeTabsAndEditor() {
+    const tabsBar = document.getElementById("vscode-tabs-bar");
+    const editor = document.getElementById("vscode-editor-textarea");
+    const statusFile = document.getElementById("vscode-status-file");
+
+    if (tabsBar) {
+        tabsBar.innerHTML = vscodeState.openTabs
+            .map((t) => {
+                const isAct = t.path === vscodeState.activeFilePath;
+                return `
+                    <div class="vscode-tab ${isAct ? "active" : ""}" onclick="vscodeSelectTab('${escapeAttr(t.path)}')">
+                        <span>${escapeHtml(t.name)}${t.dirty ? " ●" : ""}</span>
+                        <span class="vscode-tab-close" onclick="vscodeCloseTab(event, '${escapeAttr(t.path)}')">&times;</span>
+                    </div>
+                `;
+            })
+            .join("");
+    }
+
+    const activeTab = vscodeState.openTabs.find((t) => t.path === vscodeState.activeFilePath);
+    if (editor) {
+        editor.value = activeTab ? activeTab.content : "";
+        updateVscodeLineNumbers();
+        updateVscodeCursorPos();
+    }
+    if (statusFile) {
+        statusFile.textContent = activeTab ? `/workspace/${activeTab.path}` : "No file open";
+    }
+}
+
+function vscodeSelectTab(path) {
+    vscodeState.activeFilePath = path;
+    renderVscodeTabsAndEditor();
+    renderVscodeFileTree();
+}
+
+function vscodeCloseTab(e, path) {
+    if (e) e.stopPropagation();
+    vscodeState.openTabs = vscodeState.openTabs.filter((t) => t.path !== path);
+    if (vscodeState.activeFilePath === path) {
+        vscodeState.activeFilePath = vscodeState.openTabs.length
+            ? vscodeState.openTabs[vscodeState.openTabs.length - 1].path
+            : null;
+    }
+    renderVscodeTabsAndEditor();
+    renderVscodeFileTree();
+}
+
+function onVscodeEditorInput() {
+    const editor = document.getElementById("vscode-editor-textarea");
+    const activeTab = vscodeState.openTabs.find((t) => t.path === vscodeState.activeFilePath);
+    if (editor && activeTab) {
+        activeTab.content = editor.value;
+        activeTab.dirty = true;
+        const tabsBar = document.getElementById("vscode-tabs-bar");
+        if (tabsBar) {
+            renderVscodeTabsAndEditor();
+            editor.focus();
+        }
+    }
+    updateVscodeLineNumbers();
+    updateVscodeCursorPos();
+}
+
+function updateVscodeLineNumbers() {
+    const editor = document.getElementById("vscode-editor-textarea");
+    const gutter = document.getElementById("vscode-line-numbers");
+    if (!editor || !gutter) return;
+    const count = Math.max(1, (editor.value || "").split("\n").length);
+    const nums = [];
+    for (let i = 1; i <= count; i++) nums.push(i);
+    gutter.textContent = nums.join("\n");
+}
+
+function syncVscodeLineNumbersScroll() {
+    const editor = document.getElementById("vscode-editor-textarea");
+    const gutter = document.getElementById("vscode-line-numbers");
+    if (editor && gutter) {
+        gutter.scrollTop = editor.scrollTop;
+    }
+}
+
+function updateVscodeCursorPos() {
+    const editor = document.getElementById("vscode-editor-textarea");
+    const statusCursor = document.getElementById("vscode-status-cursor");
+    if (!editor || !statusCursor) return;
+    const pos = editor.selectionStart || 0;
+    const lines = editor.value.slice(0, pos).split("\n");
+    statusCursor.textContent = `Ln ${lines.length}, Col ${lines[lines.length - 1].length + 1}`;
+}
+
+function handleVscodeEditorKeydown(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+        vscodeSaveActiveFile();
+        return;
+    }
+    if (e.key === "Tab") {
+        e.preventDefault();
+        const editor = e.target;
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        editor.value = editor.value.substring(0, start) + "    " + editor.value.substring(end);
+        editor.selectionStart = editor.selectionEnd = start + 4;
+        onVscodeEditorInput();
+    }
+}
+
+async function vscodeSaveActiveFile() {
+    const activeTab = vscodeState.openTabs.find((t) => t.path === vscodeState.activeFilePath);
+    if (!activeTab) {
+        await vscodeNewFile();
+        return;
+    }
+    await fetch("/api/workspace/file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: activeTab.path, content: activeTab.content }),
+    });
+    activeTab.dirty = false;
+    renderVscodeTabsAndEditor();
+    await refreshVscodeTree();
+    appendVscodeTerminal(`[Saved /workspace/${activeTab.path}]`);
+    playXpSound("ding");
+}
+
+async function vscodeNewFile() {
+    const relPath = prompt("Enter relative file path in /workspace (e.g. my-project/main.c or script.py):", "app.py");
+    if (!relPath) return;
+    const editor = document.getElementById("vscode-editor-textarea");
+    const initialContent = editor && !vscodeState.activeFilePath ? editor.value : "";
+    await fetch("/api/workspace/file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: relPath.trim(), content: initialContent }),
+    });
+    await refreshVscodeTree();
+    await vscodeOpenFile(relPath.trim());
+}
+
+async function vscodeNewFolder() {
+    const relPath = prompt("Enter folder path to create in /workspace:", "new-project");
+    if (!relPath) return;
+    await fetch("/api/workspace/mkdir", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: relPath.trim() }),
+    });
+    await refreshVscodeTree();
+}
+
+async function vscodeDeleteActiveFile() {
+    if (!vscodeState.activeFilePath) return;
+    if (!confirm(`Delete /workspace/${vscodeState.activeFilePath}?`)) return;
+    const target = vscodeState.activeFilePath;
+    await fetch(`/api/workspace/file?path=${encodeURIComponent(target)}`, { method: "DELETE" });
+    vscodeCloseTab(null, target);
+    await refreshVscodeTree();
+}
+
+function appendVscodeTerminal(text) {
+    const out = document.getElementById("vscode-terminal-output");
+    if (!out) return;
+    out.textContent += `\n${text}`;
+    out.scrollTop = out.scrollHeight;
+}
+
+function clearVscodeTerminal() {
+    const out = document.getElementById("vscode-terminal-output");
+    if (out) out.textContent = "";
+}
+
+async function executeVscodeCommand(cmdStr) {
+    const promptSpan = document.getElementById("vscode-term-prompt");
+    const cwdLabel = vscodeState.termCwd ? `/workspace/${vscodeState.termCwd}` : "/workspace";
+    appendVscodeTerminal(`root@debian-bunker:${cwdLabel}# ${cmdStr}`);
+
+    const res = await fetch("/api/workspace/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ command: cmdStr, cwd: vscodeState.termCwd }),
+    });
+    const data = await res.json();
+    vscodeState.termCwd = data.cwd || "";
+    const nextCwdLabel = vscodeState.termCwd ? `/workspace/${vscodeState.termCwd}` : "/workspace";
+    if (promptSpan) promptSpan.textContent = `root@debian-bunker:${nextCwdLabel}#`;
+
+    if (data.stdout) appendVscodeTerminal(data.stdout.trimEnd());
+    if (data.stderr) appendVscodeTerminal(data.stderr.trimEnd());
+    await refreshVscodeTree();
+}
+
+async function handleVscodeTerminalSubmit(e) {
+    e.preventDefault();
+    const inp = document.getElementById("vscode-term-input");
+    const cmd = (inp?.value || "").trim();
+    if (!cmd) return;
+    inp.value = "";
+    if (cmd === "clear" || cmd === "cls") {
+        clearVscodeTerminal();
+        return;
+    }
+    await executeVscodeCommand(cmd);
+}
+
+async function vscodeRunActiveFile() {
+    if (!vscodeState.activeFilePath) return;
+    await vscodeSaveActiveFile();
+    const p = vscodeState.activeFilePath;
+    let cmd = "";
+    if (p.endsWith(".c")) {
+        const bin = p.replace(/\.c$/, ".out");
+        cmd = `gcc "${p}" -O2 -Wall -o "${bin}" && "./${bin}"`;
+    } else if (p.endsWith(".cpp") || p.endsWith(".cc")) {
+        const bin = p.replace(/\.(cpp|cc)$/, ".out");
+        cmd = `g++ "${p}" -O2 -Wall -o "${bin}" && "./${bin}"`;
+    } else if (p.endsWith(".py")) {
+        cmd = `python3 "${p}"`;
+    } else if (p.endsWith(".sh")) {
+        cmd = `bash "${p}"`;
+    } else if (p.endsWith("Makefile")) {
+        const dir = p.includes("/") ? p.split("/").slice(0, -1).join("/") : ".";
+        cmd = `make -C "${dir}" run || make -C "${dir}"`;
+    } else {
+        cmd = `cat "${p}"`;
+    }
+    await executeVscodeCommand(cmd);
+}
+
+async function vscodeInstallToolchain() {
+    appendVscodeTerminal("[Installing gcc, g++, make, git, sqlite3 inside Debian 12 container via apt-get...]");
+    const res = await fetch("/api/workspace/install-tools", { method: "POST" });
+    const data = await res.json();
+    if (data.stdout) appendVscodeTerminal(data.stdout.slice(-800));
+    if (data.stderr) appendVscodeTerminal(data.stderr.slice(-800));
+    await refreshVscodeTree();
+}
+
+function vscodeAskAiToBuild() {
+    setWorkspaceAgentMode(true);
+    openChatAndFocus(
+        vscodeState.activeFilePath
+            ? `In /workspace/${vscodeState.activeFilePath}, please improve the code, save it, and run it.`
+            : `Create a new project in /workspace and run it.`
+    );
+}
+
+async function sendCodeBlockToVscode(btnEl) {
+    const wrap = btnEl.closest(".md-code-wrap");
+    const codeEl = wrap?.querySelector("code");
+    if (!codeEl) return;
+    const rawLang = (wrap.getAttribute("data-code-lang") || "").trim();
+    let defaultPath = vscodeState.activeFilePath || "ai_snippet.c";
+    if (rawLang.includes(":")) {
+        const afterColon = rawLang.split(":", 2)[1];
+        if (afterColon && afterColon !== "run") defaultPath = afterColon;
+    } else if (rawLang === "python" || rawLang === "py") {
+        defaultPath = "script.py";
+    } else if (rawLang === "bash" || rawLang === "sh") {
+        defaultPath = "run.sh";
+    }
+    const targetPath = prompt("Save code block to /workspace file:", defaultPath);
+    if (!targetPath) return;
+
+    await fetch("/api/workspace/file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: targetPath.trim(), content: codeEl.textContent || "" }),
+    });
+    await openVscodeWorkspace(targetPath.trim());
+}
+
+async function handleAgentWorkspaceActions(actions) {
+    if (!Array.isArray(actions) || !actions.length) return;
+    openWindow("win-vscode");
+    await refreshVscodeTree();
+
+    for (const act of actions) {
+        if (act.kind === "write_file" && act.path) {
+            appendVscodeTerminal(`[AI Agent wrote /workspace/${act.path} (${act.bytes} bytes)]`);
+            await vscodeOpenFile(act.path);
+        } else if (act.kind === "run_cmd") {
+            appendVscodeTerminal(`[AI Agent executed: ${act.command} (exit ${act.exit_code})]`);
+            if (act.stdout) appendVscodeTerminal(act.stdout.trimEnd());
+            if (act.stderr) appendVscodeTerminal(act.stderr.trimEnd());
+        }
+    }
+    playXpSound("win");
+}
+
+// Check URL parameters or saved environment shell on startup
+window.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const envParam = params.get("env");
+    if (envParam === "bob") {
+        switchEnvironmentShell("bob");
+    } else if (envParam === "xp") {
+        switchEnvironmentShell("xp");
+    } else {
+        const savedEnv = localStorage.getItem("bunker_env_shell");
+        if (savedEnv === "bob") switchEnvironmentShell("bob");
+    }
+    if (params.get("workspace") === "1") {
+        openVscodeWorkspace();
+    }
+});
+
 

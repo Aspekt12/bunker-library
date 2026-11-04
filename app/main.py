@@ -1472,6 +1472,232 @@ async def api_delete_chat(chat_id: str) -> Dict[str, Any]:
 class ChatMessageRequest(BaseModel):
     message: str
     model: Optional[str] = None
+    workspace_mode: bool = False
+    active_file: Optional[str] = None
+
+
+WORKSPACE_ROOT = APP_DATA_DIR / "workspace"
+
+
+def init_debian_workspace() -> None:
+    WORKSPACE_ROOT.mkdir(parents=True, exist_ok=True)
+    c_proj = WORKSPACE_ROOT / "c-mmap-allocator"
+    py_proj = WORKSPACE_ROOT / "python-log-analyzer"
+    sh_proj = WORKSPACE_ROOT / "debian-toolkit"
+
+    for d in (c_proj, py_proj, sh_proj):
+        d.mkdir(parents=True, exist_ok=True)
+
+    starter_files = {
+        c_proj / "main.c": (
+            "#include <stdio.h>\n"
+            "#include <stdlib.h>\n"
+            "#include <string.h>\n"
+            "#include <sys/mman.h>\n"
+            "#include <unistd.h>\n\n"
+            "int main(void) {\n"
+            "    long page_size = sysconf(_SC_PAGESIZE);\n"
+            "    void *arena = mmap(NULL, page_size, PROT_READ | PROT_WRITE,\n"
+            "                       MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);\n"
+            "    if (arena == MAP_FAILED) {\n"
+            "        perror(\"mmap\");\n"
+            "        return 1;\n"
+            "    }\n\n"
+            "    snprintf((char *)arena, page_size,\n"
+            "             \"[Debian Linux Workspace] Custom mmap() arena (%ld bytes) active!\\n\",\n"
+            "             page_size);\n"
+            "    printf(\"%s\", (char *)arena);\n\n"
+            "    munmap(arena, page_size);\n"
+            "    return 0;\n"
+            "}\n"
+        ),
+        c_proj / "Makefile": (
+            "CC = gcc\n"
+            "CFLAGS = -Wall -Wextra -O2\n\n"
+            "all: mmap_demo\n\n"
+            "mmap_demo: main.c\n"
+            "\t$(CC) $(CFLAGS) main.c -o mmap_demo\n\n"
+            "run: mmap_demo\n"
+            "\t./mmap_demo\n\n"
+            "clean:\n"
+            "\trm -f mmap_demo\n"
+        ),
+        py_proj / "analyzer.py": (
+            "#!/usr/bin/env python3\n"
+            "import os\n"
+            "import platform\n"
+            "import sys\n\n"
+            "def main() -> None:\n"
+            "    print('=== BunkerOS Debian Workspace Python Runner ===')\n"
+            "    print(f'Python : {sys.version.split()[0]}')\n"
+            "    print(f'Kernel : {platform.system()} {platform.release()} ({platform.machine()})')\n"
+            "    print(f'Workdir: {os.getcwd()}')\n"
+            "    files = sorted(os.listdir('.'))\n"
+            "    print(f'Files  : {files}')\n\n"
+            "if __name__ == '__main__':\n"
+            "    main()\n"
+        ),
+        sh_proj / "sysaudit.sh": (
+            "#!/usr/bin/env bash\n"
+            "set -e\n"
+            "echo \"=== Debian Container Environment Audit ===\"\n"
+            "grep -E '^(PRETTY_NAME|VERSION)=' /etc/os-release || true\n"
+            "uname -a\n"
+            "echo \"Workspace path: $(pwd)\"\n"
+            "ls -la\n"
+        ),
+    }
+
+    for fpath, content in starter_files.items():
+        if not fpath.exists():
+            fpath.write_text(content, encoding="utf-8")
+
+
+init_debian_workspace()
+
+
+def resolve_workspace_path(rel_path: str) -> Path:
+    cleaned = (rel_path or "").strip().lstrip("/\\").replace("\\", "/")
+    if not cleaned or cleaned == ".":
+        return WORKSPACE_ROOT.resolve()
+    candidate = (WORKSPACE_ROOT / cleaned).resolve()
+    root_res = WORKSPACE_ROOT.resolve()
+    if not str(candidate).startswith(str(root_res)):
+        return root_res
+    return candidate
+
+
+def list_workspace_files_flat(limit: int = 60) -> List[str]:
+    out: List[str] = []
+    root_res = WORKSPACE_ROOT.resolve()
+    for p in sorted(root_res.rglob("*")):
+        if p.is_file() and "/.git/" not in str(p):
+            rel = str(p.relative_to(root_res))
+            out.append(rel)
+            if len(out) >= limit:
+                break
+    return out
+
+
+def execute_workspace_shell_cmd(command: str, rel_cwd: str = "") -> Dict[str, Any]:
+    work_dir = resolve_workspace_path(rel_cwd)
+    if not work_dir.exists() or not work_dir.is_dir():
+        work_dir = WORKSPACE_ROOT.resolve()
+
+    wrapped_cmd = f"{command}\n__ec=$?\npwd > /tmp/.bunker_ws_pwd\nexit $__ec"
+    try:
+        proc = subprocess.run(
+            ["bash", "-c", wrapped_cmd],
+            cwd=str(work_dir),
+            capture_output=True,
+            text=True,
+            timeout=45,
+            env={**os.environ, "DEBIAN_FRONTEND": "noninteractive", "TERM": "xterm-256color"},
+        )
+        new_cwd = rel_cwd
+        pwd_file = Path("/tmp/.bunker_ws_pwd")
+        if pwd_file.exists():
+            raw_pwd = pwd_file.read_text(encoding="utf-8", errors="ignore").strip()
+            resolved_pwd = Path(raw_pwd).resolve()
+            root_res = WORKSPACE_ROOT.resolve()
+            if str(resolved_pwd).startswith(str(root_res)):
+                rel_sub = str(resolved_pwd.relative_to(root_res))
+                new_cwd = "" if rel_sub == "." else rel_sub
+        return {
+            "command": command,
+            "stdout": proc.stdout[-16000:] if proc.stdout else "",
+            "stderr": proc.stderr[-16000:] if proc.stderr else "",
+            "exit_code": proc.returncode,
+            "cwd": new_cwd,
+        }
+    except subprocess.TimeoutExpired:
+        return {
+            "command": command,
+            "stdout": "",
+            "stderr": "Command timed out after 45 seconds.",
+            "exit_code": 124,
+            "cwd": rel_cwd,
+        }
+    except Exception as exc:
+        return {
+            "command": command,
+            "stdout": "",
+            "stderr": str(exc),
+            "exit_code": 1,
+            "cwd": rel_cwd,
+        }
+
+
+def execute_workspace_agent_actions(reply_text: str, user_text: str = "") -> List[Dict[str, Any]]:
+    actions: List[Dict[str, Any]] = []
+    written_paths = set()
+
+    # 1. Explicit <write_file path="...">...</write_file> tags
+    for m in re.finditer(r'<write_file\s+path=["\']([^"\']+)["\']\s*>\s*([\s\S]*?)\s*</write_file>', reply_text, re.IGNORECASE):
+        rel_path = m.group(1).strip()
+        code_body = m.group(2)
+        code_body = re.sub(r"^```[a-zA-Z0-9_+-]*\n", "", code_body)
+        code_body = re.sub(r"\n```$", "", code_body)
+        target = resolve_workspace_path(rel_path)
+        if target != WORKSPACE_ROOT.resolve():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(code_body.rstrip() + "\n", encoding="utf-8")
+            written_paths.add(rel_path)
+            actions.append({"kind": "write_file", "path": rel_path, "bytes": len(code_body)})
+
+    # 2. Fenced ```file:path/to/file or ```lang:path/to/file.ext or ```lang filename=path
+    for m in re.finditer(r"```(?:file:|([a-zA-Z0-9_+-]+):)([a-zA-Z0-9_./-]+\.[a-zA-Z0-9]+)\s*\n([\s\S]*?)```", reply_text):
+        rel_path = m.group(2).strip()
+        if rel_path in ("run", "sh", "bash") or rel_path in written_paths:
+            continue
+        code_body = m.group(3)
+        target = resolve_workspace_path(rel_path)
+        if target != WORKSPACE_ROOT.resolve():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(code_body.rstrip() + "\n", encoding="utf-8")
+            written_paths.add(rel_path)
+            actions.append({"kind": "write_file", "path": rel_path, "bytes": len(code_body)})
+
+    # 3. Fallback: If the user explicitly asked to create/write/save a filename (e.g. "create hello.c" or "write fib.py")
+    #    and no file was written yet, extract the first code block and write it to that filename!
+    if not written_paths:
+        m_fname = re.search(r"\b([a-zA-Z0-9_./-]+\.(?:c|cpp|h|py|sh|js|html|css|md|txt|json|rs|go))\b", user_text + "\n" + reply_text)
+        m_block = re.search(r"```([a-zA-Z0-9_+-]*)\n([\s\S]*?)```", reply_text)
+        if m_fname and m_block and m_block.group(1).lower() not in ("bash:run", "sh:run"):
+            rel_path = m_fname.group(1).strip()
+            code_body = m_block.group(2)
+            target = resolve_workspace_path(rel_path)
+            if target != WORKSPACE_ROOT.resolve():
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text(code_body.rstrip() + "\n", encoding="utf-8")
+                written_paths.add(rel_path)
+                actions.append({"kind": "write_file", "path": rel_path, "bytes": len(code_body)})
+
+    # 4. Explicit <run_cmd>...</run_cmd> or ```bash:run ... ``` blocks
+    cmds_to_run: List[str] = []
+    for m in re.finditer(r"<run_cmd>([\s\S]*?)</run_cmd>", reply_text, re.IGNORECASE):
+        c = m.group(1).strip()
+        if c:
+            cmds_to_run.append(c)
+
+    for m in re.finditer(r"```(?:bash:run|sh:run|run)\s*\n([\s\S]*?)```", reply_text, re.IGNORECASE):
+        c = m.group(1).strip()
+        if c:
+            cmds_to_run.append(c)
+
+    for cmd_str in cmds_to_run[:4]:
+        res = execute_workspace_shell_cmd(cmd_str)
+        actions.append(
+            {
+                "kind": "run_cmd",
+                "command": cmd_str,
+                "stdout": res["stdout"],
+                "stderr": res["stderr"],
+                "exit_code": res["exit_code"],
+            }
+        )
+
+    return actions
 
 
 async def prepare_chat_turn(chat_id: str, req: ChatMessageRequest) -> Dict[str, Any]:
@@ -1528,10 +1754,29 @@ async def prepare_chat_turn(chat_id: str, req: ChatMessageRequest) -> Dict[str, 
         + " IMPORTANT: Never just dump or repeat manual pages. Solve the user's problem directly with clear explanations and practical, working code examples."
     )
 
+    if req.workspace_mode:
+        ws_files = ", ".join(list_workspace_files_flat(25)) or "(empty)"
+        active_file_ctx = ""
+        if req.active_file:
+            af_path = resolve_workspace_path(req.active_file)
+            if af_path.exists() and af_path.is_file():
+                af_text = af_path.read_text(encoding="utf-8", errors="ignore")[:1200]
+                active_file_ctx = f"\nCurrently open file in VS Code (`{req.active_file}`):\n```\n{af_text}\n```\n"
+        formatted_persona += (
+            "\n\n[DEBIAN LINUX WORKSPACE AGENT MODE ACTIVE]\n"
+            f"Current files in /workspace: {ws_files}\n"
+            "You have direct write & execution access to the user's Debian Linux /workspace container!\n"
+            "- To create or modify a file in /workspace, wrap the file content in:\n"
+            "```file:path/to/filename.ext\n<full code here>\n```\n"
+            "- To run Linux commands (e.g. gcc, python3, ls, make) in /workspace, wrap commands in:\n"
+            "```bash:run\n<shell command here>\n```\n"
+            "Always use these blocks when creating or running projects so they execute automatically in VS Code!"
+        )
+        context_note = active_file_ctx + context_note
+
     ollama_messages = [{"role": "system", "content": formatted_persona}]
     for h in recent_rows[:-1]:
         content_str = h["content"] or ""
-        # Skip old broken fallback dumps or huge welcome messages so prompt eval stays < 2s
         if content_str.startswith("**[Local Archive Direct Match") or len(content_str) > 1400:
             continue
         ollama_messages.append({"role": h["role"], "content": content_str})
@@ -1567,6 +1812,7 @@ async def prepare_chat_turn(chat_id: str, req: ChatMessageRequest) -> Dict[str, 
         "sources": sources,
         "ollama_messages": ollama_messages,
         "target_model": target_model,
+        "workspace_mode": req.workspace_mode,
     }
 
 
@@ -1582,6 +1828,7 @@ async def api_stream_message(chat_id: str, req: ChatMessageRequest) -> Streaming
                 "chat_title": turn["chat_title"],
                 "sources": turn["sources"],
                 "model": turn["target_model"],
+                "workspace_mode": turn["workspace_mode"],
             }
         ) + "\n"
 
@@ -1615,6 +1862,24 @@ async def api_stream_message(chat_id: str, req: ChatMessageRequest) -> Streaming
             yield json.dumps({"type": "token", "token": err_msg}) + "\n"
 
         reply_text = "".join(accumulated).strip() or "No response generated from local AI model."
+
+        # If Workspace Agent Mode is active, execute any file writes and Linux shell commands!
+        ws_actions = []
+        if turn["workspace_mode"]:
+            ws_actions = execute_workspace_agent_actions(reply_text, turn["user_text"])
+            if ws_actions:
+                summary_lines = ["\n\n---\n**Debian Workspace Agent Actions Executed:**"]
+                for act in ws_actions:
+                    if act["kind"] == "write_file":
+                        summary_lines.append(f"- Wrote file `/workspace/{act['path']}` ({act['bytes']} bytes)")
+                    elif act["kind"] == "run_cmd":
+                        out_snip = (act.get("stdout") or act.get("stderr") or "(exit 0)").strip()[:400]
+                        summary_lines.append(f"- Executed `{act['command']}` (exit {act['exit_code']}):\n```\n{out_snip}\n```")
+                extra_md = "\n".join(summary_lines)
+                reply_text += extra_md
+                yield json.dumps({"type": "token", "token": extra_md}) + "\n"
+                yield json.dumps({"type": "workspace_actions", "actions": ws_actions}) + "\n"
+
         assistant_msg_id = str(uuid.uuid4())
         now_done = int(time.time())
         conn = get_db()
@@ -1636,6 +1901,7 @@ async def api_stream_message(chat_id: str, req: ChatMessageRequest) -> Streaming
                     "content": reply_text,
                     "sources": turn["sources"],
                     "created_at": now_done,
+                    "workspace_actions": ws_actions,
                 },
             }
         ) + "\n"
@@ -2124,6 +2390,148 @@ async def api_fs_rename(req: FsRenameRequest) -> Dict[str, Any]:
     parts = norm.split("\\")
     parts[-1] = clean_name
     return {"status": "renamed", "path": "\\".join(parts), "name": clean_name}
+
+
+# ==============================================================================
+# 7.8. Debian Linux Container Workspace API (/api/workspace/*) for VS Code
+# ==============================================================================
+class WorkspaceFileRequest(BaseModel):
+    path: str
+    content: str
+
+
+class WorkspacePathRequest(BaseModel):
+    path: str
+
+
+class WorkspaceExecRequest(BaseModel):
+    command: str
+    cwd: str = ""
+
+
+def build_workspace_tree_items() -> List[Dict[str, Any]]:
+    root_res = WORKSPACE_ROOT.resolve()
+    items: List[Dict[str, Any]] = []
+    for entry in sorted(root_res.rglob("*"), key=lambda e: str(e.relative_to(root_res)).lower()):
+        if "/.git/" in str(entry) or entry.name.startswith(".bunker"):
+            continue
+        rel = str(entry.relative_to(root_res))
+        depth = rel.count("/")
+        if entry.is_dir():
+            items.append(
+                {
+                    "path": rel,
+                    "name": entry.name,
+                    "kind": "folder",
+                    "depth": depth,
+                }
+            )
+        else:
+            st = entry.stat()
+            items.append(
+                {
+                    "path": rel,
+                    "name": entry.name,
+                    "kind": "file",
+                    "depth": depth,
+                    "size": st.st_size,
+                    "size_label": human_size(st.st_size),
+                }
+            )
+    return items
+
+
+@app.get("/api/workspace/tree")
+async def api_workspace_tree() -> Dict[str, Any]:
+    os_pretty = "Debian GNU/Linux 12 (bookworm)"
+    os_rel = Path("/etc/os-release")
+    if os_rel.exists():
+        for line in os_rel.read_text(encoding="utf-8", errors="ignore").splitlines():
+            if line.startswith("PRETTY_NAME="):
+                os_pretty = line.split("=", 1)[1].strip('"')
+                break
+
+    has_gcc = shutil.which("gcc") is not None
+    has_git = shutil.which("git") is not None
+    has_python = shutil.which("python3") is not None
+
+    return {
+        "root": "/workspace",
+        "os_name": os_pretty,
+        "tools": {
+            "gcc": has_gcc,
+            "git": has_git,
+            "python3": has_python,
+        },
+        "items": build_workspace_tree_items(),
+    }
+
+
+@app.get("/api/workspace/file")
+async def api_workspace_read_file(path: str) -> Dict[str, Any]:
+    target = resolve_workspace_path(path)
+    if not target.exists() or not target.is_file():
+        raise HTTPException(status_code=404, detail=f"Workspace file not found: {path}")
+    rel = str(target.relative_to(WORKSPACE_ROOT.resolve()))
+    text = target.read_text(encoding="utf-8", errors="replace")
+    return {
+        "path": rel,
+        "name": target.name,
+        "content": text,
+        "size_label": human_size(target.stat().st_size),
+    }
+
+
+@app.post("/api/workspace/file")
+async def api_workspace_write_file(req: WorkspaceFileRequest) -> Dict[str, Any]:
+    target = resolve_workspace_path(req.path)
+    if target == WORKSPACE_ROOT.resolve():
+        raise HTTPException(status_code=400, detail="Invalid file path")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(req.content, encoding="utf-8")
+    rel = str(target.relative_to(WORKSPACE_ROOT.resolve()))
+    return {
+        "status": "saved",
+        "path": rel,
+        "name": target.name,
+        "size_label": human_size(target.stat().st_size),
+    }
+
+
+@app.post("/api/workspace/mkdir")
+async def api_workspace_mkdir(req: WorkspacePathRequest) -> Dict[str, Any]:
+    target = resolve_workspace_path(req.path)
+    target.mkdir(parents=True, exist_ok=True)
+    rel = str(target.relative_to(WORKSPACE_ROOT.resolve()))
+    return {"status": "created", "path": rel}
+
+
+@app.delete("/api/workspace/file")
+async def api_workspace_delete(path: str) -> Dict[str, Any]:
+    target = resolve_workspace_path(path)
+    if target == WORKSPACE_ROOT.resolve() or not target.exists():
+        raise HTTPException(status_code=400, detail="Cannot delete workspace root or missing path")
+    if target.is_dir():
+        shutil.rmtree(target)
+    else:
+        target.unlink()
+    return {"status": "deleted", "path": path}
+
+
+@app.post("/api/workspace/exec")
+async def api_workspace_exec(req: WorkspaceExecRequest) -> Dict[str, Any]:
+    cmd = req.command.strip()
+    if not cmd:
+        return {"command": "", "stdout": "", "stderr": "", "exit_code": 0, "cwd": req.cwd}
+    res = await asyncio.to_thread(execute_workspace_shell_cmd, cmd, req.cwd)
+    return res
+
+
+@app.post("/api/workspace/install-tools")
+async def api_workspace_install_tools() -> Dict[str, Any]:
+    cmd = "apt-get update && apt-get install -y --no-install-recommends gcc g++ make git procps sqlite3"
+    res = await asyncio.to_thread(execute_workspace_shell_cmd, cmd, "")
+    return res
 
 
 # ==============================================================================
