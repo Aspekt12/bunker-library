@@ -335,6 +335,119 @@ function xpIcon(name, size = 18) {
                 </svg>
             </span>`;
 
+        case "my_computer":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="29" y="7" width="14" height="33" rx="2" fill="#cbd5e1" stroke="#334155" stroke-width="1.8"/>
+                    <rect x="32" y="11" width="8" height="3" fill="#475569"/>
+                    <rect x="32" y="16" width="8" height="3" fill="#475569"/>
+                    <circle cx="36" cy="33" r="2" fill="#22c55e"/>
+                    <rect x="4" y="10" width="28" height="22" rx="2.5" fill="url(#xpMonitorBezel)" stroke="#334155" stroke-width="2"/>
+                    <rect x="7" y="13" width="22" height="16" fill="url(#xpMonitorScreen)" stroke="#0f172a" stroke-width="1.2"/>
+                    <rect x="14" y="32" width="8" height="5" fill="#94a3b8" stroke="#475569" stroke-width="1.4"/>
+                    <path d="M9 37 L27 37 L29 41 L7 41 Z" fill="url(#xpMonitorBezel)" stroke="#475569" stroke-width="1.4"/>
+                </svg>
+            </span>`;
+
+        case "drive_hdd":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <path d="M6 22 L14 12 L34 12 L42 22 L42 34 L6 34 Z" fill="#cbd5e1" stroke="#334155" stroke-width="2" stroke-linejoin="round"/>
+                    <rect x="6" y="25" width="36" height="9" fill="#94a3b8" stroke="#334155" stroke-width="1.8"/>
+                    <circle cx="35" cy="29.5" r="2.2" fill="#22c55e"/>
+                    <line x1="11" y1="29.5" x2="25" y2="29.5" stroke="#334155" stroke-width="2"/>
+                </svg>
+            </span>`;
+
+        case "folder_docs":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <path d="M5 12 L18 12 L22 16 L41 16 L41 38 L5 38 Z" fill="url(#xpFolderBack)" stroke="#92400e" stroke-width="1.8"/>
+                    <rect x="14" y="7" width="20" height="24" rx="1.5" fill="#ffffff" stroke="#2563eb" stroke-width="1.6"/>
+                    <line x1="18" y1="12" x2="30" y2="12" stroke="#2563eb" stroke-width="1.6"/>
+                    <line x1="18" y1="16" x2="30" y2="16" stroke="#94a3b8" stroke-width="1.5"/>
+                    <path d="M5 20 L43 20 L41 39 L5 39 Z" fill="url(#xpFolderFront)" stroke="#92400e" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+            </span>`;
+
+        case "game_mine":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <line x1="24" y1="4" x2="24" y2="44" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="4" y1="24" x2="44" y2="24" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="9" y1="9" x2="39" y2="39" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="39" y1="9" x2="9" y2="39" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="24" cy="24" r="13" fill="#334155" stroke="#0f172a" stroke-width="2.2"/>
+                    <circle cx="19" cy="19" r="4" fill="#ffffff"/>
+                </svg>
+            </span>`;
+
+        case "game_cards":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="7" y="7" width="23" height="32" rx="3" transform="rotate(-10 18 23)" fill="#ffffff" stroke="#1e293b" stroke-width="1.8"/>
+                    <rect x="17" y="9" width="23" height="32" rx="3" transform="rotate(8 28 25)" fill="#ffffff" stroke="#1e293b" stroke-width="1.8"/>
+                    <path d="M28 20 C28 17 24 16 24 20 C24 16 20 17 20 20 C20 24 24 26 24 29 C24 26 28 24 28 20 Z" fill="#dc2626"/>
+                    <text x="11" y="18" font-size="9" font-weight="bold" fill="#0f172a">A♠</text>
+                </svg>
+            </span>`;
+
+        case "game_arcade":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="6" y="28" width="36" height="12" rx="3" fill="#334155" stroke="#0f172a" stroke-width="2"/>
+                    <line x1="20" y1="28" x2="20" y2="15" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="20" cy="12" r="6.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.8"/>
+                    <circle cx="32" cy="34" r="3" fill="#facc15"/>
+                    <circle cx="38" cy="32" r="3" fill="#22c55e"/>
+                </svg>
+            </span>`;
+
+        case "cmd_prompt":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="5" y="8" width="38" height="32" rx="2.5" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+                    <rect x="5" y="8" width="38" height="7" fill="#1d4ed8"/>
+                    <text x="9" y="27" font-family="monospace" font-size="11" font-weight="bold" fill="#e2e8f0">C:\&gt;_</text>
+                </svg>
+            </span>`;
+
+        case "task_mgr":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="6" y="6" width="36" height="36" rx="3" fill="#064e3b" stroke="#0f172a" stroke-width="2"/>
+                    <line x1="6" y1="18" x2="42" y2="18" stroke="#047857" stroke-width="1"/>
+                    <line x1="6" y1="30" x2="42" y2="30" stroke="#047857" stroke-width="1"/>
+                    <polyline points="8,34 15,26 21,30 28,14 34,22 40,12" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>`;
+
+        case "calculator":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="10" y="5" width="28" height="38" rx="3" fill="#3b82f6" stroke="#1e3a8a" stroke-width="2"/>
+                    <rect x="14" y="9" width="20" height="8" rx="1" fill="#dcfce7" stroke="#1e293b" stroke-width="1.4"/>
+                    <rect x="14" y="21" width="5" height="5" rx="1" fill="#ffffff"/>
+                    <rect x="21.5" y="21" width="5" height="5" rx="1" fill="#ffffff"/>
+                    <rect x="29" y="21" width="5" height="5" rx="1" fill="#fca5a5"/>
+                    <rect x="14" y="28" width="5" height="5" rx="1" fill="#ffffff"/>
+                    <rect x="21.5" y="28" width="5" height="5" rx="1" fill="#ffffff"/>
+                    <rect x="29" y="28" width="5" height="12" rx="1" fill="#fde047"/>
+                    <rect x="14" y="35" width="12.5" height="5" rx="1" fill="#ffffff"/>
+                </svg>
+            </span>`;
+
+        case "xp_run":
+            return `<span class="xp-svg-wrap" style="width:${size}px;height:${size}px;">
+                <svg viewBox="0 0 48 48" width="${size}" height="${size}">
+                    <rect x="12" y="10" width="30" height="26" rx="2" fill="#ffffff" stroke="#1e3a8a" stroke-width="2"/>
+                    <rect x="12" y="10" width="30" height="6" fill="#2563eb"/>
+                    <line x1="4" y1="18" x2="10" y2="18" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="2" y1="24" x2="10" y2="24" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="5" y1="30" x2="10" y2="30" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </span>`;
+
         default:
             return renderBookSvg("#2563eb", "#1e40af", "#1e3a8a", size);
     }
@@ -349,12 +462,21 @@ function hydrateStaticIcons() {
 }
 
 const WINDOW_META = {
-    "win-library":    { title: "My Library (Bookshelf)", icon: "my_library" },
-    "win-settings":   { title: "Control Panel",          icon: "control_panel" },
-    "win-downloader": { title: "Add or Remove Books",    icon: "add_remove" },
-    "win-reader":     { title: "Book Reader",            icon: "book_open" },
-    "win-chats":      { title: "Saved Chats",            icon: "msn_chat" },
-    "win-new-book":   { title: "Write New Volume",       icon: "notepad" },
+    "win-library":     { title: "My Library (Bookshelf)", icon: "my_library" },
+    "win-explorer":    { title: "My Computer (C:\\)",     icon: "my_computer" },
+    "win-notepad":     { title: "Notepad",                icon: "notepad" },
+    "win-cmd":         { title: "Command Prompt",         icon: "cmd_prompt" },
+    "win-minesweeper": { title: "Minesweeper",            icon: "game_mine" },
+    "win-solitaire":   { title: "Solitaire",              icon: "game_cards" },
+    "win-arcade":      { title: "Bunker Arcade",          icon: "game_arcade" },
+    "win-taskmgr":     { title: "Task Manager",           icon: "task_mgr" },
+    "win-calc":        { title: "Calculator",             icon: "calculator" },
+    "win-run":         { title: "Run",                    icon: "xp_run" },
+    "win-settings":    { title: "Control Panel",          icon: "control_panel" },
+    "win-downloader":  { title: "Add or Remove Books",    icon: "add_remove" },
+    "win-reader":      { title: "Book Reader",            icon: "book_open" },
+    "win-chats":       { title: "Saved Chats",            icon: "msn_chat" },
+    "win-new-book":    { title: "Write New Volume",       icon: "notepad" },
 };
 
 const PERSONA_PRESETS = {
@@ -1116,12 +1238,31 @@ function openWindow(winId) {
     win.style.display = "flex";
     win.dataset.minimized = "false";
     focusWindow(winId);
+    if (typeof playXpSound === "function") playXpSound("click");
     if (winId === "win-downloader") {
         loadCatalog();
     } else if (winId === "win-chats") {
         loadChatsList(false);
     } else if (winId === "win-settings") {
         populateSettingsForm(appSettings);
+    } else if (winId === "win-explorer" && typeof refreshXpExplorer === "function") {
+        refreshXpExplorer();
+    } else if (winId === "win-minesweeper" && typeof ensureMinesweeperReady === "function") {
+        ensureMinesweeperReady();
+    } else if (winId === "win-solitaire" && typeof ensureSolitaireReady === "function") {
+        ensureSolitaireReady();
+    } else if (winId === "win-arcade" && typeof ensureArcadeReady === "function") {
+        ensureArcadeReady();
+    } else if (winId === "win-taskmgr" && typeof refreshTaskManager === "function") {
+        refreshTaskManager();
+    } else if (winId === "win-cmd") {
+        setTimeout(() => document.getElementById("cmd-input")?.focus(), 40);
+    } else if (winId === "win-run") {
+        setTimeout(() => {
+            const inp = document.getElementById("run-dialog-input");
+            inp?.focus();
+            inp?.select();
+        }, 40);
     }
 }
 
@@ -2925,3 +3066,1836 @@ function renderMarkdown(md, isStreaming = false) {
     const cursorHtml = isStreaming ? `<span class="md-stream-cursor"></span>` : "";
     return `<div class="md-prose">${outBlocks.join("")}${cursorHtml}</div>`;
 }
+
+// ==========================================================================
+// 10. AUTHENTIC WINDOWS XP SUBSYSTEMS: SOUND SYNTH, C:\ EXPLORER, NOTEPAD,
+//     MINESWEEPER, SOLITAIRE, ARCADE, CMD.EXE, TASK MANAGER, CALC & CLIPPY
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// 10.1 Web Audio Windows XP Sound Synthesizer, Tray Balloon & Clippy
+// --------------------------------------------------------------------------
+let xpAudioCtx = null;
+let xpSoundMuted = false;
+
+function getAudioCtx() {
+    if (xpSoundMuted) return null;
+    if (!xpAudioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) xpAudioCtx = new AudioContextClass();
+    }
+    if (xpAudioCtx && xpAudioCtx.state === "suspended") {
+        xpAudioCtx.resume().catch(() => {});
+    }
+    return xpAudioCtx;
+}
+
+function playTone(freq, startOffset, duration, type = "sine", gainVal = 0.06) {
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    try {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + startOffset);
+        gain.gain.setValueAtTime(gainVal, ctx.currentTime + startOffset);
+        gain.gain.exponentialRampToValueAtTime(0.0008, ctx.currentTime + startOffset + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + startOffset);
+        osc.stop(ctx.currentTime + startOffset + duration);
+    } catch (_) {}
+}
+
+function playXpSound(kind) {
+    if (xpSoundMuted) return;
+    switch (kind) {
+        case "startup":
+            // Classic E-flat major XP startup piano/pad arpeggio
+            playTone(311.13, 0.0, 0.7, "triangle", 0.08);
+            playTone(466.16, 0.16, 0.7, "triangle", 0.08);
+            playTone(622.25, 0.32, 0.8, "sine", 0.09);
+            playTone(932.33, 0.48, 1.1, "sine", 0.07);
+            break;
+        case "ding":
+            playTone(880, 0.0, 0.22, "sine", 0.06);
+            playTone(1174.66, 0.06, 0.35, "sine", 0.06);
+            break;
+        case "error":
+            playTone(220, 0.0, 0.18, "sawtooth", 0.06);
+            playTone(164.81, 0.1, 0.28, "sawtooth", 0.06);
+            break;
+        case "win":
+            [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => playTone(f, idx * 0.1, 0.35, "triangle", 0.08));
+            break;
+        case "click":
+            playTone(1200, 0.0, 0.025, "sine", 0.02);
+            break;
+    }
+}
+
+function toggleXpSoundMute() {
+    xpSoundMuted = !xpSoundMuted;
+    const btn = document.getElementById("tray-sound-btn");
+    if (btn) {
+        btn.innerHTML = xpSoundMuted ? "&#128263;" : "&#128266;";
+        btn.title = xpSoundMuted ? "Windows XP Sounds: Muted (Click to Unmute)" : "Windows XP Sounds: On";
+    }
+    if (!xpSoundMuted) playXpSound("ding");
+}
+
+let balloonTimer = null;
+function showTrayBalloon(title, bodyText) {
+    const el = document.getElementById("xp-tray-balloon");
+    if (!el) return;
+    const headerStrong = el.querySelector(".xp-balloon-header strong");
+    const bodyEl = document.getElementById("xp-balloon-body");
+    if (headerStrong) headerStrong.innerHTML = `&#9432; ${escapeHtml(title)}`;
+    if (bodyEl) bodyEl.innerHTML = bodyText;
+    el.style.display = "block";
+    playXpSound("ding");
+    if (balloonTimer) clearTimeout(balloonTimer);
+    balloonTimer = setTimeout(() => {
+        el.style.display = "none";
+    }, 8500);
+}
+
+function dismissTrayBalloon() {
+    const el = document.getElementById("xp-tray-balloon");
+    if (el) el.style.display = "none";
+}
+
+const CLIPPY_TIPS = [
+    "It looks like you're running BunkerOS XP! Double-click <b>My Computer</b> to explore your real <code>C:\\</code> filesystem.",
+    "Tip: Open <b>Notepad</b> to write C code or notes, press <b>F5</b> to stamp the date/time, and press <b>Ctrl+S</b> to save to <code>C:\\</code>!",
+    "Need a break? Launch <b>Minesweeper</b>, <b>Klondike Solitaire</b>, or <b>Bunker Arcade</b> right from your desktop.",
+    "Pro Tip: Dragging any maximized window's titlebar automatically unmaximizes it under your cursor!",
+    "Open <b>Command Prompt (cmd.exe)</b> and type <code>dir</code>, <code>tree</code>, <code>man mmap</code>, or <code>ai &lt;question&gt;</code>.",
+    "Press <b>Publish to Shelf</b> inside Notepad to turn any text file into a leather-bound book on your 3D Library Bookshelf!",
+];
+let clippyTipIdx = 0;
+
+function toggleClippyWidget(forceState) {
+    const w = document.getElementById("xp-clippy-widget");
+    if (!w) return;
+    const show = typeof forceState === "boolean" ? forceState : w.style.display === "none";
+    w.style.display = show ? "flex" : "none";
+    if (show) playXpSound("ding");
+}
+
+function nextClippyTip() {
+    clippyTipIdx = (clippyTipIdx + 1) % CLIPPY_TIPS.length;
+    const el = document.getElementById("xp-clippy-tip-text");
+    if (el) el.innerHTML = CLIPPY_TIPS[clippyTipIdx];
+    playXpSound("click");
+}
+
+// --------------------------------------------------------------------------
+// 10.2 My Computer / Windows Explorer (C:\ Persistent Filesystem)
+// --------------------------------------------------------------------------
+let currentExplorerPath = "My Computer";
+let currentExplorerParent = null;
+let currentExplorerItems = [];
+let selectedExplorerItem = null;
+
+async function openXpExplorer(path = "My Computer") {
+    currentExplorerPath = path || "My Computer";
+    openWindow("win-explorer");
+    await refreshXpExplorer();
+}
+
+async function refreshXpExplorer() {
+    try {
+        const res = await fetch(`/api/fs/list?path=${encodeURIComponent(currentExplorerPath)}`);
+        const data = await res.json();
+        currentExplorerPath = data.path || "My Computer";
+        currentExplorerParent = data.parent || null;
+        currentExplorerItems = data.items || [];
+        selectedExplorerItem = null;
+
+        const addrInput = document.getElementById("explorer-address-input");
+        if (addrInput) addrInput.value = currentExplorerPath;
+
+        const titleEl = document.getElementById("explorer-win-title");
+        if (titleEl) titleEl.textContent = `${currentExplorerPath} — Windows Explorer`;
+
+        const statusLeft = document.getElementById("explorer-status-left");
+        if (statusLeft) statusLeft.textContent = `${currentExplorerItems.length} object(s) in ${currentExplorerPath}`;
+
+        renderXpExplorerGrid();
+    } catch (err) {
+        console.error("Failed to load XP Explorer:", err);
+    }
+}
+
+function xpExplorerUp() {
+    if (currentExplorerParent) {
+        openXpExplorer(currentExplorerParent);
+    } else {
+        openXpExplorer("My Computer");
+    }
+}
+
+function renderXpExplorerGrid() {
+    const grid = document.getElementById("explorer-items-grid");
+    if (!grid) return;
+
+    if (!currentExplorerItems.length) {
+        grid.innerHTML = `<div style="padding:18px;color:#64748b;">This folder is empty. Click <b>+ New Folder</b> or <b>+ New Text File</b> on the toolbar.</div>`;
+        return;
+    }
+
+    grid.innerHTML = currentExplorerItems
+        .map(
+            (item, idx) => `
+            <div class="xp-file-card ${selectedExplorerItem && selectedExplorerItem.win_path === item.win_path ? "selected" : ""}"
+                 onclick="selectFsItem(${idx})"
+                 ondblclick="openFsItem(${idx})">
+                <div class="xp-file-icon">${xpIcon(item.icon || "folder_closed", 36)}</div>
+                <div class="xp-file-meta">
+                    <strong>${escapeHtml(item.name)}</strong>
+                    <small>${escapeHtml(item.desc || item.kind)} &bull; ${escapeHtml(item.size_label || "")}</small>
+                </div>
+            </div>
+        `
+        )
+        .join("");
+}
+
+function selectFsItem(idx) {
+    selectedExplorerItem = currentExplorerItems[idx] || null;
+    renderXpExplorerGrid();
+    const detailsBox = document.getElementById("explorer-details-box");
+    if (detailsBox && selectedExplorerItem) {
+        detailsBox.innerHTML = `
+            <strong>${escapeHtml(selectedExplorerItem.name)}</strong><br>
+            <span>${escapeHtml(selectedExplorerItem.desc || "")}</span><br>
+            <span>Size: ${escapeHtml(selectedExplorerItem.size_label || "--")}</span><br>
+            ${selectedExplorerItem.modified ? `<span>Modified: ${escapeHtml(selectedExplorerItem.modified)}</span><br>` : ""}
+            <code style="font-size:10px;word-break:break-all;">${escapeHtml(selectedExplorerItem.win_path)}</code>
+        `;
+    }
+}
+
+function openFsItem(idx) {
+    const item = currentExplorerItems[idx];
+    if (!item) return;
+    if (item.kind === "drive" || item.kind === "folder") {
+        openXpExplorer(item.win_path);
+    } else if (item.kind === "exe" && item.app_target) {
+        openWindow(item.app_target);
+    } else if (item.kind === "book" && item.book_id) {
+        openLibraryItem(item.book_id);
+    } else if (item.kind === "file") {
+        openNotepadFile(item.win_path);
+    }
+}
+
+async function promptNewFsFolder() {
+    const base = currentExplorerPath === "My Computer"
+        ? "C:\\Documents and Settings\\Administrator\\My Documents"
+        : currentExplorerPath;
+    const folderName = prompt("Enter name for New Folder:", "New Folder");
+    if (!folderName) return;
+    const fullPath = `${base.replace(/\\$/, "")}\\${folderName.trim()}`;
+    await fetch("/api/fs/mkdir", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: fullPath }),
+    });
+    await openXpExplorer(base);
+}
+
+async function promptNewFsFile() {
+    const base = currentExplorerPath === "My Computer"
+        ? "C:\\Documents and Settings\\Administrator\\My Documents"
+        : currentExplorerPath;
+    const fileName = prompt("Enter name for New Text Document:", "New_Note.txt");
+    if (!fileName) return;
+    const fullPath = `${base.replace(/\\$/, "")}\\${fileName.trim()}`;
+    await fetch("/api/fs/write", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: fullPath, content: `# ${fileName}\nCreated on ${new Date().toLocaleString()}\n\n` }),
+    });
+    await openXpExplorer(base);
+    await openNotepadFile(fullPath);
+}
+
+function openSelectedFsInNotepad() {
+    if (selectedExplorerItem && selectedExplorerItem.kind === "file") {
+        openNotepadFile(selectedExplorerItem.win_path);
+    } else {
+        notepadNew();
+    }
+}
+
+async function renameSelectedFsItem() {
+    if (!selectedExplorerItem || selectedExplorerItem.kind === "drive") return;
+    const newName = prompt(`Rename "${selectedExplorerItem.name}" to:`, selectedExplorerItem.name);
+    if (!newName || newName === selectedExplorerItem.name) return;
+    await fetch("/api/fs/rename", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ old_path: selectedExplorerItem.win_path, new_name: newName }),
+    });
+    await refreshXpExplorer();
+}
+
+async function deleteSelectedFsItem() {
+    if (!selectedExplorerItem || selectedExplorerItem.kind === "drive" || selectedExplorerItem.kind === "exe") return;
+    if (!confirm(`Are you sure you want to send "${selectedExplorerItem.name}" to the Recycle Bin?`)) return;
+    await fetch("/api/fs/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: selectedExplorerItem.win_path }),
+    });
+    await refreshXpExplorer();
+}
+
+// --------------------------------------------------------------------------
+// 10.3 Authentic Windows XP Notepad (notepad.exe)
+// --------------------------------------------------------------------------
+let notepadDirty = false;
+let notepadWrap = true;
+
+async function openNotepadFile(winPath) {
+    openWindow("win-notepad");
+    const ta = document.getElementById("notepad-textarea");
+    const pathInput = document.getElementById("notepad-filepath-input");
+    const titleEl = document.getElementById("notepad-win-title");
+    const statusLeft = document.getElementById("notepad-status-left");
+    try {
+        const res = await fetch(`/api/fs/read?path=${encodeURIComponent(winPath)}`);
+        if (!res.ok) throw new Error(`File not found: ${winPath}`);
+        const data = await res.json();
+        if (ta) ta.value = data.content || "";
+        if (pathInput) pathInput.value = data.path || winPath;
+        if (titleEl) titleEl.textContent = `${data.name || "Document"} - Notepad`;
+        if (statusLeft) statusLeft.textContent = `Opened ${data.path}`;
+        notepadDirty = false;
+        updateNotepadCursor();
+    } catch (err) {
+        if (ta) ta.value = "";
+        if (pathInput) pathInput.value = winPath;
+        if (statusLeft) statusLeft.textContent = `New file: ${winPath}`;
+    }
+}
+
+function notepadNew() {
+    openWindow("win-notepad");
+    const ta = document.getElementById("notepad-textarea");
+    const pathInput = document.getElementById("notepad-filepath-input");
+    const titleEl = document.getElementById("notepad-win-title");
+    const statusLeft = document.getElementById("notepad-status-left");
+    if (ta) ta.value = "";
+    if (pathInput) pathInput.value = "C:\\Documents and Settings\\Administrator\\My Documents\\Untitled.txt";
+    if (titleEl) titleEl.textContent = "Untitled - Notepad";
+    if (statusLeft) statusLeft.textContent = "New Document";
+    notepadDirty = false;
+    updateNotepadCursor();
+    ta?.focus();
+}
+
+function notepadPromptOpen() {
+    const pathInput = document.getElementById("notepad-filepath-input");
+    const target = prompt(
+        "Enter Windows XP file path to open (or browse in My Computer):",
+        pathInput?.value || "C:\\Documents and Settings\\Administrator\\My Documents\\Welcome_to_BunkerOS_XP.txt"
+    );
+    if (target) openNotepadFile(target);
+}
+
+async function notepadSave() {
+    const ta = document.getElementById("notepad-textarea");
+    const pathInput = document.getElementById("notepad-filepath-input");
+    const titleEl = document.getElementById("notepad-win-title");
+    const statusLeft = document.getElementById("notepad-status-left");
+    if (!ta || !pathInput) return;
+
+    const targetPath = pathInput.value.trim() || "C:\\Documents and Settings\\Administrator\\My Documents\\Untitled.txt";
+    const res = await fetch("/api/fs/write", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: targetPath, content: ta.value }),
+    });
+    const data = await res.json();
+    notepadDirty = false;
+    if (titleEl) titleEl.textContent = `${data.name || "Document"} - Notepad`;
+    if (statusLeft) statusLeft.textContent = `Saved to ${data.path} (${data.size_label || ""})`;
+    playXpSound("ding");
+    if (document.getElementById("win-explorer")?.style.display !== "none") {
+        refreshXpExplorer();
+    }
+}
+
+async function notepadSaveAs() {
+    const pathInput = document.getElementById("notepad-filepath-input");
+    const nextPath = prompt(
+        "Save As (Full C:\\ Path):",
+        pathInput?.value || "C:\\Documents and Settings\\Administrator\\My Documents\\My_Note.txt"
+    );
+    if (!nextPath) return;
+    if (pathInput) pathInput.value = nextPath;
+    await notepadSave();
+}
+
+function notepadInsertTimeDate() {
+    const ta = document.getElementById("notepad-textarea");
+    if (!ta) return;
+    const stamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + " " + new Date().toLocaleDateString();
+    const start = ta.selectionStart || 0;
+    const end = ta.selectionEnd || 0;
+    ta.value = ta.value.slice(0, start) + stamp + ta.value.slice(end);
+    ta.selectionStart = ta.selectionEnd = start + stamp.length;
+    onNotepadInput();
+    ta.focus();
+}
+
+function notepadToggleWrap() {
+    notepadWrap = !notepadWrap;
+    const ta = document.getElementById("notepad-textarea");
+    const btn = document.getElementById("btn-notepad-wrap");
+    if (ta) ta.classList.toggle("nowrap", !notepadWrap);
+    if (btn) btn.textContent = `Wrap: ${notepadWrap ? "ON" : "OFF"}`;
+}
+
+function notepadChangeFont(fontFamily) {
+    const ta = document.getElementById("notepad-textarea");
+    if (ta) ta.style.fontFamily = fontFamily;
+}
+
+async function notepadPublishToShelf() {
+    const ta = document.getElementById("notepad-textarea");
+    const pathInput = document.getElementById("notepad-filepath-input");
+    if (!ta || !ta.value.trim()) {
+        alert("Write some content in Notepad first before publishing to your Library Bookshelf.");
+        return;
+    }
+    const defaultTitle = (pathInput?.value || "Field_Note.txt").split("\\").pop().replace(/\.[^.]+$/, "");
+    const title = prompt("Book Spine Title for your Library Bookshelf:", defaultTitle);
+    if (!title) return;
+    await fetch("/api/library/custom", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            title,
+            category: "Custom Field Notes",
+            spine_color: "#1e3a8a",
+            content: ta.value,
+        }),
+    });
+    await loadLibrary();
+    await loadSystemStatus();
+    showTrayBalloon("Published to Library Shelf", `"${escapeHtml(title)}" is now on your 3D Bookshelf.`);
+}
+
+function notepadAskAi() {
+    const ta = document.getElementById("notepad-textarea");
+    const snippet = (ta?.value || "").trim().slice(0, 1200);
+    if (!snippet) {
+        openChatAndFocus();
+        return;
+    }
+    openChatAndFocus(`Review or explain this code/note from Notepad:\n\n${snippet}`);
+}
+
+function onNotepadInput() {
+    if (!notepadDirty) {
+        notepadDirty = true;
+        const titleEl = document.getElementById("notepad-win-title");
+        if (titleEl && !titleEl.textContent.startsWith("*")) {
+            titleEl.textContent = "*" + titleEl.textContent;
+        }
+    }
+    updateNotepadCursor();
+}
+
+function updateNotepadCursor() {
+    const ta = document.getElementById("notepad-textarea");
+    const statusRight = document.getElementById("notepad-status-right");
+    if (!ta || !statusRight) return;
+    const pos = ta.selectionStart || 0;
+    const upToCursor = ta.value.slice(0, pos);
+    const lines = upToCursor.split("\n");
+    const ln = lines.length;
+    const col = lines[lines.length - 1].length + 1;
+    statusRight.textContent = `Ln ${ln}, Col ${col} | ${ta.value.length} chars | UTF-8`;
+}
+
+function handleNotepadKeydown(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+        notepadSave();
+    } else if (e.key === "F5") {
+        e.preventDefault();
+        notepadInsertTimeDate();
+    }
+}
+
+// --------------------------------------------------------------------------
+// 10.4 Classic Windows XP Minesweeper (winmine.exe)
+// --------------------------------------------------------------------------
+let mineState = {
+    level: "beginner",
+    rows: 9,
+    cols: 9,
+    mines: 10,
+    board: [],
+    started: false,
+    gameOver: false,
+    flags: 0,
+    revealedCount: 0,
+    seconds: 0,
+    timerId: null,
+    flagMode: false,
+};
+
+function ensureMinesweeperReady() {
+    if (!mineState.board.length) {
+        initMinesweeper("beginner");
+    }
+}
+
+function toggleMineFlagMode() {
+    mineState.flagMode = !mineState.flagMode;
+    const btn = document.getElementById("btn-mine-flagmode");
+    if (btn) {
+        btn.innerHTML = `&#128681; Flag: ${mineState.flagMode ? "ON" : "OFF"}`;
+    }
+}
+
+function initMinesweeper(level) {
+    if (level) mineState.level = level;
+    const win = document.getElementById("win-minesweeper");
+    if (mineState.level === "beginner") {
+        mineState.rows = 9;
+        mineState.cols = 9;
+        mineState.mines = 10;
+        if (win && !win.classList.contains("maximized")) {
+            win.style.width = "310px";
+            win.style.height = "405px";
+        }
+    } else if (mineState.level === "intermediate") {
+        mineState.rows = 16;
+        mineState.cols = 16;
+        mineState.mines = 40;
+        if (win && !win.classList.contains("maximized")) {
+            win.style.width = "450px";
+            win.style.height = "560px";
+        }
+    } else {
+        mineState.rows = 16;
+        mineState.cols = 30;
+        mineState.mines = 99;
+        if (win && !win.classList.contains("maximized")) {
+            win.style.width = "790px";
+            win.style.height = "560px";
+        }
+    }
+
+    if (mineState.timerId) clearInterval(mineState.timerId);
+    mineState.timerId = null;
+    mineState.started = false;
+    mineState.gameOver = false;
+    mineState.flags = 0;
+    mineState.revealedCount = 0;
+    mineState.seconds = 0;
+
+    mineState.board = [];
+    for (let r = 0; r < mineState.rows; r++) {
+        const row = [];
+        for (let c = 0; c < mineState.cols; c++) {
+            row.push({ r, c, mine: false, revealed: false, flagged: false, count: 0, hit: false });
+        }
+        mineState.board.push(row);
+    }
+
+    updateMineHud("🙂");
+    const best = localStorage.getItem(`bunker_mine_best_${mineState.level}`);
+    const bestEl = document.getElementById("mine-best-time");
+    if (bestEl) bestEl.textContent = best ? `Best (${mineState.level}): ${best}s` : "Best: --s";
+    renderMinesweeperBoard();
+}
+
+function updateMineHud(smiley) {
+    const countLed = document.getElementById("mine-count-led");
+    const timerLed = document.getElementById("mine-timer-led");
+    const smileyBtn = document.getElementById("mine-smiley-btn");
+    const rem = Math.max(-99, Math.min(999, mineState.mines - mineState.flags));
+    if (countLed) countLed.textContent = rem < 0 ? `-${String(Math.abs(rem)).padStart(2, "0")}` : String(rem).padStart(3, "0");
+    if (timerLed) timerLed.textContent = String(Math.min(999, mineState.seconds)).padStart(3, "0");
+    if (smiley && smileyBtn) smileyBtn.textContent = smiley;
+}
+
+function placeMinesAvoiding(safeR, safeC) {
+    let placed = 0;
+    while (placed < mineState.mines) {
+        const r = Math.floor(Math.random() * mineState.rows);
+        const c = Math.floor(Math.random() * mineState.cols);
+        if (Math.abs(r - safeR) <= 1 && Math.abs(c - safeC) <= 1) continue;
+        if (mineState.board[r][c].mine) continue;
+        mineState.board[r][c].mine = true;
+        placed++;
+    }
+
+    for (let r = 0; r < mineState.rows; r++) {
+        for (let c = 0; c < mineState.cols; c++) {
+            if (mineState.board[r][c].mine) continue;
+            let cnt = 0;
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    const nr = r + dr;
+                    const nc = c + dc;
+                    if (nr >= 0 && nr < mineState.rows && nc >= 0 && nc < mineState.cols && mineState.board[nr][nc].mine) {
+                        cnt++;
+                    }
+                }
+            }
+            mineState.board[r][c].count = cnt;
+        }
+    }
+}
+
+function renderMinesweeperBoard() {
+    const boardEl = document.getElementById("minesweeper-board");
+    if (!boardEl) return;
+    boardEl.style.gridTemplateColumns = `repeat(${mineState.cols}, 24px)`;
+
+    let html = "";
+    for (let r = 0; r < mineState.rows; r++) {
+        for (let c = 0; c < mineState.cols; c++) {
+            const cell = mineState.board[r][c];
+            let cls = "xp-mine-cell";
+            let txt = "";
+            if (cell.revealed) {
+                cls += " revealed";
+                if (cell.mine) {
+                    txt = "💣";
+                    if (cell.hit) cls += " mine-hit";
+                } else if (cell.count > 0) {
+                    cls += ` n${cell.count}`;
+                    txt = String(cell.count);
+                }
+            } else if (cell.flagged) {
+                txt = "🚩";
+            }
+            html += `<div class="${cls}" onclick="onMineCellClick(${r},${c})" oncontextmenu="onMineCellRightClick(event,${r},${c})">${txt}</div>`;
+        }
+    }
+    boardEl.innerHTML = html;
+}
+
+function onMineCellClick(r, c) {
+    if (mineState.gameOver) return;
+    if (mineState.flagMode) {
+        onMineCellRightClick(null, r, c);
+        return;
+    }
+    const cell = mineState.board[r][c];
+    if (cell.flagged || cell.revealed) return;
+
+    if (!mineState.started) {
+        mineState.started = true;
+        placeMinesAvoiding(r, c);
+        mineState.timerId = setInterval(() => {
+            mineState.seconds++;
+            updateMineHud();
+        }, 1000);
+    }
+
+    if (cell.mine) {
+        cell.revealed = true;
+        cell.hit = true;
+        mineState.gameOver = true;
+        if (mineState.timerId) clearInterval(mineState.timerId);
+        for (let rr = 0; rr < mineState.rows; rr++) {
+            for (let cc = 0; cc < mineState.cols; cc++) {
+                if (mineState.board[rr][cc].mine) mineState.board[rr][cc].revealed = true;
+            }
+        }
+        updateMineHud("😵");
+        playXpSound("error");
+        renderMinesweeperBoard();
+        return;
+    }
+
+    floodRevealMine(r, c);
+    playXpSound("click");
+    checkMineWin();
+    renderMinesweeperBoard();
+}
+
+function floodRevealMine(r, c) {
+    const stack = [[r, c]];
+    while (stack.length > 0) {
+        const [cr, cc] = stack.pop();
+        const cell = mineState.board[cr][cc];
+        if (cell.revealed || cell.flagged || cell.mine) continue;
+        cell.revealed = true;
+        mineState.revealedCount++;
+        if (cell.count === 0) {
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    const nr = cr + dr;
+                    const nc = cc + dc;
+                    if (nr >= 0 && nr < mineState.rows && nc >= 0 && nc < mineState.cols) {
+                        if (!mineState.board[nr][nc].revealed) stack.push([nr, nc]);
+                    }
+                }
+            }
+        }
+    }
+}
+
+function onMineCellRightClick(e, r, c) {
+    if (e) e.preventDefault();
+    if (mineState.gameOver) return;
+    const cell = mineState.board[r][c];
+    if (cell.revealed) return;
+    cell.flagged = !cell.flagged;
+    mineState.flags += cell.flagged ? 1 : -1;
+    updateMineHud();
+    renderMinesweeperBoard();
+}
+
+function checkMineWin() {
+    const totalSafe = mineState.rows * mineState.cols - mineState.mines;
+    if (mineState.revealedCount >= totalSafe) {
+        mineState.gameOver = true;
+        if (mineState.timerId) clearInterval(mineState.timerId);
+        updateMineHud("😎");
+        playXpSound("win");
+        const key = `bunker_mine_best_${mineState.level}`;
+        const prev = parseInt(localStorage.getItem(key) || "9999", 10);
+        if (mineState.seconds < prev) {
+            localStorage.setItem(key, String(mineState.seconds));
+            const bestEl = document.getElementById("mine-best-time");
+            if (bestEl) bestEl.textContent = `Best (${mineState.level}): ${mineState.seconds}s`;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// 10.5 Windows XP Klondike Solitaire (sol.exe)
+// --------------------------------------------------------------------------
+const SUITS = [
+    { sym: "♠", color: "black" },
+    { sym: "♥", color: "red" },
+    { sym: "♣", color: "black" },
+    { sym: "♦", color: "red" },
+];
+const RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+
+let solState = {
+    stock: [],
+    waste: [],
+    foundations: [[], [], [], []],
+    tableau: [[], [], [], [], [], [], []],
+    selected: null,
+    score: 0,
+    moves: 0,
+    history: [],
+    winAnimId: null,
+};
+
+function ensureSolitaireReady() {
+    if (!solState.tableau[0].length && !solState.stock.length && !solState.foundations[0].length) {
+        initSolitaire();
+    }
+}
+
+function initSolitaire() {
+    if (solState.winAnimId) {
+        cancelAnimationFrame(solState.winAnimId);
+        solState.winAnimId = null;
+    }
+    const winCanvas = document.getElementById("solitaire-win-canvas");
+    if (winCanvas) winCanvas.style.display = "none";
+
+    const deck = [];
+    SUITS.forEach((s, sIdx) => {
+        RANKS.forEach((r, rIdx) => {
+            deck.push({
+                id: `${r}${s.sym}`,
+                suit: s.sym,
+                color: s.color,
+                suitIdx: sIdx,
+                rank: r,
+                val: rIdx + 1,
+                faceUp: false,
+            });
+        });
+    });
+
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+
+    solState.tableau = [[], [], [], [], [], [], []];
+    for (let col = 0; col < 7; col++) {
+        for (let row = 0; row <= col; row++) {
+            const card = deck.pop();
+            card.faceUp = row === col;
+            solState.tableau[col].push(card);
+        }
+    }
+
+    solState.stock = deck;
+    solState.waste = [];
+    solState.foundations = [[], [], [], []];
+    solState.selected = null;
+    solState.score = 0;
+    solState.moves = 0;
+    solState.history = [];
+    renderSolitaire();
+}
+
+function saveSolSnapshot() {
+    solState.history.push(
+        JSON.stringify({
+            stock: solState.stock,
+            waste: solState.waste,
+            foundations: solState.foundations,
+            tableau: solState.tableau,
+            score: solState.score,
+            moves: solState.moves,
+        })
+    );
+    if (solState.history.length > 30) solState.history.shift();
+}
+
+function solitaireUndo() {
+    const snap = solState.history.pop();
+    if (!snap) return;
+    const parsed = JSON.parse(snap);
+    solState.stock = parsed.stock;
+    solState.waste = parsed.waste;
+    solState.foundations = parsed.foundations;
+    solState.tableau = parsed.tableau;
+    solState.score = parsed.score;
+    solState.moves = parsed.moves;
+    solState.selected = null;
+    renderSolitaire();
+}
+
+function renderSolCardHtml(card, isSelected, onClickJs, onDblClickJs = "", extraStyle = "") {
+    if (!card.faceUp) {
+        return `<div class="sol-card face-down" style="${extraStyle}" onclick="${onClickJs}"></div>`;
+    }
+    const colorCls = card.color === "red" ? "red-suit" : "black-suit";
+    const selCls = isSelected ? "selected-card" : "";
+    return `
+        <div class="sol-card ${colorCls} ${selCls}" style="${extraStyle}" onclick="${onClickJs}" ondblclick="${onDblClickJs}">
+            <div class="sol-card-corner">${card.rank}${card.suit}</div>
+            <div class="sol-card-center">${card.suit}</div>
+            <div class="sol-card-corner" style="text-align:right;transform:rotate(180deg);">${card.rank}${card.suit}</div>
+        </div>
+    `;
+}
+
+function renderSolitaire() {
+    const board = document.getElementById("solitaire-board");
+    if (!board) return;
+
+    const badge = document.getElementById("solitaire-score-badge");
+    if (badge) badge.textContent = `Score: ${solState.score} | Moves: ${solState.moves}`;
+
+    // Stock Slot
+    const stockHtml = solState.stock.length
+        ? `<div class="sol-card face-down" onclick="solitaireDrawStock()" title="Click to draw card"><span style="color:#fff;font-size:11px;margin:auto;">${solState.stock.length}</span></div>`
+        : `<div class="sol-pile-slot" onclick="solitaireDrawStock()" title="Recycle Waste">↻</div>`;
+
+    // Waste Slot
+    const topWaste = solState.waste[solState.waste.length - 1];
+    const wasteSel = solState.selected && solState.selected.zone === "waste";
+    const wasteHtml = topWaste
+        ? renderSolCardHtml(
+              topWaste,
+              wasteSel,
+              `solitaireSelect('waste', 0, ${solState.waste.length - 1}, event)`,
+              `solitaireAutoSendCard('waste', 0, event)`
+          )
+        : `<div class="sol-pile-slot"></div>`;
+
+    // 4 Foundations
+    const foundHtml = SUITS.map((s, fIdx) => {
+        const pile = solState.foundations[fIdx];
+        const top = pile[pile.length - 1];
+        if (!top) {
+            return `<div class="sol-pile-slot" onclick="solitaireMoveToFoundation(${fIdx})">${s.sym}</div>`;
+        }
+        const isSel = solState.selected && solState.selected.zone === "foundation" && solState.selected.col === fIdx;
+        return renderSolCardHtml(top, isSel, `solitaireMoveToFoundation(${fIdx})`);
+    }).join("");
+
+    // 7 Tableau Columns
+    const tabHtml = solState.tableau
+        .map((colCards, colIdx) => {
+            if (!colCards.length) {
+                return `<div class="sol-tableau-col"><div class="sol-pile-slot" onclick="solitaireMoveToTableau(${colIdx})">K</div></div>`;
+            }
+            const stackHtml = colCards
+                .map((c, cIdx) => {
+                    const topPx = cIdx * 24;
+                    const isSel =
+                        solState.selected &&
+                        solState.selected.zone === "tableau" &&
+                        solState.selected.col === colIdx &&
+                        cIdx >= solState.selected.idx;
+                    return renderSolCardHtml(
+                        c,
+                        isSel,
+                        `solitaireClickTableau(${colIdx}, ${cIdx}, event)`,
+                        `solitaireAutoSendCard('tableau', ${colIdx}, event)`,
+                        `position:absolute;top:${topPx}px;left:0;z-index:${cIdx + 1};`
+                    );
+                })
+                .join("");
+            return `<div class="sol-tableau-col">${stackHtml}</div>`;
+        })
+        .join("");
+
+    board.innerHTML = `
+        <div class="sol-top-row">
+            ${stockHtml}
+            ${wasteHtml}
+            <div></div>
+            ${foundHtml}
+        </div>
+        <div class="sol-tableau-row">
+            ${tabHtml}
+        </div>
+    `;
+}
+
+function solitaireDrawStock() {
+    saveSolSnapshot();
+    solState.selected = null;
+    if (solState.stock.length > 0) {
+        const card = solState.stock.pop();
+        card.faceUp = true;
+        solState.waste.push(card);
+        solState.moves++;
+    } else if (solState.waste.length > 0) {
+        while (solState.waste.length > 0) {
+            const c = solState.waste.pop();
+            c.faceUp = false;
+            solState.stock.push(c);
+        }
+        solState.moves++;
+    }
+    playXpSound("click");
+    renderSolitaire();
+}
+
+function solitaireSelect(zone, col, idx, e) {
+    if (e) e.stopPropagation();
+    solState.selected = { zone, col, idx };
+    renderSolitaire();
+}
+
+function solitaireClickTableau(colIdx, cardIdx, e) {
+    if (e) e.stopPropagation();
+    const col = solState.tableau[colIdx];
+    const clickedCard = col[cardIdx];
+    if (!clickedCard) return;
+
+    // Flip unrevealed top card
+    if (!clickedCard.faceUp && cardIdx === col.length - 1) {
+        saveSolSnapshot();
+        clickedCard.faceUp = true;
+        solState.score += 5;
+        renderSolitaire();
+        return;
+    }
+
+    if (!clickedCard.faceUp) return;
+
+    if (solState.selected) {
+        if (solState.selected.zone === "tableau" && solState.selected.col === colIdx && solState.selected.idx === cardIdx) {
+            solState.selected = null;
+            renderSolitaire();
+            return;
+        }
+        if (solitaireTryMoveSelectedToTableau(colIdx)) {
+            return;
+        }
+    }
+
+    solState.selected = { zone: "tableau", col: colIdx, idx: cardIdx };
+    renderSolitaire();
+}
+
+function solitaireMoveToTableau(colIdx) {
+    solitaireTryMoveSelectedToTableau(colIdx);
+}
+
+function solitaireTryMoveSelectedToTableau(targetColIdx) {
+    if (!solState.selected) return false;
+    const targetCol = solState.tableau[targetColIdx];
+    const destCard = targetCol[targetCol.length - 1];
+
+    let movingCards = [];
+    if (solState.selected.zone === "waste") {
+        const top = solState.waste[solState.waste.length - 1];
+        if (!top) return false;
+        movingCards = [top];
+    } else if (solState.selected.zone === "tableau") {
+        const srcCol = solState.tableau[solState.selected.col];
+        movingCards = srcCol.slice(solState.selected.idx);
+    } else {
+        return false;
+    }
+
+    const lead = movingCards[0];
+    if (!lead) return false;
+
+    const legal = !destCard
+        ? lead.val === 13
+        : destCard.faceUp && destCard.color !== lead.color && destCard.val === lead.val + 1;
+
+    if (!legal) return false;
+
+    saveSolSnapshot();
+    if (solState.selected.zone === "waste") {
+        solState.waste.pop();
+    } else if (solState.selected.zone === "tableau") {
+        const srcCol = solState.tableau[solState.selected.col];
+        srcCol.splice(solState.selected.idx);
+        if (srcCol.length > 0 && !srcCol[srcCol.length - 1].faceUp) {
+            srcCol[srcCol.length - 1].faceUp = true;
+            solState.score += 5;
+        }
+    }
+
+    targetCol.push(...movingCards);
+    solState.moves++;
+    solState.score += 5;
+    solState.selected = null;
+    playXpSound("click");
+    renderSolitaire();
+    return true;
+}
+
+function solitaireMoveToFoundation(fIdx) {
+    if (!solState.selected) return false;
+    let card = null;
+    if (solState.selected.zone === "waste") {
+        card = solState.waste[solState.waste.length - 1];
+    } else if (solState.selected.zone === "tableau") {
+        const srcCol = solState.tableau[solState.selected.col];
+        if (solState.selected.idx !== srcCol.length - 1) return false;
+        card = srcCol[srcCol.length - 1];
+    }
+    if (!card || card.suitIdx !== fIdx) return false;
+
+    const pile = solState.foundations[fIdx];
+    const top = pile[pile.length - 1];
+    if ((!top && card.val === 1) || (top && card.val === top.val + 1)) {
+        saveSolSnapshot();
+        if (solState.selected.zone === "waste") {
+            solState.waste.pop();
+        } else {
+            const srcCol = solState.tableau[solState.selected.col];
+            srcCol.pop();
+            if (srcCol.length > 0 && !srcCol[srcCol.length - 1].faceUp) {
+                srcCol[srcCol.length - 1].faceUp = true;
+            }
+        }
+        pile.push(card);
+        solState.score += 10;
+        solState.moves++;
+        solState.selected = null;
+        playXpSound("ding");
+        renderSolitaire();
+        checkSolitaireWin();
+        return true;
+    }
+    return false;
+}
+
+function solitaireAutoSendCard(zone, colIdx, e) {
+    if (e) e.stopPropagation();
+    let card = null;
+    if (zone === "waste") {
+        card = solState.waste[solState.waste.length - 1];
+        if (!card) return;
+        solState.selected = { zone: "waste", col: 0, idx: solState.waste.length - 1 };
+    } else if (zone === "tableau") {
+        const col = solState.tableau[colIdx];
+        card = col[col.length - 1];
+        if (!card || !card.faceUp) return;
+        solState.selected = { zone: "tableau", col: colIdx, idx: col.length - 1 };
+    }
+    if (card) {
+        solitaireMoveToFoundation(card.suitIdx);
+    }
+}
+
+function solitaireAutoMoveAll() {
+    let moved = true;
+    while (moved) {
+        moved = false;
+        const wCard = solState.waste[solState.waste.length - 1];
+        if (wCard) {
+            solState.selected = { zone: "waste", col: 0, idx: solState.waste.length - 1 };
+            if (solitaireMoveToFoundation(wCard.suitIdx)) {
+                moved = true;
+                continue;
+            }
+        }
+        for (let c = 0; c < 7; c++) {
+            const col = solState.tableau[c];
+            const top = col[col.length - 1];
+            if (top && top.faceUp) {
+                solState.selected = { zone: "tableau", col: c, idx: col.length - 1 };
+                if (solitaireMoveToFoundation(top.suitIdx)) {
+                    moved = true;
+                    break;
+                }
+            }
+        }
+    }
+    solState.selected = null;
+    renderSolitaire();
+}
+
+function checkSolitaireWin() {
+    const totalFound = solState.foundations.reduce((acc, p) => acc + p.length, 0);
+    if (totalFound === 52) {
+        playXpSound("win");
+        startSolitaireVictoryCascade();
+    }
+}
+
+function startSolitaireVictoryCascade() {
+    const canvas = document.getElementById("solitaire-win-canvas");
+    const wrap = document.getElementById("solitaire-felt-wrap");
+    if (!canvas || !wrap) return;
+    canvas.width = wrap.clientWidth;
+    canvas.height = wrap.clientHeight;
+    canvas.style.display = "block";
+    const ctx = canvas.getContext("2d");
+
+    let x = 120;
+    let y = 40;
+    let vx = 4.5;
+    let vy = 0;
+    const gravity = 0.45;
+    let suitIdx = 0;
+
+    function step() {
+        ctx.fillStyle = "#ffffff";
+        ctx.strokeStyle = "#0f172a";
+        ctx.lineWidth = 1.5;
+        ctx.fillRect(x, y, 76, 104);
+        ctx.strokeRect(x, y, 76, 104);
+        ctx.fillStyle = suitIdx % 2 === 1 ? "#dc2626" : "#0f172a";
+        ctx.font = "bold 20px Tahoma";
+        ctx.fillText(`K${SUITS[suitIdx].sym}`, x + 10, y + 26);
+
+        x += vx;
+        vy += gravity;
+        y += vy;
+        if (y + 104 > canvas.height) {
+            y = canvas.height - 104;
+            vy = -vy * 0.78;
+        }
+        if (x > canvas.width || x < -80) {
+            x = 120 + ((suitIdx * 95) % 340);
+            y = 30;
+            vx = (Math.random() > 0.5 ? 1 : -1) * (3 + Math.random() * 4);
+            vy = 0;
+            suitIdx = (suitIdx + 1) % 4;
+        }
+        solState.winAnimId = requestAnimationFrame(step);
+    }
+    step();
+}
+
+// --------------------------------------------------------------------------
+// 10.6 Bunker Retro Arcade (Cyber-Snake & DX-Breakout on 60fps Canvas)
+// --------------------------------------------------------------------------
+let arcadeState = {
+    mode: "snake",
+    timer: null,
+    paused: false,
+    score: 0,
+    highScore: parseInt(localStorage.getItem("bunker_arcade_high") || "0", 10),
+    snake: [],
+    dir: { x: 1, y: 0 },
+    nextDir: { x: 1, y: 0 },
+    food: { x: 10, y: 10 },
+    paddleX: 190,
+    ball: { x: 240, y: 200, vx: 3.5, vy: -3.5 },
+    bricks: [],
+};
+
+function ensureArcadeReady() {
+    if (!arcadeState.timer) {
+        startArcadeGame(arcadeState.mode || "snake");
+    }
+}
+
+function stopArcadeLoop() {
+    if (arcadeState.timer) {
+        clearInterval(arcadeState.timer);
+        arcadeState.timer = null;
+    }
+}
+
+function toggleArcadePause() {
+    arcadeState.paused = !arcadeState.paused;
+}
+
+function startArcadeGame(mode = "snake") {
+    stopArcadeLoop();
+    arcadeState.mode = mode;
+    arcadeState.paused = false;
+    arcadeState.score = 0;
+
+    if (mode === "snake") {
+        arcadeState.snake = [
+            { x: 10, y: 10 },
+            { x: 9, y: 10 },
+            { x: 8, y: 10 },
+        ];
+        arcadeState.dir = { x: 1, y: 0 };
+        arcadeState.nextDir = { x: 1, y: 0 };
+        spawnSnakeFood();
+        arcadeState.timer = setInterval(tickSnake, 95);
+    } else {
+        arcadeState.paddleX = 195;
+        arcadeState.ball = { x: 240, y: 240, vx: 4, vy: -4 };
+        arcadeState.bricks = [];
+        const colors = ["#ef4444", "#f97316", "#eab308", "#22c55e", "#3b82f6"];
+        for (let r = 0; r < 5; r++) {
+            for (let c = 0; c < 8; c++) {
+                arcadeState.bricks.push({
+                    x: 16 + c * 56,
+                    y: 28 + r * 22,
+                    w: 50,
+                    h: 16,
+                    color: colors[r],
+                    alive: true,
+                });
+            }
+        }
+        arcadeState.timer = setInterval(tickBreakout, 20);
+    }
+    updateArcadeBadge();
+}
+
+function spawnSnakeFood() {
+    arcadeState.food = {
+        x: Math.floor(Math.random() * 28) + 1,
+        y: Math.floor(Math.random() * 20) + 1,
+    };
+}
+
+function updateArcadeBadge() {
+    if (arcadeState.score > arcadeState.highScore) {
+        arcadeState.highScore = arcadeState.score;
+        localStorage.setItem("bunker_arcade_high", String(arcadeState.highScore));
+    }
+    const badge = document.getElementById("arcade-score-badge");
+    if (badge) badge.textContent = `Score: ${arcadeState.score} | High: ${arcadeState.highScore}`;
+}
+
+function tickSnake() {
+    if (arcadeState.paused) return;
+    const canvas = document.getElementById("arcade-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    arcadeState.dir = arcadeState.nextDir;
+    const head = {
+        x: arcadeState.snake[0].x + arcadeState.dir.x,
+        y: arcadeState.snake[0].y + arcadeState.dir.y,
+    };
+
+    if (
+        head.x < 0 ||
+        head.x >= 30 ||
+        head.y < 0 ||
+        head.y >= 22 ||
+        arcadeState.snake.some((s) => s.x === head.x && s.y === head.y)
+    ) {
+        playXpSound("error");
+        startArcadeGame("snake");
+        return;
+    }
+
+    arcadeState.snake.unshift(head);
+    if (head.x === arcadeState.food.x && head.y === arcadeState.food.y) {
+        arcadeState.score += 10;
+        playXpSound("ding");
+        updateArcadeBadge();
+        spawnSnakeFood();
+    } else {
+        arcadeState.snake.pop();
+    }
+
+    ctx.fillStyle = "#050811";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Food
+    ctx.fillStyle = "#ef4444";
+    ctx.fillRect(arcadeState.food.x * 16 + 2, arcadeState.food.y * 16 + 2, 12, 12);
+
+    // Snake
+    arcadeState.snake.forEach((seg, i) => {
+        ctx.fillStyle = i === 0 ? "#4ade80" : "#16a34a";
+        ctx.fillRect(seg.x * 16 + 1, seg.y * 16 + 1, 14, 14);
+    });
+}
+
+function tickBreakout() {
+    if (arcadeState.paused) return;
+    const canvas = document.getElementById("arcade-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    const b = arcadeState.ball;
+    b.x += b.vx;
+    b.y += b.vy;
+
+    if (b.x < 8 || b.x > canvas.width - 8) b.vx = -b.vx;
+    if (b.y < 8) b.vy = -b.vy;
+
+    // Paddle bounce
+    if (b.y >= 332 && b.y <= 344 && b.x >= arcadeState.paddleX && b.x <= arcadeState.paddleX + 90) {
+        b.vy = -Math.abs(b.vy);
+        const hitOffset = (b.x - (arcadeState.paddleX + 45)) / 45;
+        b.vx = hitOffset * 5.2;
+        playXpSound("click");
+    }
+
+    // Brick collision
+    arcadeState.bricks.forEach((br) => {
+        if (!br.alive) return;
+        if (b.x >= br.x && b.x <= br.x + br.w && b.y >= br.y && b.y <= br.y + br.h) {
+            br.alive = false;
+            b.vy = -b.vy;
+            arcadeState.score += 15;
+            updateArcadeBadge();
+            playXpSound("ding");
+        }
+    });
+
+    if (b.y > canvas.height) {
+        playXpSound("error");
+        startArcadeGame("breakout");
+        return;
+    }
+
+    ctx.fillStyle = "#050811";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    arcadeState.bricks.forEach((br) => {
+        if (!br.alive) return;
+        ctx.fillStyle = br.color;
+        ctx.fillRect(br.x, br.y, br.w, br.h);
+    });
+
+    ctx.fillStyle = "#38bdf8";
+    ctx.fillRect(arcadeState.paddleX, 336, 90, 10);
+
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = "#facc15";
+    ctx.fill();
+}
+
+window.addEventListener("keydown", (e) => {
+    const arcadeWin = document.getElementById("win-arcade");
+    if (!arcadeWin || arcadeWin.style.display === "none") return;
+    if (document.activeElement && ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+
+    const k = e.key.toLowerCase();
+    if (k === "p") {
+        toggleArcadePause();
+        return;
+    }
+    if (arcadeState.mode === "snake") {
+        if ((e.key === "ArrowUp" || k === "w") && arcadeState.dir.y === 0) {
+            e.preventDefault();
+            arcadeState.nextDir = { x: 0, y: -1 };
+        } else if ((e.key === "ArrowDown" || k === "s") && arcadeState.dir.y === 0) {
+            e.preventDefault();
+            arcadeState.nextDir = { x: 0, y: 1 };
+        } else if ((e.key === "ArrowLeft" || k === "a") && arcadeState.dir.x === 0) {
+            e.preventDefault();
+            arcadeState.nextDir = { x: -1, y: 0 };
+        } else if ((e.key === "ArrowRight" || k === "d") && arcadeState.dir.x === 0) {
+            e.preventDefault();
+            arcadeState.nextDir = { x: 1, y: 0 };
+        }
+    } else {
+        if (e.key === "ArrowLeft" || k === "a") {
+            arcadeState.paddleX = Math.max(6, arcadeState.paddleX - 28);
+        } else if (e.key === "ArrowRight" || k === "d") {
+            arcadeState.paddleX = Math.min(384, arcadeState.paddleX + 28);
+        }
+    }
+});
+
+// --------------------------------------------------------------------------
+// 10.7 Windows XP Command Prompt (cmd.exe)
+// --------------------------------------------------------------------------
+let cmdCwd = "C:\\Documents and Settings\\Administrator\\My Documents";
+
+function appendCmdOutput(html) {
+    const out = document.getElementById("cmd-output");
+    const wrap = document.getElementById("cmd-terminal-wrap");
+    if (!out) return;
+    out.innerHTML += `\n${html}`;
+    if (wrap) wrap.scrollTop = wrap.scrollHeight;
+}
+
+async function handleCmdSubmit(e) {
+    e.preventDefault();
+    const inp = document.getElementById("cmd-input");
+    const raw = (inp?.value || "").trim();
+    if (inp) inp.value = "";
+    appendCmdOutput(`<span>${escapeHtml(cmdCwd)}&gt;${escapeHtml(raw)}</span>`);
+    if (!raw) return;
+
+    const parts = raw.split(/\s+/);
+    const cmd = parts[0].toLowerCase();
+    const argStr = raw.slice(parts[0].length).trim();
+
+    if (cmd === "cls" || cmd === "clear") {
+        const out = document.getElementById("cmd-output");
+        if (out) out.innerHTML = "";
+        return;
+    }
+
+    if (cmd === "help") {
+        appendCmdOutput(
+            `Available BunkerOS Windows XP Commands:\n` +
+                `  DIR                List files and subdirectories in current directory\n` +
+                `  CD <path>          Change current directory (e.g. cd C:\\WINDOWS\\System32)\n` +
+                `  TYPE <file>        Display the contents of a text file\n` +
+                `  MKDIR <folder>     Create a new directory on C:\\\n` +
+                `  NOTEPAD [file]     Open a file in Windows XP Notepad\n` +
+                `  MAN <page>         Open a Linux manual page (e.g. man mmap)\n` +
+                `  AI <question>      Ask the local AI Assistant directly\n` +
+                `  MINE / SOL / CALC  Launch Minesweeper, Solitaire, or Calculator\n` +
+                `  TASKLIST           Display running processes and PIDs\n` +
+                `  SYSTEMINFO         Display Windows XP SP3 & hardware configuration\n` +
+                `  COLOR 0A / 07      Toggle Matrix Green (0A) or Classic Gray (07)\n` +
+                `  CLS                Clear the Command Prompt screen`
+        );
+        return;
+    }
+
+    if (cmd === "ver") {
+        appendCmdOutput("Microsoft Windows XP [Version 5.1.2600 Service Pack 3 — BunkerOS Offline Kernel]");
+        return;
+    }
+
+    if (cmd === "color") {
+        const term = document.getElementById("cmd-terminal-wrap");
+        if (term) term.classList.toggle("matrix-green", argStr.toLowerCase().includes("a"));
+        return;
+    }
+
+    if (cmd === "systeminfo") {
+        appendCmdOutput(
+            `Host Name:                 BUNKER-XP-WORKSTATION\n` +
+                `OS Name:                   Microsoft Windows XP Professional\n` +
+                `OS Version:                5.1.2600 Service Pack 3 Build 2600\n` +
+                `System Type:               X86-64 Containerized Knowledge Vault\n` +
+                `Offline Linux Manuals:     13,820 pages (Sections 1-8 via GNU groff)\n` +
+                `Active AI Engine:          ${escapeHtml(appSettings.active_ai_model)}`
+        );
+        return;
+    }
+
+    if (cmd === "ipconfig") {
+        appendCmdOutput(
+            `Windows IP Configuration\n\n` +
+                `Ethernet adapter Local Bunker Area Connection:\n` +
+                `   Connection-specific DNS Suffix  . : bunker.local\n` +
+                `   IP Address. . . . . . . . . . . . : 10.88.0.10\n` +
+                `   Subnet Mask . . . . . . . . . . . : 255.255.255.0\n` +
+                `   Default Gateway . . . . . . . . . : 10.88.0.1`
+        );
+        return;
+    }
+
+    if (cmd === "tasklist") {
+        appendCmdOutput(
+            `Image Name                   PID Session Name     Mem Usage\n` +
+                `========================= ====== ================ ============\n` +
+                `System Idle Process            0 Console                 28 K\n` +
+                `explorer.exe                 412 Console             24,820 K\n` +
+                `uvicorn_vault.exe            528 Console             68,400 K\n` +
+                `ollama_llm_server.exe        604 Console            612,900 K\n` +
+                `kiwix-serve.exe              718 Console             32,140 K\n` +
+                `cmd.exe                      892 Console              3,840 K`
+        );
+        return;
+    }
+
+    if (cmd === "dir" || cmd === "ls") {
+        const target = argStr || cmdCwd;
+        const res = await fetch(`/api/fs/list?path=${encodeURIComponent(target)}`);
+        const data = await res.json();
+        const lines = (data.items || []).map(
+            (it) =>
+                `${escapeHtml(it.modified || "2026-11-04 12:00")}    ${
+                    it.kind === "folder" || it.kind === "drive" ? "&lt;DIR&gt;         " : String(it.size_label || "").padStart(14, " ")
+                }  ${escapeHtml(it.name)}`
+        );
+        appendCmdOutput(` Directory of ${escapeHtml(data.path)}\n\n${lines.join("\n")}\n               ${lines.length} item(s)`);
+        return;
+    }
+
+    if (cmd === "cd") {
+        if (!argStr) {
+            appendCmdOutput(escapeHtml(cmdCwd));
+            return;
+        }
+        const nextPath = argStr === ".."
+            ? cmdCwd.split("\\").slice(0, -1).join("\\") || "C:\\"
+            : argStr.includes(":")
+            ? argStr
+            : `${cmdCwd.replace(/\\$/, "")}\\${argStr}`;
+        const res = await fetch(`/api/fs/list?path=${encodeURIComponent(nextPath)}`);
+        const data = await res.json();
+        cmdCwd = data.path || "C:\\";
+        const lbl = document.getElementById("cmd-prompt-label");
+        if (lbl) lbl.textContent = `${cmdCwd}>`;
+        return;
+    }
+
+    if (cmd === "type" || cmd === "cat") {
+        const full = argStr.includes(":") ? argStr : `${cmdCwd.replace(/\\$/, "")}\\${argStr}`;
+        try {
+            const res = await fetch(`/api/fs/read?path=${encodeURIComponent(full)}`);
+            if (!res.ok) throw new Error("The system cannot find the file specified.");
+            const data = await res.json();
+            appendCmdOutput(escapeHtml(data.content || ""));
+        } catch (err) {
+            appendCmdOutput(`<span style="color:#f87171;">${escapeHtml(String(err))}</span>`);
+        }
+        return;
+    }
+
+    if (cmd === "mkdir") {
+        if (!argStr) return;
+        const full = argStr.includes(":") ? argStr : `${cmdCwd.replace(/\\$/, "")}\\${argStr}`;
+        await fetch("/api/fs/mkdir", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: full }),
+        });
+        appendCmdOutput(`Directory created: ${escapeHtml(full)}`);
+        return;
+    }
+
+    if (cmd === "notepad") {
+        if (argStr) {
+            const full = argStr.includes(":") ? argStr : `${cmdCwd.replace(/\\$/, "")}\\${argStr}`;
+            openNotepadFile(full);
+        } else {
+            notepadNew();
+        }
+        return;
+    }
+
+    if (cmd === "man") {
+        openManPage("2", argStr || "mmap");
+        return;
+    }
+
+    if (cmd === "mine" || cmd === "winmine") {
+        openWindow("win-minesweeper");
+        return;
+    }
+
+    if (cmd === "sol" || cmd === "solitaire") {
+        openWindow("win-solitaire");
+        return;
+    }
+
+    if (cmd === "calc") {
+        openWindow("win-calc");
+        return;
+    }
+
+    if (cmd === "ai") {
+        if (!argStr) {
+            appendCmdOutput("Usage: ai <your technical or coding question>");
+            return;
+        }
+        quickPrompt(argStr);
+        appendCmdOutput(`Sent question to ${escapeHtml(appSettings.ai_name)} in the AI Chat window.`);
+        return;
+    }
+
+    appendCmdOutput(`'${escapeHtml(parts[0])}' is not recognized as an internal or external command. Type <b>help</b> for commands.`);
+}
+
+// --------------------------------------------------------------------------
+// 10.8 Windows Task Manager (taskmgr.exe) with Live Green CPU & PF Graphs
+// --------------------------------------------------------------------------
+let tmSelectedWinId = null;
+let tmCpuHistory = [12, 15, 11, 18, 14, 10, 16, 22, 13, 11, 14, 17, 15, 12, 19, 14, 11, 13, 16, 12];
+let tmMemHistory = [620, 622, 625, 628, 630, 632, 631, 635, 638, 640, 641, 642, 640, 643, 645, 644];
+
+function switchTaskMgrTab(tab) {
+    ["apps", "procs", "perf"].forEach((t) => {
+        const btn = document.getElementById(`tm-tabbtn-${t}`);
+        const page = document.getElementById(`tm-page-${t}`);
+        if (btn) btn.classList.toggle("active", t === tab);
+        if (page) page.style.display = t === tab ? "block" : "none";
+    });
+    refreshTaskManager();
+}
+
+function refreshTaskManager() {
+    const appsBox = document.getElementById("tm-apps-list");
+    const procsBox = document.getElementById("tm-procs-list");
+
+    const openWins = Object.keys(WINDOW_META).filter((id) => {
+        const el = document.getElementById(id);
+        return el && el.style.display !== "none";
+    });
+
+    if (appsBox) {
+        const rows = openWins
+            .map(
+                (id) => `
+                <tr class="${tmSelectedWinId === id ? "selected" : ""}" onclick="tmSelectWin('${id}')">
+                    <td>${xpIcon(WINDOW_META[id].icon, 14)} <strong>${escapeHtml(WINDOW_META[id].title)}</strong></td>
+                    <td style="color:#16a34a;font-weight:bold;">Running</td>
+                </tr>
+            `
+            )
+            .join("");
+        appsBox.innerHTML = `<table class="tm-table"><thead><tr><th>Task</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }
+
+    if (procsBox) {
+        const procs = [
+            { name: "explorer.exe", user: "Administrator", cpu: "02", mem: "24,820 K" },
+            { name: "ollama_llm.exe", user: "SYSTEM", cpu: "08", mem: "614,200 K" },
+            { name: "bunker_fastapi.exe", user: "SYSTEM", cpu: "03", mem: "68,412 K" },
+            { name: "kiwix-serve.exe", user: "SYSTEM", cpu: "00", mem: "31,940 K" },
+            { name: "groff_man_idx.exe", user: "SYSTEM", cpu: "00", mem: "14,220 K" },
+            { name: "taskmgr.exe", user: "Administrator", cpu: "01", mem: "5,120 K" },
+            ...openWins.map((id) => ({
+                name: `${id.replace("win-", "")}.exe`,
+                user: "Administrator",
+                cpu: "01",
+                mem: "8,440 K",
+            })),
+        ];
+        procsBox.innerHTML = `
+            <table class="tm-table">
+                <thead><tr><th>Image Name</th><th>User Name</th><th>CPU</th><th>Mem Usage</th></tr></thead>
+                <tbody>
+                    ${procs.map((p) => `<tr><td>${escapeHtml(p.name)}</td><td>${escapeHtml(p.user)}</td><td>${p.cpu}</td><td>${p.mem}</td></tr>`).join("")}
+                </tbody>
+            </table>
+        `;
+    }
+
+    drawTaskMgrGraphs();
+}
+
+function tmSelectWin(winId) {
+    tmSelectedWinId = winId;
+    refreshTaskManager();
+}
+
+function tmEndSelectedTask() {
+    if (tmSelectedWinId && tmSelectedWinId !== "win-taskmgr") {
+        closeWindow(tmSelectedWinId);
+        tmSelectedWinId = null;
+        refreshTaskManager();
+    }
+}
+
+function tmSwitchToSelectedTask() {
+    if (tmSelectedWinId) {
+        openWindow(tmSelectedWinId);
+    }
+}
+
+function drawTaskMgrGraphs() {
+    const cpuVal = Math.max(4, Math.min(92, (tmCpuHistory[tmCpuHistory.length - 1] || 12) + Math.floor(Math.random() * 13) - 6));
+    tmCpuHistory.push(cpuVal);
+    if (tmCpuHistory.length > 32) tmCpuHistory.shift();
+
+    const memVal = 640 + Math.floor(Math.random() * 12);
+    tmMemHistory.push(memVal);
+    if (tmMemHistory.length > 32) tmMemHistory.shift();
+
+    const cpuBig = document.getElementById("tm-cpu-big");
+    if (cpuBig) cpuBig.textContent = `${cpuVal}%`;
+    const statusCpu = document.getElementById("tm-status-cpu");
+    if (statusCpu) statusCpu.textContent = `CPU Usage: ${cpuVal}%`;
+
+    drawGreenGridGraph("tm-cpu-canvas", tmCpuHistory, 100);
+    drawGreenGridGraph("tm-mem-canvas", tmMemHistory, 1024);
+}
+
+function drawGreenGridGraph(canvasId, values, maxVal) {
+    const c = document.getElementById(canvasId);
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(0, 0, c.width, c.height);
+
+    ctx.strokeStyle = "#003b00";
+    ctx.lineWidth = 1;
+    for (let x = 0; x < c.width; x += 16) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, c.height);
+        ctx.stroke();
+    }
+    for (let y = 0; y < c.height; y += 16) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(c.width, y);
+        ctx.stroke();
+    }
+
+    ctx.strokeStyle = "#00ff00";
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    values.forEach((v, idx) => {
+        const px = (idx / Math.max(1, values.length - 1)) * c.width;
+        const py = c.height - (v / maxVal) * (c.height - 10) - 4;
+        if (idx === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+    });
+    ctx.stroke();
+}
+
+setInterval(() => {
+    const tmWin = document.getElementById("win-taskmgr");
+    if (tmWin && tmWin.style.display !== "none") {
+        drawTaskMgrGraphs();
+    }
+}, 1500);
+
+// --------------------------------------------------------------------------
+// 10.9 Windows XP Calculator (calc.exe) & Run Dialog (Start -> Run...)
+// --------------------------------------------------------------------------
+let calcBuffer = "0";
+let calcPendingOp = null;
+let calcStoredVal = 0;
+let calcResetNext = false;
+
+function calcInput(token) {
+    const screen = document.getElementById("calc-display");
+    if (!screen) return;
+
+    if (token === "C" || token === "CE") {
+        calcBuffer = "0";
+        if (token === "C") {
+            calcPendingOp = null;
+            calcStoredVal = 0;
+        }
+        screen.value = calcBuffer;
+        return;
+    }
+
+    if (token === "BACK") {
+        calcBuffer = calcBuffer.length > 1 ? calcBuffer.slice(0, -1) : "0";
+        screen.value = calcBuffer;
+        return;
+    }
+
+    if (token === "+-") {
+        calcBuffer = String(parseFloat(calcBuffer) * -1);
+        screen.value = calcBuffer;
+        return;
+    }
+
+    if (token === "sqrt") {
+        calcBuffer = String(Math.sqrt(parseFloat(calcBuffer) || 0));
+        screen.value = calcBuffer;
+        calcResetNext = true;
+        return;
+    }
+
+    if (token === "1/x") {
+        const v = parseFloat(calcBuffer);
+        calcBuffer = v ? String(1 / v) : "Cannot divide by zero";
+        screen.value = calcBuffer;
+        calcResetNext = true;
+        return;
+    }
+
+    if (["+", "-", "*", "/", "%"].includes(token)) {
+        calcStoredVal = parseFloat(calcBuffer) || 0;
+        calcPendingOp = token;
+        calcResetNext = true;
+        return;
+    }
+
+    if (token === "=") {
+        const cur = parseFloat(calcBuffer) || 0;
+        if (calcPendingOp === "+") calcBuffer = String(calcStoredVal + cur);
+        else if (calcPendingOp === "-") calcBuffer = String(calcStoredVal - cur);
+        else if (calcPendingOp === "*") calcBuffer = String(calcStoredVal * cur);
+        else if (calcPendingOp === "/") calcBuffer = cur !== 0 ? String(calcStoredVal / cur) : "Error";
+        else if (calcPendingOp === "%") calcBuffer = String(calcStoredVal % cur);
+        calcPendingOp = null;
+        calcResetNext = true;
+        screen.value = calcBuffer;
+        return;
+    }
+
+    if (calcResetNext) {
+        calcBuffer = token === "." ? "0." : token;
+        calcResetNext = false;
+    } else {
+        if (token === "." && calcBuffer.includes(".")) return;
+        calcBuffer = calcBuffer === "0" && token !== "." ? token : calcBuffer + token;
+    }
+    screen.value = calcBuffer;
+}
+
+function handleRunDialogSubmit(e) {
+    e.preventDefault();
+    const inp = document.getElementById("run-dialog-input");
+    const cmd = (inp?.value || "").trim();
+    if (!cmd) return;
+    closeWindow("win-run");
+
+    const lower = cmd.toLowerCase();
+    if (lower === "notepad" || lower === "notepad.exe") {
+        notepadNew();
+    } else if (lower === "cmd" || lower === "cmd.exe") {
+        openWindow("win-cmd");
+    } else if (lower === "winmine" || lower === "winmine.exe" || lower === "minesweeper") {
+        openWindow("win-minesweeper");
+    } else if (lower === "sol" || lower === "sol.exe" || lower === "solitaire") {
+        openWindow("win-solitaire");
+    } else if (lower === "arcade" || lower === "pinball" || lower === "snake") {
+        openWindow("win-arcade");
+    } else if (lower === "calc" || lower === "calc.exe") {
+        openWindow("win-calc");
+    } else if (lower === "taskmgr" || lower === "taskmgr.exe") {
+        openWindow("win-taskmgr");
+    } else if (lower === "control" || lower === "control.exe") {
+        openWindow("win-settings");
+    } else if (lower === "explorer" || lower === "explorer.exe" || lower.includes(":\\")) {
+        openXpExplorer(cmd.includes(":\\") ? cmd : "My Computer");
+    } else if (lower.startsWith("man ")) {
+        openManPage("2", cmd.slice(4).trim());
+    } else {
+        openXpExplorer(cmd);
+    }
+}
+

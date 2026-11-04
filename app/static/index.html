@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BunkerOS XP Professional — Offline Knowledge Desktop</title>
-    <link rel="stylesheet" href="/static/xp.css?v=9">
+    <link rel="stylesheet" href="/static/xp.css?v=10">
 </head>
 <body class="theme-luna-blue wallpaper-bliss chat-mode-fb-side">
 
@@ -61,9 +61,54 @@
 
         <!-- Desktop Shortcut Grid (1:1 XP Vector Icons + Dynamic Folders/Books) -->
         <div id="desktop-icons">
+            <div class="desktop-icon" ondblclick="openXpExplorer('My Computer')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="my_computer" data-icon-size="38"></div>
+                <span class="icon-label">My Computer</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openXpExplorer('C:\\Documents and Settings\\Administrator\\My Documents')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="folder_docs" data-icon-size="38"></div>
+                <span class="icon-label">My Documents</span>
+            </div>
+
             <div class="desktop-icon" ondblclick="openWindow('win-library')" onclick="selectDesktopIcon(this)">
                 <div class="icon-graphic" data-xp-icon="my_library" data-icon-size="38"></div>
                 <span class="icon-label">My Library (Bookshelf)</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openNotepadFile('C:\\Documents and Settings\\Administrator\\My Documents\\Welcome_to_BunkerOS_XP.txt')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="notepad" data-icon-size="38"></div>
+                <span class="icon-label">Notepad</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openWindow('win-cmd')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="cmd_prompt" data-icon-size="38"></div>
+                <span class="icon-label">Command Prompt</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openWindow('win-minesweeper')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="game_mine" data-icon-size="38"></div>
+                <span class="icon-label">Minesweeper</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openWindow('win-solitaire')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="game_cards" data-icon-size="38"></div>
+                <span class="icon-label">Solitaire</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openWindow('win-arcade')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="game_arcade" data-icon-size="38"></div>
+                <span class="icon-label">Bunker Arcade</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openWindow('win-calc')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="calculator" data-icon-size="38"></div>
+                <span class="icon-label">Calculator</span>
+            </div>
+
+            <div class="desktop-icon" ondblclick="openWindow('win-taskmgr')" onclick="selectDesktopIcon(this)">
+                <div class="icon-graphic" data-xp-icon="task_mgr" data-icon-size="38"></div>
+                <span class="icon-label">Task Manager</span>
             </div>
 
             <div class="desktop-icon" ondblclick="openWindow('win-downloader')" onclick="selectDesktopIcon(this)">
@@ -71,24 +116,9 @@
                 <span class="icon-label">Add or Remove Books</span>
             </div>
 
-            <div class="desktop-icon" ondblclick="openKiwixBrowser('/kiwix/')" onclick="selectDesktopIcon(this)">
-                <div class="icon-graphic" data-xp-icon="ie_globe" data-icon-size="38"></div>
-                <span class="icon-label">Kiwix ZIM Explorer</span>
-            </div>
-
             <div class="desktop-icon" ondblclick="openWindow('win-settings')" onclick="selectDesktopIcon(this)">
                 <div class="icon-graphic" data-xp-icon="control_panel" data-icon-size="38"></div>
                 <span class="icon-label">Control Panel</span>
-            </div>
-
-            <div class="desktop-icon" ondblclick="openWindow('win-chats')" onclick="selectDesktopIcon(this)">
-                <div class="icon-graphic" data-xp-icon="msn_chat" data-icon-size="38"></div>
-                <span class="icon-label">Saved Chats</span>
-            </div>
-
-            <div class="desktop-icon" ondblclick="openWindow('win-new-book')" onclick="selectDesktopIcon(this)">
-                <div class="icon-graphic" data-xp-icon="notepad" data-icon-size="38"></div>
-                <span class="icon-label">Write New Volume</span>
             </div>
 
             <!-- Dynamic Desktop Category Folders & ZIM Discs injected here -->
@@ -780,12 +810,563 @@
             </div>
         </div>
 
+        <!-- =============================================================== -->
+        <!-- WINDOW 7: MY COMPUTER / WINDOWS EXPLORER (C:\ FILESYSTEM)       -->
+        <!-- =============================================================== -->
+        <div id="win-explorer" class="xp-window" style="top: 32px; left: 150px; width: 820px; height: 510px; z-index: 32; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-explorer')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" data-xp-icon="my_computer" data-icon-size="16"></span>
+                    <span class="xp-title-text" id="explorer-win-title">My Computer — Windows Explorer</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-explorer')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-explorer')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-explorer')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="xp-classic-menubar">
+                <div class="xp-menu-items">
+                    <span onclick="promptNewFsFile()"><u>F</u>ile</span>
+                    <span onclick="promptNewFsFolder()"><u>E</u>dit</span>
+                    <span onclick="refreshXpExplorer()"><u>V</u>iew</span>
+                    <span onclick="openXpExplorer('C:\\Documents and Settings\\Administrator\\My Documents')"><u>F</u>avorites</span>
+                    <span onclick="openWindow('win-cmd')"><u>T</u>ools</span>
+                    <span onclick="openChatAndFocus()"><u>H</u>elp</span>
+                </div>
+                <div class="xp-menubar-flag">
+                    <svg viewBox="0 0 24 24" width="14" height="14">
+                        <path d="M2 4 Q6 2 11 4 L11 11 Q6 9 2 11 Z" fill="#f25022"/><path d="M13 4 Q18 6 22 4 L22 11 Q18 13 13 11 Z" fill="#7fba00"/><path d="M2 13 Q6 11 11 13 L11 20 Q6 18 2 20 Z" fill="#00a4ef"/><path d="M13 13 Q18 15 22 13 L22 20 Q18 22 13 20 Z" fill="#ffb900"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="xp-menubar">
+                <div class="xp-toolbar-group">
+                    <button class="xp-toolbar-btn" onclick="xpExplorerUp()">
+                        <span class="btn-svg" data-xp-icon="nav_back" data-icon-size="14"></span>
+                        <span>Up</span>
+                    </button>
+                    <button class="xp-toolbar-btn" onclick="refreshXpExplorer()">
+                        <span class="btn-svg" data-xp-icon="nav_refresh" data-icon-size="14"></span>
+                        <span>Refresh</span>
+                    </button>
+                    <span class="xp-toolbar-sep"></span>
+                    <button class="xp-toolbar-btn" onclick="promptNewFsFolder()">
+                        <span class="btn-svg" data-xp-icon="folder_closed" data-icon-size="14"></span>
+                        <span>+ New Folder</span>
+                    </button>
+                    <button class="xp-toolbar-btn" onclick="promptNewFsFile()">
+                        <span class="btn-svg" data-xp-icon="notepad" data-icon-size="14"></span>
+                        <span>+ New Text File</span>
+                    </button>
+                    <button class="xp-toolbar-btn" onclick="openSelectedFsInNotepad()">
+                        <span>Edit in Notepad</span>
+                    </button>
+                    <button class="xp-toolbar-btn" onclick="renameSelectedFsItem()">
+                        <span>Rename</span>
+                    </button>
+                    <button class="xp-toolbar-btn" onclick="deleteSelectedFsItem()">
+                        <span>Delete</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="xp-addressbar">
+                <span class="addr-label">A<u>d</u>dress</span>
+                <div class="addr-input-wrap">
+                    <span class="addr-folder-icon" data-xp-icon="my_computer" data-icon-size="14"></span>
+                    <input type="text" id="explorer-address-input" value="My Computer" onkeydown="if(event.key==='Enter') openXpExplorer(this.value)">
+                </div>
+                <button class="xp-go-btn" onclick="openXpExplorer(document.getElementById('explorer-address-input').value)">
+                    <span class="btn-svg" data-xp-icon="go_arrow" data-icon-size="14"></span>
+                    <span>Go</span>
+                </button>
+            </div>
+
+            <div class="xp-window-body xp-explorer-layout">
+                <aside class="xp-sidebar">
+                    <div class="xp-task-card">
+                        <div class="xp-task-header">File and Folder Tasks</div>
+                        <div class="xp-task-body">
+                            <a href="javascript:void(0)" onclick="promptNewFsFolder()">
+                                <span class="task-link-icon" data-xp-icon="folder_closed" data-icon-size="14"></span>
+                                <span>Make a new folder</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="promptNewFsFile()">
+                                <span class="task-link-icon" data-xp-icon="notepad" data-icon-size="14"></span>
+                                <span>Create new text file</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openWindow('win-cmd')">
+                                <span class="task-link-icon" data-xp-icon="cmd_prompt" data-icon-size="14"></span>
+                                <span>Open Command Prompt here</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="xp-task-card">
+                        <div class="xp-task-header">Other Places</div>
+                        <div class="xp-task-body">
+                            <a href="javascript:void(0)" onclick="openXpExplorer('My Computer')">
+                                <span class="task-link-icon" data-xp-icon="my_computer" data-icon-size="14"></span>
+                                <span>My Computer</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openXpExplorer('C:\\')">
+                                <span class="task-link-icon" data-xp-icon="drive_hdd" data-icon-size="14"></span>
+                                <span>Local Disk (C:)</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openXpExplorer('C:\\Documents and Settings\\Administrator\\My Documents')">
+                                <span class="task-link-icon" data-xp-icon="folder_docs" data-icon-size="14"></span>
+                                <span>My Documents</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openXpExplorer('C:\\Bunker_Library')">
+                                <span class="task-link-icon" data-xp-icon="my_library" data-icon-size="14"></span>
+                                <span>C:\Bunker_Library</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openXpExplorer('C:\\WINDOWS\\System32')">
+                                <span class="task-link-icon" data-xp-icon="control_panel" data-icon-size="14"></span>
+                                <span>C:\WINDOWS\System32</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="xp-task-card">
+                        <div class="xp-task-header">Details</div>
+                        <div class="xp-task-body" id="explorer-details-box" style="font-size:11px;line-height:1.45;">
+                            <strong>My Computer</strong><br>System Folder<br>BunkerOS Windows XP SP3
+                        </div>
+                    </div>
+                </aside>
+
+                <main class="xp-explorer-main" style="background:#ffffff;padding:12px;">
+                    <div id="explorer-items-grid" class="xp-folders-grid"></div>
+                </main>
+            </div>
+
+            <div class="xp-statusbar">
+                <span id="explorer-status-left">Double-click any folder to browse, .txt/.c file to edit in Notepad, or .exe to run.</span>
+                <span id="explorer-status-right">Local Disk (C:)</span>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 8: WINDOWS XP NOTEPAD (notepad.exe)                      -->
+        <!-- =============================================================== -->
+        <div id="win-notepad" class="xp-window" style="top: 46px; left: 220px; width: 690px; height: 480px; z-index: 33; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-notepad')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" data-xp-icon="notepad" data-icon-size="16"></span>
+                    <span class="xp-title-text" id="notepad-win-title">Untitled - Notepad</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-notepad')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-notepad')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-notepad')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="xp-menubar" style="gap:6px;flex-wrap:wrap;">
+                <div class="xp-toolbar-group">
+                    <button class="xp-toolbar-btn" onclick="notepadNew()">New</button>
+                    <button class="xp-toolbar-btn" onclick="notepadPromptOpen()">Open...</button>
+                    <button class="xp-toolbar-btn" onclick="notepadSave()"><strong>Save (Ctrl+S)</strong></button>
+                    <button class="xp-toolbar-btn" onclick="notepadSaveAs()">Save As...</button>
+                    <span class="xp-toolbar-sep"></span>
+                    <button class="xp-toolbar-btn" onclick="notepadInsertTimeDate()" title="Insert Time/Date (F5)">Time/Date (F5)</button>
+                    <button class="xp-toolbar-btn" onclick="notepadToggleWrap()" id="btn-notepad-wrap">Wrap: ON</button>
+                    <select id="notepad-font-select" class="xp-mini-select" style="background:#fff;color:#111;border:1px solid #7f9db9;" onchange="notepadChangeFont(this.value)">
+                        <option value="'Lucida Console', monospace">Lucida Console</option>
+                        <option value="'Courier New', monospace">Courier New</option>
+                        <option value="Tahoma, sans-serif">Tahoma</option>
+                        <option value="Georgia, serif">Georgia Serif</option>
+                    </select>
+                    <span class="xp-toolbar-sep"></span>
+                    <button class="xp-toolbar-btn" onclick="notepadPublishToShelf()" title="Publish current Notepad document as a Book on your Library Shelf">+ Publish to Shelf</button>
+                    <button class="xp-toolbar-btn" onclick="notepadAskAi()" title="Send current Notepad content to AI Assistant">Ask AI</button>
+                </div>
+            </div>
+
+            <div class="xp-addressbar" style="padding:2px 8px;">
+                <span class="addr-label">File Path</span>
+                <div class="addr-input-wrap">
+                    <span class="addr-folder-icon" data-xp-icon="notepad" data-icon-size="13"></span>
+                    <input type="text" id="notepad-filepath-input" value="C:\Documents and Settings\Administrator\My Documents\Untitled.txt">
+                </div>
+                <button class="xp-go-btn" onclick="notepadSave()">Save</button>
+            </div>
+
+            <div class="xp-window-body" style="display:flex;flex-direction:column;flex:1;background:#ffffff;">
+                <textarea id="notepad-textarea" class="xp-notepad-editor" spellcheck="false" oninput="onNotepadInput()" onkeyup="updateNotepadCursor()" onclick="updateNotepadCursor()" onkeydown="handleNotepadKeydown(event)" placeholder="Type notes, C code, shell scripts, or documents here... Press Ctrl+S to save to C:\"></textarea>
+            </div>
+
+            <div class="xp-statusbar">
+                <span id="notepad-status-left">Ready — Saved to C:\ filesystem</span>
+                <span id="notepad-status-right">Ln 1, Col 1 | UTF-8 | Windows (CRLF)</span>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 9: WINDOWS XP MINESWEEPER (winmine.exe)                  -->
+        <!-- =============================================================== -->
+        <div id="win-minesweeper" class="xp-window" style="top: 65px; left: 310px; width: 340px; height: 420px; z-index: 34; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-minesweeper')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" data-xp-icon="game_mine" data-icon-size="16"></span>
+                    <span class="xp-title-text">Minesweeper</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-minesweeper')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-minesweeper')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="xp-menubar" style="padding:3px 6px;">
+                <div class="xp-toolbar-group">
+                    <button class="xp-toolbar-btn" onclick="initMinesweeper('beginner')">Beginner (9x9)</button>
+                    <button class="xp-toolbar-btn" onclick="initMinesweeper('intermediate')">Intermediate (16x16)</button>
+                    <button class="xp-toolbar-btn" onclick="initMinesweeper('expert')">Expert (30x16)</button>
+                    <button class="xp-toolbar-btn" id="btn-mine-flagmode" onclick="toggleMineFlagMode()" title="Toggle Flag Mode for left-click flagging">&#128681; Flag: OFF</button>
+                </div>
+            </div>
+
+            <div class="xp-window-body xp-mine-container">
+                <div class="xp-mine-hud">
+                    <div class="xp-led-digits" id="mine-count-led">010</div>
+                    <button type="button" class="xp-mine-smiley" id="mine-smiley-btn" onclick="initMinesweeper()">&#128578;</button>
+                    <div class="xp-led-digits" id="mine-timer-led">000</div>
+                </div>
+                <div class="xp-mine-board-wrap">
+                    <div id="minesweeper-board" class="xp-mine-board" oncontextmenu="return false;"></div>
+                </div>
+            </div>
+
+            <div class="xp-statusbar">
+                <span id="mine-status-text">Left-click to reveal, Right-click (or Flag button) to place flag.</span>
+                <span id="mine-best-time">Best: --s</span>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 10: WINDOWS XP KLONDIKE SOLITAIRE (sol.exe)              -->
+        <!-- =============================================================== -->
+        <div id="win-solitaire" class="xp-window" style="top: 38px; left: 195px; width: 760px; height: 530px; z-index: 34; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-solitaire')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" data-xp-icon="game_cards" data-icon-size="16"></span>
+                    <span class="xp-title-text">Solitaire</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-solitaire')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-solitaire')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-solitaire')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="xp-menubar">
+                <div class="xp-toolbar-group">
+                    <button class="xp-toolbar-btn" onclick="initSolitaire()">Deal New Game</button>
+                    <button class="xp-toolbar-btn" onclick="solitaireUndo()">Undo</button>
+                    <button class="xp-toolbar-btn" onclick="solitaireAutoMoveAll()">Auto-Send to Foundations</button>
+                </div>
+                <div class="xp-shelf-meter" id="solitaire-score-badge">Score: 0 | Moves: 0</div>
+            </div>
+
+            <div class="xp-window-body xp-solitaire-felt" id="solitaire-felt-wrap">
+                <canvas id="solitaire-win-canvas" style="display:none;position:absolute;inset:0;pointer-events:none;z-index:10;"></canvas>
+                <div id="solitaire-board" class="solitaire-board"></div>
+            </div>
+
+            <div class="xp-statusbar">
+                <span id="solitaire-status-text">Click a card to select, then click destination column/foundation. Double-click any card to auto-send to foundation!</span>
+                <span>Klondike Draw-1</span>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 11: BUNKER RETRO ARCADE (CYBER-SNAKE & BRICK BREAKER)    -->
+        <!-- =============================================================== -->
+        <div id="win-arcade" class="xp-window" style="top: 52px; left: 265px; width: 520px; height: 475px; z-index: 34; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-arcade')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" data-xp-icon="game_arcade" data-icon-size="16"></span>
+                    <span class="xp-title-text">Bunker XP Retro Arcade — Cyber-Snake &amp; Breakout</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-arcade')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="stopArcadeLoop(); closeWindow('win-arcade')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="xp-menubar">
+                <div class="xp-toolbar-group">
+                    <button class="xp-toolbar-btn" onclick="startArcadeGame('snake')">Play Cyber-Snake</button>
+                    <button class="xp-toolbar-btn" onclick="startArcadeGame('breakout')">Play DX-Breakout</button>
+                    <button class="xp-toolbar-btn" onclick="toggleArcadePause()">Pause / Resume (P)</button>
+                </div>
+                <div class="xp-shelf-meter" id="arcade-score-badge">Score: 0 | High: 0</div>
+            </div>
+
+            <div class="xp-window-body" style="background:#090d16;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:8px;">
+                <canvas id="arcade-canvas" width="480" height="360" style="border:2px inset #475569;background:#050811;max-width:100%;"></canvas>
+            </div>
+
+            <div class="xp-statusbar">
+                <span id="arcade-status-text">Use Arrow Keys or WASD to steer. Press Space to launch / restart.</span>
+                <span>60 FPS Canvas</span>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 12: WINDOWS XP COMMAND PROMPT (cmd.exe)                  -->
+        <!-- =============================================================== -->
+        <div id="win-cmd" class="xp-window" style="top: 58px; left: 240px; width: 680px; height: 430px; z-index: 35; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-cmd')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" data-xp-icon="cmd_prompt" data-icon-size="16"></span>
+                    <span class="xp-title-text">C:\WINDOWS\system32\cmd.exe</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-cmd')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-max" title="Maximize" onclick="toggleMaximize('win-cmd')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="2" width="9" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="1.5" y1="3.5" x2="10.5" y2="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-cmd')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="xp-window-body xp-cmd-terminal" id="cmd-terminal-wrap" onclick="document.getElementById('cmd-input')?.focus()">
+                <div id="cmd-output">Microsoft Windows XP [Version 5.1.2600]
+(C) Copyright 1985-2001 Microsoft Corp. — BunkerOS Offline Kernel Shell
+Type <b>help</b> for available commands (dir, cd, type, mkdir, man, ai, notepad, calc, mine, sol, tasklist, color 0a, cls).
+</div>
+                <form onsubmit="handleCmdSubmit(event)" class="cmd-input-line">
+                    <span id="cmd-prompt-label">C:\Documents and Settings\Administrator&gt;</span>
+                    <input type="text" id="cmd-input" autocomplete="off" spellcheck="false">
+                </form>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 13: WINDOWS TASK MANAGER (taskmgr.exe)                   -->
+        <!-- =============================================================== -->
+        <div id="win-taskmgr" class="xp-window" style="top: 50px; left: 290px; width: 500px; height: 445px; z-index: 36; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-taskmgr')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" data-xp-icon="task_mgr" data-icon-size="16"></span>
+                    <span class="xp-title-text">Windows Task Manager</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-taskmgr')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-taskmgr')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="xp-window-body xp-properties-dialog" style="padding:8px;">
+                <div class="xp-prop-tabs">
+                    <button class="xp-prop-tab active" id="tm-tabbtn-apps" onclick="switchTaskMgrTab('apps')">Applications</button>
+                    <button class="xp-prop-tab" id="tm-tabbtn-procs" onclick="switchTaskMgrTab('procs')">Processes</button>
+                    <button class="xp-prop-tab" id="tm-tabbtn-perf" onclick="switchTaskMgrTab('perf')">Performance</button>
+                </div>
+
+                <!-- Applications Tab -->
+                <div class="xp-prop-page" id="tm-page-apps">
+                    <div id="tm-apps-list" style="border:1px solid #7f9db9;background:#fff;height:260px;overflow-y:auto;"></div>
+                    <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:8px;">
+                        <button class="xp-dialog-btn" onclick="tmEndSelectedTask()"><u>E</u>nd Task</button>
+                        <button class="xp-dialog-btn" onclick="tmSwitchToSelectedTask()"><u>S</u>witch To</button>
+                        <button class="xp-dialog-btn" onclick="openWindow('win-run')"><u>N</u>ew Task...</button>
+                    </div>
+                </div>
+
+                <!-- Processes Tab -->
+                <div class="xp-prop-page" id="tm-page-procs" style="display:none;">
+                    <div id="tm-procs-list" style="border:1px solid #7f9db9;background:#fff;height:290px;overflow-y:auto;"></div>
+                </div>
+
+                <!-- Performance Tab (Classic Green Grid Graphs) -->
+                <div class="xp-prop-page" id="tm-page-perf" style="display:none;">
+                    <div style="display:grid;grid-template-columns:110px 1fr;gap:8px;margin-bottom:8px;">
+                        <div class="xp-perf-box">
+                            <div class="xp-perf-label">CPU Usage</div>
+                            <div class="xp-perf-meter" id="tm-cpu-big">12%</div>
+                        </div>
+                        <div class="xp-perf-box">
+                            <div class="xp-perf-label">CPU Usage History</div>
+                            <canvas id="tm-cpu-canvas" width="310" height="80" style="width:100%;height:80px;background:#000;"></canvas>
+                        </div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:110px 1fr;gap:8px;">
+                        <div class="xp-perf-box">
+                            <div class="xp-perf-label">PF Usage</div>
+                            <div class="xp-perf-meter" id="tm-mem-big">642 MB</div>
+                        </div>
+                        <div class="xp-perf-box">
+                            <div class="xp-perf-label">Page File Usage History</div>
+                            <canvas id="tm-mem-canvas" width="310" height="80" style="width:100%;height:80px;background:#000;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="xp-statusbar">
+                <span id="tm-status-procs">Processes: 18</span>
+                <span id="tm-status-cpu">CPU Usage: 12%</span>
+                <span id="tm-status-mem">Commit Charge: 642M / 4096M</span>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 14: WINDOWS XP CALCULATOR (calc.exe)                     -->
+        <!-- =============================================================== -->
+        <div id="win-calc" class="xp-window" style="top: 90px; left: 370px; width: 270px; height: 315px; z-index: 36; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-calc')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" data-xp-icon="calculator" data-icon-size="16"></span>
+                    <span class="xp-title-text">Calculator</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-min" title="Minimize" onclick="minimizeWindow('win-calc')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><rect x="2" y="8" width="7" height="2" fill="currentColor"/></svg>
+                    </button>
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-calc')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="xp-window-body" style="padding:10px;background:var(--win-bg);display:flex;flex-direction:column;gap:8px;">
+                <input type="text" id="calc-display" class="xp-calc-screen" readonly value="0">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;">
+                    <button class="xp-calc-btn red" onclick="calcInput('BACK')">Backspace</button>
+                    <button class="xp-calc-btn red" onclick="calcInput('CE')">CE</button>
+                    <button class="xp-calc-btn red" onclick="calcInput('C')">C</button>
+                </div>
+                <div class="xp-calc-grid">
+                    <button class="xp-calc-btn" onclick="calcInput('7')">7</button>
+                    <button class="xp-calc-btn" onclick="calcInput('8')">8</button>
+                    <button class="xp-calc-btn" onclick="calcInput('9')">9</button>
+                    <button class="xp-calc-btn red" onclick="calcInput('/')">/</button>
+                    <button class="xp-calc-btn" onclick="calcInput('sqrt')">sqrt</button>
+
+                    <button class="xp-calc-btn" onclick="calcInput('4')">4</button>
+                    <button class="xp-calc-btn" onclick="calcInput('5')">5</button>
+                    <button class="xp-calc-btn" onclick="calcInput('6')">6</button>
+                    <button class="xp-calc-btn red" onclick="calcInput('*')">*</button>
+                    <button class="xp-calc-btn" onclick="calcInput('%')">%</button>
+
+                    <button class="xp-calc-btn" onclick="calcInput('1')">1</button>
+                    <button class="xp-calc-btn" onclick="calcInput('2')">2</button>
+                    <button class="xp-calc-btn" onclick="calcInput('3')">3</button>
+                    <button class="xp-calc-btn red" onclick="calcInput('-')">-</button>
+                    <button class="xp-calc-btn" onclick="calcInput('1/x')">1/x</button>
+
+                    <button class="xp-calc-btn" onclick="calcInput('0')">0</button>
+                    <button class="xp-calc-btn" onclick="calcInput('+-')">+/-</button>
+                    <button class="xp-calc-btn" onclick="calcInput('.')">.</button>
+                    <button class="xp-calc-btn red" onclick="calcInput('+')">+</button>
+                    <button class="xp-calc-btn red" onclick="calcInput('=')">=</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- WINDOW 15: WINDOWS XP RUN DIALOG (Start -> Run...)              -->
+        <!-- =============================================================== -->
+        <div id="win-run" class="xp-window" style="top: 320px; left: 24px; width: 380px; height: 185px; z-index: 45; display: none;">
+            <div class="xp-titlebar" onmousedown="startDrag(event, 'win-run')">
+                <div class="xp-title-left">
+                    <span class="xp-title-icon" data-xp-icon="xp_run" data-icon-size="16"></span>
+                    <span class="xp-title-text">Run</span>
+                </div>
+                <div class="xp-title-controls">
+                    <button class="xp-btn-close" title="Close" onclick="closeWindow('win-run')">
+                        <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+            <form onsubmit="handleRunDialogSubmit(event)" class="xp-window-body" style="padding:14px;background:var(--win-bg);display:flex;flex-direction:column;justify-content:space-between;">
+                <div style="display:flex;gap:12px;align-items:center;">
+                    <span data-xp-icon="xp_run" data-icon-size="32"></span>
+                    <div style="font-size:11px;line-height:1.4;">Type the name of a program, folder, document, or manual (e.g. <code>notepad</code>, <code>cmd</code>, <code>winmine</code>, <code>sol</code>, <code>calc</code>, <code>taskmgr</code>, <code>C:\</code>, <code>man mmap</code>).</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+                    <label style="font-size:11px;"><u>O</u>pen:</label>
+                    <input type="text" id="run-dialog-input" value="notepad" style="flex:1;padding:3px 6px;border:1px solid #7f9db9;">
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:10px;">
+                    <button type="submit" class="xp-dialog-btn default">OK</button>
+                    <button type="button" class="xp-dialog-btn" onclick="closeWindow('win-run')">Cancel</button>
+                    <button type="button" class="xp-dialog-btn" onclick="closeWindow('win-run'); openXpExplorer('C:\\WINDOWS\\System32');"><u>B</u>rowse...</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- CLIPPY / ROVER INTERACTIVE XP DESKTOP ASSISTANT WIDGET          -->
+        <!-- =============================================================== -->
+        <div id="xp-clippy-widget" class="xp-clippy-widget" style="display:none;">
+            <div class="xp-clippy-bubble">
+                <button class="xp-clippy-close" onclick="toggleClippyWidget(false)" title="Hide Assistant">&times;</button>
+                <div id="xp-clippy-tip-text">It looks like you're exploring BunkerOS XP! Need a hand?</div>
+                <div class="xp-clippy-actions">
+                    <button onclick="nextClippyTip()">Next Tip</button>
+                    <button onclick="openNotepadFile('C:\\Documents and Settings\\Administrator\\My Documents\\Welcome_to_BunkerOS_XP.txt')">Notepad</button>
+                    <button onclick="openWindow('win-minesweeper')">Play Minesweeper</button>
+                </div>
+            </div>
+            <div class="xp-clippy-character" onclick="nextClippyTip()" title="Click for another Windows XP tip!">
+                <span data-xp-icon="xp_clippy" data-icon-size="44"></span>
+            </div>
+        </div>
+
         <!-- Desktop Selection Marquee & Right-Click Context Menu -->
         <div id="xp-selection-marquee" style="display:none;"></div>
         <div id="xp-context-menu" class="xp-context-menu" style="display:none;">
             <div class="xp-ctx-item" onclick="refreshAll(); hideContextMenu();">Refresh Desktop &amp; Vault</div>
-            <div class="xp-ctx-item" onclick="openWindow('win-library'); hideContextMenu();">Open My Library (Bookshelf)</div>
-            <div class="xp-ctx-item" onclick="toggleChatDrawer(true); hideContextMenu();">Open AI Problem Solver</div>
+            <div class="xp-ctx-item" onclick="openXpExplorer('My Computer'); hideContextMenu();">Explore My Computer (C:\)</div>
+            <div class="xp-ctx-item" onclick="notepadNew(); hideContextMenu();">New &rarr; Text Document (Notepad)</div>
+            <div class="xp-ctx-item" onclick="openWindow('win-cmd'); hideContextMenu();">Open Command Prompt (cmd.exe)</div>
+            <div class="xp-ctx-item" onclick="openWindow('win-taskmgr'); hideContextMenu();">Windows Task Manager</div>
+            <div class="xp-ctx-sep"></div>
+            <div class="xp-ctx-item" onclick="openWindow('win-minesweeper'); hideContextMenu();">Game: Minesweeper</div>
+            <div class="xp-ctx-item" onclick="openWindow('win-solitaire'); hideContextMenu();">Game: Klondike Solitaire</div>
+            <div class="xp-ctx-item" onclick="openWindow('win-arcade'); hideContextMenu();">Game: Bunker Cyber-Snake</div>
+            <div class="xp-ctx-item" onclick="toggleClippyWidget(); hideContextMenu();">Show / Hide Clippy Assistant</div>
             <div class="xp-ctx-sep"></div>
             <div class="xp-ctx-item" onclick="quickSelectTheme('luna-blue'); hideContextMenu();">Theme: Luna Blue (Default)</div>
             <div class="xp-ctx-item" onclick="quickSelectTheme('luna-olive'); hideContextMenu();">Theme: Luna Olive Green</div>
@@ -886,36 +1467,48 @@
             <div class="xp-user-avatar" data-xp-icon="xp_user_chess" data-icon-size="34"></div>
             <div class="xp-user-info">
                 <div class="xp-user-name">Bunker Administrator</div>
-                <div class="xp-user-role">Windows XP Professional</div>
+                <div class="xp-user-role">Windows XP Professional SP3</div>
             </div>
         </div>
         <div class="xp-start-columns">
             <div class="xp-start-left">
                 <div class="xp-start-item" onclick="openWindow('win-library'); closeStartMenu();">
-                    <span class="s-icon" data-xp-icon="my_library" data-icon-size="28"></span>
+                    <span class="s-icon" data-xp-icon="my_library" data-icon-size="26"></span>
                     <div><strong>My Library (Bookshelf)</strong><small>Browse full books &amp; ZIM archives</small></div>
                 </div>
-                <div class="xp-start-item" onclick="openWindow('win-downloader'); closeStartMenu();">
-                    <span class="s-icon" data-xp-icon="add_remove" data-icon-size="28"></span>
-                    <div><strong>Add or Remove Books</strong><small>Install Gutenberg books &amp; ZIMs</small></div>
+                <div class="xp-start-item" onclick="openNotepadFile('C:\\Documents and Settings\\Administrator\\My Documents\\Welcome_to_BunkerOS_XP.txt'); closeStartMenu();">
+                    <span class="s-icon" data-xp-icon="notepad" data-icon-size="26"></span>
+                    <div><strong>Notepad</strong><small>Edit &amp; save C:\ text and code files</small></div>
                 </div>
-                <div class="xp-start-item" onclick="openKiwixBrowser('/kiwix/'); closeStartMenu();">
-                    <span class="s-icon" data-xp-icon="ie_globe" data-icon-size="28"></span>
-                    <div><strong>Kiwix ZIM Explorer</strong><small>Offline encyclopedia browser</small></div>
+                <div class="xp-start-item" onclick="openWindow('win-cmd'); closeStartMenu();">
+                    <span class="s-icon" data-xp-icon="cmd_prompt" data-icon-size="26"></span>
+                    <div><strong>Command Prompt</strong><small>C:\WINDOWS\system32\cmd.exe</small></div>
+                </div>
+                <div class="xp-start-item" onclick="openWindow('win-minesweeper'); closeStartMenu();">
+                    <span class="s-icon" data-xp-icon="game_mine" data-icon-size="26"></span>
+                    <div><strong>Minesweeper</strong><small>Classic Windows XP puzzle game</small></div>
+                </div>
+                <div class="xp-start-item" onclick="openWindow('win-solitaire'); closeStartMenu();">
+                    <span class="s-icon" data-xp-icon="game_cards" data-icon-size="26"></span>
+                    <div><strong>Solitaire</strong><small>Classic Klondike card game</small></div>
+                </div>
+                <div class="xp-start-item" onclick="openWindow('win-arcade'); closeStartMenu();">
+                    <span class="s-icon" data-xp-icon="game_arcade" data-icon-size="26"></span>
+                    <div><strong>Bunker Retro Arcade</strong><small>Cyber-Snake &amp; DX-Breakout</small></div>
                 </div>
                 <div class="xp-start-item" onclick="toggleChatDrawer(true); closeStartMenu();">
-                    <span class="s-icon" id="start-menu-ai-icon" data-xp-icon="xp_agent_f" data-icon-size="28"></span>
-                    <div><strong id="start-menu-ai-name">Elena Vancea AI</strong><small>Local archive assistant</small></div>
-                </div>
-                <div class="xp-start-item" onclick="openWindow('win-new-book'); closeStartMenu();">
-                    <span class="s-icon" data-xp-icon="notepad" data-icon-size="28"></span>
-                    <div><strong>Write New Field Volume</strong><small>Author custom manual on shelf</small></div>
+                    <span class="s-icon" id="start-menu-ai-icon" data-xp-icon="xp_agent_f" data-icon-size="26"></span>
+                    <div><strong id="start-menu-ai-name">Elena Vancea AI</strong><small>Local problem-solving assistant</small></div>
                 </div>
             </div>
             <div class="xp-start-right">
-                <div class="xp-start-link bold" onclick="openWindow('win-library'); closeStartMenu();">
-                    <span class="start-r-icon" data-xp-icon="folder_open" data-icon-size="16"></span>
+                <div class="xp-start-link bold" onclick="openXpExplorer('C:\\Documents and Settings\\Administrator\\My Documents'); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="folder_docs" data-icon-size="16"></span>
                     <span>My Documents</span>
+                </div>
+                <div class="xp-start-link bold" onclick="openXpExplorer('My Computer'); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="my_computer" data-icon-size="16"></span>
+                    <span>My Computer (C:\)</span>
                 </div>
                 <div class="xp-start-link bold" onclick="openWindow('win-chats'); closeStartMenu();">
                     <span class="start-r-icon" data-xp-icon="msn_chat" data-icon-size="16"></span>
@@ -926,29 +1519,49 @@
                     <span class="start-r-icon" data-xp-icon="control_panel" data-icon-size="16"></span>
                     <span>Control Panel</span>
                 </div>
-                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('themes'); closeStartMenu();">
-                    <span>Display &amp; XP Themes</span>
+                <div class="xp-start-link" onclick="openWindow('win-downloader'); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="add_remove" data-icon-size="16"></span>
+                    <span>Add or Remove Books</span>
                 </div>
-                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('interface'); closeStartMenu();">
-                    <span>Font Size &amp; Chat Bar</span>
+                <div class="xp-start-link" onclick="openWindow('win-taskmgr'); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="task_mgr" data-icon-size="16"></span>
+                    <span>Task Manager</span>
                 </div>
-                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('models'); closeStartMenu();">
-                    <span>AI Models (Pros &amp; Cons)</span>
+                <div class="xp-start-link" onclick="openWindow('win-calc'); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="calculator" data-icon-size="16"></span>
+                    <span>Calculator</span>
                 </div>
-                <div class="xp-start-link" onclick="openWindow('win-settings'); switchSettingsTab('ai'); closeStartMenu();">
-                    <span>AI Helper Persona</span>
+                <div class="xp-start-link" onclick="toggleClippyWidget(true); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="xp_clippy" data-icon-size="16"></span>
+                    <span>Clippy Desktop Helper</span>
+                </div>
+                <hr>
+                <div class="xp-start-link bold" onclick="openWindow('win-run'); closeStartMenu();">
+                    <span class="start-r-icon" data-xp-icon="xp_run" data-icon-size="16"></span>
+                    <span>Run...</span>
                 </div>
             </div>
         </div>
         <div class="xp-start-footer">
-            <button class="xp-start-logoff" onclick="openWindow('win-settings'); closeStartMenu();">
+            <button class="xp-start-logoff" onclick="playXpSound('startup'); toggleClippyWidget(true); closeStartMenu();">
                 <span class="footer-btn-svg" data-xp-icon="xp_key" data-icon-size="14"></span>
-                <span>Control Panel</span>
+                <span>XP Chime</span>
             </button>
             <button class="xp-start-shutdown" onclick="refreshAll(); closeStartMenu();">
                 <span class="footer-btn-svg" data-xp-icon="xp_power" data-icon-size="14"></span>
                 <span>Sync Vault</span>
             </button>
+        </div>
+    </div>
+
+    <!-- System Tray Classic Yellow XP Balloon Notification -->
+    <div id="xp-tray-balloon" class="xp-tray-balloon" style="display:none;">
+        <div class="xp-balloon-header">
+            <strong>&#9432; BunkerOS XP Professional SP3</strong>
+            <button onclick="dismissTrayBalloon()">&times;</button>
+        </div>
+        <div id="xp-balloon-body" class="xp-balloon-body">
+            Local filesystem <code>C:\</code>, Notepad, Minesweeper, Solitaire, Command Prompt, and 13,820 Linux Manuals are ready.
         </div>
     </div>
 
@@ -974,13 +1587,15 @@
                 <span id="tray-font-label">12px</span>
                 <button class="systray-font-btn" onclick="stepUiFontSize(1)">A+</button>
             </div>
+            <span class="systray-item" id="tray-sound-btn" title="Toggle Windows XP Sound Effects" onclick="toggleXpSoundMute()">&#128266;</span>
+            <span class="systray-item" id="tray-taskmgr-btn" title="Open Windows Task Manager" onclick="openWindow('win-taskmgr')" data-xp-icon="task_mgr" data-icon-size="15"></span>
             <span class="systray-item" id="tray-settings-btn" title="Open Control Panel" onclick="openWindow('win-settings')" data-xp-icon="control_panel" data-icon-size="15"></span>
             <span class="systray-item" id="tray-books-count" title="Total Installed Books & Man Pages" onclick="openWindow('win-library')">15 Books</span>
             <span class="systray-item" id="tray-ai-pill" title="Active AI Model — Click to Switch" onclick="openWindow('win-settings'); switchSettingsTab('models');">AI Ready</span>
-            <span class="systray-clock" id="xp-clock">12:00 PM</span>
+            <span class="systray-clock" id="xp-clock" onclick="showTrayBalloon('BunkerOS XP System Clock & Status', 'All local services (FastAPI, SQLite, C:\\ Drive, Ollama LLM) are healthy.')">12:00 PM</span>
         </div>
     </footer>
 
-    <script src="/static/xp.js?v=9"></script>
+    <script src="/static/xp.js?v=10"></script>
 </body>
 </html>

@@ -2823,5 +2823,486 @@ body.is-resizing #ai-chat-drawer {
     margin: 3px 4px;
 }
 
+/* ==========================================================================
+   13. Authentic Windows XP Notepad, Explorer, Minesweeper, Solitaire,
+       Command Prompt, Task Manager, Calculator, Clippy & Tray Balloon
+   ========================================================================== */
+.xp-file-card.selected {
+    background: #dce8fc;
+    border-color: #316ac5;
+    box-shadow: inset 0 0 0 1px #316ac5;
+}
+
+/* Notepad Editor */
+.xp-notepad-editor {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 10px 12px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: var(--reader-font-size);
+    line-height: 1.5;
+    color: #0f172a;
+    background: #ffffff;
+    white-space: pre-wrap;
+    overflow: auto;
+}
+
+.xp-notepad-editor.nowrap {
+    white-space: pre;
+}
+
+/* Classic Windows XP Minesweeper */
+.xp-mine-container {
+    background: #c0c0c0;
+    border-top: 3px solid #ffffff;
+    border-left: 3px solid #ffffff;
+    border-right: 3px solid #808080;
+    border-bottom: 3px solid #808080;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    overflow: auto;
+    user-select: none;
+}
+
+.xp-mine-hud {
+    width: 100%;
+    background: #c0c0c0;
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    padding: 5px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.xp-led-digits {
+    background: #000000;
+    color: #ff1a1a;
+    font-family: "Courier New", "Lucida Console", monospace;
+    font-weight: 900;
+    font-size: 21px;
+    letter-spacing: 2px;
+    padding: 1px 6px;
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+    text-shadow: 0 0 6px rgba(255, 26, 26, 0.7);
+}
+
+.xp-mine-smiley {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    line-height: 1;
+    background: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.xp-mine-smiley:active {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+.xp-mine-board-wrap {
+    border-top: 3px solid #808080;
+    border-left: 3px solid #808080;
+    border-right: 3px solid #ffffff;
+    border-bottom: 3px solid #ffffff;
+    background: #808080;
+}
+
+.xp-mine-board {
+    display: grid;
+    background: #808080;
+}
+
+.xp-mine-cell {
+    width: 24px;
+    height: 24px;
+    background: #c0c0c0;
+    border-top: 2.5px solid #ffffff;
+    border-left: 2.5px solid #ffffff;
+    border-right: 2.5px solid #808080;
+    border-bottom: 2.5px solid #808080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Tahoma, "Arial Black", sans-serif;
+    font-weight: 900;
+    font-size: 13px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.xp-mine-cell.revealed {
+    border: 1px solid #808080;
+    background: #c0c0c0;
+    cursor: default;
+}
+
+.xp-mine-cell.mine-hit {
+    background: #ff0000 !important;
+}
+
+.xp-mine-cell.n1 { color: #0000ff; }
+.xp-mine-cell.n2 { color: #008000; }
+.xp-mine-cell.n3 { color: #ff0000; }
+.xp-mine-cell.n4 { color: #000080; }
+.xp-mine-cell.n5 { color: #800000; }
+.xp-mine-cell.n6 { color: #008080; }
+.xp-mine-cell.n7 { color: #000000; }
+.xp-mine-cell.n8 { color: #808080; }
+
+/* Windows XP Klondike Solitaire */
+.xp-solitaire-felt {
+    position: relative;
+    background: radial-gradient(circle at 50% 35%, #0e7c3a 0%, #075928 85%, #053e1c 100%);
+    padding: 14px;
+    overflow: auto;
+    user-select: none;
+}
+
+.solitaire-board {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 660px;
+}
+
+.sol-top-row, .sol-tableau-row {
+    display: grid;
+    grid-template-columns: repeat(7, 86px);
+    gap: 10px;
+    justify-content: center;
+}
+
+.sol-pile-slot {
+    width: 86px;
+    min-height: 116px;
+    border: 2px dashed rgba(255, 255, 255, 0.35);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 26px;
+    position: relative;
+    cursor: pointer;
+}
+
+.sol-tableau-col {
+    width: 86px;
+    min-height: 290px;
+    position: relative;
+}
+
+.sol-card {
+    width: 86px;
+    height: 116px;
+    border-radius: 6px;
+    background: #ffffff;
+    border: 1.5px solid #1e293b;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    padding: 5px 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.08s ease;
+}
+
+.sol-card:hover {
+    transform: translateY(-2px);
+}
+
+.sol-card.face-down {
+    background: repeating-linear-gradient(
+        45deg,
+        #1d4ed8,
+        #1d4ed8 6px,
+        #1e40af 6px,
+        #1e40af 12px
+    );
+    border: 2px solid #ffffff;
+    box-shadow: inset 0 0 0 2px #1e3a8a, 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.sol-card.red-suit { color: #dc2626; }
+.sol-card.black-suit { color: #0f172a; }
+
+.sol-card.selected-card {
+    outline: 3px solid #facc15;
+    box-shadow: 0 0 12px rgba(250, 204, 21, 0.9);
+}
+
+.sol-card-corner {
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 1;
+}
+
+.sol-card-center {
+    font-size: 28px;
+    text-align: center;
+    line-height: 1;
+}
+
+/* Windows XP Command Prompt (cmd.exe) */
+.xp-cmd-terminal {
+    background: #000000;
+    color: #c0c0c0;
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    padding: 10px 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    cursor: text;
+}
+
+.xp-cmd-terminal.matrix-green {
+    color: #22c55e;
+}
+
+#cmd-output {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.cmd-input-line {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+#cmd-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+/* Windows Task Manager Performance Meters */
+.xp-perf-box {
+    background: #000000;
+    border: 2px inset #808080;
+    padding: 6px;
+    color: #00ff00;
+    font-family: "Lucida Console", monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.xp-perf-label {
+    font-size: 10px;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+
+.xp-perf-meter {
+    font-size: 20px;
+    font-weight: bold;
+    color: #00ff00;
+    text-align: center;
+    padding: 12px 0;
+}
+
+.tm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+}
+
+.tm-table th {
+    background: #ece9d8;
+    border-bottom: 1px solid #94a3b8;
+    text-align: left;
+    padding: 4px 8px;
+    position: sticky;
+    top: 0;
+}
+
+.tm-table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+}
+
+.tm-table tr.selected {
+    background: #316ac5;
+    color: #ffffff;
+}
+
+/* Windows XP Calculator */
+.xp-calc-screen {
+    width: 100%;
+    height: 34px;
+    background: #ffffff;
+    border: 2px inset #7f9db9;
+    text-align: right;
+    padding: 4px 8px;
+    font-family: "Lucida Console", monospace;
+    font-size: 17px;
+    font-weight: bold;
+    color: #0f172a;
+}
+
+.xp-calc-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    flex: 1;
+}
+
+.xp-calc-btn {
+    background: linear-gradient(180deg, #ffffff 0%, #e3dfd1 100%);
+    border: 1px solid #003c74;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #1e3a8a;
+    cursor: pointer;
+    font-size: 12px;
+    min-height: 32px;
+}
+
+.xp-calc-btn.red {
+    color: #dc2626;
+}
+
+.xp-calc-btn:hover {
+    border-color: #f59e0b;
+    background: linear-gradient(180deg, #fffbeb 0%, #fde68a 100%);
+}
+
+/* Clippy Interactive XP Desktop Assistant Widget */
+.xp-clippy-widget {
+    position: fixed;
+    right: 26px;
+    bottom: 92px;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    max-width: 265px;
+}
+
+.xp-clippy-bubble {
+    background: #ffffe1;
+    border: 1.5px solid #000000;
+    border-radius: 8px;
+    padding: 10px 12px;
+    box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.35);
+    color: #111827;
+    font-size: 11.5px;
+    line-height: 1.45;
+    position: relative;
+}
+
+.xp-clippy-close {
+    position: absolute;
+    top: 3px;
+    right: 6px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    color: #475569;
+}
+
+.xp-clippy-actions {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.xp-clippy-actions button {
+    background: #ece9d8;
+    border: 1px solid #7f9db9;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 10.5px;
+    cursor: pointer;
+}
+
+.xp-clippy-actions button:hover {
+    background: #dce8fc;
+}
+
+.xp-clippy-character {
+    cursor: pointer;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.4));
+    transition: transform 0.15s ease;
+}
+
+.xp-clippy-character:hover {
+    transform: scale(1.08) rotate(-4deg);
+}
+
+/* Windows XP System Tray Classic Yellow Balloon Tip */
+.xp-tray-balloon {
+    position: fixed;
+    right: 16px;
+    bottom: 42px;
+    width: 310px;
+    background: #ffffe1;
+    border: 1px solid #000000;
+    border-radius: 7px;
+    padding: 9px 12px;
+    box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.4);
+    z-index: 2600;
+    color: #111827;
+    font-size: 11.5px;
+    line-height: 1.4;
+}
+
+.xp-balloon-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.xp-balloon-header button {
+    background: #ece9d8;
+    border: 1px solid #808080;
+    border-radius: 2px;
+    width: 16px;
+    height: 16px;
+    line-height: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
 
 

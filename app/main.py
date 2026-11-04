@@ -1737,6 +1737,396 @@ async def proxy_kiwix(path: str, request: Request) -> Response:
 
 
 # ==============================================================================
+# 7.5. Authentic Windows XP Persistent Filesystem (C:\ Drive & My Computer)
+# ==============================================================================
+XP_FS_ROOT = APP_DATA_DIR / "xp_fs"
+
+
+def init_xp_filesystem() -> None:
+    docs_dir = XP_FS_ROOT / "Documents and Settings" / "Administrator" / "My Documents"
+    desktop_dir = XP_FS_ROOT / "Documents and Settings" / "Administrator" / "Desktop"
+    sys32_dir = XP_FS_ROOT / "WINDOWS" / "System32"
+    prog_dir = XP_FS_ROOT / "Program Files" / "BunkerOS Accessories"
+
+    for d in (docs_dir, desktop_dir, sys32_dir, prog_dir):
+        d.mkdir(parents=True, exist_ok=True)
+
+    seed_files = {
+        docs_dir / "Welcome_to_BunkerOS_XP.txt": (
+            "====================================================================\n"
+            "  MICROSOFT WINDOWS XP PROFESSIONAL — BUNKEROS EDITION (SP3)\n"
+            "====================================================================\n\n"
+            "Welcome to your personal offline workstation and knowledge vault.\n\n"
+            "What you can do on this desktop:\n"
+            "1. NOTEPAD (notepad.exe): Write, open, and save real text, code,\n"
+            "   and Markdown files directly to C:\\Documents and Settings\\...\n"
+            "   or publish any document straight to your 3D Library Bookshelf.\n"
+            "2. MY COMPUTER (explorer.exe): Browse C:\\ drives, folders, system\n"
+            "   executables, and your offline books.\n"
+            "3. GAMES: Play classic Windows XP Minesweeper (winmine.exe),\n"
+            "   Klondike Solitaire (sol.exe), and Bunker Pinball/Snake Arcade!\n"
+            "4. COMMAND PROMPT (cmd.exe): Run dir, cd, type, tree, ipconfig,\n"
+            "   tasklist, man <syscall>, or ask the AI directly from DOS.\n"
+            "5. TASK MANAGER (taskmgr.exe): Monitor running windows, processes,\n"
+            "   and real-time CPU / Page File usage graphs.\n"
+        ),
+        docs_dir / "Field_Engineering_Notes.txt": (
+            "# BUNKER FIELD ENGINEERING LOG — SECTOR 7\n"
+            "Author: Administrator\n\n"
+            "- Solar array bus voltage nominal at 48.2V DC.\n"
+            "- Offline Kiwix ZIM archive server listening on port 8081.\n"
+            "- Linux Man Pages Sections 1-8 (13,820 pages) indexed in groff.\n"
+            "- Local LLM (Elena Vancea) responding on internal port 11434.\n"
+        ),
+        docs_dir / "mmap_allocator_demo.c": (
+            "#include <stdio.h>\n"
+            "#include <stdlib.h>\n"
+            "#include <string.h>\n"
+            "#include <sys/mman.h>\n\n"
+            "int main(void) {\n"
+            "    size_t size = 4096;\n"
+            "    /* Allocate anonymous page-aligned memory directly from kernel */\n"
+            "    char *buf = mmap(NULL, size, PROT_READ | PROT_WRITE,\n"
+            "                     MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);\n"
+            "    if (buf == MAP_FAILED) {\n"
+            "        perror(\"mmap\");\n"
+            "        return 1;\n"
+            "    }\n\n"
+            "    strcpy(buf, \"Allocated via Linux mmap(2) without malloc!\\n\");\n"
+            "    printf(\"%s\", buf);\n\n"
+            "    munmap(buf, size);\n"
+            "    return 0;\n"
+            "}\n"
+        ),
+        desktop_dir / "README_FIRST.txt": (
+            "BunkerOS XP Desktop Quick Tips:\n"
+            "-------------------------------\n"
+            "- Double-click any desktop icon to launch the program.\n"
+            "- Drag any maximized window's titlebar to tear it off into windowed mode.\n"
+            "- Resize any window from all 8 edges/corners, including the AI Chat window!\n"
+            "- Press F5 inside Notepad to insert the current XP timestamp.\n"
+        ),
+        sys32_dir / "boot.ini": (
+            "[boot loader]\n"
+            "timeout=30\n"
+            "default=multi(0)disk(0)rdisk(0)partition(1)\\WINDOWS\n"
+            "[operating systems]\n"
+            "multi(0)disk(0)rdisk(0)partition(1)\\WINDOWS=\"BunkerOS Windows XP Professional SP3\" /noexecute=optin /fastdetect\n"
+        ),
+        sys32_dir / "hosts": (
+            "# Copyright (c) 1993-2001 Microsoft Corp.\n"
+            "# TCP/IP Host Table for BunkerOS XP\n"
+            "127.0.0.1       localhost bunker-xp\n"
+            "10.88.0.2       bunker-ollama.local\n"
+        ),
+    }
+
+    for fpath, text in seed_files.items():
+        if not fpath.exists():
+            fpath.write_text(text, encoding="utf-8")
+
+
+init_xp_filesystem()
+
+VIRTUAL_SYS32_EXES = [
+    {"name": "notepad.exe", "desc": "Windows XP Notepad Text Editor", "app_target": "win-notepad", "icon": "notepad", "size": 69120},
+    {"name": "explorer.exe", "desc": "Windows XP File Explorer (My Computer)", "app_target": "win-explorer", "icon": "my_computer", "size": 1033728},
+    {"name": "winmine.exe", "desc": "Microsoft Minesweeper", "app_target": "win-minesweeper", "icon": "game_mine", "size": 119808},
+    {"name": "sol.exe", "desc": "Microsoft Klondike Solitaire", "app_target": "win-solitaire", "icon": "game_cards", "size": 56832},
+    {"name": "pinball_snake.exe", "desc": "Bunker Retro Snake & Brick Arcade", "app_target": "win-arcade", "icon": "game_arcade", "size": 245760},
+    {"name": "cmd.exe", "desc": "Windows XP Command Prompt", "app_target": "win-cmd", "icon": "cmd_prompt", "size": 389120},
+    {"name": "taskmgr.exe", "desc": "Windows Task Manager", "app_target": "win-taskmgr", "icon": "task_mgr", "size": 135680},
+    {"name": "calc.exe", "desc": "Windows XP Calculator", "app_target": "win-calc", "icon": "calculator", "size": 114688},
+    {"name": "control.exe", "desc": "Windows XP Control Panel", "app_target": "win-settings", "icon": "control_panel", "size": 98304},
+]
+
+
+def human_size(num_bytes: int) -> str:
+    if num_bytes < 1024:
+        return f"{num_bytes} B"
+    if num_bytes < 1024 * 1024:
+        return f"{round(num_bytes / 1024, 1)} KB"
+    return f"{round(num_bytes / (1024 * 1024), 2)} MB"
+
+
+def normalize_win_path(raw_path: str) -> str:
+    p = (raw_path or "").strip().replace("/", "\\")
+    if not p or p.upper() in ("MY COMPUTER", "COMPUTER", "ROOT", "\\"):
+        return "My Computer"
+    if len(p) == 2 and p[1] == ":":
+        return p.upper() + "\\"
+    if len(p) >= 3 and p[1:3] == ":\\":
+        p = p[0].upper() + ":\\" + p[3:].strip("\\")
+        return p if p != "C:\\" else "C:\\"
+    return "C:\\"
+
+
+def resolve_real_xp_path(win_path: str) -> Path:
+    norm = normalize_win_path(win_path)
+    if norm in ("My Computer", "C:\\"):
+        return XP_FS_ROOT
+    rel = norm[3:].replace("\\", "/")
+    candidate = (XP_FS_ROOT / rel).resolve()
+    root_resolved = XP_FS_ROOT.resolve()
+    if not str(candidate).startswith(str(root_resolved)):
+        return root_resolved
+    return candidate
+
+
+class FsWriteRequest(BaseModel):
+    path: str
+    content: str
+
+
+class FsFolderRequest(BaseModel):
+    path: str
+
+
+class FsRenameRequest(BaseModel):
+    old_path: str
+    new_name: str
+
+
+@app.get("/api/fs/list")
+async def api_fs_list(path: str = "My Computer") -> Dict[str, Any]:
+    norm = normalize_win_path(path)
+    usage = shutil.disk_usage(str(APP_DATA_DIR))
+    free_gb = round(usage.free / (1024 ** 3), 2)
+    total_gb = round(usage.total / (1024 ** 3), 2)
+
+    if norm == "My Computer":
+        return {
+            "path": "My Computer",
+            "parent": None,
+            "items": [
+                {
+                    "name": "Local Disk (C:)",
+                    "win_path": "C:\\",
+                    "kind": "drive",
+                    "icon": "drive_hdd",
+                    "size_label": f"{free_gb} GB free of {total_gb} GB",
+                    "desc": "Local NTFS System & User Drive",
+                },
+                {
+                    "name": "My Documents",
+                    "win_path": "C:\\Documents and Settings\\Administrator\\My Documents",
+                    "kind": "folder",
+                    "icon": "folder_docs",
+                    "size_label": "Personal Files",
+                    "desc": "Administrator's Saved Notes & Code",
+                },
+                {
+                    "name": "Offline Library Vault (B:)",
+                    "win_path": "C:\\Bunker_Library",
+                    "kind": "drive",
+                    "icon": "my_library",
+                    "size_label": "Books & Man Pages",
+                    "desc": "All Unabridged Volumes & Archives",
+                },
+                {
+                    "name": "Kiwix ZIM Optical Vault (D:)",
+                    "win_path": "D:\\",
+                    "kind": "drive",
+                    "icon": "zim_disc",
+                    "size_label": "Offline ZIM Discs",
+                    "desc": "Mounted Kiwix ZIM Encyclopedias",
+                },
+                {
+                    "name": "Control Panel",
+                    "win_path": "C:\\WINDOWS\\System32",
+                    "kind": "exe",
+                    "app_target": "win-settings",
+                    "icon": "control_panel",
+                    "size_label": "System Settings",
+                    "desc": "Themes, Fonts, AI Models & Layout",
+                },
+            ],
+        }
+
+    if norm.startswith("D:\\"):
+        zims = scan_downloaded_zims()
+        items = []
+        for z in zims:
+            items.append(
+                {
+                    "name": z["zim_filename"],
+                    "win_path": f"D:\\{z['zim_filename']}",
+                    "kind": "book",
+                    "book_id": z["id"],
+                    "icon": "zim_disc",
+                    "size_label": z["size_label"],
+                    "desc": z["title"],
+                }
+            )
+        return {"path": "D:\\", "parent": "My Computer", "items": items}
+
+    if norm.upper().startswith("C:\\BUNKER_LIBRARY"):
+        library_items = get_all_library_items()
+        items = []
+        for b in library_items:
+            ext = ".zim" if b.get("type") == "zim" else ".book.txt"
+            safe_title = re.sub(r"[^a-zA-Z0-9_.-]+", "_", b["title"])[:48]
+            items.append(
+                {
+                    "name": f"{safe_title}{ext}",
+                    "win_path": f"C:\\Bunker_Library\\{b['id']}.txt",
+                    "kind": "book",
+                    "book_id": b["id"],
+                    "icon": b.get("icon_type", "book_blue"),
+                    "size_label": b.get("size_label", "Volume"),
+                    "desc": f"{b['title']} ({b.get('category', '')})",
+                }
+            )
+        return {"path": "C:\\Bunker_Library", "parent": "C:\\", "items": items}
+
+    target_dir = resolve_real_xp_path(norm)
+    target_dir.mkdir(parents=True, exist_ok=True)
+
+    # Compute parent Windows path
+    if norm == "C:\\":
+        parent_win = "My Computer"
+    else:
+        parts = norm.split("\\")
+        parent_win = "C:\\" if len(parts) <= 2 else "\\".join(parts[:-1])
+
+    items: List[Dict[str, Any]] = []
+
+    # If at root C:\, also inject virtual C:\Bunker_Library folder shortcut
+    if norm == "C:\\":
+        items.append(
+            {
+                "name": "Bunker_Library",
+                "win_path": "C:\\Bunker_Library",
+                "kind": "folder",
+                "icon": "my_library",
+                "size_label": "Vault Mount",
+                "desc": "Unabridged Books & Linux Man Pages",
+            }
+        )
+
+    for entry in sorted(target_dir.iterdir(), key=lambda e: (not e.is_dir(), e.name.lower())):
+        child_win = f"{norm.rstrip(chr(92))}\\{entry.name}"
+        stat = entry.stat()
+        mtime_str = time.strftime("%Y-%m-%d %H:%M", time.localtime(stat.st_mtime))
+        if entry.is_dir():
+            items.append(
+                {
+                    "name": entry.name,
+                    "win_path": child_win,
+                    "kind": "folder",
+                    "icon": "folder_closed",
+                    "size_label": "File Folder",
+                    "modified": mtime_str,
+                    "desc": "File Folder",
+                }
+            )
+        else:
+            ext = entry.suffix.lower()
+            icon = "notepad" if ext in (".txt", ".md", ".log", ".ini", ".bat", ".c", ".py", ".sh") else "book_blue"
+            items.append(
+                {
+                    "name": entry.name,
+                    "win_path": child_win,
+                    "kind": "file",
+                    "icon": icon,
+                    "size": stat.st_size,
+                    "size_label": human_size(stat.st_size),
+                    "modified": mtime_str,
+                    "desc": f"{ext.upper().lstrip('.') or 'Text'} Document",
+                }
+            )
+
+    # If inside C:\WINDOWS\System32 or Program Files, show classic XP executables
+    if norm.upper() in ("C:\\WINDOWS\\SYSTEM32", "C:\\PROGRAM FILES\\BUNKEROS ACCESSORIES"):
+        for exe in VIRTUAL_SYS32_EXES:
+            items.append(
+                {
+                    "name": exe["name"],
+                    "win_path": f"{norm}\\{exe['name']}",
+                    "kind": "exe",
+                    "app_target": exe["app_target"],
+                    "icon": exe["icon"],
+                    "size": exe["size"],
+                    "size_label": human_size(exe["size"]),
+                    "modified": "2001-08-24 12:00",
+                    "desc": exe["desc"],
+                }
+            )
+
+    return {"path": norm, "parent": parent_win, "items": items}
+
+
+@app.get("/api/fs/read")
+async def api_fs_read(path: str) -> Dict[str, Any]:
+    norm = normalize_win_path(path)
+    if norm.upper().startswith("C:\\BUNKER_LIBRARY\\"):
+        fname = norm.split("\\")[-1]
+        book_id = fname[:-4] if fname.endswith(".txt") else fname
+        book_path = BOOKS_DIR / f"{book_id}.txt"
+        if book_path.exists():
+            text = book_path.read_text(encoding="utf-8", errors="replace")[:120000]
+            return {"path": norm, "name": fname, "content": text, "readonly": True}
+    real_p = resolve_real_xp_path(norm)
+    if not real_p.exists() or not real_p.is_file():
+        raise HTTPException(status_code=404, detail=f"File not found: {norm}")
+    text = real_p.read_text(encoding="utf-8", errors="replace")
+    return {"path": norm, "name": real_p.name, "content": text, "readonly": False}
+
+
+@app.post("/api/fs/write")
+async def api_fs_write(req: FsWriteRequest) -> Dict[str, Any]:
+    norm = normalize_win_path(req.path)
+    if norm in ("My Computer", "C:\\"):
+        norm = "C:\\Documents and Settings\\Administrator\\My Documents\\Untitled.txt"
+    real_p = resolve_real_xp_path(norm)
+    real_p.parent.mkdir(parents=True, exist_ok=True)
+    real_p.write_text(req.content, encoding="utf-8")
+    return {
+        "status": "saved",
+        "path": norm,
+        "name": real_p.name,
+        "size_label": human_size(real_p.stat().st_size),
+    }
+
+
+@app.post("/api/fs/mkdir")
+async def api_fs_mkdir(req: FsFolderRequest) -> Dict[str, Any]:
+    norm = normalize_win_path(req.path)
+    real_p = resolve_real_xp_path(norm)
+    real_p.mkdir(parents=True, exist_ok=True)
+    return {"status": "created", "path": norm, "name": real_p.name}
+
+
+@app.post("/api/fs/delete")
+async def api_fs_delete(req: FsFolderRequest) -> Dict[str, Any]:
+    norm = normalize_win_path(req.path)
+    real_p = resolve_real_xp_path(norm)
+    if real_p == XP_FS_ROOT.resolve() or not real_p.exists():
+        raise HTTPException(status_code=400, detail="Cannot delete system root or non-existent path.")
+    if real_p.is_dir():
+        shutil.rmtree(real_p)
+    else:
+        real_p.unlink()
+    return {"status": "deleted", "path": norm}
+
+
+@app.post("/api/fs/rename")
+async def api_fs_rename(req: FsRenameRequest) -> Dict[str, Any]:
+    norm = normalize_win_path(req.old_path)
+    real_p = resolve_real_xp_path(norm)
+    if not real_p.exists():
+        raise HTTPException(status_code=404, detail="Path not found.")
+    clean_name = re.sub(r'[<>:"/\\|?*]', "_", req.new_name.strip())
+    if not clean_name:
+        raise HTTPException(status_code=400, detail="Invalid file name.")
+    new_p = real_p.parent / clean_name
+    real_p.rename(new_p)
+    parts = norm.split("\\")
+    parts[-1] = clean_name
+    return {"status": "renamed", "path": "\\".join(parts), "name": clean_name}
+
+
+# ==============================================================================
 # 8. Serve Windows XP Desktop Frontend (/, /static/*)
 # ==============================================================================
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
